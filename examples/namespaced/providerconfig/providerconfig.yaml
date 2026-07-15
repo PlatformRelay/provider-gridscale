@@ -1,4 +1,4 @@
-apiVersion: gridscale.m.crossplane.io/v1beta1
+apiVersion: gridscale.m.platformrelay.io/v1beta1
 kind: ProviderConfig
 metadata:
   name: default
