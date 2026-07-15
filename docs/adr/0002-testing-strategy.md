@@ -78,14 +78,21 @@ carries exactly one `**Test:**` (artifact) + one `**Verify:**` (command) + a `**
   subset** (server, network, storage, ipv4, sshkey), wiring refs via the uptest datasource, and
   running against a **live gridscale lab project** — so E is gated on lab access. Keep behind
   `/test-examples` + nightly (real API cost + rate limits); document the creds contract.
-- **Coverage** — codecov upload for visibility; a **floor scoped to `./config/...`** (start ~70%,
-  ratchet up), **not** repo-wide. Generated packages are excluded from the floor.
+- **Coverage** — codecov upload for visibility; a **floor scoped to the hand-authored packages
+  `./config/...` and `./internal/clients/...`** (start ~70%, ratchet up), **not** repo-wide. Generated
+  packages (`internal/controller/**`, `apis/**/zz_*.go`, `package/crds/**`) are excluded from the floor.
+  > **Updated by [D-007](../../agent-context/decisions.md) (2026-07-16):** the floor originally covered
+  > only `./config/...`. It now also includes `./internal/clients/...` — the audit-critical credential
+  > surface (`TerraformSetupBuilder`/`resolveModern`/`resolveLegacy`/`buildProviderConfiguration`, which
+  > map a `ProviderConfig` + `Secret` into the Terraform provider setup). This is a hand-authored package,
+  > so the generation-boundary exclusion does not apply to it; the floor still stops at the generated tree.
 
 **Explicitly out of scope (and why):**
 
 - ❌ **envtest / Ginkgo reconcile tests** — controllers are generated; nothing of ours to exercise.
 - ❌ **mockery / interface mocks** — no hand-written business interfaces to mock.
-- ❌ **Repo-wide coverage floor** — generated code would dominate and make the number a lie.
+- ❌ **Repo-wide coverage floor** — generated code would dominate and make the number a lie. (The
+  floor stays scoped to the hand-authored packages `./config/...` + `./internal/clients/...`; see D-007.)
 - ❌ **Standalone Chainsaw suites** — uptest already renders Chainsaw for CRUD; hand-rolled Chainsaw
   only pays off at the Composition/policy layer, which is kaddy's E6g-S03, not this provider.
 

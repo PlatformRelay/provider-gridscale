@@ -296,18 +296,21 @@ arch-lint:
 	go run github.com/fe3dback/go-arch-lint@v1.15.0 check --arch-file .go-arch-lint.yml
 	@$(OK) checking architecture boundaries
 
-# coverage (E2-S03): unit-test coverage scoped to the hand-authored ./config/...
-# surface. Enforces a floor (COVERAGE_MIN, default 70) and emits cover.out as an
-# artifact for E5 (codecov). config coverage is ~100% today; the floor guards
-# against regression, it is not the target.
+# coverage (E2-S03): unit-test coverage scoped to the hand-authored surface —
+# ./config/... (external-name strategy + kind overrides) AND ./internal/clients/...
+# (the credential-resolution surface). D-007 widened the floor to include
+# internal/clients because it is the audit-critical credential path (ProviderConfig
+# + Secret -> terraform Setup), overriding D-005's original ./config/...-only scope.
+# Enforces a floor (COVERAGE_MIN, default 70) and emits cover.out as an artifact
+# for E5 (codecov). The floor guards against regression, it is not the target.
 COVERAGE_MIN ?= 70
 coverage:
-	@$(INFO) running config coverage
-	go test -covermode=count -coverpkg=./config/... -coverprofile=cover.out ./config/...
+	@$(INFO) running unit coverage for config and internal/clients
+	go test -covermode=count -coverpkg=./config/...,./internal/clients/... -coverprofile=cover.out ./config/... ./internal/clients/...
 	@total=$$(go tool cover -func=cover.out | awk '/^total:/ {gsub(/%/,"",$$3); print $$3}'); \
-	echo "total config coverage: $$total% / floor $(COVERAGE_MIN)%"; \
+	echo "total unit coverage (config + internal/clients): $$total% / floor $(COVERAGE_MIN)%"; \
 	awk -v t=$$total -v m=$(COVERAGE_MIN) 'BEGIN { exit (t+0 < m+0) }' || { echo "coverage below floor"; exit 1; }
-	@$(OK) config coverage floor satisfied
+	@$(OK) unit coverage floor satisfied
 
 .PHONY: vuln test.race tidy-check arch-lint coverage
 
