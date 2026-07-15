@@ -1,4 +1,19 @@
+<div align="center">
+
+<img src="extensions/icons/icon.svg" alt="provider-gridscale" width="128" height="128" />
+
 # provider-gridscale
+
+[![CI](https://img.shields.io/github/actions/workflow/status/PlatformRelay/provider-gridscale/ci.yml?branch=main&label=CI)](https://github.com/PlatformRelay/provider-gridscale/actions/workflows/ci.yml)
+[![Coverage](https://img.shields.io/codecov/c/github/PlatformRelay/provider-gridscale)](https://codecov.io/gh/PlatformRelay/provider-gridscale)
+[![CodeQL](https://img.shields.io/github/actions/workflow/status/PlatformRelay/provider-gridscale/codeql.yml?branch=main&label=CodeQL)](https://github.com/PlatformRelay/provider-gridscale/actions/workflows/codeql.yml)
+[![Scorecard](https://img.shields.io/github/actions/workflow/status/PlatformRelay/provider-gridscale/scorecard.yml?branch=main&label=Scorecard)](https://github.com/PlatformRelay/provider-gridscale/actions/workflows/scorecard.yml)
+[![Go Report Card](https://goreportcard.com/badge/github.com/PlatformRelay/provider-gridscale)](https://goreportcard.com/report/github.com/PlatformRelay/provider-gridscale)
+[![Go Version](https://img.shields.io/github/go-mod/go-version/PlatformRelay/provider-gridscale)](https://github.com/PlatformRelay/provider-gridscale/blob/main/go.mod)
+[![Release](https://img.shields.io/github/v/release/PlatformRelay/provider-gridscale?include_prereleases&sort=semver)](https://github.com/PlatformRelay/provider-gridscale/releases)
+[![License](https://img.shields.io/github/license/PlatformRelay/provider-gridscale)](LICENSE)
+
+</div>
 
 `provider-gridscale` is a [Crossplane](https://crossplane.io/) provider for
 [gridscale](https://gridscale.io/), built with the
@@ -131,7 +146,8 @@ credentials.
 - **Examples:** ready-to-apply manifests live under [`examples/`](examples/) —
   cluster-scoped under [`examples/cluster/`](examples/cluster/) and namespaced
   under [`examples/namespaced/`](examples/namespaced/).
-- **API / CRD reference:** the generated CustomResourceDefinitions for every
+- **API / CRD reference:** a generated, human-readable API reference lives under
+  [`docs/api/`](docs/api/). The underlying CustomResourceDefinitions for every
   supported resource are in [`package/crds/`](package/crds/). Each CRD's
   OpenAPI schema documents the available spec fields for that resource. You can
   also inspect an installed CRD with, for example, `kubectl explain servers`
