@@ -107,7 +107,7 @@ linters:
         path: internal/features/features\.go
         text: 'G101:'
     paths:
-      - zz_\..+\.go$
+      - (^|/)zz_.*\.go$
       - third_party$
       - builtin$
       - examples$
@@ -124,11 +124,11 @@ formatters:
       simplify: true
     goimports:
       local-prefixes:
-        - github.com/crossplane/upjet-provider-template
+        - github.com/PlatformRelay/provider-gridscale
   exclusions:
     generated: lax
     paths:
-      - zz_\..+\.go$
+      - (^|/)zz_.*\.go$
       - third_party$
       - builtin$
       - examples$
