@@ -42,4 +42,7 @@ MERGEABLE (security/API/release lanes are **surfaced, not auto-merged**).
   smoke test** — automated *uptest* coverage (E2-S04/S05) is still pending, gated on lab creds + CI.
 - Wiring the new E2-S06…S10 quality tools (govulncheck / go-arch-lint / race / fuzz / tidy-check) into
   CI (`.github/workflows/`) — **deferred to Epic E5** (surfaced, not auto-merged). govulncheck job = E5-S01.
-- Any `govulncheck` findings once the scan is first run — surface to operator when known.
+- **`govulncheck` findings (2026-07-16):** the first scan surfaced **3 called vulnerabilities** —
+  GO-2026-5856 (`crypto/tls` ECH leak; fix go1.26.5), GO-2026-5026 + GO-2026-4918
+  (`golang.org/x/net` idna Punycode + HTTP/2 loop; fix v0.55.0). Remediation (Go 1.26.5 + `x/net`
+  bump) is a **surfaced operator decision** — see [`INBOX.md`](../INBOX.md).
