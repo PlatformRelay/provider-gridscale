@@ -1,0 +1,16 @@
+apiVersion: gridscale.gridscale.m.platformrelay.io/v1alpha1
+kind: Sqlserver
+metadata:
+  annotations:
+    meta.upbound.io/example-id: gridscale/v1alpha1/sqlserver
+  labels:
+    testing.upbound.io/example-name: terra-sqlserver-test
+  name: terra-sqlserver-test
+  namespace: crossplane-system
+spec:
+  forProvider:
+    labels:
+    - test
+    name: test
+    performanceClass: standard
+    release: "2019"

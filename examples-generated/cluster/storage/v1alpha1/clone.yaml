@@ -1,0 +1,32 @@
+apiVersion: storage.gridscale.platformrelay.io/v1alpha1
+kind: Clone
+metadata:
+  annotations:
+    meta.upbound.io/example-id: storage/v1alpha1/clone
+  labels:
+    testing.upbound.io/example-name: storage-clone-john
+  name: storage-clone-john
+spec:
+  forProvider:
+    name: john's storage clone
+    sourceStorageId: ${gridscale_storage.storage-clone-john.id}
+    timeouts:
+    - create: 10m
+
+---
+
+apiVersion: gridscale.gridscale.platformrelay.io/v1alpha1
+kind: Storage
+metadata:
+  annotations:
+    meta.upbound.io/example-id: storage/v1alpha1/clone
+  labels:
+    testing.upbound.io/example-name: storage-john
+  name: storage-john
+spec:
+  forProvider:
+    capacity: 10
+    name: john's storage
+    storageType: storage_high
+    timeouts:
+    - create: 10m

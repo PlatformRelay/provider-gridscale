@@ -1,0 +1,14 @@
+apiVersion: gridscale.gridscale.platformrelay.io/v1alpha1
+kind: Paas
+metadata:
+  annotations:
+    meta.upbound.io/example-id: gridscale/v1alpha1/paas
+  labels:
+    testing.upbound.io/example-name: terra-paas-test
+  name: terra-paas-test
+spec:
+  forProvider:
+    name: terra-paas-test
+    serviceTemplateUuid: f9625726-5ca8-4d5c-b9bd-3257e1e2211a
+    timeouts:
+    - create: 10m

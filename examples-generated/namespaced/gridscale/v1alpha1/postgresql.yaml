@@ -1,0 +1,17 @@
+apiVersion: gridscale.gridscale.m.platformrelay.io/v1alpha1
+kind: Postgresql
+metadata:
+  annotations:
+    meta.upbound.io/example-id: gridscale/v1alpha1/postgresql
+  labels:
+    testing.upbound.io/example-name: terra-postgres-test
+  name: terra-postgres-test
+  namespace: crossplane-system
+spec:
+  forProvider:
+    labels:
+    - test
+    maxCoreCount: 20
+    name: test
+    performanceClass: standard
+    release: "13"

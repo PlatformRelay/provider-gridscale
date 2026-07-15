@@ -1,0 +1,19 @@
+apiVersion: gridscale.gridscale.m.platformrelay.io/v1alpha1
+kind: Mariadb
+metadata:
+  annotations:
+    meta.upbound.io/example-id: gridscale/v1alpha1/mariadb
+  labels:
+    testing.upbound.io/example-name: terra-mariadb-test
+  name: terra-mariadb-test
+  namespace: crossplane-system
+spec:
+  forProvider:
+    mariadbBinlogFormat: STATEMENT
+    mariadbDefaultTimeZone: Europe/Berlin
+    mariadbQueryCacheLimit: 2M
+    mariadbServerId: 2
+    maxCoreCount: 20
+    name: my mariadb
+    performanceClass: insane
+    release: "10.5"

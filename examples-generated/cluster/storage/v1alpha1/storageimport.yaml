@@ -1,0 +1,14 @@
+apiVersion: storage.gridscale.platformrelay.io/v1alpha1
+kind: StorageImport
+metadata:
+  annotations:
+    meta.upbound.io/example-id: storage/v1alpha1/storageimport
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+spec:
+  forProvider:
+    capacity: 20
+    name: imported storage
+    storageBackupId: xxx-xxx-xxx-xxx-xxx
+    storageType: storage_high

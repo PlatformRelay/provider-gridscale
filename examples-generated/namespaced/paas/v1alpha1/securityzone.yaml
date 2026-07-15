@@ -1,0 +1,14 @@
+apiVersion: paas.gridscale.m.platformrelay.io/v1alpha1
+kind: Securityzone
+metadata:
+  annotations:
+    meta.upbound.io/example-id: paas/v1alpha1/securityzone
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: test
+    timeouts:
+    - create: 10m

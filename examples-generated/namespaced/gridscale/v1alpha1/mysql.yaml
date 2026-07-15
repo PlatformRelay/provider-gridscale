@@ -1,0 +1,19 @@
+apiVersion: gridscale.gridscale.m.platformrelay.io/v1alpha1
+kind: MySQL
+metadata:
+  annotations:
+    meta.upbound.io/example-id: gridscale/v1alpha1/mysql
+  labels:
+    testing.upbound.io/example-name: terra-mysql-test
+  name: terra-mysql-test
+  namespace: crossplane-system
+spec:
+  forProvider:
+    maxCoreCount: 20
+    mysqlBinlogFormat: STATEMENT
+    mysqlDefaultTimeZone: Europe/Berlin
+    mysqlQueryCacheLimit: 2M
+    mysqlServerId: 2
+    name: my mysql
+    performanceClass: insane
+    release: "5.7"

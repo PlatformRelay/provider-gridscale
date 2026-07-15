@@ -30,7 +30,8 @@ func GetProvider() *ujconfig.Provider {
 		))
 
 	for _, configure := range []func(provider *ujconfig.Provider){
-		// add custom config functions (gridscale resources use defaults)
+		// add custom config functions
+		configureGridscale,
 	} {
 		configure(pc)
 	}
@@ -53,7 +54,8 @@ func GetProviderNamespaced() *ujconfig.Provider {
 		}))
 
 	for _, configure := range []func(provider *ujconfig.Provider){
-		// add custom config functions (gridscale resources use defaults)
+		// add custom config functions
+		configureGridscale,
 	} {
 		configure(pc)
 	}

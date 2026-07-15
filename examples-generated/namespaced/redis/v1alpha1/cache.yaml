@@ -1,0 +1,16 @@
+apiVersion: redis.gridscale.m.platformrelay.io/v1alpha1
+kind: Cache
+metadata:
+  annotations:
+    meta.upbound.io/example-id: redis/v1alpha1/cache
+  labels:
+    testing.upbound.io/example-name: terra-redis-cache-test
+  name: terra-redis-cache-test
+  namespace: crossplane-system
+spec:
+  forProvider:
+    labels:
+    - test
+    name: test
+    performanceClass: standard
+    release: "5.0"

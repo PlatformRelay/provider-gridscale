@@ -1,0 +1,23 @@
+apiVersion: gridscale.gridscale.m.platformrelay.io/v1alpha1
+kind: Storage
+metadata:
+  annotations:
+    meta.upbound.io/example-id: gridscale/v1alpha1/storage
+  labels:
+    testing.upbound.io/example-name: storage-john
+  name: storage-john
+  namespace: crossplane-system
+spec:
+  forProvider:
+    capacity: 10
+    name: john's storage
+    storageType: storage_high
+    template:
+    - hostname: Ubuntu
+      passwordSecretRef:
+        key: example-key
+        name: example-secret
+      passwordType: plain
+      templateUuid: 4db64bfc-9fb2-4976-80b5-94ff43b1233a
+    timeouts:
+    - create: 10m

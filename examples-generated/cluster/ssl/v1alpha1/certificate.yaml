@@ -1,0 +1,50 @@
+apiVersion: ssl.gridscale.platformrelay.io/v1alpha1
+kind: Certificate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ssl/v1alpha1/certificate
+  labels:
+    testing.upbound.io/example-name: ssl-certificate-john
+  name: ssl-certificate-john
+spec:
+  forProvider:
+    leafCertificateSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    name: john's computer
+    privateKeySecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    timeouts:
+    - create: 10m
+
+---
+
+apiVersion: gridscale.gridscale.platformrelay.io/v1alpha1
+kind: Loadbalancer
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ssl/v1alpha1/certificate
+  labels:
+    testing.upbound.io/example-name: lb-john
+  name: lb-john
+spec:
+  forProvider:
+    algorithm: leastconn
+    backendServer:
+    - host: ${gridscale_ipv4.server.ip}
+      weight: 100
+    forwardingRule:
+    - certificateUuid: ${gridscale_ssl_certificate.ssl-certificate-john.id}
+      listenPort: 80
+      mode: http
+      targetPort: 80
+    labels: []
+    listenIpv4Uuid: ${gridscale_ipv4.lb.id}
+    listenIpv6Uuid: ${gridscale_ipv6.lb.id}
+    name: john's lb
+    redirectHttpToHttps: false
+    timeouts:
+    - create: 10m

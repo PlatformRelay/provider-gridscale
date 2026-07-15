@@ -10,7 +10,14 @@ package cluster
 import (
 	"k8s.io/apimachinery/pkg/runtime"
 
-	v1alpha1 "github.com/PlatformRelay/provider-gridscale/apis/cluster/null/v1alpha1"
+	v1alpha1 "github.com/PlatformRelay/provider-gridscale/apis/cluster/gridscale/v1alpha1"
+	v1alpha1marketplace "github.com/PlatformRelay/provider-gridscale/apis/cluster/marketplace/v1alpha1"
+	v1alpha1mysql8 "github.com/PlatformRelay/provider-gridscale/apis/cluster/mysql8/v1alpha1"
+	v1alpha1object "github.com/PlatformRelay/provider-gridscale/apis/cluster/object/v1alpha1"
+	v1alpha1paas "github.com/PlatformRelay/provider-gridscale/apis/cluster/paas/v1alpha1"
+	v1alpha1redis "github.com/PlatformRelay/provider-gridscale/apis/cluster/redis/v1alpha1"
+	v1alpha1ssl "github.com/PlatformRelay/provider-gridscale/apis/cluster/ssl/v1alpha1"
+	v1alpha1storage "github.com/PlatformRelay/provider-gridscale/apis/cluster/storage/v1alpha1"
 	v1alpha1cluster "github.com/PlatformRelay/provider-gridscale/apis/cluster/v1alpha1"
 	v1beta1 "github.com/PlatformRelay/provider-gridscale/apis/cluster/v1beta1"
 )
@@ -19,6 +26,13 @@ func init() {
 	// Register the types with the Scheme so the components can map objects to GroupVersionKinds and back
 	AddToSchemes = append(AddToSchemes,
 		v1alpha1.SchemeBuilder.AddToScheme,
+		v1alpha1marketplace.SchemeBuilder.AddToScheme,
+		v1alpha1mysql8.SchemeBuilder.AddToScheme,
+		v1alpha1object.SchemeBuilder.AddToScheme,
+		v1alpha1paas.SchemeBuilder.AddToScheme,
+		v1alpha1redis.SchemeBuilder.AddToScheme,
+		v1alpha1ssl.SchemeBuilder.AddToScheme,
+		v1alpha1storage.SchemeBuilder.AddToScheme,
 		v1alpha1cluster.SchemeBuilder.AddToScheme,
 		v1beta1.SchemeBuilder.AddToScheme,
 	)

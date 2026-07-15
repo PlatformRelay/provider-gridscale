@@ -1,0 +1,31 @@
+apiVersion: gridscale.gridscale.m.platformrelay.io/v1alpha1
+kind: Template
+metadata:
+  annotations:
+    meta.upbound.io/example-id: gridscale/v1alpha1/template
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: newname
+    snapshotUuid: ${gridscale_snapshot.foo.id}
+    timeouts:
+    - create: 10m
+
+---
+
+apiVersion: gridscale.gridscale.m.platformrelay.io/v1alpha1
+kind: Storage
+metadata:
+  annotations:
+    meta.upbound.io/example-id: gridscale/v1alpha1/template
+  labels:
+    testing.upbound.io/example-name: foo
+  name: foo
+  namespace: crossplane-system
+spec:
+  forProvider:
+    capacity: 1
+    name: newname

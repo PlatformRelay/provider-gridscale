@@ -1,0 +1,16 @@
+apiVersion: mysql8.gridscale.m.platformrelay.io/v1alpha1
+kind: MySQL8
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mysql8/v1alpha1/mysql8
+  labels:
+    testing.upbound.io/example-name: terra-mysql-test
+  name: terra-mysql-test
+  namespace: crossplane-system
+spec:
+  forProvider:
+    maxCoreCount: 20
+    mysqlDefaultTimeZone: Europe/Berlin
+    name: my mysql
+    performanceClass: insane
+    release: "8.0"

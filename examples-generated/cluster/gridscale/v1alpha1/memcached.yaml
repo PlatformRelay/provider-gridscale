@@ -1,0 +1,16 @@
+apiVersion: gridscale.gridscale.platformrelay.io/v1alpha1
+kind: Memcached
+metadata:
+  annotations:
+    meta.upbound.io/example-id: gridscale/v1alpha1/memcached
+  labels:
+    testing.upbound.io/example-name: terra-memcached-test
+  name: terra-memcached-test
+spec:
+  forProvider:
+    labels:
+    - test
+    maxCoreCount: 20
+    name: test
+    performanceClass: standard
+    release: "1.5"

@@ -1,0 +1,23 @@
+apiVersion: gridscale.gridscale.platformrelay.io/v1alpha1
+kind: Server
+metadata:
+  annotations:
+    meta.upbound.io/example-id: gridscale/v1alpha1/server
+  labels:
+    testing.upbound.io/example-name: terra-server-test
+  name: terra-server-test
+spec:
+  forProvider:
+    cores: 2
+    ipv4: ${gridscale_ipv4.terra-ipv4-test.id}
+    isoimage: 9be3e0a3-42ac-4207-8887-3383c405724d
+    memory: 1
+    name: terra-server-test
+    network:
+    - bootdevice: true
+      objectUuid: ${gridscale_network.terra-network-test.id}
+    - objectUuid: ${gridscale_network.terra-network-test-2.id}
+    storage:
+    - objectUuid: ${gridscale_storage.terra-storage-test.id}
+    timeouts:
+    - create: 10m
