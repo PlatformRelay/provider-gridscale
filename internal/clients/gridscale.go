@@ -22,6 +22,11 @@ const (
 	errTrackUsage           = "cannot track ProviderConfig usage"
 	errExtractCredentials   = "cannot extract credentials"
 	errUnmarshalCredentials = "cannot unmarshal gridscale credentials as JSON"
+
+	// credential secret keys, matching the gridscale Terraform provider schema
+	keyUUID   = "uuid"
+	keyToken  = "token"
+	keyAPIURL = "api_url"
 )
 
 // TerraformSetupBuilder builds Terraform a terraform.SetupFn function which
@@ -51,12 +56,24 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 		}
 
 		// Set credentials in Terraform provider configuration.
-		/*ps.Configuration = map[string]any{
-			"username": creds["username"],
-			"password": creds["password"],
-		}*/
+		ps.Configuration = buildProviderConfiguration(creds)
 		return ps, nil
 	}
+}
+
+// buildProviderConfiguration maps the extracted credential secret into the
+// gridscale Terraform provider configuration. uuid (User-UUID) and token
+// (API-token) are always mapped; api_url is only passed through when the
+// secret provides a non-empty value so we never inject an empty override.
+func buildProviderConfiguration(creds map[string]string) map[string]any {
+	config := map[string]any{
+		keyUUID:  creds[keyUUID],
+		keyToken: creds[keyToken],
+	}
+	if apiURL := creds[keyAPIURL]; apiURL != "" {
+		config[keyAPIURL] = apiURL
+	}
+	return config
 }
 
 func toSharedPCSpec(pc *clusterv1beta1.ProviderConfig) (*namespacedv1beta1.ProviderConfigSpec, error) {
