@@ -1,0 +1,75 @@
+version: 3
+workdir: .
+
+# Exclude generated / vendored / build / example / helper trees. The generated
+# Go lives under apis/**/zz_*.go and internal/controller/**; those are modelled
+# as components below (not excluded) so the generation boundary is *enforced*,
+# not silently ignored. Everything here is non-Go or pure scaffolding.
+exclude:
+  - package/**
+  - build/**
+  - examples/**
+  - examples-generated/**
+  - hack/**
+
+allow:
+  depOnAnyVendor: true
+
+# Components. The hand-authored packages (config, clients, cmd) are the surface
+# we assert on. apis/** and internal/controller/** are generated; declaring them
+# as components (rather than excluding) makes any hand-authored import of them a
+# hard, checkable edge.
+components:
+  config:
+    in: config/**
+  clients:
+    in: internal/clients/**
+  cmd:
+    in: cmd/**
+  features:
+    in: internal/features/**
+  version:
+    in: internal/version/**
+  apis:
+    in: apis/**
+  controller:
+    in: internal/controller/**
+
+deps:
+  # config is pure configuration (external-name strategy + kind overrides). It
+  # imports no in-repo component (only vendors, allowed via depOnAnyVendor), so
+  # it is intentionally absent from `deps`: with no mayDependOn entry, ANY
+  # in-project import — including the generated controller tree — is a violation.
+  #
+  # clients builds the terraform setup and reads generated API *types* only.
+  # It may depend on apis (generated types) but MUST NOT depend on the
+  # generated controller tree (internal/controller/**).
+  clients:
+    mayDependOn:
+      - apis
+  # cmd is the wiring entrypoint: it legitimately assembles everything.
+  cmd:
+    mayDependOn:
+      - config
+      - clients
+      - features
+      - version
+      - apis
+      - controller
+  # controller is GENERATED. We do not police its internal shape; we only need
+  # it to be a declared component so hand-authored config/clients importing it
+  # is a violation. Allow the edges the generator actually emits (generated API
+  # types, feature flags, and controller subpackage-to-subpackage wiring) so the
+  # generated tree itself stays green.
+  controller:
+    mayDependOn:
+      - apis
+      - features
+      - version
+      - controller
+  # apis is GENERATED. The zz_register.go aggregators import their sibling
+  # apis/<group>/<version> packages, so allow apis self-dependency to keep the
+  # generated tree green. Not a hand-authored boundary we police.
+  apis:
+    mayDependOn:
+      - apis
