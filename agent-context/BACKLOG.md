@@ -9,7 +9,8 @@ Public build order: [docs/ROADMAP.md](../docs/ROADMAP.md). OpenSpec changes: `op
 | Codegen (E6g-S01 in kaddy's terms) | **complete** — 32 resources generated & building |
 | Design (this harness: openspec, ADRs, ROADMAP, backlog) | **in progress** — E1 lane |
 | Implementation E1–E6 | **pending** — `/agent-loop` |
-| E4-S04 (docs site), E5-S06 (signing), E6-S05 (assurance) | **decision-gated / stretch** |
+| E4-S04 (docs site) | **dropped** (D-002→A, provider-native docs) |
+| E5-S06 (signing), E6-S05 (assurance) | **stretch** |
 
 ## Lane dependency graph
 
@@ -17,7 +18,7 @@ Public build order: [docs/ROADMAP.md](../docs/ROADMAP.md). OpenSpec changes: `op
 E1 (foundation)
  ├─ E2 tests        (parallel after E1)
  ├─ E3 branding     (parallel after E1)
- ├─ E4 docs         (parallel after E1; E4-S01/02 need no assets; E4-S04 gated on D-002)
+ ├─ E4 docs         (parallel after E1; E4-S01/02 need no assets; E4-S04 dropped per D-002→A)
  ├─ E6 governance   (parallel after E1)
  └─ E5 CI/supply    (after E2 coverage lands + E3 metadata/badges; E5-S04 anytime)
 ```

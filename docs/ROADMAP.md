@@ -122,10 +122,11 @@ change: `e4-docgen`.
 | E4-S01 | `crd-ref-docs` config + `make docs` → `docs/api/` CRD reference; sync check in CI | D |
 | E4-S02 | `examples-generated` wired; one curated example per API group under `examples/` | D |
 | E4-S03 | Seed `docs/adr/` with foundational ADRs (codegen boundary, test taxonomy, build tooling) | M |
-| E4-S04 | *(decision-gated)* MkDocs Material site + `docs.yaml` GitHub Pages deploy | M |
+| ~~E4-S04~~ | ~~MkDocs Material site + `docs.yaml` GitHub Pages deploy~~ — **dropped** (D-002→A) | — |
 
 **Exit:** `make docs` regenerates API reference deterministically; CI fails on stale docs; ADRs
-capture the non-obvious decisions. E4-S04 only if **D-002** picks the full-site option.
+capture the non-obvious decisions. E4-S04 is **dropped** — D-002 chose provider-native docs (A);
+no MkDocs site (re-addable later if desired).
 
 ---
 
@@ -176,5 +177,7 @@ recognised standard; OpenSSF Scorecard's governance checks pass.
   this backlog does not touch the generated tree except through `config/`.
 - **Composition/XRD work** — that's kaddy's E6g-S03; not this provider's concern.
 
-Open decisions that shape scope: **D-001** (numbering), **D-002** (docs depth), **D-003** (build
-tooling), **D-004** (parity scope) — see [`agent-context/INBOX.md`](../agent-context/INBOX.md).
+Scope-shaping decisions — all **resolved (A)**; see
+[`agent-context/decisions.md`](../agent-context/decisions.md): **D-001** (numbering), **D-002** (docs
+depth → provider-native, E4-S04 dropped), **D-003** (build tooling), **D-004** (parity scope),
+**D-005** (test taxonomy), **D-006** (CI unblock / provider-download URL).

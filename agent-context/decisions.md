@@ -57,3 +57,25 @@ Recommended option (**A**) 2026-07-15.
   govulncheck + gitleaks + pre-commit + dependabot + cliff + cosign/SBOM. **SonarCloud, OpenVEX,
   and the assurance case (E6-S05) stay out/stretch.** Counterpoint: weaker signal than full
   parity — accepted as proportionate for a generated provider's first release.
+
+---
+
+## D-006 — Unblock `main` CI: merge sequence + `local-deploy` root-cause correction → A
+
+**Date:** 2026-07-15 · **Status:** Accepted — operator chose **A** ("go with option A and merge the
+rest as well") 2026-07-15.
+**Context:** `main` CI was red on `lint` (gofmt) and `local-deploy`. A prior INBOX note diagnosed the
+`local-deploy` red as an unfixable upstream `build/` submodule / buildx-cache infra issue needing
+operator/infra. **That was wrong:** buildx's `failed to load cache key: invalid response status 404`
+was surfacing a failed `ADD <url>` in the provider-image Dockerfile — the terraform-provider binary
+was fetched from `releases.hashicorp.com/terraform-provider-gridscale/2.3.0/...`, which 404s because
+`releases.hashicorp.com` only hosts HashiCorp's own providers. Root cause: a one-line wrong
+`TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX` in the repo's own `Makefile` — fully in-repo fixable.
+**Decision:** Repoint the prefix at the gridscale GitHub releases (reusing `TERRAFORM_PROVIDER_REPO`);
+carry it on PR #1 alongside the gofmt fix; merge PR #1 (rebase), then rebase+merge PR #2 (E1), then
+start E2–E6. The fix was surfaced (agent-loop-auto), not auto-merged, because an explicit operator
+gate named this blocker and it is a build/supply-chain change; the operator then approved A.
+**Counterpoints:** the `ADD` still verifies no checksum/signature on the provider zip (pre-existing,
+tracked as a supply-chain follow-up, not introduced here); reusing `TERRAFORM_PROVIDER_REPO` couples
+the prefix to GitHub's `/releases/download/v<ver>` asset-path convention — correct today, revisit only
+if `REPO` is ever pointed at a non-GitHub host.

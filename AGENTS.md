@@ -64,5 +64,6 @@ make build           # build provider + xpkg
 ## Next action
 
 Run `/pick-next-story` (or read [docs/ROADMAP.md](docs/ROADMAP.md) + [agent-context/BACKLOG.md](agent-context/BACKLOG.md)):
-start at **E1** (workflow foundation); E2·E3·E4·E6 parallelise after it; E5 integrates last. Resolve
-open decisions **D-001…D-004** ([INBOX.md](agent-context/INBOX.md)) before fanning out.
+start at **E1** (workflow foundation); E2·E3·E4·E6 parallelise after it; E5 integrates last.
+Scope-shaping decisions **D-001…D-006** are resolved (all **A**; see
+[decisions.md](agent-context/decisions.md)) — no open decisions block fan-out.
