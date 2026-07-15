@@ -17,14 +17,14 @@ import (
 // asserts the stub's contract holds and never panics.
 func FuzzGetExternalName(f *testing.F) {
 	// Seed corpus: representative + edge inputs.
-	f.Add("")                                     // empty id
-	f.Add("6a5d0f0e-8a2b-4c7d-9e1f-0123456789ab") // normal UUID
-	f.Add("name/with/slashes")                    // embedded separators
-	f.Add("ünîcödé-résource-名前")                    // unicode
-	f.Add("id\nwith\nnewlines")                   // embedded newlines
-	f.Add("id\x00with\x00nul")                    // embedded NUL bytes
-	f.Add(string([]byte{0xff, 0xfe, 0xfd}))       // invalid UTF-8
-	f.Add("   surrounding whitespace   ")         // whitespace
+	f.Add("")                                                       // empty id
+	f.Add("6a5d0f0e-8a2b-4c7d-9e1f-0123456789ab")                   // normal UUID
+	f.Add("name/with/slashes")                                      // embedded separators
+	f.Add("\u00fcn\u00eec\u00f6d\u00e9-r\u00e9source-\u540d\u524d") // unicode
+	f.Add("id\nwith\nnewlines")                                     // embedded newlines
+	f.Add("id\x00with\x00nul")                                      // embedded NUL bytes
+	f.Add(string([]byte{0xff, 0xfe, 0xfd}))                         // invalid UTF-8
+	f.Add("   surrounding whitespace   ")                           // whitespace
 
 	// Resolve the stub once; it is a pure function of its tfstate argument.
 	opt := ExternalNameConfigurations()
