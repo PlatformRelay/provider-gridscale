@@ -238,7 +238,23 @@ schema-version-diff:
 	./scripts/version_diff.py config/generated.lst "$(WORK_DIR)/schema.json.$${PREV_PROVIDER_VERSION}" config/schema.json
 	@$(OK) Checking for native state schema version changes
 
-.PHONY: cobertura submodules fallthrough run crds.clean
+# docs (E4-S01): render the generated CRD API reference from the Go API types
+# under apis/** into docs/api/ using elastic/crd-ref-docs. Runs via
+# `go run @pinned-version` so no separate install step is needed, consistent
+# with the other tool targets. Deterministic: re-running produces no diff, so a
+# CI sync-check can diff docs/api/ later. Config lives in .crd-ref-docs.yaml.
+CRD_REF_DOCS_VERSION ?= v0.2.0
+docs:
+	@$(INFO) generating CRD API reference
+	@mkdir -p docs/api
+	go run github.com/elastic/crd-ref-docs@$(CRD_REF_DOCS_VERSION) \
+		--source-path=apis \
+		--config=.crd-ref-docs.yaml \
+		--renderer=markdown \
+		--output-path=docs/api/
+	@$(OK) generating CRD API reference
+
+.PHONY: docs cobertura submodules fallthrough run crds.clean
 
 # ====================================================================================
 # Dev Quality (local) targets
@@ -300,6 +316,7 @@ coverage:
 
 define CROSSPLANE_MAKE_HELP
 Crossplane Targets:
+    docs                  Generate the CRD API reference into docs/api/ via crd-ref-docs.
     cobertura             Generate a coverage report for cobertura applying exclusions on generated files.
     submodules            Update the submodules, such as the common build scripts.
     run                   Run crossplane locally, out-of-cluster. Useful for development.

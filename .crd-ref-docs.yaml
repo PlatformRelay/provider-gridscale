@@ -1,0 +1,11 @@
+processor:
+  # Ignore boilerplate metadata fields inherited from Kubernetes/Crossplane so
+  # the reference focuses on the provider's own spec/status surface.
+  ignoreFields:
+    - "status.deprecated"
+    - "TypeMeta$"
+
+render:
+  # Trim the fully-qualified k8s.io / crossplane-runtime import prefixes from
+  # rendered Go package names for readability.
+  kubernetesVersion: "1.30"
