@@ -241,6 +241,48 @@ schema-version-diff:
 .PHONY: cobertura submodules fallthrough run crds.clean
 
 # ====================================================================================
+# Dev Quality (local) targets
+#
+# Thin local-only quality mechanisms ported from the sibling kollect repo
+# (E2-S06/S07/S08/S10). CI wiring is intentionally out of scope here. All four
+# targets are hermetic-ish `go run @pinned-version` invocations plus git checks
+# so they need no extra tooling install step.
+
+# vuln (E2-S06): report known vulnerabilities in dependencies / std lib via
+# govulncheck. Informational: a non-zero exit means real findings to surface,
+# not a broken target.
+vuln:
+	@$(INFO) running govulncheck
+	go run golang.org/x/vuln/cmd/govulncheck@v1.1.4 ./...
+	@$(OK) running govulncheck
+
+# test.race (E2-S08): run the hand-authored unit tests under the race detector.
+# The race detector requires cgo, so force CGO_ENABLED=1. Generated controller
+# packages under internal/... carry no _test.go files, so they compile and
+# report "no test files" (they do not need envtest at this scope).
+test.race:
+	@$(INFO) running tests with the race detector
+	CGO_ENABLED=1 go test -race -count=1 ./config/... ./internal/...
+	@$(OK) running tests with the race detector
+
+# tidy-check (E2-S10): fail if `go mod tidy` would change go.mod/go.sum.
+tidy-check:
+	@$(INFO) checking go module hygiene
+	go mod tidy
+	git diff --exit-code go.mod go.sum
+	@$(OK) checking go module hygiene
+
+# arch-lint (E2-S07): enforce the generation boundary. Asserts hand-authored
+# config/ and internal/clients do not import the generated internal/controller
+# tree. Config lives in .go-arch-lint.yml.
+arch-lint:
+	@$(INFO) checking architecture boundaries
+	go run github.com/fe3dback/go-arch-lint@v1.15.0 check --arch-file .go-arch-lint.yml
+	@$(OK) checking architecture boundaries
+
+.PHONY: vuln test.race tidy-check arch-lint
+
+# ====================================================================================
 # Special Targets
 
 define CROSSPLANE_MAKE_HELP
