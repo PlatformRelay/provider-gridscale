@@ -13,4 +13,16 @@
 # See also OWNERS.md for governance details
 
 # Fallback owners
-#*			@username
+*			@konih
+
+# Provider configuration and codegen inputs
+/config/		@konih
+
+# Build tooling and scripts
+/hack/			@konih
+/Makefile		@konih
+
+# Governance and community-health docs
+/CODEOWNERS		@konih
+/OWNERS.md		@konih
+/GOVERNANCE.md		@konih

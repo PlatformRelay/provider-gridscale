@@ -50,8 +50,7 @@ The people accountable for the health and direction of the repository. Maintaine
   (see [`SECURITY.md`](SECURITY.md)).
 - Steward the roadmap and are the operator(s) for the open decisions this project tracks.
 
-**Current maintainers:** `[MAINTAINER TBD]`
-<!-- TODO: operator to name maintainers (DOC-4); mirror into CODEOWNERS + OWNERS.md -->
+**Current maintainers:** Konrad Heimel (@konih)
 
 > The concrete maintainer identities are an **open operator decision** (tracked as **DOC-4**). Once
 > resolved, the authoritative list lives in [`CODEOWNERS`](CODEOWNERS) and [`OWNERS.md`](OWNERS.md);
