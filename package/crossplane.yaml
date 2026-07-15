@@ -2,6 +2,20 @@ apiVersion: meta.pkg.crossplane.io/v1
 kind: Provider
 metadata:
   name: provider-gridscale
+  annotations:
+    meta.crossplane.io/maintainer: Konrad Heimel <konrad.heimel@gmail.com>
+    meta.crossplane.io/source: github.com/PlatformRelay/provider-gridscale
+    meta.crossplane.io/license: Apache-2.0
+    meta.crossplane.io/description: |
+      A Crossplane provider for gridscale IaaS, generated with Upjet on top of
+      the gridscale Terraform provider. Manages gridscale servers, storages,
+      networks, load balancers, managed databases (PaaS), object storage, SSL
+      certificates, and more as Kubernetes custom resources.
+    meta.crossplane.io/readme: |
+      `provider-gridscale` lets you provision and manage gridscale cloud
+      infrastructure declaratively from a Crossplane control plane. See the
+      Marketplace README for install, credentials, and ProviderConfig setup.
+    friendly-name.meta.crossplane.io/provider-gridscale: gridscale provider
 spec:
   capabilities:
     - SafeStart
