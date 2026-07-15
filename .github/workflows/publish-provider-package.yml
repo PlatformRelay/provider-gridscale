@@ -22,6 +22,9 @@ jobs:
       go-version: ${{ github.event.inputs.go-version }}
       cleanup-disk: true
     secrets:
-      GHCR_PAT: ${{ secrets.GITHUB_TOKEN }}
+      # A classic PAT with write:packages is required to CREATE a new org-level
+      # ghcr package; the default GITHUB_TOKEN can only push to a package that
+      # already exists and is linked to the repo.
+      GHCR_PAT: ${{ secrets.GHCR_PAT }}
       XPKG_MIRROR_TOKEN: ${{ secrets.XPKG_MIRROR_TOKEN }}
       XPKG_MIRROR_ACCESS_ID: ${{ secrets.XPKG_MIRROR_ACCESS_ID }}
