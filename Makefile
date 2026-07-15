@@ -48,7 +48,11 @@ GO_REQUIRED_VERSION ?= 1.24
 GOLANGCILINT_VERSION ?= 2.12.1
 GO_STATIC_PACKAGES = $(GO_PROJECT)/cmd/provider $(GO_PROJECT)/cmd/generator
 GO_LDFLAGS += -X $(GO_PROJECT)/internal/version.Version=$(VERSION)
-GO_SUBDIRS += cmd internal apis
+# config holds the hand-authored provider configuration (external-name strategy
+# and kind overrides) and its unit tests. It must be in GO_SUBDIRS so that
+# go.test.unit (which tests $(GO_PACKAGES) derived from GO_SUBDIRS) actually
+# compiles and runs config/*_test.go and reports its coverage.
+GO_SUBDIRS += cmd internal apis config
 -include build/makelib/golang.mk
 
 # ====================================================================================
