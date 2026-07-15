@@ -11,6 +11,8 @@ exclude:
   - examples/**
   - examples-generated/**
   - hack/**
+  - .claude/**
+  - .work/**
 
 allow:
   depOnAnyVendor: true
