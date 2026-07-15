@@ -82,9 +82,21 @@ change: `e2-test-foundation`.
 | E2-S03 | Wire `make test` (unit + contract) + coverage scoped to `./config/...` (floor ~70%) + `make test.spec` gate | M |
 | E2-S04 | Curate uptest smoke subset (server, network, storage, ipv4, sshkey) + datasource/ref wiring — **needs lab access** | E |
 | E2-S05 | Enable `e2e.yaml` uptest run on `/test-examples` + nightly + document creds contract | E |
+| E2-S06 | `govulncheck` make target (`make vuln` → `go run golang.org/x/vuln/cmd/govulncheck@v1.1.4 ./...`) *(ported from kollect's test tooling)* | M |
+| E2-S07 | `go-arch-lint` config (`.go-arch-lint.yml`) + `make arch-lint` enforcing the generation boundary (hand-authored `config`/`internal/clients` must not import generated `internal/controller/**`) *(ported from kollect's test tooling)* | M |
+| E2-S08 | Race-detector make target (`make test.race` → `go test -race -count=1`) *(ported from kollect's test tooling)* | U |
+| E2-S09 | Native fuzz test on the `config` external-name extraction (`FuzzGetExternalName`) *(ported from kollect's test tooling)* | U |
+| E2-S10 | `go mod` hygiene gate (`make tidy-check` → `go mod tidy` + `git diff --exit-code go.{mod,sum}`) *(ported from kollect's test tooling)* | M |
 
 > The mysql8/storageimport Kind overrides get **no standalone unit story** — they're guarded by
 > compilation (`make build`) + the CRD-contract tier; an optional assertion can ride E2-S02.
+>
+> **E2-S06…S10 provenance & CI split (ported from kollect's test tooling):** these stories add the
+> local `make` targets + tests **now** (auto-mergeable — they touch only `Makefile`, `config/*_test.go`,
+> and `.go-arch-lint.yml`). **Wiring each tool into CI (`.github/workflows/`) is deferred to Epic E5**
+> (CI/release changes are surfaced-not-auto-merged per the harness guardrails). Concretely: E2-S06's
+> `make vuln` target lands here; the **govulncheck CI job is the existing E5-S01 follow-up** — same for
+> arch-lint / race / fuzz / tidy-check gating, which become E5 CI jobs, not new work.
 
 **Exit:** `make test` runs unit + CRD-contract tests with `config/`-scoped coverage; scoped CRD
 goldens committed; ≥1 uptest example green against a lab project (gated on lab creds); coverage

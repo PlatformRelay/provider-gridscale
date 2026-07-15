@@ -12,6 +12,24 @@ Public build order: [docs/ROADMAP.md](../docs/ROADMAP.md). OpenSpec changes: `op
 | E4-S04 (docs site) | **dropped** (D-002→A, provider-native docs) |
 | E5-S06 (signing), E6-S05 (assurance) | **stretch** |
 
+## E2 test-hardening batch (S06–S10) — ported from kollect's test tooling
+
+Appended to the E2 story table in [docs/ROADMAP.md](../docs/ROADMAP.md); levels per ADR-0002 (U/E/M/D):
+
+| Story | Adds (local, auto-mergeable now) | Level |
+| --- | --- | --- |
+| E2-S06 | `make vuln` → `go run golang.org/x/vuln/cmd/govulncheck@v1.1.4 ./...` | M |
+| E2-S07 | `.go-arch-lint.yml` + `make arch-lint` — generation boundary: `config`/`internal/clients` must **not** import generated `internal/controller/**` | M |
+| E2-S08 | `make test.race` → `go test -race -count=1` | U |
+| E2-S09 | `FuzzGetExternalName` native fuzz test on the `config` external-name extraction | U |
+| E2-S10 | `make tidy-check` → `go mod tidy` + `git diff --exit-code go.{mod,sum}` | M |
+
+> **CI split (harness guardrail):** the `make` targets + tests above land **now** (auto-mergeable —
+> paths `Makefile`, `config/*_test.go`, `.go-arch-lint.yml`). **Wiring each tool into CI
+> (`.github/workflows/`) is deferred to Epic E5** (CI/release = surfaced-not-auto-merged). The
+> govulncheck CI job in particular is the **existing E5-S01 follow-up**, not new scope; arch-lint /
+> race / fuzz / tidy-check gating likewise become E5 CI jobs.
+
 ## Lane dependency graph
 
 ```
@@ -24,7 +42,7 @@ E1 (foundation)
 ```
 
 Disjoint path sets (safe to run as parallel worktrees):
-- **E2** → `config/*_test.go`, `examples/**`, `test/**`, Makefile test targets
+- **E2** → `config/*_test.go`, `examples/**`, `test/**`, Makefile test targets, `.go-arch-lint.yml`
 - **E3** → `extensions/**`, `docs/assets/**`, `README.md`, `package/crossplane.yaml`
 - **E4** → `docs/api/**`, `docs/adr/**`, `.crd-ref-docs.yaml`, `mkdocs.yml`
 - **E6** → `CONTRIBUTING.md`, `SECURITY.md`, `GOVERNANCE.md`, `CODEOWNERS`, `OWNERS.md`, `.github/*_TEMPLATE*`
