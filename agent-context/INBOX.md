@@ -8,16 +8,11 @@ remove here. This repo's INBOX is independent — never coordinate other repos f
 
 ## Decisions (open)
 
-_(none — D-001…D-004 answered **A** and the E1–E6 plan approved by the operator 2026-07-15; see
-[`decisions.md`](decisions.md).)_
+_(none — D-001…D-006 all answered **A**; see [`decisions.md`](decisions.md). D-006 unblocked `main`
+CI: PR #1 (gofmt + provider-download URL) merged, PR #2/E1 landing, E2–E6 cleared to start.)_
 
 ---
 
 ## Operator tasks / reviews / PRs
 
-- **CI: `local-deploy` red on `main`.** The `local-deploy` job fails in buildx `img.build.shared`
-  with `failed to load cache key: invalid response status 404` (upstream `build/` submodule,
-  `build/makelib/imagelight.mk`). Deterministic (both commits). Not hand-editable per **D-003**;
-  needs an operator/infra look before `main` can go fully green and before any lane can auto-merge.
-- **PR #1 — gofmt fix** (`worktree-fix-gofmt-config`): clears the `lint` job's gofmt failure on
-  `main`. Operator-merge (its CI stays red on `local-deploy` above until that is resolved).
+_(none open — `main` CI is green; E1 foundation landing. Next: E2–E6 lanes via `/agent-loop-auto`.)_
