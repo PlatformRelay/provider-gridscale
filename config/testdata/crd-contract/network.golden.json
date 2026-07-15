@@ -1,0 +1,16 @@
+{
+  "group": "gridscale.gridscale.platformrelay.io",
+  "kind": "Network",
+  "scope": "Cluster",
+  "version": "v1alpha1",
+  "forProviderProps": [
+    "dhcpActive",
+    "dhcpDns",
+    "dhcpGateway",
+    "dhcpRange",
+    "dhcpReservedSubnet",
+    "l2security",
+    "labels",
+    "name"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "group": "storage.gridscale.platformrelay.io",
+  "kind": "StorageImport",
+  "scope": "Cluster",
+  "version": "v1alpha1",
+  "forProviderProps": [
+    "capacity",
+    "labels",
+    "name",
+    "storageBackupId",
+    "storageType"
+  ]
+}

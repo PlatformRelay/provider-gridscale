@@ -1,0 +1,23 @@
+{
+  "group": "gridscale.gridscale.platformrelay.io",
+  "kind": "Server",
+  "scope": "Cluster",
+  "version": "v1alpha1",
+  "forProviderProps": [
+    "autoRecovery",
+    "availabilityZone",
+    "cores",
+    "hardwareProfile",
+    "hardwareProfileConfig",
+    "ipv4",
+    "ipv6",
+    "isoimage",
+    "labels",
+    "memory",
+    "name",
+    "network",
+    "power",
+    "storage",
+    "userDataBase64"
+  ]
+}

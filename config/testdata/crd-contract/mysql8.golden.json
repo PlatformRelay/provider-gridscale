@@ -1,0 +1,19 @@
+{
+  "group": "mysql8.gridscale.platformrelay.io",
+  "kind": "MySQL8",
+  "scope": "Cluster",
+  "version": "v1alpha1",
+  "forProviderProps": [
+    "labels",
+    "maxCoreCount",
+    "mysqlDefaultTimeZone",
+    "mysqlMaxAllowedPacket",
+    "mysqlMaxConnections",
+    "mysqlSqlMode",
+    "name",
+    "networkUuid",
+    "performanceClass",
+    "release",
+    "securityZoneUuid"
+  ]
+}
