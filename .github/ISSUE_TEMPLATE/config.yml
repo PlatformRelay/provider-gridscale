@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question or discussion
+    url: https://github.com/PlatformRelay/provider-gridscale/discussions
+    about: Ask questions and discuss usage here rather than opening an issue.
+  - name: Crossplane Slack
+    url: https://slack.crossplane.io
+    about: Real-time help from the Crossplane community (#dev, #providers).
+  - name: gridscale API documentation
+    url: https://gridscale.io/en/api-documentation/
+    about: Reference for the underlying gridscale API this provider wraps.

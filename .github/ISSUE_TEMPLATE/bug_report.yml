@@ -1,0 +1,95 @@
+name: Bug report
+description: Report a defect in provider-gridscale (reconciliation, CRD, or generation)
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug report. Please fill in as much
+        detail as you can — reproducible reports get fixed fastest.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear and concise description of the bug.
+      placeholder: The MysqlServer resource never becomes Ready...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen instead?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: |
+        Minimal steps to reproduce. If possible, include the managed-resource
+        manifest (redact secrets/tokens) you applied.
+      placeholder: |
+        1. Apply the following ProviderConfig + Server manifest: ...
+        2. Observe `kubectl get server` ...
+        3. See error in provider logs ...
+      render: shell
+    validations:
+      required: true
+  - type: input
+    id: provider-version
+    attributes:
+      label: provider-gridscale version
+      description: Package tag / image digest of the provider you are running.
+      placeholder: "v0.3.0"
+    validations:
+      required: true
+  - type: input
+    id: crossplane-version
+    attributes:
+      label: Crossplane version
+      placeholder: "v1.16.0"
+    validations:
+      required: true
+  - type: input
+    id: kubernetes-version
+    attributes:
+      label: Kubernetes / distribution version
+      placeholder: "v1.29.0 (kind)"
+    validations:
+      required: false
+  - type: input
+    id: resource
+    attributes:
+      label: Affected resource / CRD
+      description: The managed-resource kind and API group involved.
+      placeholder: "Server.compute.gridscale.crossplane.io"
+    validations:
+      required: true
+  - type: textarea
+    id: gridscale-context
+    attributes:
+      label: gridscale API context
+      description: |
+        Relevant gridscale context — region/partner, resource UUID(s) (redact
+        credentials), and any error surfaced by the gridscale API.
+      placeholder: "Region gridscale-de; API returned 400 on server create ..."
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs / status conditions
+      description: |
+        Provider controller logs and the managed resource's status conditions
+        (`kubectl describe`). Redact tokens and UUIDs where sensitive.
+      render: shell
+    validations:
+      required: false
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Anything else that helps — workarounds tried, screenshots, links.
+    validations:
+      required: false
