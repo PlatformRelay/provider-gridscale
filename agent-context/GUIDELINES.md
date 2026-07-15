@@ -48,9 +48,9 @@ real API round-trip; keep those examples minimal (cost + rate limits).
 ## 6. Security & supply chain
 
 - No secrets in git — gridscale tokens via `ProviderConfig` secretRef only; `.envrc`/lab creds are
-  local and gitignored. `gitleaks` + pre-commit block accidental commits (E5-S03).
-- Pinned action SHAs; `govulncheck`, CodeQL, OpenSSF Scorecard on CI (E5). Released XPKG signed with
-  cosign + SBOM (E5-S06).
+  local and gitignored. `gitleaks` + pre-commit to block accidental commits are **planned** (E5-S03).
+- **Planned** (E5, not yet shipped): pinned action SHAs; `govulncheck`, CodeQL, OpenSSF Scorecard on
+  CI (E5-S01/S02); released XPKG signed with cosign + SBOM (E5-S06).
 - Don't bump `TERRAFORM_VERSION` past `1.5.7` (BSL boundary — deliberate pin).
 
 ## 7. Documentation & decisions

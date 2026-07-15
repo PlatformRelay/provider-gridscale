@@ -10,6 +10,11 @@ cover.out
 .vscode/
 .idea/
 
+# ignore local environment / secret files (never commit gridscale creds)
+.envrc
+*.env
+.env.local
+
 # --- Committed spec-driven harness (ADR-0001 / D-000) ---
 # The workspace global gitignore (~/.config/git/ignore) hides AGENTS.md and
 # agent-context/ by default. For this public provider we deliberately COMMIT the
