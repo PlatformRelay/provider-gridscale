@@ -1,0 +1,31 @@
+title = "provider-gridscale gitleaks config"
+
+# Extend the upstream default ruleset; only add repo-specific allowlisting on
+# top. We never broaden real secret patterns — the entries below scope out
+# documented placeholders and map-key constants, not credentials.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "provider-gridscale known-safe patterns"
+
+# Vendored / generated / tooling trees are not authored secrets.
+paths = [
+  '''(?:^|/)vendor/''',
+  '''(?:^|/)\.work/''',
+  '''(?:^|/)_output/''',
+]
+
+# Documented placeholder credentials and non-secret map-key constants. These
+# are literal instructions to the user ("replace with your own") or Go string
+# constants used as JSON keys, not secrets.
+regexes = [
+  # `keyToken = "token"` / `keyUUID = "uuid"` map-key constants in
+  # internal/clients/gridscale.go.
+  '''key(?:Token|UUID)\s*=\s*"(?:token|uuid)"''',
+  # Placeholder values in examples/**/secret.yaml.tmpl providerconfig templates.
+  '''your-user-uuid''',
+  '''your-api-token''',
+  '''your-uuid''',
+  '''your-token''',
+]
