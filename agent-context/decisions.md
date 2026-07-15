@@ -79,3 +79,23 @@ gate named this blocker and it is a build/supply-chain change; the operator then
 tracked as a supply-chain follow-up, not introduced here); reusing `TERRAFORM_PROVIDER_REPO` couples
 the prefix to GitHub's `/releases/download/v<ver>` asset-path convention — correct today, revisit only
 if `REPO` is ever pointed at a non-GitHub host.
+
+---
+
+## D-007 — `govulncheck` remediation: Go 1.26.5 + `x/net` v0.55.0 → landed (reconciled)
+
+**Date:** 2026-07-16 · **Status:** Accepted — **landed on `main` as `d75721e`** (`go 1.25.9` /
+`toolchain go1.26.5`; `golang.org/x/net v0.55.0`). Recorded here **retroactively** to reconcile a
+stale INBOX entry that still listed this as an *open, awaiting-go-ahead* security decision after the
+change had already merged.
+**Context:** `make vuln` (E2-S06) surfaced 3 **called** vulnerabilities — GO-2026-5856 (`crypto/tls`
+Encrypted Client Hello privacy leak; fixed go1.26.5), GO-2026-5026 (`x/net/idna` Punycode) and
+GO-2026-4918 (`x/net` HTTP/2 infinite loop; both fixed in `x/net` v0.55.0). Remediation was a
+Go-toolchain + dependency bump, which the auto-loop guardrails classify as **surfaced-not-auto-merged**.
+**Decision:** Apply the bump (toolchain `go1.26.5`, `x/net` v0.55.0); `make vuln` after = 0 affecting
+our code; BSL `TERRAFORM_VERSION=1.5.7` pin untouched.
+**Process counterpoint (kept):** the commit landed on `main` **before** an operator answer was logged
+and before this entry existed — either it was approved out-of-band or a prior session merged a
+surfaced security/deps change. It clears real called CVEs and `main` is green, so it is **not
+reverted**; the gap is noted so future surfaced items are logged at merge time, not after. The
+follow-up CI wiring for `govulncheck` remains **E5-S01** (surfaced), separate from this local bump.

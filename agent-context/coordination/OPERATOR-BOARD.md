@@ -23,11 +23,23 @@ MERGEABLE (security/API/release lanes are **surfaced, not auto-merged**).
 | E4-S03 | ADRs 0003/0004 (foundational decisions) | `docs/adr/**` | yes | ✅ Integrated |
 | E2-S02 | CRD golden-contract tests | `test/**`, `config/*_test.go` | yes | ✅ Integrated |
 
-### Batch 2 — in flight (test-hardening tooling, ported from kollect)
+### Batch 2 — test-hardening tooling (ported from kollect)
 
 | Lane | Story | Owns (disjoint paths) | Auto-merge? | State |
 | --- | --- | --- | --- | --- |
-| E2-S06…S10 | `make vuln` / `.go-arch-lint.yml`+`make arch-lint` / `make test.race` / `FuzzGetExternalName` / `make tidy-check` | `Makefile`, `config/*_test.go`, `.go-arch-lint.yml` | yes (local targets/tests only) | 🔶 In flight |
+| E2-S06…S10 | `make vuln` / `.go-arch-lint.yml`+`make arch-lint` / `make test.race` / `FuzzGetExternalName` / `make tidy-check` | `Makefile`, `config/*_test.go`, `.go-arch-lint.yml` | yes (local targets/tests only) | ✅ Integrated |
+| SEC-govuln | Go 1.26.5 + `x/net` v0.55.0 (clears 3 called CVEs) | `go.mod`/`go.sum` | surfaced | ✅ Landed (`d75721e`); reconciled → decisions.md **D-007** |
+
+### Batch 3 — final auto-mergeable docs lane
+
+| Lane | Story | Owns (disjoint paths) | Auto-merge? | State |
+| --- | --- | --- | --- | --- |
+| E3-S02b | README enrichment — 32-resource matrix (correct served `names.kind` casing) + community/contributing links | `README.md` | yes | ✅ Integrated — `/tech-review` REQUEST-CHANGES (P1: Kind casing) → **fixed** → re-verified, gates green |
+
+> **Loop stopped here (2026-07-16).** Auto-mergeable backlog **exhausted**. All remaining work is
+> operator-gated — surfaced as **D-008…D-012** in [`INBOX.md`](../INBOX.md): maintainer identity
+> (D-008), real branding (D-009), Marketplace metadata (D-010), the E5 CI/supply-chain epic (D-011),
+> and uptest lab creds (D-012). E3-S02's badges + logo halves are deferred inside D-009/D-011.
 
 ## Collision notes
 - L1 and L3 both reference credential setup but touch **different files** — no path collision.
