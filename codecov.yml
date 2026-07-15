@@ -1,0 +1,20 @@
+coverage:
+  status:
+    project:
+      default:
+        target: 70%
+        threshold: 2%
+    patch:
+      default:
+        target: auto
+
+# Generated/scaffolded code is excluded from coverage reporting: the
+# hand-authored, testable surface lives under config/.
+ignore:
+  - "apis/**"
+  - "internal/controller/**"
+  - "**/zz_*.go"
+
+comment:
+  layout: "reach, diff, flags, files"
+  require_changes: false

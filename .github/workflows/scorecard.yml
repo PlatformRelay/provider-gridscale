@@ -1,0 +1,50 @@
+name: Scorecard
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    # Weekly, Mondays 07:00 UTC.
+    - cron: '0 7 * * 1'
+  workflow_dispatch: {}
+
+# Least-privilege default; the analysis job elevates only what it needs.
+permissions: read-all
+
+jobs:
+  analysis:
+    name: Scorecard analysis
+    runs-on: ubuntu-24.04
+    permissions:
+      # Needed to upload the SARIF results to the code-scanning dashboard.
+      security-events: write
+      # Needed to publish results and get a badge (publish_results: true).
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Run analysis
+        uses: ossf/scorecard-action@4eaacf0543bb3f2c246792bd56e8cdeffafb205a # v2.4.3
+        with:
+          results_file: results.sarif
+          results_format: sarif
+          # Publish results to the OpenSSF REST API for the Scorecard badge
+          # and the public dashboard. Requires a public repo + default branch.
+          publish_results: true
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: SARIF file
+          path: results.sarif
+          retention-days: 5
+
+      - name: Upload to code-scanning
+        uses: github/codeql-action/upload-sarif@99df26d4f13ea111d4ec1a7dddef6063f76b97e9 # v4.37.0
+        with:
+          sarif_file: results.sarif
