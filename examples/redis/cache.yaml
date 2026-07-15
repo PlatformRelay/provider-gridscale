@@ -1,0 +1,13 @@
+apiVersion: redis.gridscale.platformrelay.io/v1alpha1
+kind: Cache
+metadata:
+  annotations:
+    meta.upbound.io/example-id: redis/v1alpha1/cache
+  name: example-redis-cache
+spec:
+  forProvider:
+    name: example-redis-cache
+    performanceClass: standard
+    release: "6.2"
+  providerConfigRef:
+    name: default

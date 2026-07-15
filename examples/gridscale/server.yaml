@@ -1,0 +1,13 @@
+apiVersion: gridscale.gridscale.platformrelay.io/v1alpha1
+kind: Server
+metadata:
+  annotations:
+    meta.upbound.io/example-id: gridscale/v1alpha1/server
+  name: example-server
+spec:
+  forProvider:
+    name: example-server
+    cores: 1
+    memory: 1
+  providerConfigRef:
+    name: default

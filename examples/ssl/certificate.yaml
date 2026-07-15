@@ -1,0 +1,21 @@
+apiVersion: ssl.gridscale.platformrelay.io/v1alpha1
+kind: Certificate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ssl/v1alpha1/certificate
+  name: example-certificate
+spec:
+  forProvider:
+    name: example-certificate
+    # Provide the leaf certificate and private key via Kubernetes Secrets.
+    # Create a Secret (e.g. named "example-ssl") holding both keys before applying.
+    leafCertificateSecretRef:
+      name: example-ssl
+      namespace: crossplane-system
+      key: tls.crt
+    privateKeySecretRef:
+      name: example-ssl
+      namespace: crossplane-system
+      key: tls.key
+  providerConfigRef:
+    name: default

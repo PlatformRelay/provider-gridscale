@@ -1,0 +1,13 @@
+apiVersion: gridscale.gridscale.platformrelay.io/v1alpha1
+kind: Sshkey
+metadata:
+  annotations:
+    meta.upbound.io/example-id: gridscale/v1alpha1/sshkey
+  name: example-sshkey
+spec:
+  forProvider:
+    name: example-sshkey
+    # Replace with a real OpenSSH public key.
+    sshkey: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIExampleExampleExampleExampleExampleExampl example@platformrelay
+  providerConfigRef:
+    name: default

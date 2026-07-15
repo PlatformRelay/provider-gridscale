@@ -1,0 +1,13 @@
+apiVersion: mysql8.gridscale.platformrelay.io/v1alpha1
+kind: MySQL8
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mysql8/v1alpha1/mysql8
+  name: example-mysql8
+spec:
+  forProvider:
+    name: example-mysql8
+    performanceClass: standard
+    release: "8.0"
+  providerConfigRef:
+    name: default

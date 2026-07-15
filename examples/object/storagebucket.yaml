@@ -1,0 +1,23 @@
+apiVersion: object.gridscale.platformrelay.io/v1alpha1
+kind: StorageBucket
+metadata:
+  annotations:
+    meta.upbound.io/example-id: object/v1alpha1/storagebucket
+  name: example-bucket
+spec:
+  forProvider:
+    bucketName: example-platformrelay-bucket
+    # S3 endpoint host for the object-storage region.
+    s3Host: gos3.io
+    # Object-storage access/secret key pair, supplied via a Kubernetes Secret.
+    # Create a Secret (e.g. named "example-object-creds") with both keys first.
+    accessKeySecretRef:
+      name: example-object-creds
+      namespace: crossplane-system
+      key: access_key
+    secretKeySecretRef:
+      name: example-object-creds
+      namespace: crossplane-system
+      key: secret_key
+  providerConfigRef:
+    name: default

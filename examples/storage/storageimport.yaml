@@ -1,0 +1,18 @@
+apiVersion: storage.gridscale.platformrelay.io/v1alpha1
+kind: StorageImport
+metadata:
+  annotations:
+    meta.upbound.io/example-id: storage/v1alpha1/storageimport
+  name: example-storageimport
+spec:
+  forProvider:
+    name: example-storageimport
+    # capacity is required (GB, 1-4096).
+    capacity: 10
+    # one of: storage, storage_high, storage_insane
+    storageType: storage
+    # Cross-resource dependency: UUID of an existing gridscale storage backup to
+    # import from. Replace with a real backup UUID before applying.
+    storageBackupId: 00000000-0000-0000-0000-000000000000
+  providerConfigRef:
+    name: default

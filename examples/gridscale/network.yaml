@@ -1,0 +1,11 @@
+apiVersion: gridscale.gridscale.platformrelay.io/v1alpha1
+kind: Network
+metadata:
+  annotations:
+    meta.upbound.io/example-id: gridscale/v1alpha1/network
+  name: example-network
+spec:
+  forProvider:
+    name: example-network
+  providerConfigRef:
+    name: default

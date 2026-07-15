@@ -1,0 +1,11 @@
+apiVersion: gridscale.gridscale.platformrelay.io/v1alpha1
+kind: IPv4
+metadata:
+  annotations:
+    meta.upbound.io/example-id: gridscale/v1alpha1/ipv4
+  name: example-ipv4
+spec:
+  forProvider:
+    name: example-ipv4
+  providerConfigRef:
+    name: default

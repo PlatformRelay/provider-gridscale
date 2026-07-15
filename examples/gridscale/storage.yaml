@@ -1,0 +1,15 @@
+apiVersion: gridscale.gridscale.platformrelay.io/v1alpha1
+kind: Storage
+metadata:
+  annotations:
+    meta.upbound.io/example-id: gridscale/v1alpha1/storage
+  name: example-storage
+spec:
+  forProvider:
+    name: example-storage
+    # capacity is required (GB, 1-4096).
+    capacity: 10
+    # one of: storage, storage_high, storage_insane
+    storageType: storage
+  providerConfigRef:
+    name: default

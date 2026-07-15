@@ -1,0 +1,11 @@
+apiVersion: paas.gridscale.platformrelay.io/v1alpha1
+kind: Securityzone
+metadata:
+  annotations:
+    meta.upbound.io/example-id: paas/v1alpha1/securityzone
+  name: example-securityzone
+spec:
+  forProvider:
+    name: example-securityzone
+  providerConfigRef:
+    name: default
