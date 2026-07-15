@@ -139,6 +139,32 @@ credentials.
   `servers.gridscale.gridscale.platformrelay.io`; the shorter
   `gridscale.platformrelay.io` group holds only the `ProviderConfig` types).
 
+## Supported resources
+
+The provider generates **32 managed resources across 8 API groups**. Each is
+served under both the cluster-scoped `gridscale.platformrelay.io` and namespaced
+`gridscale.m.platformrelay.io` families; the group prefixes below are the
+resource-scoped forms (e.g. `servers.gridscale.gridscale.platformrelay.io`).
+
+The `Kind` names below are the exact values the API server registers (upjet's
+generated casing), so they can be copied straight into a manifest's `kind:`.
+
+| API group     | Managed resources (`Kind`) |
+| ------------- | -------------------------- |
+| `gridscale`   | `Backupschedule`, `Filesystem`, `Firewall`, `IPv4`, `IPv6`, `Isoimage`, `K8S`, `Loadbalancer`, `Mariadb`, `Memcached`, `MySQL`, `Network`, `Paas`, `Postgresql`, `Server`, `Snapshot`, `Snapshotschedule`, `Sqlserver`, `Sshkey`, `Storage`, `Template` |
+| `marketplace` | `Application`, `ApplicationImport` |
+| `mysql8`      | `MySQL8` |
+| `object`      | `StorageAccesskey`, `StorageBucket` |
+| `paas`        | `Securityzone` |
+| `redis`       | `Cache`, `Store` |
+| `ssl`         | `Certificate` |
+| `storage`     | `Clone`, `StorageImport` |
+
+The authoritative schema for every resource is its CRD under
+[`package/crds/`](package/crds/) (and the generated
+[API reference](docs/api/)); `kubectl explain <resource>` works once the
+provider is installed.
+
 ## Developing
 
 Run the code-generation pipeline:
@@ -164,6 +190,18 @@ Build the binary:
 ```console
 make build
 ```
+
+## Community & contributing
+
+Contributions are welcome. Before you start, please read:
+
+- [`CONTRIBUTING.md`](CONTRIBUTING.md) — how to build, test, and submit changes,
+  the local preflight (`make reviewable`), and the commit convention.
+- [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) — the Contributor Covenant we follow.
+- [`GOVERNANCE.md`](GOVERNANCE.md) — how the project is run and how decisions
+  are made.
+- [`SECURITY.md`](SECURITY.md) — how to privately report a vulnerability
+  (please do **not** open a public issue for security reports).
 
 ## Report a Bug
 
