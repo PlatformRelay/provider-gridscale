@@ -12,6 +12,8 @@ supply chain.
 | --- | --- | --- |
 | [0001](0001-spec-driven-workflow.md) | Adopt a committed spec-driven (OpenSpec) workflow | Accepted |
 | [0002](0002-testing-strategy.md) | Testing strategy for a generated Upjet provider | Accepted |
+| [0003](0003-codegen-boundary.md) | Treat the provider as machine-generated (the codegen boundary) | Accepted |
+| [0004](0004-build-tooling.md) | Keep the upstream Makefile + `build/` submodule; add thin `hack/` scripts | Accepted |
 
 ## Conventions
 
