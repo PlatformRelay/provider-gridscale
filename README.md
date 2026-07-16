@@ -11,6 +11,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/PlatformRelay/provider-gridscale)](https://goreportcard.com/report/github.com/PlatformRelay/provider-gridscale)
 [![Go Version](https://img.shields.io/github/go-mod/go-version/PlatformRelay/provider-gridscale)](https://github.com/PlatformRelay/provider-gridscale/blob/main/go.mod)
 [![Release](https://img.shields.io/github/v/release/PlatformRelay/provider-gridscale?include_prereleases&sort=semver)](https://github.com/PlatformRelay/provider-gridscale/releases)
+[![Marketplace](https://img.shields.io/badge/Upbound%20Marketplace-v0.1.0-blue)](https://marketplace.upbound.io/providers/platformrelay/provider-gridscale)
 [![License](https://img.shields.io/github/license/PlatformRelay/provider-gridscale)](LICENSE)
 
 </div>
@@ -202,6 +203,38 @@ replacements below when writing new manifests (curated examples under
 | `MySQL` (`gridscale_mysql`, MySQL 5.7) | Migrate to `MySQL8` (`gridscale_mysql8_0`, kind `MySQL8` in the `mysql8` group). |
 | `K8S` `networkUuid` / `network_uuid` | Upstream-deprecated on Kubernetes clusters specifically (unlike other PaaS resources). Prefer omitting it, or use `k8sPrivateNetworkUuid` when attaching nodes to a private network. Do **not** fall back to `securityZoneUuid`. |
 | `Server` `network[].ordering` | Upstream-deprecated. Network interface order follows the order of `network` entries; do not set `ordering`. |
+
+## Known limitations
+
+### Terraform datasources (E8 / D-015)
+
+Upjet generates managed resources from Terraform **resource** schemas only. The
+gridscale Terraform provider also exposes ~21 **datasources** (lookups such as
+name→UUID); those are **not** generated into this provider today, because upjet
+does not consume `DataSourceSchemas`.
+
+**Workaround for resource-twinned datasources:** import an existing object with
+a known UUID using Observe-Only management policies, for example:
+
+```yaml
+apiVersion: gridscale.gridscale.platformrelay.io/v1alpha1
+kind: Network
+metadata:
+  name: existing-network
+spec:
+  managementPolicies: ["Observe"]
+  forProvider: {}
+  providerConfigRef:
+    name: default
+```
+
+Set the Crossplane external name / annotation to the gridscale UUID, then apply.
+This covers the 19 datasources that mirror a managed resource. Pure lookup
+datasources without a resource twin (notably `backup_list` and `public_network`)
+have no Crossplane equivalent until upstream upjet adds datasource support.
+
+Install from the [Upbound Marketplace](https://marketplace.upbound.io/providers/platformrelay/provider-gridscale)
+or GHCR (`ghcr.io/platformrelay/provider-gridscale:v0.1.0`).
 
 ## Developing
 
