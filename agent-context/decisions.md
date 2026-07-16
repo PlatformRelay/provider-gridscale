@@ -361,3 +361,29 @@ token. Operator regenerated a local classic `GITHUB_TOKEN` and a new Upbound **r
 current sign job hard-codes `secrets.GHCR_PAT`, so A (update the secret) unblocks signing with zero
 workflow change. Robot tokens are correct for Marketplace mirrors; documenting that avoids the next
 session trying a user PAT again.
+
+---
+
+## D-017 — Public Upbound listing + link GHCR package to the repo — operator 2026-07-16
+
+**Date:** 2026-07-16 · **Status:** Accepted (operator direction).
+**Context:** Operator refreshed GHCR/Upbound tokens and directed that (1) the Upbound Marketplace
+provider should be **public**, and (2) the GHCR package should be moved/linked **from org-orphan to
+this repository** so Actions can use `GITHUB_TOKEN` instead of a packages PAT for push/sign.
+**Decision:**
+1. **Upbound:** create `platformrelay/provider-gridscale` as a **public** repository (done
+   2026-07-16; `public: true`). Listing stays `publishPolicy: draft` until
+   `up repository update provider-gridscale --private=false --publish --force` succeeds (rate-limited
+   immediately after create) and Upbound's one-time public-listing review if still required.
+2. **GHCR:** keep the package public; **link** `provider-gridscale` to
+   `PlatformRelay/provider-gridscale` (Manage Actions access: Read and write) so repo Actions can
+   read/write with `GITHUB_TOKEN`. After link, switch `sign-and-sbom` login off `GHCR_PAT` onto
+   `GITHUB_TOKEN` / `github.actor`. API link endpoint returned 404 with current token — operator UI
+   step required once.
+3. **CI secrets:** Actions secrets `GHCR_PAT`, `XPKG_MIRROR_TOKEN`, `XPKG_MIRROR_ACCESS_ID` refreshed
+   from local `.envrc` (mirror JWT leading-`e` typo stripped). Robot `provider-gridscale` granted
+   write via team `providers`.
+**Counterpoint:** Upbound docs say repository visibility is immutable after create — mitigated by
+creating public from the start. Marketplace *listing* (`--publish`) is a separate draft→published
+step and may still need Upbound Slack review for first public package.
+
