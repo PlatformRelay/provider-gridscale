@@ -37,6 +37,12 @@ jobs:
   # workflow) is intentionally out of scope.
   sign-and-sbom:
     needs: publish-provider-package
+    # Run even if the reusable publish job reports failure (e.g. the optional
+    # xpkg.upbound.io mirror sub-job fails on creds): the ghcr artifact is
+    # already pushed by publish-artifacts, so signing must not be coupled to
+    # the mirror. The crane-digest step is the real guard (fails cleanly if the
+    # version tag was not published).
+    if: ${{ !cancelled() && github.event.inputs.version != '' }}
     runs-on: ubuntu-24.04
     # Job-scoped permissions ONLY. A top-level permissions block would also
     # narrow the reusable-workflow job above and could break its push.
