@@ -17,7 +17,11 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 ### Documentation
 
-- **decisions,inbox:** Log operator answers — D-009 confirmed B (closed), D-012→B, D-013 PR#7 reconcile-then-merge [92e0550](https://github.com/platformrelay/provider-gridscale/commit/92e0550810d32c0cb32a99314103d740b3632501)
+- **backlog:** Reconcile gap-stories vs D-012/D-013 — flag uptest-dependent criteria as superseded [df1c493](https://github.com/platformrelay/provider-gridscale/commit/df1c49390e85c7742ea3d8f59c6a6dcc0c8a0639)
+
+- **backlog:** Audit gap-stories + gridscale docs research (for review) [521a4e1](https://github.com/platformrelay/provider-gridscale/commit/521a4e175bee099017e7a768f55e91df4fd41bb0)
+
+- **decisions,inbox:** Log operator answers — D-009 confirmed B (closed), D-012→B, D-013 PR#7 reconcile-then-merge [dade776](https://github.com/platformrelay/provider-gridscale/commit/dade776a48d955f2441a03aa263b9ba13daced3a)
 
 - **inbox:** V0.1.0 published to ghcr; record signing (GHCR_PAT read) + Upbound-mirror cred follow-ups [4f96887](https://github.com/platformrelay/provider-gridscale/commit/4f968877d79e01f032876b64b2f43195b35e6fb4)
 
