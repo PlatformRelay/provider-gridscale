@@ -26,6 +26,10 @@ Severity: P0 (blocker) · P1 (high) · P2 (medium) · P3 (low). Status: NEW / op
 
 | DOC-5 | Docs | P3 | README resource matrix hand-maintained (GUIDELINES §7 drift-risk). `make check-docs` (`hack/check-docs.sh`, 32/8) exists and passes. **FIXED (2026-07-16b): now CI-wired** via `check-diff: go-version-check check-docs` — the existing `check-diff` CI job now runs the README-matrix staleness guard, mirroring the go-version-check wiring pattern. Both guard scripts re-verified passing at HEAD before wiring (32/8 in sync). | `Makefile:336-340` (`check-diff` RHS); `hack/check-docs.sh` | S | 2026-07-16 | **FIXED** (CI-wired via `check-diff`; verified `a1748f3`) |
 | BRAND-1 | Docs/Branding | P3 | Provider icon is an original PLACEHOLDER (`extensions/icons/icon.svg`); commission a real gridscale-provider brand icon (+ social card) and wire `iconURI`. Per D-009→B, deferred post-v0.1.0. | `extensions/icons/icon.svg`; `docs/assets/branding/` | S | 2026-07-16 | **NEW** (post-v0.1.0) |
+| SEC-H1 | Security | P3 | `ci.yml` had no top-level `permissions:` block → inherited repo/org default `GITHUB_TOKEN` scope. **FIXED (2026-07-16c):** added top-level `permissions: contents: read` (verified every job is token-read-only — checkout/lint/generate/tests/local-deploy/upload-artifact; no registry/packages/git-push). | `.github/workflows/ci.yml:11-16` | S | 2026-07-16c | **FIXED** (least-privilege default) |
+| SEC-H2 | Security | P3 | `e2e.yaml` had no top-level `permissions:` block. **FIXED (2026-07-16c):** top-level `contents: read` default + job-level `statuses: write` on `get-example-list`/`uptest` (the only jobs POSTing commit statuses). e2e triggers only on `issue_comment`, so no CI-on-push impact. | `.github/workflows/e2e.yaml:14-15,53-55,117-119` | S | 2026-07-16c | **FIXED** (least-privilege per-job) |
+| SEC-H3 | Security | P3 | `check-permissions` job ran on every `issue_comment` (wasted collaborators-API run). **FIXED (2026-07-16c):** added `/test-examples` keyword `if:` gate matching the downstream jobs. | `.github/workflows/e2e.yaml:21-25` | S | 2026-07-16c | **FIXED** (keyword-gated) |
+| U-1 | Security (upstream) | P2 | **Upstream `gridscale/terraform-provider-gridscale` bug (v2.3.0 + HEAD, unreported):** 5 credential fields lack `Sensitive: true` — `k8s.log_delivery_access_key`/`_secret_key`, `postgresql.pgaudit_log_access_key`/`_secret_key` (core), `server.console_token` (lower-tier). Our baked `config/schema.json` carries `sensitive: false`, so Upjet renders them as plain `type: string` in the generated CRDs (`zz_k8s_types.go` bare `*string`, not `SecretKeySelector`) → S3 creds persisted **plaintext** in the K8s CR. Contrast: same resources correctly mark `password`/`kubeconfig` sensitive. Remediation: (A) upstream PR adding `Sensitive: true`; and/or (B) local Upjet config override marking the fields sensitive + regenerate. | upstream `resource_gridscale_k8s.go:372,378`, `resource_gridscale_postgresql.go:212,218`, `resource_gridscale_server.go:365`; our `config/schema.json`, `apis/**/zz_k8s_types.go` | M | 2026-07-16c | **OPEN** (NEW — needs upstream-PR decision + local override lane) |
 
 ## Summary
 - **Reconciled @ `a1748f3` (2026-07-16b):** re-verified every prior "still open" item from source, not from the prior report.
@@ -34,8 +38,15 @@ Severity: P0 (blocker) · P1 (high) · P2 (medium) · P3 (low). Status: NEW / op
   **DOC-5 FIXED** (`check-docs` wired into the `check-diff` CI job), **DIR-2c ACCEPTED** (robust
   `GOTOOLCHAIN=auto` pattern, now self-documented across all 4 aux workflows), **DOC-2 ACCEPTED**
   (curated `examples/` 8/8; generated gap is an upstream-scrape artifact, not hand-fixable).
-- **Open at HEAD after this loop:** 1 OPERATOR-BLOCKED (**TEST-2** P2, uptest live creds) + BRAND-1
-  (P3, deferred post-v0.1.0 per D-009→B). **Zero UNBLOCKED findings remain.**
-- **Open by severity (unblocked):** P0×0 · P1×0 · P2×0 · P3×0. (Remaining P2 TEST-2 is operator-blocked; P3 BRAND-1 is deferred.)
+- **Security review (2026-07-16c):** APPROVE for release, no P0/P1. 3 P3 CI-hardening items found and
+  **FIXED same session** — SEC-H1 (`ci.yml` least-privilege), SEC-H2 (`e2e.yaml` least-privilege),
+  SEC-H3 (`check-permissions` keyword gate). Several tempting items (comment injection, SSRF,
+  `pull_request_target`, http_headers) adversarially verified as NON-findings.
+- **Upstream bug hunt (2026-07-16c):** found **U-1** (P2) — an unreported upstream sensitive-flag
+  omission that leaks S3 creds to plaintext in our generated CRDs. Tracked open; needs an upstream-PR
+  decision + a local override+regen lane (surfaced to operator INBOX).
+- **Open at HEAD after this loop:** **U-1** (P2, actionable — upstream/local remediation) +
+  OPERATOR-BLOCKED **TEST-2** (P2, uptest live creds) + BRAND-1 (P3, deferred post-v0.1.0 per D-009→B).
+- **Open by severity:** P0×0 · P1×0 · P2×1 actionable (U-1) + P2×1 operator-blocked (TEST-2) · P3×1 deferred (BRAND-1). All originally-audited UNBLOCKED P3s remain cleared.
 - **Gate matrix @ `a1748f3` (fresh, uncached):** unit 58 pass · coverage 93.0%/70% · vet clean · arch-lint OK · govulncheck 0 affecting.
 - **Correction to prior 07-16 summary:** "DOC-5 addressed via `make check-docs` guard" was optimistic — the guard existed but was not CI-wired; that wiring landed this session (`check-diff: … check-docs`).

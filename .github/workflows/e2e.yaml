@@ -8,12 +8,22 @@ on:
   issue_comment:
     types: [created]
 
+# Least-privilege default (SEC-H2): most steps only read the repo (checkout,
+# `gh pr checkout`, collaborator-permission lookup). Jobs that POST commit
+# statuses elevate to `statuses: write` at the job level below.
+permissions:
+  contents: read
+
 env:
   GO_VERSION: "1.26.5"
 
 jobs:
   check-permissions:
     runs-on: ubuntu-latest
+    # SEC-H3: only run on PR comments carrying the trigger keyword, matching the
+    # gate on the downstream jobs — avoids a wasted collaborators-API run on
+    # every issue/PR comment in the repo.
+    if: ${{ github.event.issue.pull_request != null && contains(github.event.comment.body, '/test-examples') }}
     outputs:
       permission: ${{ steps.check-permissions.outputs.permission }}
     steps:
@@ -39,6 +49,10 @@ jobs:
     needs: check-permissions
     if: ${{ (needs.check-permissions.outputs.permission == 'admin' || needs.check-permissions.outputs.permission == 'write') && github.event.issue.pull_request != null && contains(github.event.comment.body, '/test-examples')}}
     runs-on: ubuntu-latest
+    # Elevates over the top-level read default to POST the pending commit status.
+    permissions:
+      contents: read
+      statuses: write
     outputs:
       example_list: ${{ steps.get-example-list-name.outputs.example-list }}
       example_hash: ${{ steps.get-example-list-name.outputs.example-hash }}
@@ -99,6 +113,10 @@ jobs:
       - get-example-list
     if: ${{ (needs.check-permissions.outputs.permission == 'admin' || needs.check-permissions.outputs.permission == 'write') && github.event.issue.pull_request != null && contains(github.event.comment.body, '/test-examples')}}
     runs-on: ubuntu-latest
+    # Elevates over the top-level read default to POST success/failure statuses.
+    permissions:
+      contents: read
+      statuses: write
 
     steps:
       - name: Cleanup Disk

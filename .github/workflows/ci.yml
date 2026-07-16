@@ -8,6 +8,12 @@ on:
   pull_request: {}
   workflow_dispatch: {}
 
+# Least-privilege default (SEC-H1): every job here is read-only w.r.t. the
+# GITHUB_TOKEN (checkout, lint, generate/diff, unit tests, local kind deploy,
+# artifact upload). None push to a registry or write repo contents.
+permissions:
+  contents: read
+
 env:
   # Common versions
   GO_VERSION: '1.26.5'
