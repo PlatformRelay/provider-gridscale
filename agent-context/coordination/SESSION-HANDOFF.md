@@ -1,7 +1,7 @@
 # SESSION-HANDOFF — provider-gridscale
 
 **Session wrap:** 2026-07-16 (CI-red fix + final tidy).
-**HEAD:** `origin/main` @ `d275897`.
+**HEAD:** `origin/main` — tip is this wrap’s coordination commit; product CI tip `d275897` / fix `d8433f5`.
 **Latest package tag:** `v0.1.1` (published + icon/readme extensions appended).
 **Merge model:** local ff-merge → push `main` (no PRs), per operator.
 
@@ -24,6 +24,7 @@
 | --- | --- |
 | `d8433f5` | CI-red fix — regenerate Filesystem CRDs from `gridscale_filesystem` metadata stub; split `injectMissingResourceStubs` (gocyclo); De Morgan fix in test (staticcheck QF1001) |
 | `d275897` | Sync `docs/api/out.md` Filesystem description for `check-api-docs` |
+| (wrap tip) | Coordination wrap — SESSION-HANDOFF / board / INBOX / BACKLOG |
 
 Earlier same day (already on `main` before this wrap loop): Batch 7 polish, E6-S05 assurance, session-wrap docs @ `c9eff5b`, audit-gap E7 / E5, credential wiring, Marketplace `v0.1.1`.
 

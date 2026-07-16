@@ -4,7 +4,7 @@ Items needing the operator. **Decisions** carry full Context + Options (one mark
 **Answer** field. When answered, record in [`decisions.md`](decisions.md) (with counterpoints) and
 remove here. This repo's INBOX is independent — never coordinate other repos from here.
 
-> **Handoff 2026-07-16 wrap:** `main` @ `d275897`; Marketplace **v0.1.1**. Primary CI restored
+> **Handoff 2026-07-16 wrap:** Marketplace **v0.1.1**. Primary CI restored
 > (`d8433f5`+`d275897`). See [`coordination/SESSION-HANDOFF.md`](coordination/SESSION-HANDOFF.md).
 
 ---

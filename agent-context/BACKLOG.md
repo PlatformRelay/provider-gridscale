@@ -8,7 +8,7 @@ Public build order: [docs/ROADMAP.md](../docs/ROADMAP.md). OpenSpec changes: `op
 | --- | --- |
 | Codegen (E6g-S01 in kaddy's terms) | **complete** — 32 resources generated & building |
 | Design (openspec, ADRs, ROADMAP, backlog) | **complete** — E1 landed |
-| Implementation E1–E7 + Batch 7 polish | **complete** on `main` @ `d275897` (see OPERATOR-BOARD) |
+| Implementation E1–E7 + Batch 7 polish | **complete** on `main` (see OPERATOR-BOARD; tip after wrap) |
 | E4-S04 (docs site) | **dropped** (D-002→A, provider-native docs) |
 | E2-S04/S05 uptest | **intentionally skipped** (D-012→B — manual smoke only) |
 | E6-S05 (assurance) | **landed** (`3edc5f0`); was stretch |
