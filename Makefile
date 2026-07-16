@@ -44,7 +44,7 @@ NPROCS ?= 1
 # to half the number of CPU cores.
 GO_TEST_PARALLEL := $(shell echo $$(( $(NPROCS) / 2 )))
 
-GO_REQUIRED_VERSION ?= 1.25
+GO_REQUIRED_VERSION ?= 1.26.5
 GOLANGCILINT_VERSION ?= 2.12.1
 GO_STATIC_PACKAGES = $(GO_PROJECT)/cmd/provider $(GO_PROJECT)/cmd/generator
 GO_LDFLAGS += -X $(GO_PROJECT)/internal/version.Version=$(VERSION)
@@ -319,7 +319,18 @@ check-docs:
 	bash hack/check-docs.sh
 	@$(OK) README resource matrix in sync
 
-.PHONY: vuln test.race tidy-check arch-lint coverage check-docs
+# go-version-check (E5-S08 / DIR-2): fail if the pinned Go version drifts
+# between Makefile, ci.yml, e2e.yaml, or go.mod (see hack/check-go-version.sh).
+go-version-check:
+	@$(INFO) checking Go version consistency across build configs
+	bash hack/check-go-version.sh
+	@$(OK) Go versions consistent
+
+# Run the drift guard in CI without touching ci.yml: check-diff already runs
+# in its own CI job, so making it depend on go-version-check wires the guard in.
+check-diff: go-version-check
+
+.PHONY: vuln test.race tidy-check arch-lint coverage check-docs go-version-check
 
 # ====================================================================================
 # Special Targets
