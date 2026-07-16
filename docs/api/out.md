@@ -107,6 +107,8 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `host` _string_ | A valid domain or an IP address of a server. |  |  |
+| `hostRef` _[NamespacedReference](#namespacedreference)_ | Reference to a IPv4 in gridscale to populate host. |  | Optional: \{\} <br /> |
+| `hostSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a IPv4 in gridscale to populate host. |  | Optional: \{\} <br /> |
 | `proxyProtocol` _string_ | The proxy protocol version. The proxy protocol is disabled by default and the valid version is either v1 or v2. |  |  |
 | `weight` _float_ | The backend host weight. Default: 100. |  |  |
 
@@ -143,6 +145,8 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `host` _string_ | A valid domain or an IP address of a server. |  | Optional: \{\} <br /> |
+| `hostRef` _[NamespacedReference](#namespacedreference)_ | Reference to a IPv4 in gridscale to populate host. |  | Optional: \{\} <br /> |
+| `hostSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a IPv4 in gridscale to populate host. |  | Optional: \{\} <br /> |
 | `proxyProtocol` _string_ | The proxy protocol version. The proxy protocol is disabled by default and the valid version is either v1 or v2. |  | Optional: \{\} <br /> |
 | `weight` _float_ | The backend host weight. Default: 100. |  | Optional: \{\} <br /> |
 
@@ -151,7 +155,7 @@ _Appears in:_
 
 
 
-Backupschedule is the Schema for the Backupschedules API. <no value>
+Backupschedule is the Schema for the Backupschedules API. Manages a storage backup schedule.
 
 
 
@@ -180,13 +184,15 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `active` _boolean_ | The status of the schedule active or not |  |  |
-| `backupLocationUuid` _string_ | UUID of the location where your backup is stored. |  |  |
-| `keepBackups` _float_ | The amount of storage backups to keep before overwriting the last created backup |  |  |
-| `name` _string_ | The human-readable name of the object |  |  |
-| `nextRuntime` _string_ | The date and time that the storage backup schedule will be run. Format: "2006-01-02 15:04:05" |  |  |
-| `runInterval` _float_ | The interval at which the schedule will run (in minutes) |  |  |
-| `storageUuid` _string_ | UUID of the storage used to create storage backups |  |  |
+| `active` _boolean_ | The status of the schedule active or not.<br />The status of the schedule active or not |  |  |
+| `backupLocationUuid` _string_ | UUID of the location where your backup is stored.<br />UUID of the location where your backup is stored. |  |  |
+| `keepBackups` _float_ | The amount of Snapshots to keep before overwriting the last created Snapshot (>=1).<br />The amount of storage backups to keep before overwriting the last created backup |  |  |
+| `name` _string_ | UUID of the backup schedule.<br />The human-readable name of the object |  |  |
+| `nextRuntime` _string_ | The date and time that the backup schedule will be run.<br />The date and time that the storage backup schedule will be run. Format: "2006-01-02 15:04:05" |  |  |
+| `runInterval` _float_ | The interval at which the schedule will run (in minutes, >=60).<br />The interval at which the schedule will run (in minutes) |  |  |
+| `storageUuid` _string_ | UUID of the storage that the backup schedule belongs to.<br />UUID of the storage used to create storage backups |  |  |
+| `storageUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Storage in gridscale to populate storageUuid. |  | Optional: \{\} <br /> |
+| `storageUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Storage in gridscale to populate storageUuid. |  | Optional: \{\} <br /> |
 
 
 #### BackupscheduleList
@@ -220,20 +226,20 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `active` _boolean_ | The status of the schedule active or not |  |  |
-| `backupLocationName` _string_ | The human-readable name of backup location. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
-| `backupLocationUuid` _string_ | UUID of the location where your backup is stored. |  |  |
-| `changeTime` _string_ | Defines the date and time of the last object change |  |  |
-| `createTime` _string_ | Defines the date and time the object was initially created |  |  |
-| `id` _string_ |  |  |  |
-| `keepBackups` _float_ | The amount of storage backups to keep before overwriting the last created backup |  |  |
-| `name` _string_ | The human-readable name of the object |  |  |
-| `nextRuntime` _string_ | The date and time that the storage backup schedule will be run. Format: "2006-01-02 15:04:05" |  |  |
-| `nextRuntimeComputed` _string_ | The date and time that the storage backup schedule will be run. This date and time is computed by gridscale's server. |  |  |
-| `runInterval` _float_ | The interval at which the schedule will run (in minutes) |  |  |
-| `status` _string_ | Status indicates the status of the object |  |  |
-| `storageBackups` _[StorageBackupsObservation](#storagebackupsobservation) array_ | Related backups |  |  |
-| `storageUuid` _string_ | UUID of the storage used to create storage backups |  |  |
+| `active` _boolean_ | The status of the schedule active or not.<br />The status of the schedule active or not |  |  |
+| `backupLocationName` _string_ | The human-readable name of backup location. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of backup location. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
+| `backupLocationUuid` _string_ | UUID of the location where your backup is stored.<br />UUID of the location where your backup is stored. |  |  |
+| `changeTime` _string_ | The date and time of the last backup schedule change.<br />Defines the date and time of the last object change |  |  |
+| `createTime` _string_ | The date and time the backup schedule was initially created.<br />Defines the date and time the object was initially created |  |  |
+| `id` _string_ | The UUID of the backup schedule. |  |  |
+| `keepBackups` _float_ | The amount of Snapshots to keep before overwriting the last created Snapshot (>=1).<br />The amount of storage backups to keep before overwriting the last created backup |  |  |
+| `name` _string_ | UUID of the backup schedule.<br />The human-readable name of the object |  |  |
+| `nextRuntime` _string_ | The date and time that the backup schedule will be run.<br />The date and time that the storage backup schedule will be run. Format: "2006-01-02 15:04:05" |  |  |
+| `nextRuntimeComputed` _string_ | The date and time that the backup schedule will be run. This date and time is computed by gridscale's server.<br />The date and time that the storage backup schedule will be run. This date and time is computed by gridscale's server. |  |  |
+| `runInterval` _float_ | The interval at which the schedule will run (in minutes, >=60).<br />The interval at which the schedule will run (in minutes) |  |  |
+| `status` _string_ | The status of the backup schedule.<br />Status indicates the status of the object |  |  |
+| `storageBackups` _[StorageBackupsObservation](#storagebackupsobservation) array_ | Related backups.<br />Related backups |  |  |
+| `storageUuid` _string_ | UUID of the storage that the backup schedule belongs to.<br />UUID of the storage used to create storage backups |  |  |
 
 
 #### BackupscheduleParameters
@@ -249,13 +255,15 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `active` _boolean_ | The status of the schedule active or not |  | Optional: \{\} <br /> |
-| `backupLocationUuid` _string_ | UUID of the location where your backup is stored. |  | Optional: \{\} <br /> |
-| `keepBackups` _float_ | The amount of storage backups to keep before overwriting the last created backup |  | Optional: \{\} <br /> |
-| `name` _string_ | The human-readable name of the object |  | Optional: \{\} <br /> |
-| `nextRuntime` _string_ | The date and time that the storage backup schedule will be run. Format: "2006-01-02 15:04:05" |  | Optional: \{\} <br /> |
-| `runInterval` _float_ | The interval at which the schedule will run (in minutes) |  | Optional: \{\} <br /> |
-| `storageUuid` _string_ | UUID of the storage used to create storage backups |  | Optional: \{\} <br /> |
+| `active` _boolean_ | The status of the schedule active or not.<br />The status of the schedule active or not |  | Optional: \{\} <br /> |
+| `backupLocationUuid` _string_ | UUID of the location where your backup is stored.<br />UUID of the location where your backup is stored. |  | Optional: \{\} <br /> |
+| `keepBackups` _float_ | The amount of Snapshots to keep before overwriting the last created Snapshot (>=1).<br />The amount of storage backups to keep before overwriting the last created backup |  | Optional: \{\} <br /> |
+| `name` _string_ | UUID of the backup schedule.<br />The human-readable name of the object |  | Optional: \{\} <br /> |
+| `nextRuntime` _string_ | The date and time that the backup schedule will be run.<br />The date and time that the storage backup schedule will be run. Format: "2006-01-02 15:04:05" |  | Optional: \{\} <br /> |
+| `runInterval` _float_ | The interval at which the schedule will run (in minutes, >=60).<br />The interval at which the schedule will run (in minutes) |  | Optional: \{\} <br /> |
+| `storageUuid` _string_ | UUID of the storage that the backup schedule belongs to.<br />UUID of the storage used to create storage backups |  | Optional: \{\} <br /> |
+| `storageUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Storage in gridscale to populate storageUuid. |  | Optional: \{\} <br /> |
+| `storageUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Storage in gridscale to populate storageUuid. |  | Optional: \{\} <br /> |
 
 
 #### BackupscheduleSpec
@@ -333,6 +341,8 @@ _Appears in:_
 | `labels` _string array_ | List of labels. |  |  |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to. |  |  |
+| `networkUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of Filesystem service. |  |  |
 | `release` _string_ | The Filesystem service release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available Filesystem service releases. |  |  |
 | `rootSquash` _boolean_ | Map root user/group ownership to anon_uid/anon_gid |  |  |
@@ -409,6 +419,8 @@ _Appears in:_
 | `labels` _string array_ | List of labels. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  | Optional: \{\} <br /> |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to. |  | Optional: \{\} <br /> |
+| `networkUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of Filesystem service. |  | Optional: \{\} <br /> |
 | `release` _string_ | The Filesystem service release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available Filesystem service releases. |  | Optional: \{\} <br /> |
 | `rootSquash` _boolean_ | Map root user/group ownership to anon_uid/anon_gid |  | Optional: \{\} <br /> |
@@ -610,6 +622,8 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `certificateUuid` _string_ | The UUID of a custom certificate.<br />The UUID of a custom certificate. |  |  |
+| `certificateUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Certificate in ssl to populate certificateUuid. |  | Optional: \{\} <br /> |
+| `certificateUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Certificate in ssl to populate certificateUuid. |  | Optional: \{\} <br /> |
 | `letsencryptSsl` _string_ | A valid domain name that points to the loadbalancer's IP address.<br />A valid domain name that points to the loadbalancer's IP address. |  |  |
 | `listenPort` _float_ | Specifies the entry port of the load balancer.<br />Specifies the entry port of the load balancer. |  |  |
 | `mode` _string_ | Supports HTTP and TCP mode. Valid values: http, tcp.<br />Supports HTTP and TCP mode. Valid values: http, tcp. |  |  |
@@ -650,6 +664,8 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `certificateUuid` _string_ | The UUID of a custom certificate.<br />The UUID of a custom certificate. |  | Optional: \{\} <br /> |
+| `certificateUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Certificate in ssl to populate certificateUuid. |  | Optional: \{\} <br /> |
+| `certificateUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Certificate in ssl to populate certificateUuid. |  | Optional: \{\} <br /> |
 | `letsencryptSsl` _string_ | A valid domain name that points to the loadbalancer's IP address.<br />A valid domain name that points to the loadbalancer's IP address. |  | Optional: \{\} <br /> |
 | `listenPort` _float_ | Specifies the entry port of the load balancer.<br />Specifies the entry port of the load balancer. |  | Optional: \{\} <br /> |
 | `mode` _string_ | Supports HTTP and TCP mode. Valid values: http, tcp.<br />Supports HTTP and TCP mode. Valid values: http, tcp. |  | Optional: \{\} <br /> |
@@ -1017,7 +1033,7 @@ _Appears in:_
 
 
 
-Isoimage is the Schema for the Isoimages API. <no value>
+Isoimage is the Schema for the Isoimages API. Manages an ISO Image in Gridscale.
 
 
 
@@ -1046,9 +1062,9 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `labels` _string array_ | List of labels. |  |  |
-| `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
-| `sourceUrl` _string_ | Contains the source URL of the ISO image that it was originally fetched from. |  |  |
+| `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  |  |
+| `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
+| `sourceUrl` _string_ | Contains the source URL of the ISO Image that it was originally fetched from.<br />Contains the source URL of the ISO image that it was originally fetched from. |  |  |
 
 
 #### IsoimageList
@@ -1082,24 +1098,24 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `capacity` _float_ | The capacity of a storage/ISO image/template/snapshot in GB. |  |  |
-| `changeTime` _string_ | The date and time of the last object change. |  |  |
-| `createTime` _string_ | The date and time the object was initially created. |  |  |
-| `currentPrice` _float_ | Defines the price for the current period since the last bill. |  |  |
-| `description` _string_ | Description of the ISO image. |  |  |
-| `id` _string_ |  |  |  |
-| `labels` _string array_ | List of labels. |  |  |
-| `locationCountry` _string_ | Two digit country code (ISO 3166-2) of the location where this object is placed. |  |  |
-| `locationIata` _string_ | Uses IATA airport code, which works as a location identifier |  |  |
-| `locationName` _string_ | The human-readable name of the location. It supports the full UTF-8 character set, with a maximum of 64 characters |  |  |
-| `locationUuid` _string_ | The location this object is placed. |  |  |
-| `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
-| `private` _boolean_ | The object is private, the value will be true. Otherwise the value will be false. |  |  |
-| `server` _[ServerObservation](#serverobservation) array_ | The information about servers which are related to this ISO image. |  |  |
-| `sourceUrl` _string_ | Contains the source URL of the ISO image that it was originally fetched from. |  |  |
-| `status` _string_ | Status indicates the status of the object |  |  |
-| `usageInMinutes` _float_ | Total minutes the object has been running. |  |  |
-| `version` _string_ | Upstream version of the ISO image release |  |  |
+| `capacity` _float_ | The capacity of a storage/ISO Image/template/snapshot in GB.<br />The capacity of a storage/ISO image/template/snapshot in GB. |  |  |
+| `changeTime` _string_ | The date and time of the last object change.<br />The date and time of the last object change. |  |  |
+| `createTime` _string_ | The date and time the object was initially created.<br />The date and time the object was initially created. |  |  |
+| `currentPrice` _float_ | Defines the price for the current period since the last bill.<br />Defines the price for the current period since the last bill. |  |  |
+| `description` _string_ | Description of the template.<br />Description of the ISO image. |  |  |
+| `id` _string_ | The UUID of the ISO Image. |  |  |
+| `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  |  |
+| `locationCountry` _string_ | Two digit country code (ISO 3166-2) of the location where this object is placed.<br />Two digit country code (ISO 3166-2) of the location where this object is placed. |  |  |
+| `locationIata` _string_ | Uses IATA airport code, which works as a location identifier.<br />Uses IATA airport code, which works as a location identifier |  |  |
+| `locationName` _string_ | The human-readable name of the location. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the location. It supports the full UTF-8 character set, with a maximum of 64 characters |  |  |
+| `locationUuid` _string_ | The location this object is placed.<br />The location this object is placed. |  |  |
+| `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
+| `private` _boolean_ | The object is private, the value will be true. Otherwise the value will be false.<br />The object is private, the value will be true. Otherwise the value will be false. |  |  |
+| `server` _[ServerObservation](#serverobservation) array_ | The information about servers which are related to this ISO Image.<br />The information about servers which are related to this ISO image. |  |  |
+| `sourceUrl` _string_ | Contains the source URL of the ISO Image that it was originally fetched from.<br />Contains the source URL of the ISO image that it was originally fetched from. |  |  |
+| `status` _string_ | Status indicates the status of the object.<br />Status indicates the status of the object |  |  |
+| `usageInMinutes` _float_ | Total minutes the object has been running.<br />Total minutes the object has been running. |  |  |
+| `version` _string_ | The version of the ISO Image.<br />Upstream version of the ISO image release |  |  |
 
 
 #### IsoimageParameters
@@ -1115,9 +1131,9 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `labels` _string array_ | List of labels. |  | Optional: \{\} <br /> |
-| `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  | Optional: \{\} <br /> |
-| `sourceUrl` _string_ | Contains the source URL of the ISO image that it was originally fetched from. |  | Optional: \{\} <br /> |
+| `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  | Optional: \{\} <br /> |
+| `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  | Optional: \{\} <br /> |
+| `sourceUrl` _string_ | Contains the source URL of the ISO Image that it was originally fetched from.<br />Contains the source URL of the ISO image that it was originally fetched from. |  | Optional: \{\} <br /> |
 
 
 #### IsoimageSpec
@@ -1503,7 +1519,11 @@ _Appears in:_
 | `forwardingRule` _[ForwardingRuleInitParameters](#forwardingruleinitparameters) array_ | The forwarding rules of the load balancer.<br />List of forwarding rules for the Load balancer. |  |  |
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  |  |
 | `listenIpv4Uuid` _string_ | The UUID of the IPv4 address the load balancer will listen to for incoming requests.<br />The UUID of the IPv4 address the Load balancer will listen to for incoming requests. |  |  |
+| `listenIpv4UuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a IPv4 in gridscale to populate listenIpv4Uuid. |  | Optional: \{\} <br /> |
+| `listenIpv4UuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a IPv4 in gridscale to populate listenIpv4Uuid. |  | Optional: \{\} <br /> |
 | `listenIpv6Uuid` _string_ | The UUID of the IPv6 address the load balancer will listen to for incoming requests.<br />The UUID of the IPv6 address the Load balancer will listen to for incoming requests. |  |  |
+| `listenIpv6UuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a IPv6 in gridscale to populate listenIpv6Uuid. |  | Optional: \{\} <br /> |
+| `listenIpv6UuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a IPv6 in gridscale to populate listenIpv6Uuid. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  |  |
 | `redirectHttpToHttps` _boolean_ | Whether the load balancer is forced to redirect requests from HTTP to HTTPS.<br />Whether the Load balancer is forced to redirect requests from HTTP to HTTPS |  |  |
 | `status` _string_ | The status of the load balancer.<br />Status indicates the status of the object. |  |  |
@@ -1571,7 +1591,11 @@ _Appears in:_
 | `forwardingRule` _[ForwardingRuleParameters](#forwardingruleparameters) array_ | The forwarding rules of the load balancer.<br />List of forwarding rules for the Load balancer. |  | Optional: \{\} <br /> |
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  | Optional: \{\} <br /> |
 | `listenIpv4Uuid` _string_ | The UUID of the IPv4 address the load balancer will listen to for incoming requests.<br />The UUID of the IPv4 address the Load balancer will listen to for incoming requests. |  | Optional: \{\} <br /> |
+| `listenIpv4UuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a IPv4 in gridscale to populate listenIpv4Uuid. |  | Optional: \{\} <br /> |
+| `listenIpv4UuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a IPv4 in gridscale to populate listenIpv4Uuid. |  | Optional: \{\} <br /> |
 | `listenIpv6Uuid` _string_ | The UUID of the IPv6 address the load balancer will listen to for incoming requests.<br />The UUID of the IPv6 address the Load balancer will listen to for incoming requests. |  | Optional: \{\} <br /> |
+| `listenIpv6UuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a IPv6 in gridscale to populate listenIpv6Uuid. |  | Optional: \{\} <br /> |
+| `listenIpv6UuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a IPv6 in gridscale to populate listenIpv6Uuid. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  | Optional: \{\} <br /> |
 | `redirectHttpToHttps` _boolean_ | Whether the load balancer is forced to redirect requests from HTTP to HTTPS.<br />Whether the Load balancer is forced to redirect requests from HTTP to HTTPS |  | Optional: \{\} <br /> |
 | `status` _string_ | The status of the load balancer.<br />Status indicates the status of the object. |  | Optional: \{\} <br /> |
@@ -1660,6 +1684,8 @@ _Appears in:_
 | `maxCoreCount` _float_ | Maximum CPU core count. The MariaDB instance's CPU core count will be autoscaled based on the workload. The number of cores stays between 1 and max_core_count.<br />Maximum CPU core count. The MariaDB instance's CPU core count will be autoscaled based on the workload. The number of cores stays between 1 and `max_core_count`. |  |  |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  |  |
+| `networkUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of MariaDB service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of MariaDB service. |  |  |
 | `release` _string_ | The MariaDB release of this instance. For convenience, please use gscloud to get the list of available MariaDB service releases.<br />The MariaDB release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available MariaDB service releases. |  |  |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to MariaDB service. |  |  |
@@ -1772,6 +1798,8 @@ _Appears in:_
 | `maxCoreCount` _float_ | Maximum CPU core count. The MariaDB instance's CPU core count will be autoscaled based on the workload. The number of cores stays between 1 and max_core_count.<br />Maximum CPU core count. The MariaDB instance's CPU core count will be autoscaled based on the workload. The number of cores stays between 1 and `max_core_count`. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  | Optional: \{\} <br /> |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  | Optional: \{\} <br /> |
+| `networkUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of MariaDB service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of MariaDB service. |  | Optional: \{\} <br /> |
 | `release` _string_ | The MariaDB release of this instance. For convenience, please use gscloud to get the list of available MariaDB service releases.<br />The MariaDB release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available MariaDB service releases. |  | Optional: \{\} <br /> |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to MariaDB service. |  | Optional: \{\} <br /> |
@@ -1850,6 +1878,8 @@ _Appears in:_
 | `maxCoreCount` _float_ | Maximum CPU core count. The Memcached instance's CPU core count will be autoscaled based on the workload. The number of cores stays between 1 and max_core_count.<br />Maximum CPU core count. The Memcached instance's CPU core count will be autoscaled based on the workload. The number of cores stays between 1 and `max_core_count`. |  |  |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  |  |
+| `networkUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of Memcached service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of Memcached service. |  |  |
 | `release` _string_ | The Memcached release of this instance. For convenience, please use gscloud to get the list of available Memcached service releases.<br />The Memcached release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available Memcached service releases. |  |  |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to Memcached service. |  |  |
@@ -1942,6 +1972,8 @@ _Appears in:_
 | `maxCoreCount` _float_ | Maximum CPU core count. The Memcached instance's CPU core count will be autoscaled based on the workload. The number of cores stays between 1 and max_core_count.<br />Maximum CPU core count. The Memcached instance's CPU core count will be autoscaled based on the workload. The number of cores stays between 1 and `max_core_count`. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  | Optional: \{\} <br /> |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  | Optional: \{\} <br /> |
+| `networkUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of Memcached service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of Memcached service. |  | Optional: \{\} <br /> |
 | `release` _string_ | The Memcached release of this instance. For convenience, please use gscloud to get the list of available Memcached service releases.<br />The Memcached release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available Memcached service releases. |  | Optional: \{\} <br /> |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to Memcached service. |  | Optional: \{\} <br /> |
@@ -2030,6 +2062,8 @@ _Appears in:_
 | `mysqlServerId` _float_ | mysql parameter: Server Id. Default: 1.<br />Server Id. |  |  |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  |  |
+| `networkUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of mysql service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of MySQL service. |  |  |
 | `release` _string_ | The mysql release of this instance. For convenience, please use gscloud to get the list of available mysql service releases.<br />The MySQL release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available MySQL service releases. |  |  |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to MySQL service. |  |  |
@@ -2142,6 +2176,8 @@ _Appears in:_
 | `mysqlServerId` _float_ | mysql parameter: Server Id. Default: 1.<br />Server Id. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  | Optional: \{\} <br /> |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  | Optional: \{\} <br /> |
+| `networkUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of mysql service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of MySQL service. |  | Optional: \{\} <br /> |
 | `release` _string_ | The mysql release of this instance. For convenience, please use gscloud to get the list of available mysql service releases.<br />The MySQL release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available MySQL service releases. |  | Optional: \{\} <br /> |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to MySQL service. |  | Optional: \{\} <br /> |
@@ -2723,12 +2759,12 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `accessKeySecretRef` _[LocalSecretKeySelector](#localsecretkeyselector)_ | Access key |  |  |
-| `bucket` _string_ | Bucket name |  |  |
-| `host` _string_ | Host of object storage. Must be of URL type. E.g: https://gos3.io |  |  |
-| `object` _string_ | Name of file (include file path) |  |  |
-| `private` _boolean_ |  |  |  |
-| `secretKeySecretRef` _[LocalSecretKeySelector](#localsecretkeyselector)_ | Secret key |  |  |
+| `accessKeySecretRef` _[LocalSecretKeySelector](#localsecretkeyselector)_ | Access key.<br />Access key |  |  |
+| `bucket` _string_ | Bucket name.<br />Bucket name |  |  |
+| `host` _string_ | Host of object storage. Must be of URL type, e.g., https://gos3.io<br />Host of object storage. Must be of URL type. E.g: https://gos3.io |  |  |
+| `object` _string_ | Name of file (include file path).<br />Name of file (include file path) |  |  |
+| `private` _boolean_ | Privacy. |  |  |
+| `secretKeySecretRef` _[LocalSecretKeySelector](#localsecretkeyselector)_ | Secret key.<br />Secret key |  |  |
 
 
 #### ObjectStorageExportObservation
@@ -2744,11 +2780,11 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `bucket` _string_ | Bucket name |  |  |
-| `host` _string_ | Host of object storage. Must be of URL type. E.g: https://gos3.io |  |  |
-| `object` _string_ | Name of file (include file path) |  |  |
-| `private` _boolean_ |  |  |  |
-| `status` _string_ |  |  |  |
+| `bucket` _string_ | Bucket name.<br />Bucket name |  |  |
+| `host` _string_ | Host of object storage. Must be of URL type, e.g., https://gos3.io<br />Host of object storage. Must be of URL type. E.g: https://gos3.io |  |  |
+| `object` _string_ | Name of file (include file path).<br />Name of file (include file path) |  |  |
+| `private` _boolean_ | Privacy. |  |  |
+| `status` _string_ | The status of the snapshot. |  |  |
 
 
 #### ObjectStorageExportParameters
@@ -2764,12 +2800,12 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `accessKeySecretRef` _[LocalSecretKeySelector](#localsecretkeyselector)_ | Access key |  | Optional: \{\} <br /> |
-| `bucket` _string_ | Bucket name |  | Optional: \{\} <br /> |
-| `host` _string_ | Host of object storage. Must be of URL type. E.g: https://gos3.io |  | Optional: \{\} <br /> |
-| `object` _string_ | Name of file (include file path) |  | Optional: \{\} <br /> |
-| `private` _boolean_ |  |  | Optional: \{\} <br /> |
-| `secretKeySecretRef` _[LocalSecretKeySelector](#localsecretkeyselector)_ | Secret key |  | Optional: \{\} <br /> |
+| `accessKeySecretRef` _[LocalSecretKeySelector](#localsecretkeyselector)_ | Access key.<br />Access key |  | Optional: \{\} <br /> |
+| `bucket` _string_ | Bucket name.<br />Bucket name |  | Optional: \{\} <br /> |
+| `host` _string_ | Host of object storage. Must be of URL type, e.g., https://gos3.io<br />Host of object storage. Must be of URL type. E.g: https://gos3.io |  | Optional: \{\} <br /> |
+| `object` _string_ | Name of file (include file path).<br />Name of file (include file path) |  | Optional: \{\} <br /> |
+| `private` _boolean_ | Privacy. |  | Optional: \{\} <br /> |
+| `secretKeySecretRef` _[LocalSecretKeySelector](#localsecretkeyselector)_ | Secret key.<br />Secret key |  | Optional: \{\} <br /> |
 
 
 #### Paas
@@ -2808,6 +2844,8 @@ _Appears in:_
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  |  |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  |  |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  |  |
+| `networkUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `parameter` _[ParameterInitParameters](#parameterinitparameters) array_ | See Argument Reference above.<br />Parameter for PaaS service |  |  |
 | `resourceLimit` _[ResourceLimitInitParameters](#resourcelimitinitparameters) array_ | A list of service resource limits..<br />Resource for PaaS service |  |  |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to PaaS service |  |  |
@@ -2901,6 +2939,8 @@ _Appears in:_
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  | Optional: \{\} <br /> |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  | Optional: \{\} <br /> |
+| `networkUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `parameter` _[ParameterParameters](#parameterparameters) array_ | See Argument Reference above.<br />Parameter for PaaS service |  | Optional: \{\} <br /> |
 | `resourceLimit` _[ResourceLimitParameters](#resourcelimitparameters) array_ | A list of service resource limits..<br />Resource for PaaS service |  | Optional: \{\} <br /> |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to PaaS service |  | Optional: \{\} <br /> |
@@ -3055,6 +3095,8 @@ _Appears in:_
 | `maxCoreCount` _float_ | Maximum CPU core count. The PostgreSQL instance's CPU core count will be autoscaled based on the workload. The number of cores stays between 1 and max_core_count.<br />Maximum CPU core count. The PostgreSQL instance's CPU core count will be autoscaled based on the workload. The number of cores stays between 1 and `max_core_count`. |  |  |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  |  |
+| `networkUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of PostgreSQL service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of PostgreSQL service. |  |  |
 | `pgauditLogAccessKey` _string_ | Access key used to authenticate against Object Storage server.<br />Access key used to authenticate against Object Storage server. |  |  |
 | `pgauditLogBucket` _string_ | Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key.<br />Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key. |  |  |
@@ -3157,6 +3199,8 @@ _Appears in:_
 | `maxCoreCount` _float_ | Maximum CPU core count. The PostgreSQL instance's CPU core count will be autoscaled based on the workload. The number of cores stays between 1 and max_core_count.<br />Maximum CPU core count. The PostgreSQL instance's CPU core count will be autoscaled based on the workload. The number of cores stays between 1 and `max_core_count`. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  | Optional: \{\} <br /> |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  | Optional: \{\} <br /> |
+| `networkUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of PostgreSQL service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of PostgreSQL service. |  | Optional: \{\} <br /> |
 | `pgauditLogAccessKey` _string_ | Access key used to authenticate against Object Storage server.<br />Access key used to authenticate against Object Storage server. |  | Optional: \{\} <br /> |
 | `pgauditLogBucket` _string_ | Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key.<br />Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key. |  | Optional: \{\} <br /> |
@@ -3267,7 +3311,7 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `id` _string_ | ID of the rollback request. Each rollback request has to have a unique id. ID can be any string value. |  |  |
+| `id` _string_ | ID of the rollback request. It can be any string value. Each rollback request has to have a UNIQUE id.<br />ID of the rollback request. Each rollback request has to have a unique id. ID can be any string value. |  |  |
 
 
 #### RollbackObservation
@@ -3283,9 +3327,9 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `id` _string_ | ID of the rollback request. Each rollback request has to have a unique id. ID can be any string value. |  |  |
-| `rollbackTime` _string_ |  |  |  |
-| `status` _string_ |  |  |  |
+| `id` _string_ | ID of the rollback request. It can be any string value. Each rollback request has to have a UNIQUE id.<br />ID of the rollback request. Each rollback request has to have a unique id. ID can be any string value. |  |  |
+| `rollbackTime` _string_ | The time when rollback request is fulfilled. |  |  |
+| `status` _string_ | The status of the snapshot. |  |  |
 
 
 #### RollbackParameters
@@ -3301,7 +3345,7 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `id` _string_ | ID of the rollback request. Each rollback request has to have a unique id. ID can be any string value. |  | Optional: \{\} <br /> |
+| `id` _string_ | ID of the rollback request. It can be any string value. Each rollback request has to have a UNIQUE id.<br />ID of the rollback request. Each rollback request has to have a unique id. ID can be any string value. |  | Optional: \{\} <br /> |
 
 
 #### RulesV4InInitParameters
@@ -3679,8 +3723,14 @@ _Appears in:_
 | `hardwareProfile` _string_ | The hardware profile of the Server. Options are default, legacy, nested, cisco_csr, sophos_utm, f5_bigip and q35 at the moment of writing. If it is not set, the backend will set it by default. Check the official docs.<br />Specifies the hardware settings for the virtual machine. Note: hardware_profile and hardware_profile_config parameters can't be used at the same time. |  |  |
 | `hardwareProfileConfig` _[HardwareProfileConfigInitParameters](#hardwareprofileconfiginitparameters) array_ | Specifies the custom hardware settings for the virtual machine. Note: hardware_profile and hardware_profile_config parameters can't be used at the same time. Note: If hardware_profile_config is set, all fields of hardware_profile_config MUST be set.<br />Specifies the custom hardware settings for the virtual machine. Note: hardware_profile and hardware_profile_config parameters can't be used at the same time. |  |  |
 | `ipv4` _string_ | The UUID of the IPv4 address of the server. (***NOTE: The server will NOT automatically be connected to the public network; to give it access to the internet, please add server to the public network.) |  |  |
+| `ipv4Ref` _[NamespacedReference](#namespacedreference)_ | Reference to a IPv4 in gridscale to populate ipv4. |  | Optional: \{\} <br /> |
+| `ipv4Selector` _[NamespacedSelector](#namespacedselector)_ | Selector for a IPv4 in gridscale to populate ipv4. |  | Optional: \{\} <br /> |
 | `ipv6` _string_ | The UUID of the IPv6 address of the server. (***NOTE: The server will NOT automatically be connected to the public network; to give it access to the internet, please add server to the public network.) |  |  |
+| `ipv6Ref` _[NamespacedReference](#namespacedreference)_ | Reference to a IPv6 in gridscale to populate ipv6. |  | Optional: \{\} <br /> |
+| `ipv6Selector` _[NamespacedSelector](#namespacedselector)_ | Selector for a IPv6 in gridscale to populate ipv6. |  | Optional: \{\} <br /> |
 | `isoimage` _string_ | The UUID of an ISO image in gridscale. The server will automatically boot from the ISO if one was added. The UUIDs of ISO images can be found in the expert panel. |  |  |
+| `isoimageRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Isoimage in gridscale to populate isoimage. |  | Optional: \{\} <br /> |
+| `isoimageSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Isoimage in gridscale to populate isoimage. |  | Optional: \{\} <br /> |
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  |  |
 | `memory` _float_ | The amount of server memory in GB.<br />The amount of server memory in GB. |  |  |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  |  |
@@ -3723,8 +3773,12 @@ _Appears in:_
 | --- | --- | --- | --- |
 | `bootdevice` _boolean_ | Make this network the boot device. This can only be set for one network. |  |  |
 | `firewallTemplateUuid` _string_ | The UUID of firewall template. |  |  |
+| `firewallTemplateUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Firewall in gridscale to populate firewallTemplateUuid. |  | Optional: \{\} <br /> |
+| `firewallTemplateUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Firewall in gridscale to populate firewallTemplateUuid. |  | Optional: \{\} <br /> |
 | `ip` _string_ | Manually assign DHCP IP to the server (if applicable).<br />Manually assign DHCP IP to the server. |  |  |
 | `objectUuid` _string_ | The object UUID or id of the network. |  |  |
+| `objectUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Network in gridscale to populate objectUuid. |  | Optional: \{\} <br /> |
+| `objectUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Network in gridscale to populate objectUuid. |  | Optional: \{\} <br /> |
 | `ordering` _float_ | DEPRECATED  Defines the ordering of the network interfaces. Lower numbers have lower PCI-IDs. |  |  |
 | `rulesV4In` _[NetworkRulesV4InInitParameters](#networkrulesv4ininitparameters) array_ | Firewall template rules for inbound traffic - covers ipv4 addresses. |  |  |
 | `rulesV4Out` _[NetworkRulesV4OutInitParameters](#networkrulesv4outinitparameters) array_ | Firewall template rules for outbound traffic - covers ipv4 addresses. |  |  |
@@ -3776,8 +3830,12 @@ _Appears in:_
 | --- | --- | --- | --- |
 | `bootdevice` _boolean_ | Make this network the boot device. This can only be set for one network. |  | Optional: \{\} <br /> |
 | `firewallTemplateUuid` _string_ | The UUID of firewall template. |  | Optional: \{\} <br /> |
+| `firewallTemplateUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Firewall in gridscale to populate firewallTemplateUuid. |  | Optional: \{\} <br /> |
+| `firewallTemplateUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Firewall in gridscale to populate firewallTemplateUuid. |  | Optional: \{\} <br /> |
 | `ip` _string_ | Manually assign DHCP IP to the server (if applicable).<br />Manually assign DHCP IP to the server. |  | Optional: \{\} <br /> |
 | `objectUuid` _string_ | The object UUID or id of the network. |  | Optional: \{\} <br /> |
+| `objectUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Network in gridscale to populate objectUuid. |  | Optional: \{\} <br /> |
+| `objectUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Network in gridscale to populate objectUuid. |  | Optional: \{\} <br /> |
 | `ordering` _float_ | DEPRECATED  Defines the ordering of the network interfaces. Lower numbers have lower PCI-IDs. |  | Optional: \{\} <br /> |
 | `rulesV4In` _[NetworkRulesV4InParameters](#networkrulesv4inparameters) array_ | Firewall template rules for inbound traffic - covers ipv4 addresses. |  | Optional: \{\} <br /> |
 | `rulesV4Out` _[NetworkRulesV4OutParameters](#networkrulesv4outparameters) array_ | Firewall template rules for outbound traffic - covers ipv4 addresses. |  | Optional: \{\} <br /> |
@@ -3798,10 +3856,10 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `bootdevice` _boolean_ |  |  |  |
-| `createTime` _string_ |  |  |  |
-| `objectName` _string_ |  |  |  |
-| `objectUuid` _string_ |  |  |  |
+| `bootdevice` _boolean_ | True if the ISO Image is a boot device of this server. |  |  |
+| `createTime` _string_ | The date and time the object was initially created. |  |  |
+| `objectName` _string_ | Name of the server. |  |  |
+| `objectUuid` _string_ | The object UUID or id of the server. |  |  |
 
 
 #### ServerObservation_2
@@ -3865,8 +3923,14 @@ _Appears in:_
 | `hardwareProfile` _string_ | The hardware profile of the Server. Options are default, legacy, nested, cisco_csr, sophos_utm, f5_bigip and q35 at the moment of writing. If it is not set, the backend will set it by default. Check the official docs.<br />Specifies the hardware settings for the virtual machine. Note: hardware_profile and hardware_profile_config parameters can't be used at the same time. |  | Optional: \{\} <br /> |
 | `hardwareProfileConfig` _[HardwareProfileConfigParameters](#hardwareprofileconfigparameters) array_ | Specifies the custom hardware settings for the virtual machine. Note: hardware_profile and hardware_profile_config parameters can't be used at the same time. Note: If hardware_profile_config is set, all fields of hardware_profile_config MUST be set.<br />Specifies the custom hardware settings for the virtual machine. Note: hardware_profile and hardware_profile_config parameters can't be used at the same time. |  | Optional: \{\} <br /> |
 | `ipv4` _string_ | The UUID of the IPv4 address of the server. (***NOTE: The server will NOT automatically be connected to the public network; to give it access to the internet, please add server to the public network.) |  | Optional: \{\} <br /> |
+| `ipv4Ref` _[NamespacedReference](#namespacedreference)_ | Reference to a IPv4 in gridscale to populate ipv4. |  | Optional: \{\} <br /> |
+| `ipv4Selector` _[NamespacedSelector](#namespacedselector)_ | Selector for a IPv4 in gridscale to populate ipv4. |  | Optional: \{\} <br /> |
 | `ipv6` _string_ | The UUID of the IPv6 address of the server. (***NOTE: The server will NOT automatically be connected to the public network; to give it access to the internet, please add server to the public network.) |  | Optional: \{\} <br /> |
+| `ipv6Ref` _[NamespacedReference](#namespacedreference)_ | Reference to a IPv6 in gridscale to populate ipv6. |  | Optional: \{\} <br /> |
+| `ipv6Selector` _[NamespacedSelector](#namespacedselector)_ | Selector for a IPv6 in gridscale to populate ipv6. |  | Optional: \{\} <br /> |
 | `isoimage` _string_ | The UUID of an ISO image in gridscale. The server will automatically boot from the ISO if one was added. The UUIDs of ISO images can be found in the expert panel. |  | Optional: \{\} <br /> |
+| `isoimageRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Isoimage in gridscale to populate isoimage. |  | Optional: \{\} <br /> |
+| `isoimageSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Isoimage in gridscale to populate isoimage. |  | Optional: \{\} <br /> |
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  | Optional: \{\} <br /> |
 | `memory` _float_ | The amount of server memory in GB.<br />The amount of server memory in GB. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  | Optional: \{\} <br /> |
@@ -3916,7 +3980,7 @@ _Appears in:_
 
 
 
-Snapshot is the Schema for the Snapshots API. <no value>
+Snapshot is the Schema for the Snapshots API. Manages a storage snapshot in gridscale.
 
 
 
@@ -3945,11 +4009,13 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `labels` _string array_ | List of labels. |  |  |
-| `name` _string_ | The human-readable name of the object |  |  |
-| `objectStorageExport` _[ObjectStorageExportInitParameters](#objectstorageexportinitparameters) array_ | Export snapshot to a object storage |  |  |
-| `rollback` _[RollbackInitParameters](#rollbackinitparameters) array_ | Returns a storage to the state of the selected Snapshot. |  |  |
-| `storageUuid` _string_ | UUID of the storage used to create this snapshot |  |  |
+| `labels` _string array_ | The list of labels.<br />List of labels. |  |  |
+| `name` _string_ | The name of the snapshot.<br />The human-readable name of the object |  |  |
+| `objectStorageExport` _[ObjectStorageExportInitParameters](#objectstorageexportinitparameters) array_ | Export snapshot to a object storage.<br />Export snapshot to a object storage |  |  |
+| `rollback` _[RollbackInitParameters](#rollbackinitparameters) array_ | Returns a storage to the state of the selected Snapshot.<br />Returns a storage to the state of the selected Snapshot. |  |  |
+| `storageUuid` _string_ | UUID of the storage used to create this snapshot.<br />UUID of the storage used to create this snapshot |  |  |
+| `storageUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Storage in gridscale to populate storageUuid. |  | Optional: \{\} <br /> |
+| `storageUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Storage in gridscale to populate storageUuid. |  | Optional: \{\} <br /> |
 
 
 #### SnapshotList
@@ -3983,23 +4049,23 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `capacity` _float_ | The capacity of a storage/ISO image/template/snapshot in GB |  |  |
-| `changeTime` _string_ | Defines the date and time of the last object change |  |  |
-| `createTime` _string_ | Defines the date and time the object was initially created |  |  |
-| `currentPrice` _float_ | The price for the current period since the last bill |  |  |
-| `id` _string_ |  |  |  |
-| `labels` _string array_ | List of labels. |  |  |
-| `licenseProductNo` _float_ | If a template has been used that requires a license key (e.g. Windows Servers) this shows<br />the product_no of the license (see the /prices endpoint for more details) |  |  |
-| `locationCountry` _string_ | The human-readable name of the location |  |  |
-| `locationIata` _string_ | Uses IATA airport code, which works as a location identifier |  |  |
-| `locationName` _string_ | The human-readable name of the location |  |  |
-| `locationUuid` _string_ | The location this object is placed. |  |  |
-| `name` _string_ | The human-readable name of the object |  |  |
-| `objectStorageExport` _[ObjectStorageExportObservation](#objectstorageexportobservation) array_ | Export snapshot to a object storage |  |  |
-| `rollback` _[RollbackObservation](#rollbackobservation) array_ | Returns a storage to the state of the selected Snapshot. |  |  |
-| `status` _string_ | Status indicates the status of the object |  |  |
-| `storageUuid` _string_ | UUID of the storage used to create this snapshot |  |  |
-| `usageInMinutes` _float_ | Total minutes the object has been running |  |  |
+| `capacity` _float_ | The capacity of the snapshot in GB.<br />The capacity of a storage/ISO image/template/snapshot in GB |  |  |
+| `changeTime` _string_ | The date and time of the last snapshot change.<br />Defines the date and time of the last object change |  |  |
+| `createTime` _string_ | The date and time the ip was initially created.<br />Defines the date and time the object was initially created |  |  |
+| `currentPrice` _float_ | The price for the current period since the last bill.<br />The price for the current period since the last bill |  |  |
+| `id` _string_ | ID of the rollback request. It can be any string value. Each rollback request has to have a UNIQUE id. |  |  |
+| `labels` _string array_ | The list of labels.<br />List of labels. |  |  |
+| `licenseProductNo` _float_ | If a template has been used that requires a license key (e.g. Windows Servers) this shows the product_no of the license (see the /prices endpoint for more details).<br />If a template has been used that requires a license key (e.g. Windows Servers) this shows<br />the product_no of the license (see the /prices endpoint for more details) |  |  |
+| `locationCountry` _string_ | The human-readable name of the country of the snapshot.<br />The human-readable name of the location |  |  |
+| `locationIata` _string_ | The IATA airport code, which works as a location identifier.<br />Uses IATA airport code, which works as a location identifier |  |  |
+| `locationName` _string_ | The human-readable name of the location of the snapshot.<br />The human-readable name of the location |  |  |
+| `locationUuid` _string_ | The UUID of the location, that helps to identify which datacenter an object belongs to.<br />The location this object is placed. |  |  |
+| `name` _string_ | The name of the snapshot.<br />The human-readable name of the object |  |  |
+| `objectStorageExport` _[ObjectStorageExportObservation](#objectstorageexportobservation) array_ | Export snapshot to a object storage.<br />Export snapshot to a object storage |  |  |
+| `rollback` _[RollbackObservation](#rollbackobservation) array_ | Returns a storage to the state of the selected Snapshot.<br />Returns a storage to the state of the selected Snapshot. |  |  |
+| `status` _string_ | The status of the snapshot.<br />Status indicates the status of the object |  |  |
+| `storageUuid` _string_ | UUID of the storage used to create this snapshot.<br />UUID of the storage used to create this snapshot |  |  |
+| `usageInMinutes` _float_ | Total minutes the ip has been running.<br />Total minutes the object has been running |  |  |
 
 
 #### SnapshotParameters
@@ -4015,11 +4081,13 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `labels` _string array_ | List of labels. |  | Optional: \{\} <br /> |
-| `name` _string_ | The human-readable name of the object |  | Optional: \{\} <br /> |
-| `objectStorageExport` _[ObjectStorageExportParameters](#objectstorageexportparameters) array_ | Export snapshot to a object storage |  | Optional: \{\} <br /> |
-| `rollback` _[RollbackParameters](#rollbackparameters) array_ | Returns a storage to the state of the selected Snapshot. |  | Optional: \{\} <br /> |
-| `storageUuid` _string_ | UUID of the storage used to create this snapshot |  | Optional: \{\} <br /> |
+| `labels` _string array_ | The list of labels.<br />List of labels. |  | Optional: \{\} <br /> |
+| `name` _string_ | The name of the snapshot.<br />The human-readable name of the object |  | Optional: \{\} <br /> |
+| `objectStorageExport` _[ObjectStorageExportParameters](#objectstorageexportparameters) array_ | Export snapshot to a object storage.<br />Export snapshot to a object storage |  | Optional: \{\} <br /> |
+| `rollback` _[RollbackParameters](#rollbackparameters) array_ | Returns a storage to the state of the selected Snapshot.<br />Returns a storage to the state of the selected Snapshot. |  | Optional: \{\} <br /> |
+| `storageUuid` _string_ | UUID of the storage used to create this snapshot.<br />UUID of the storage used to create this snapshot |  | Optional: \{\} <br /> |
+| `storageUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Storage in gridscale to populate storageUuid. |  | Optional: \{\} <br /> |
+| `storageUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Storage in gridscale to populate storageUuid. |  | Optional: \{\} <br /> |
 
 
 #### SnapshotSpec
@@ -4062,7 +4130,7 @@ _Appears in:_
 
 
 
-Snapshotschedule is the Schema for the Snapshotschedules API. <no value>
+Snapshotschedule is the Schema for the Snapshotschedules API. Manages a storage snapshot schedule.
 
 
 
@@ -4091,12 +4159,14 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `keepSnapshots` _float_ | The amount of Snapshots to keep before overwriting the last created Snapshot |  |  |
-| `labels` _string array_ | List of labels. |  |  |
-| `name` _string_ | The human-readable name of the object |  |  |
-| `nextRuntime` _string_ | The date and time that the snapshot schedule will be run |  |  |
-| `runInterval` _float_ | The interval at which the schedule will run (in minutes) |  |  |
-| `storageUuid` _string_ | UUID of the storage used to create snapshots |  |  |
+| `keepSnapshots` _float_ | The amount of Snapshots to keep before overwriting the last created Snapshot (>=1).<br />The amount of Snapshots to keep before overwriting the last created Snapshot |  |  |
+| `labels` _string array_ | The list of labels.<br />List of labels. |  |  |
+| `name` _string_ | UUID of the snapshot schedule.<br />The human-readable name of the object |  |  |
+| `nextRuntime` _string_ | The date and time that the snapshot schedule will be run.<br />The date and time that the snapshot schedule will be run |  |  |
+| `runInterval` _float_ | The interval at which the schedule will run (in minutes, >=60).<br />The interval at which the schedule will run (in minutes) |  |  |
+| `storageUuid` _string_ | UUID of the storage that the snapshot schedule belongs to.<br />UUID of the storage used to create snapshots |  |  |
+| `storageUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Storage in gridscale to populate storageUuid. |  | Optional: \{\} <br /> |
+| `storageUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Storage in gridscale to populate storageUuid. |  | Optional: \{\} <br /> |
 
 
 #### SnapshotscheduleList
@@ -4130,18 +4200,18 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `changeTime` _string_ | Defines the date and time of the last object change |  |  |
-| `createTime` _string_ | Defines the date and time the object was initially created |  |  |
-| `id` _string_ |  |  |  |
-| `keepSnapshots` _float_ | The amount of Snapshots to keep before overwriting the last created Snapshot |  |  |
-| `labels` _string array_ | List of labels. |  |  |
-| `name` _string_ | The human-readable name of the object |  |  |
-| `nextRuntime` _string_ | The date and time that the snapshot schedule will be run |  |  |
-| `nextRuntimeComputed` _string_ | The date and time that the snapshot schedule will be run. This date and time is computed by gridscale's server. |  |  |
-| `runInterval` _float_ | The interval at which the schedule will run (in minutes) |  |  |
-| `snapshot` _[SnapshotscheduleSnapshotObservation](#snapshotschedulesnapshotobservation) array_ | Related snashots |  |  |
-| `status` _string_ | Status indicates the status of the object |  |  |
-| `storageUuid` _string_ | UUID of the storage used to create snapshots |  |  |
+| `changeTime` _string_ | The date and time of the last snapshot schedule change.<br />Defines the date and time of the last object change |  |  |
+| `createTime` _string_ | The date and time the snapshot schedule was initially created.<br />Defines the date and time the object was initially created |  |  |
+| `id` _string_ | The UUID of the snapshot schedule. |  |  |
+| `keepSnapshots` _float_ | The amount of Snapshots to keep before overwriting the last created Snapshot (>=1).<br />The amount of Snapshots to keep before overwriting the last created Snapshot |  |  |
+| `labels` _string array_ | The list of labels.<br />List of labels. |  |  |
+| `name` _string_ | UUID of the snapshot schedule.<br />The human-readable name of the object |  |  |
+| `nextRuntime` _string_ | The date and time that the snapshot schedule will be run.<br />The date and time that the snapshot schedule will be run |  |  |
+| `nextRuntimeComputed` _string_ | The date and time that the snapshot schedule will be run. This date and time is computed by gridscale's server.<br />The date and time that the snapshot schedule will be run. This date and time is computed by gridscale's server. |  |  |
+| `runInterval` _float_ | The interval at which the schedule will run (in minutes, >=60).<br />The interval at which the schedule will run (in minutes) |  |  |
+| `snapshot` _[SnapshotscheduleSnapshotObservation](#snapshotschedulesnapshotobservation) array_ | Related snapshots.<br />Related snashots |  |  |
+| `status` _string_ | The status of the snapshot schedule.<br />Status indicates the status of the object |  |  |
+| `storageUuid` _string_ | UUID of the storage that the snapshot schedule belongs to.<br />UUID of the storage used to create snapshots |  |  |
 
 
 #### SnapshotscheduleParameters
@@ -4157,12 +4227,14 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `keepSnapshots` _float_ | The amount of Snapshots to keep before overwriting the last created Snapshot |  | Optional: \{\} <br /> |
-| `labels` _string array_ | List of labels. |  | Optional: \{\} <br /> |
-| `name` _string_ | The human-readable name of the object |  | Optional: \{\} <br /> |
-| `nextRuntime` _string_ | The date and time that the snapshot schedule will be run |  | Optional: \{\} <br /> |
-| `runInterval` _float_ | The interval at which the schedule will run (in minutes) |  | Optional: \{\} <br /> |
-| `storageUuid` _string_ | UUID of the storage used to create snapshots |  | Optional: \{\} <br /> |
+| `keepSnapshots` _float_ | The amount of Snapshots to keep before overwriting the last created Snapshot (>=1).<br />The amount of Snapshots to keep before overwriting the last created Snapshot |  | Optional: \{\} <br /> |
+| `labels` _string array_ | The list of labels.<br />List of labels. |  | Optional: \{\} <br /> |
+| `name` _string_ | UUID of the snapshot schedule.<br />The human-readable name of the object |  | Optional: \{\} <br /> |
+| `nextRuntime` _string_ | The date and time that the snapshot schedule will be run.<br />The date and time that the snapshot schedule will be run |  | Optional: \{\} <br /> |
+| `runInterval` _float_ | The interval at which the schedule will run (in minutes, >=60).<br />The interval at which the schedule will run (in minutes) |  | Optional: \{\} <br /> |
+| `storageUuid` _string_ | UUID of the storage that the snapshot schedule belongs to.<br />UUID of the storage used to create snapshots |  | Optional: \{\} <br /> |
+| `storageUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Storage in gridscale to populate storageUuid. |  | Optional: \{\} <br /> |
+| `storageUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Storage in gridscale to populate storageUuid. |  | Optional: \{\} <br /> |
 
 
 
@@ -4180,9 +4252,9 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `createTime` _string_ |  |  |  |
-| `name` _string_ |  |  |  |
-| `objectUuid` _string_ |  |  |  |
+| `createTime` _string_ | The date and time the snapshot schedule was initially created. |  |  |
+| `name` _string_ | UUID of the snapshot schedule. |  |  |
+| `objectUuid` _string_ | UUID of the snapshot. |  |  |
 
 
 
@@ -4259,6 +4331,8 @@ _Appears in:_
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  |  |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  |  |
+| `networkUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of MS SQL server service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of MS SQL Server. |  |  |
 | `release` _string_ | The MS SQL server release of this instance. For convenience, please use gscloud to get the list of available MS SQL server service releases.<br />The MS SQL Server release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available MS SQL Server releases. |  |  |
 | `s3Backup` _[S3BackupInitParameters](#s3backupinitparameters) array_ | Allow backup/restore MS SQL server to/from a S3 bucket.<br />Allow backup/restore MS SQL server to/from a S3 bucket. |  |  |
@@ -4351,6 +4425,8 @@ _Appears in:_
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  | Optional: \{\} <br /> |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  | Optional: \{\} <br /> |
+| `networkUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of MS SQL server service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of MS SQL Server. |  | Optional: \{\} <br /> |
 | `release` _string_ | The MS SQL server release of this instance. For convenience, please use gscloud to get the list of available MS SQL server service releases.<br />The MS SQL Server release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available MS SQL Server releases. |  | Optional: \{\} <br /> |
 | `s3Backup` _[S3BackupParameters](#s3backupparameters) array_ | Allow backup/restore MS SQL server to/from a S3 bucket.<br />Allow backup/restore MS SQL server to/from a S3 bucket. |  | Optional: \{\} <br /> |
@@ -4560,9 +4636,9 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `createTime` _string_ |  |  |  |
-| `name` _string_ |  |  |  |
-| `objectUuid` _string_ |  |  |  |
+| `createTime` _string_ | The date and time the backup schedule was initially created. |  |  |
+| `name` _string_ | UUID of the backup schedule. |  |  |
+| `objectUuid` _string_ | UUID of the backup. |  |  |
 
 
 
@@ -4581,6 +4657,8 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `objectUuid` _string_ | The object UUID or id of the storage. |  |  |
+| `objectUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Storage in gridscale to populate objectUuid. |  | Optional: \{\} <br /> |
+| `objectUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Storage in gridscale to populate objectUuid. |  | Optional: \{\} <br /> |
 
 
 #### StorageInitParameters_2
@@ -4699,6 +4777,8 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `objectUuid` _string_ | The object UUID or id of the storage. |  | Optional: \{\} <br /> |
+| `objectUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Storage in gridscale to populate objectUuid. |  | Optional: \{\} <br /> |
+| `objectUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Storage in gridscale to populate objectUuid. |  | Optional: \{\} <br /> |
 
 
 #### StorageParameters_2
@@ -4869,6 +4949,8 @@ _Appears in:_
 | `labels` _string array_ | List of labels.<br />List of labels. |  |  |
 | `name` _string_ | The exact name of the template as show in the page Template.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
 | `snapshotUuid` _string_ | Snapshot uuid for template.<br />Snapshot UUID for template. |  |  |
+| `snapshotUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Snapshot in gridscale to populate snapshotUuid. |  | Optional: \{\} <br /> |
+| `snapshotUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Snapshot in gridscale to populate snapshotUuid. |  | Optional: \{\} <br /> |
 
 
 #### TemplateList
@@ -4979,6 +5061,8 @@ _Appears in:_
 | `labels` _string array_ | List of labels.<br />List of labels. |  | Optional: \{\} <br /> |
 | `name` _string_ | The exact name of the template as show in the page Template.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  | Optional: \{\} <br /> |
 | `snapshotUuid` _string_ | Snapshot uuid for template.<br />Snapshot UUID for template. |  | Optional: \{\} <br /> |
+| `snapshotUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Snapshot in gridscale to populate snapshotUuid. |  | Optional: \{\} <br /> |
+| `snapshotUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Snapshot in gridscale to populate snapshotUuid. |  | Optional: \{\} <br /> |
 
 
 #### TemplateSpec
@@ -5102,6 +5186,8 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `host` _string_ | A valid domain or an IP address of a server. |  |  |
+| `hostRef` _[Reference](#reference)_ | Reference to a IPv4 in gridscale to populate host. |  | Optional: \{\} <br /> |
+| `hostSelector` _[Selector](#selector)_ | Selector for a IPv4 in gridscale to populate host. |  | Optional: \{\} <br /> |
 | `proxyProtocol` _string_ | The proxy protocol version. The proxy protocol is disabled by default and the valid version is either v1 or v2. |  |  |
 | `weight` _float_ | The backend host weight. Default: 100. |  |  |
 
@@ -5138,6 +5224,8 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `host` _string_ | A valid domain or an IP address of a server. |  | Optional: \{\} <br /> |
+| `hostRef` _[Reference](#reference)_ | Reference to a IPv4 in gridscale to populate host. |  | Optional: \{\} <br /> |
+| `hostSelector` _[Selector](#selector)_ | Selector for a IPv4 in gridscale to populate host. |  | Optional: \{\} <br /> |
 | `proxyProtocol` _string_ | The proxy protocol version. The proxy protocol is disabled by default and the valid version is either v1 or v2. |  | Optional: \{\} <br /> |
 | `weight` _float_ | The backend host weight. Default: 100. |  | Optional: \{\} <br /> |
 
@@ -5146,7 +5234,7 @@ _Appears in:_
 
 
 
-Backupschedule is the Schema for the Backupschedules API. <no value>
+Backupschedule is the Schema for the Backupschedules API. Manages a storage backup schedule.
 
 
 
@@ -5175,13 +5263,15 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `active` _boolean_ | The status of the schedule active or not |  |  |
-| `backupLocationUuid` _string_ | UUID of the location where your backup is stored. |  |  |
-| `keepBackups` _float_ | The amount of storage backups to keep before overwriting the last created backup |  |  |
-| `name` _string_ | The human-readable name of the object |  |  |
-| `nextRuntime` _string_ | The date and time that the storage backup schedule will be run. Format: "2006-01-02 15:04:05" |  |  |
-| `runInterval` _float_ | The interval at which the schedule will run (in minutes) |  |  |
-| `storageUuid` _string_ | UUID of the storage used to create storage backups |  |  |
+| `active` _boolean_ | The status of the schedule active or not.<br />The status of the schedule active or not |  |  |
+| `backupLocationUuid` _string_ | UUID of the location where your backup is stored.<br />UUID of the location where your backup is stored. |  |  |
+| `keepBackups` _float_ | The amount of Snapshots to keep before overwriting the last created Snapshot (>=1).<br />The amount of storage backups to keep before overwriting the last created backup |  |  |
+| `name` _string_ | UUID of the backup schedule.<br />The human-readable name of the object |  |  |
+| `nextRuntime` _string_ | The date and time that the backup schedule will be run.<br />The date and time that the storage backup schedule will be run. Format: "2006-01-02 15:04:05" |  |  |
+| `runInterval` _float_ | The interval at which the schedule will run (in minutes, >=60).<br />The interval at which the schedule will run (in minutes) |  |  |
+| `storageUuid` _string_ | UUID of the storage that the backup schedule belongs to.<br />UUID of the storage used to create storage backups |  |  |
+| `storageUuidRef` _[Reference](#reference)_ | Reference to a Storage in gridscale to populate storageUuid. |  | Optional: \{\} <br /> |
+| `storageUuidSelector` _[Selector](#selector)_ | Selector for a Storage in gridscale to populate storageUuid. |  | Optional: \{\} <br /> |
 
 
 #### BackupscheduleList
@@ -5215,20 +5305,20 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `active` _boolean_ | The status of the schedule active or not |  |  |
-| `backupLocationName` _string_ | The human-readable name of backup location. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
-| `backupLocationUuid` _string_ | UUID of the location where your backup is stored. |  |  |
-| `changeTime` _string_ | Defines the date and time of the last object change |  |  |
-| `createTime` _string_ | Defines the date and time the object was initially created |  |  |
-| `id` _string_ |  |  |  |
-| `keepBackups` _float_ | The amount of storage backups to keep before overwriting the last created backup |  |  |
-| `name` _string_ | The human-readable name of the object |  |  |
-| `nextRuntime` _string_ | The date and time that the storage backup schedule will be run. Format: "2006-01-02 15:04:05" |  |  |
-| `nextRuntimeComputed` _string_ | The date and time that the storage backup schedule will be run. This date and time is computed by gridscale's server. |  |  |
-| `runInterval` _float_ | The interval at which the schedule will run (in minutes) |  |  |
-| `status` _string_ | Status indicates the status of the object |  |  |
-| `storageBackups` _[StorageBackupsObservation](#storagebackupsobservation) array_ | Related backups |  |  |
-| `storageUuid` _string_ | UUID of the storage used to create storage backups |  |  |
+| `active` _boolean_ | The status of the schedule active or not.<br />The status of the schedule active or not |  |  |
+| `backupLocationName` _string_ | The human-readable name of backup location. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of backup location. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
+| `backupLocationUuid` _string_ | UUID of the location where your backup is stored.<br />UUID of the location where your backup is stored. |  |  |
+| `changeTime` _string_ | The date and time of the last backup schedule change.<br />Defines the date and time of the last object change |  |  |
+| `createTime` _string_ | The date and time the backup schedule was initially created.<br />Defines the date and time the object was initially created |  |  |
+| `id` _string_ | The UUID of the backup schedule. |  |  |
+| `keepBackups` _float_ | The amount of Snapshots to keep before overwriting the last created Snapshot (>=1).<br />The amount of storage backups to keep before overwriting the last created backup |  |  |
+| `name` _string_ | UUID of the backup schedule.<br />The human-readable name of the object |  |  |
+| `nextRuntime` _string_ | The date and time that the backup schedule will be run.<br />The date and time that the storage backup schedule will be run. Format: "2006-01-02 15:04:05" |  |  |
+| `nextRuntimeComputed` _string_ | The date and time that the backup schedule will be run. This date and time is computed by gridscale's server.<br />The date and time that the storage backup schedule will be run. This date and time is computed by gridscale's server. |  |  |
+| `runInterval` _float_ | The interval at which the schedule will run (in minutes, >=60).<br />The interval at which the schedule will run (in minutes) |  |  |
+| `status` _string_ | The status of the backup schedule.<br />Status indicates the status of the object |  |  |
+| `storageBackups` _[StorageBackupsObservation](#storagebackupsobservation) array_ | Related backups.<br />Related backups |  |  |
+| `storageUuid` _string_ | UUID of the storage that the backup schedule belongs to.<br />UUID of the storage used to create storage backups |  |  |
 
 
 #### BackupscheduleParameters
@@ -5244,13 +5334,15 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `active` _boolean_ | The status of the schedule active or not |  | Optional: \{\} <br /> |
-| `backupLocationUuid` _string_ | UUID of the location where your backup is stored. |  | Optional: \{\} <br /> |
-| `keepBackups` _float_ | The amount of storage backups to keep before overwriting the last created backup |  | Optional: \{\} <br /> |
-| `name` _string_ | The human-readable name of the object |  | Optional: \{\} <br /> |
-| `nextRuntime` _string_ | The date and time that the storage backup schedule will be run. Format: "2006-01-02 15:04:05" |  | Optional: \{\} <br /> |
-| `runInterval` _float_ | The interval at which the schedule will run (in minutes) |  | Optional: \{\} <br /> |
-| `storageUuid` _string_ | UUID of the storage used to create storage backups |  | Optional: \{\} <br /> |
+| `active` _boolean_ | The status of the schedule active or not.<br />The status of the schedule active or not |  | Optional: \{\} <br /> |
+| `backupLocationUuid` _string_ | UUID of the location where your backup is stored.<br />UUID of the location where your backup is stored. |  | Optional: \{\} <br /> |
+| `keepBackups` _float_ | The amount of Snapshots to keep before overwriting the last created Snapshot (>=1).<br />The amount of storage backups to keep before overwriting the last created backup |  | Optional: \{\} <br /> |
+| `name` _string_ | UUID of the backup schedule.<br />The human-readable name of the object |  | Optional: \{\} <br /> |
+| `nextRuntime` _string_ | The date and time that the backup schedule will be run.<br />The date and time that the storage backup schedule will be run. Format: "2006-01-02 15:04:05" |  | Optional: \{\} <br /> |
+| `runInterval` _float_ | The interval at which the schedule will run (in minutes, >=60).<br />The interval at which the schedule will run (in minutes) |  | Optional: \{\} <br /> |
+| `storageUuid` _string_ | UUID of the storage that the backup schedule belongs to.<br />UUID of the storage used to create storage backups |  | Optional: \{\} <br /> |
+| `storageUuidRef` _[Reference](#reference)_ | Reference to a Storage in gridscale to populate storageUuid. |  | Optional: \{\} <br /> |
+| `storageUuidSelector` _[Selector](#selector)_ | Selector for a Storage in gridscale to populate storageUuid. |  | Optional: \{\} <br /> |
 
 
 #### BackupscheduleSpec
@@ -5329,6 +5421,8 @@ _Appears in:_
 | `labels` _string array_ | List of labels. |  |  |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to. |  |  |
+| `networkUuidRef` _[Reference](#reference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[Selector](#selector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of Filesystem service. |  |  |
 | `release` _string_ | The Filesystem service release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available Filesystem service releases. |  |  |
 | `rootSquash` _boolean_ | Map root user/group ownership to anon_uid/anon_gid |  |  |
@@ -5405,6 +5499,8 @@ _Appears in:_
 | `labels` _string array_ | List of labels. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  | Optional: \{\} <br /> |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to. |  | Optional: \{\} <br /> |
+| `networkUuidRef` _[Reference](#reference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[Selector](#selector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of Filesystem service. |  | Optional: \{\} <br /> |
 | `release` _string_ | The Filesystem service release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available Filesystem service releases. |  | Optional: \{\} <br /> |
 | `rootSquash` _boolean_ | Map root user/group ownership to anon_uid/anon_gid |  | Optional: \{\} <br /> |
@@ -5608,6 +5704,8 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `certificateUuid` _string_ | The UUID of a custom certificate.<br />The UUID of a custom certificate. |  |  |
+| `certificateUuidRef` _[Reference](#reference)_ | Reference to a Certificate in ssl to populate certificateUuid. |  | Optional: \{\} <br /> |
+| `certificateUuidSelector` _[Selector](#selector)_ | Selector for a Certificate in ssl to populate certificateUuid. |  | Optional: \{\} <br /> |
 | `letsencryptSsl` _string_ | A valid domain name that points to the loadbalancer's IP address.<br />A valid domain name that points to the loadbalancer's IP address. |  |  |
 | `listenPort` _float_ | Specifies the entry port of the load balancer.<br />Specifies the entry port of the load balancer. |  |  |
 | `mode` _string_ | Supports HTTP and TCP mode. Valid values: http, tcp.<br />Supports HTTP and TCP mode. Valid values: http, tcp. |  |  |
@@ -5648,6 +5746,8 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `certificateUuid` _string_ | The UUID of a custom certificate.<br />The UUID of a custom certificate. |  | Optional: \{\} <br /> |
+| `certificateUuidRef` _[Reference](#reference)_ | Reference to a Certificate in ssl to populate certificateUuid. |  | Optional: \{\} <br /> |
+| `certificateUuidSelector` _[Selector](#selector)_ | Selector for a Certificate in ssl to populate certificateUuid. |  | Optional: \{\} <br /> |
 | `letsencryptSsl` _string_ | A valid domain name that points to the loadbalancer's IP address.<br />A valid domain name that points to the loadbalancer's IP address. |  | Optional: \{\} <br /> |
 | `listenPort` _float_ | Specifies the entry port of the load balancer.<br />Specifies the entry port of the load balancer. |  | Optional: \{\} <br /> |
 | `mode` _string_ | Supports HTTP and TCP mode. Valid values: http, tcp.<br />Supports HTTP and TCP mode. Valid values: http, tcp. |  | Optional: \{\} <br /> |
@@ -6017,7 +6117,7 @@ _Appears in:_
 
 
 
-Isoimage is the Schema for the Isoimages API. <no value>
+Isoimage is the Schema for the Isoimages API. Manages an ISO Image in Gridscale.
 
 
 
@@ -6046,9 +6146,9 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `labels` _string array_ | List of labels. |  |  |
-| `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
-| `sourceUrl` _string_ | Contains the source URL of the ISO image that it was originally fetched from. |  |  |
+| `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  |  |
+| `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
+| `sourceUrl` _string_ | Contains the source URL of the ISO Image that it was originally fetched from.<br />Contains the source URL of the ISO image that it was originally fetched from. |  |  |
 
 
 #### IsoimageList
@@ -6082,24 +6182,24 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `capacity` _float_ | The capacity of a storage/ISO image/template/snapshot in GB. |  |  |
-| `changeTime` _string_ | The date and time of the last object change. |  |  |
-| `createTime` _string_ | The date and time the object was initially created. |  |  |
-| `currentPrice` _float_ | Defines the price for the current period since the last bill. |  |  |
-| `description` _string_ | Description of the ISO image. |  |  |
-| `id` _string_ |  |  |  |
-| `labels` _string array_ | List of labels. |  |  |
-| `locationCountry` _string_ | Two digit country code (ISO 3166-2) of the location where this object is placed. |  |  |
-| `locationIata` _string_ | Uses IATA airport code, which works as a location identifier |  |  |
-| `locationName` _string_ | The human-readable name of the location. It supports the full UTF-8 character set, with a maximum of 64 characters |  |  |
-| `locationUuid` _string_ | The location this object is placed. |  |  |
-| `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
-| `private` _boolean_ | The object is private, the value will be true. Otherwise the value will be false. |  |  |
-| `server` _[ServerObservation](#serverobservation) array_ | The information about servers which are related to this ISO image. |  |  |
-| `sourceUrl` _string_ | Contains the source URL of the ISO image that it was originally fetched from. |  |  |
-| `status` _string_ | Status indicates the status of the object |  |  |
-| `usageInMinutes` _float_ | Total minutes the object has been running. |  |  |
-| `version` _string_ | Upstream version of the ISO image release |  |  |
+| `capacity` _float_ | The capacity of a storage/ISO Image/template/snapshot in GB.<br />The capacity of a storage/ISO image/template/snapshot in GB. |  |  |
+| `changeTime` _string_ | The date and time of the last object change.<br />The date and time of the last object change. |  |  |
+| `createTime` _string_ | The date and time the object was initially created.<br />The date and time the object was initially created. |  |  |
+| `currentPrice` _float_ | Defines the price for the current period since the last bill.<br />Defines the price for the current period since the last bill. |  |  |
+| `description` _string_ | Description of the template.<br />Description of the ISO image. |  |  |
+| `id` _string_ | The UUID of the ISO Image. |  |  |
+| `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  |  |
+| `locationCountry` _string_ | Two digit country code (ISO 3166-2) of the location where this object is placed.<br />Two digit country code (ISO 3166-2) of the location where this object is placed. |  |  |
+| `locationIata` _string_ | Uses IATA airport code, which works as a location identifier.<br />Uses IATA airport code, which works as a location identifier |  |  |
+| `locationName` _string_ | The human-readable name of the location. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the location. It supports the full UTF-8 character set, with a maximum of 64 characters |  |  |
+| `locationUuid` _string_ | The location this object is placed.<br />The location this object is placed. |  |  |
+| `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
+| `private` _boolean_ | The object is private, the value will be true. Otherwise the value will be false.<br />The object is private, the value will be true. Otherwise the value will be false. |  |  |
+| `server` _[ServerObservation](#serverobservation) array_ | The information about servers which are related to this ISO Image.<br />The information about servers which are related to this ISO image. |  |  |
+| `sourceUrl` _string_ | Contains the source URL of the ISO Image that it was originally fetched from.<br />Contains the source URL of the ISO image that it was originally fetched from. |  |  |
+| `status` _string_ | Status indicates the status of the object.<br />Status indicates the status of the object |  |  |
+| `usageInMinutes` _float_ | Total minutes the object has been running.<br />Total minutes the object has been running. |  |  |
+| `version` _string_ | The version of the ISO Image.<br />Upstream version of the ISO image release |  |  |
 
 
 #### IsoimageParameters
@@ -6115,9 +6215,9 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `labels` _string array_ | List of labels. |  | Optional: \{\} <br /> |
-| `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  | Optional: \{\} <br /> |
-| `sourceUrl` _string_ | Contains the source URL of the ISO image that it was originally fetched from. |  | Optional: \{\} <br /> |
+| `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  | Optional: \{\} <br /> |
+| `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  | Optional: \{\} <br /> |
+| `sourceUrl` _string_ | Contains the source URL of the ISO Image that it was originally fetched from.<br />Contains the source URL of the ISO image that it was originally fetched from. |  | Optional: \{\} <br /> |
 
 
 #### IsoimageSpec
@@ -6505,7 +6605,11 @@ _Appears in:_
 | `forwardingRule` _[ForwardingRuleInitParameters](#forwardingruleinitparameters) array_ | The forwarding rules of the load balancer.<br />List of forwarding rules for the Load balancer. |  |  |
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  |  |
 | `listenIpv4Uuid` _string_ | The UUID of the IPv4 address the load balancer will listen to for incoming requests.<br />The UUID of the IPv4 address the Load balancer will listen to for incoming requests. |  |  |
+| `listenIpv4UuidRef` _[Reference](#reference)_ | Reference to a IPv4 in gridscale to populate listenIpv4Uuid. |  | Optional: \{\} <br /> |
+| `listenIpv4UuidSelector` _[Selector](#selector)_ | Selector for a IPv4 in gridscale to populate listenIpv4Uuid. |  | Optional: \{\} <br /> |
 | `listenIpv6Uuid` _string_ | The UUID of the IPv6 address the load balancer will listen to for incoming requests.<br />The UUID of the IPv6 address the Load balancer will listen to for incoming requests. |  |  |
+| `listenIpv6UuidRef` _[Reference](#reference)_ | Reference to a IPv6 in gridscale to populate listenIpv6Uuid. |  | Optional: \{\} <br /> |
+| `listenIpv6UuidSelector` _[Selector](#selector)_ | Selector for a IPv6 in gridscale to populate listenIpv6Uuid. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  |  |
 | `redirectHttpToHttps` _boolean_ | Whether the load balancer is forced to redirect requests from HTTP to HTTPS.<br />Whether the Load balancer is forced to redirect requests from HTTP to HTTPS |  |  |
 | `status` _string_ | The status of the load balancer.<br />Status indicates the status of the object. |  |  |
@@ -6573,7 +6677,11 @@ _Appears in:_
 | `forwardingRule` _[ForwardingRuleParameters](#forwardingruleparameters) array_ | The forwarding rules of the load balancer.<br />List of forwarding rules for the Load balancer. |  | Optional: \{\} <br /> |
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  | Optional: \{\} <br /> |
 | `listenIpv4Uuid` _string_ | The UUID of the IPv4 address the load balancer will listen to for incoming requests.<br />The UUID of the IPv4 address the Load balancer will listen to for incoming requests. |  | Optional: \{\} <br /> |
+| `listenIpv4UuidRef` _[Reference](#reference)_ | Reference to a IPv4 in gridscale to populate listenIpv4Uuid. |  | Optional: \{\} <br /> |
+| `listenIpv4UuidSelector` _[Selector](#selector)_ | Selector for a IPv4 in gridscale to populate listenIpv4Uuid. |  | Optional: \{\} <br /> |
 | `listenIpv6Uuid` _string_ | The UUID of the IPv6 address the load balancer will listen to for incoming requests.<br />The UUID of the IPv6 address the Load balancer will listen to for incoming requests. |  | Optional: \{\} <br /> |
+| `listenIpv6UuidRef` _[Reference](#reference)_ | Reference to a IPv6 in gridscale to populate listenIpv6Uuid. |  | Optional: \{\} <br /> |
+| `listenIpv6UuidSelector` _[Selector](#selector)_ | Selector for a IPv6 in gridscale to populate listenIpv6Uuid. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  | Optional: \{\} <br /> |
 | `redirectHttpToHttps` _boolean_ | Whether the load balancer is forced to redirect requests from HTTP to HTTPS.<br />Whether the Load balancer is forced to redirect requests from HTTP to HTTPS |  | Optional: \{\} <br /> |
 | `status` _string_ | The status of the load balancer.<br />Status indicates the status of the object. |  | Optional: \{\} <br /> |
@@ -6663,6 +6771,8 @@ _Appears in:_
 | `maxCoreCount` _float_ | Maximum CPU core count. The MariaDB instance's CPU core count will be autoscaled based on the workload. The number of cores stays between 1 and max_core_count.<br />Maximum CPU core count. The MariaDB instance's CPU core count will be autoscaled based on the workload. The number of cores stays between 1 and `max_core_count`. |  |  |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  |  |
+| `networkUuidRef` _[Reference](#reference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[Selector](#selector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of MariaDB service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of MariaDB service. |  |  |
 | `release` _string_ | The MariaDB release of this instance. For convenience, please use gscloud to get the list of available MariaDB service releases.<br />The MariaDB release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available MariaDB service releases. |  |  |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to MariaDB service. |  |  |
@@ -6775,6 +6885,8 @@ _Appears in:_
 | `maxCoreCount` _float_ | Maximum CPU core count. The MariaDB instance's CPU core count will be autoscaled based on the workload. The number of cores stays between 1 and max_core_count.<br />Maximum CPU core count. The MariaDB instance's CPU core count will be autoscaled based on the workload. The number of cores stays between 1 and `max_core_count`. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  | Optional: \{\} <br /> |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  | Optional: \{\} <br /> |
+| `networkUuidRef` _[Reference](#reference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[Selector](#selector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of MariaDB service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of MariaDB service. |  | Optional: \{\} <br /> |
 | `release` _string_ | The MariaDB release of this instance. For convenience, please use gscloud to get the list of available MariaDB service releases.<br />The MariaDB release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available MariaDB service releases. |  | Optional: \{\} <br /> |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to MariaDB service. |  | Optional: \{\} <br /> |
@@ -6854,6 +6966,8 @@ _Appears in:_
 | `maxCoreCount` _float_ | Maximum CPU core count. The Memcached instance's CPU core count will be autoscaled based on the workload. The number of cores stays between 1 and max_core_count.<br />Maximum CPU core count. The Memcached instance's CPU core count will be autoscaled based on the workload. The number of cores stays between 1 and `max_core_count`. |  |  |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  |  |
+| `networkUuidRef` _[Reference](#reference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[Selector](#selector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of Memcached service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of Memcached service. |  |  |
 | `release` _string_ | The Memcached release of this instance. For convenience, please use gscloud to get the list of available Memcached service releases.<br />The Memcached release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available Memcached service releases. |  |  |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to Memcached service. |  |  |
@@ -6946,6 +7060,8 @@ _Appears in:_
 | `maxCoreCount` _float_ | Maximum CPU core count. The Memcached instance's CPU core count will be autoscaled based on the workload. The number of cores stays between 1 and max_core_count.<br />Maximum CPU core count. The Memcached instance's CPU core count will be autoscaled based on the workload. The number of cores stays between 1 and `max_core_count`. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  | Optional: \{\} <br /> |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  | Optional: \{\} <br /> |
+| `networkUuidRef` _[Reference](#reference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[Selector](#selector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of Memcached service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of Memcached service. |  | Optional: \{\} <br /> |
 | `release` _string_ | The Memcached release of this instance. For convenience, please use gscloud to get the list of available Memcached service releases.<br />The Memcached release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available Memcached service releases. |  | Optional: \{\} <br /> |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to Memcached service. |  | Optional: \{\} <br /> |
@@ -7035,6 +7151,8 @@ _Appears in:_
 | `mysqlServerId` _float_ | mysql parameter: Server Id. Default: 1.<br />Server Id. |  |  |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  |  |
+| `networkUuidRef` _[Reference](#reference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[Selector](#selector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of mysql service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of MySQL service. |  |  |
 | `release` _string_ | The mysql release of this instance. For convenience, please use gscloud to get the list of available mysql service releases.<br />The MySQL release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available MySQL service releases. |  |  |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to MySQL service. |  |  |
@@ -7147,6 +7265,8 @@ _Appears in:_
 | `mysqlServerId` _float_ | mysql parameter: Server Id. Default: 1.<br />Server Id. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  | Optional: \{\} <br /> |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  | Optional: \{\} <br /> |
+| `networkUuidRef` _[Reference](#reference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[Selector](#selector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of mysql service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of MySQL service. |  | Optional: \{\} <br /> |
 | `release` _string_ | The mysql release of this instance. For convenience, please use gscloud to get the list of available mysql service releases.<br />The MySQL release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available MySQL service releases. |  | Optional: \{\} <br /> |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to MySQL service. |  | Optional: \{\} <br /> |
@@ -7730,12 +7850,12 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `accessKeySecretRef` _[SecretKeySelector](#secretkeyselector)_ | Access key |  |  |
-| `bucket` _string_ | Bucket name |  |  |
-| `host` _string_ | Host of object storage. Must be of URL type. E.g: https://gos3.io |  |  |
-| `object` _string_ | Name of file (include file path) |  |  |
-| `private` _boolean_ |  |  |  |
-| `secretKeySecretRef` _[SecretKeySelector](#secretkeyselector)_ | Secret key |  |  |
+| `accessKeySecretRef` _[SecretKeySelector](#secretkeyselector)_ | Access key.<br />Access key |  |  |
+| `bucket` _string_ | Bucket name.<br />Bucket name |  |  |
+| `host` _string_ | Host of object storage. Must be of URL type, e.g., https://gos3.io<br />Host of object storage. Must be of URL type. E.g: https://gos3.io |  |  |
+| `object` _string_ | Name of file (include file path).<br />Name of file (include file path) |  |  |
+| `private` _boolean_ | Privacy. |  |  |
+| `secretKeySecretRef` _[SecretKeySelector](#secretkeyselector)_ | Secret key.<br />Secret key |  |  |
 
 
 #### ObjectStorageExportObservation
@@ -7751,11 +7871,11 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `bucket` _string_ | Bucket name |  |  |
-| `host` _string_ | Host of object storage. Must be of URL type. E.g: https://gos3.io |  |  |
-| `object` _string_ | Name of file (include file path) |  |  |
-| `private` _boolean_ |  |  |  |
-| `status` _string_ |  |  |  |
+| `bucket` _string_ | Bucket name.<br />Bucket name |  |  |
+| `host` _string_ | Host of object storage. Must be of URL type, e.g., https://gos3.io<br />Host of object storage. Must be of URL type. E.g: https://gos3.io |  |  |
+| `object` _string_ | Name of file (include file path).<br />Name of file (include file path) |  |  |
+| `private` _boolean_ | Privacy. |  |  |
+| `status` _string_ | The status of the snapshot. |  |  |
 
 
 #### ObjectStorageExportParameters
@@ -7771,12 +7891,12 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `accessKeySecretRef` _[SecretKeySelector](#secretkeyselector)_ | Access key |  | Optional: \{\} <br /> |
-| `bucket` _string_ | Bucket name |  | Optional: \{\} <br /> |
-| `host` _string_ | Host of object storage. Must be of URL type. E.g: https://gos3.io |  | Optional: \{\} <br /> |
-| `object` _string_ | Name of file (include file path) |  | Optional: \{\} <br /> |
-| `private` _boolean_ |  |  | Optional: \{\} <br /> |
-| `secretKeySecretRef` _[SecretKeySelector](#secretkeyselector)_ | Secret key |  | Optional: \{\} <br /> |
+| `accessKeySecretRef` _[SecretKeySelector](#secretkeyselector)_ | Access key.<br />Access key |  | Optional: \{\} <br /> |
+| `bucket` _string_ | Bucket name.<br />Bucket name |  | Optional: \{\} <br /> |
+| `host` _string_ | Host of object storage. Must be of URL type, e.g., https://gos3.io<br />Host of object storage. Must be of URL type. E.g: https://gos3.io |  | Optional: \{\} <br /> |
+| `object` _string_ | Name of file (include file path).<br />Name of file (include file path) |  | Optional: \{\} <br /> |
+| `private` _boolean_ | Privacy. |  | Optional: \{\} <br /> |
+| `secretKeySecretRef` _[SecretKeySelector](#secretkeyselector)_ | Secret key.<br />Secret key |  | Optional: \{\} <br /> |
 
 
 #### Paas
@@ -7815,6 +7935,8 @@ _Appears in:_
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  |  |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  |  |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  |  |
+| `networkUuidRef` _[Reference](#reference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[Selector](#selector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `parameter` _[ParameterInitParameters](#parameterinitparameters) array_ | See Argument Reference above.<br />Parameter for PaaS service |  |  |
 | `resourceLimit` _[ResourceLimitInitParameters](#resourcelimitinitparameters) array_ | A list of service resource limits..<br />Resource for PaaS service |  |  |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to PaaS service |  |  |
@@ -7908,6 +8030,8 @@ _Appears in:_
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  | Optional: \{\} <br /> |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  | Optional: \{\} <br /> |
+| `networkUuidRef` _[Reference](#reference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[Selector](#selector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `parameter` _[ParameterParameters](#parameterparameters) array_ | See Argument Reference above.<br />Parameter for PaaS service |  | Optional: \{\} <br /> |
 | `resourceLimit` _[ResourceLimitParameters](#resourcelimitparameters) array_ | A list of service resource limits..<br />Resource for PaaS service |  | Optional: \{\} <br /> |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to PaaS service |  | Optional: \{\} <br /> |
@@ -8063,6 +8187,8 @@ _Appears in:_
 | `maxCoreCount` _float_ | Maximum CPU core count. The PostgreSQL instance's CPU core count will be autoscaled based on the workload. The number of cores stays between 1 and max_core_count.<br />Maximum CPU core count. The PostgreSQL instance's CPU core count will be autoscaled based on the workload. The number of cores stays between 1 and `max_core_count`. |  |  |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  |  |
+| `networkUuidRef` _[Reference](#reference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[Selector](#selector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of PostgreSQL service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of PostgreSQL service. |  |  |
 | `pgauditLogAccessKey` _string_ | Access key used to authenticate against Object Storage server.<br />Access key used to authenticate against Object Storage server. |  |  |
 | `pgauditLogBucket` _string_ | Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key.<br />Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key. |  |  |
@@ -8165,6 +8291,8 @@ _Appears in:_
 | `maxCoreCount` _float_ | Maximum CPU core count. The PostgreSQL instance's CPU core count will be autoscaled based on the workload. The number of cores stays between 1 and max_core_count.<br />Maximum CPU core count. The PostgreSQL instance's CPU core count will be autoscaled based on the workload. The number of cores stays between 1 and `max_core_count`. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  | Optional: \{\} <br /> |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  | Optional: \{\} <br /> |
+| `networkUuidRef` _[Reference](#reference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[Selector](#selector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of PostgreSQL service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of PostgreSQL service. |  | Optional: \{\} <br /> |
 | `pgauditLogAccessKey` _string_ | Access key used to authenticate against Object Storage server.<br />Access key used to authenticate against Object Storage server. |  | Optional: \{\} <br /> |
 | `pgauditLogBucket` _string_ | Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key.<br />Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key. |  | Optional: \{\} <br /> |
@@ -8276,7 +8404,7 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `id` _string_ | ID of the rollback request. Each rollback request has to have a unique id. ID can be any string value. |  |  |
+| `id` _string_ | ID of the rollback request. It can be any string value. Each rollback request has to have a UNIQUE id.<br />ID of the rollback request. Each rollback request has to have a unique id. ID can be any string value. |  |  |
 
 
 #### RollbackObservation
@@ -8292,9 +8420,9 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `id` _string_ | ID of the rollback request. Each rollback request has to have a unique id. ID can be any string value. |  |  |
-| `rollbackTime` _string_ |  |  |  |
-| `status` _string_ |  |  |  |
+| `id` _string_ | ID of the rollback request. It can be any string value. Each rollback request has to have a UNIQUE id.<br />ID of the rollback request. Each rollback request has to have a unique id. ID can be any string value. |  |  |
+| `rollbackTime` _string_ | The time when rollback request is fulfilled. |  |  |
+| `status` _string_ | The status of the snapshot. |  |  |
 
 
 #### RollbackParameters
@@ -8310,7 +8438,7 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `id` _string_ | ID of the rollback request. Each rollback request has to have a unique id. ID can be any string value. |  | Optional: \{\} <br /> |
+| `id` _string_ | ID of the rollback request. It can be any string value. Each rollback request has to have a UNIQUE id.<br />ID of the rollback request. Each rollback request has to have a unique id. ID can be any string value. |  | Optional: \{\} <br /> |
 
 
 #### RulesV4InInitParameters
@@ -8688,8 +8816,14 @@ _Appears in:_
 | `hardwareProfile` _string_ | The hardware profile of the Server. Options are default, legacy, nested, cisco_csr, sophos_utm, f5_bigip and q35 at the moment of writing. If it is not set, the backend will set it by default. Check the official docs.<br />Specifies the hardware settings for the virtual machine. Note: hardware_profile and hardware_profile_config parameters can't be used at the same time. |  |  |
 | `hardwareProfileConfig` _[HardwareProfileConfigInitParameters](#hardwareprofileconfiginitparameters) array_ | Specifies the custom hardware settings for the virtual machine. Note: hardware_profile and hardware_profile_config parameters can't be used at the same time. Note: If hardware_profile_config is set, all fields of hardware_profile_config MUST be set.<br />Specifies the custom hardware settings for the virtual machine. Note: hardware_profile and hardware_profile_config parameters can't be used at the same time. |  |  |
 | `ipv4` _string_ | The UUID of the IPv4 address of the server. (***NOTE: The server will NOT automatically be connected to the public network; to give it access to the internet, please add server to the public network.) |  |  |
+| `ipv4Ref` _[Reference](#reference)_ | Reference to a IPv4 in gridscale to populate ipv4. |  | Optional: \{\} <br /> |
+| `ipv4Selector` _[Selector](#selector)_ | Selector for a IPv4 in gridscale to populate ipv4. |  | Optional: \{\} <br /> |
 | `ipv6` _string_ | The UUID of the IPv6 address of the server. (***NOTE: The server will NOT automatically be connected to the public network; to give it access to the internet, please add server to the public network.) |  |  |
+| `ipv6Ref` _[Reference](#reference)_ | Reference to a IPv6 in gridscale to populate ipv6. |  | Optional: \{\} <br /> |
+| `ipv6Selector` _[Selector](#selector)_ | Selector for a IPv6 in gridscale to populate ipv6. |  | Optional: \{\} <br /> |
 | `isoimage` _string_ | The UUID of an ISO image in gridscale. The server will automatically boot from the ISO if one was added. The UUIDs of ISO images can be found in the expert panel. |  |  |
+| `isoimageRef` _[Reference](#reference)_ | Reference to a Isoimage in gridscale to populate isoimage. |  | Optional: \{\} <br /> |
+| `isoimageSelector` _[Selector](#selector)_ | Selector for a Isoimage in gridscale to populate isoimage. |  | Optional: \{\} <br /> |
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  |  |
 | `memory` _float_ | The amount of server memory in GB.<br />The amount of server memory in GB. |  |  |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  |  |
@@ -8732,8 +8866,12 @@ _Appears in:_
 | --- | --- | --- | --- |
 | `bootdevice` _boolean_ | Make this network the boot device. This can only be set for one network. |  |  |
 | `firewallTemplateUuid` _string_ | The UUID of firewall template. |  |  |
+| `firewallTemplateUuidRef` _[Reference](#reference)_ | Reference to a Firewall in gridscale to populate firewallTemplateUuid. |  | Optional: \{\} <br /> |
+| `firewallTemplateUuidSelector` _[Selector](#selector)_ | Selector for a Firewall in gridscale to populate firewallTemplateUuid. |  | Optional: \{\} <br /> |
 | `ip` _string_ | Manually assign DHCP IP to the server (if applicable).<br />Manually assign DHCP IP to the server. |  |  |
 | `objectUuid` _string_ | The object UUID or id of the network. |  |  |
+| `objectUuidRef` _[Reference](#reference)_ | Reference to a Network in gridscale to populate objectUuid. |  | Optional: \{\} <br /> |
+| `objectUuidSelector` _[Selector](#selector)_ | Selector for a Network in gridscale to populate objectUuid. |  | Optional: \{\} <br /> |
 | `ordering` _float_ | DEPRECATED  Defines the ordering of the network interfaces. Lower numbers have lower PCI-IDs. |  |  |
 | `rulesV4In` _[NetworkRulesV4InInitParameters](#networkrulesv4ininitparameters) array_ | Firewall template rules for inbound traffic - covers ipv4 addresses. |  |  |
 | `rulesV4Out` _[NetworkRulesV4OutInitParameters](#networkrulesv4outinitparameters) array_ | Firewall template rules for outbound traffic - covers ipv4 addresses. |  |  |
@@ -8785,8 +8923,12 @@ _Appears in:_
 | --- | --- | --- | --- |
 | `bootdevice` _boolean_ | Make this network the boot device. This can only be set for one network. |  | Optional: \{\} <br /> |
 | `firewallTemplateUuid` _string_ | The UUID of firewall template. |  | Optional: \{\} <br /> |
+| `firewallTemplateUuidRef` _[Reference](#reference)_ | Reference to a Firewall in gridscale to populate firewallTemplateUuid. |  | Optional: \{\} <br /> |
+| `firewallTemplateUuidSelector` _[Selector](#selector)_ | Selector for a Firewall in gridscale to populate firewallTemplateUuid. |  | Optional: \{\} <br /> |
 | `ip` _string_ | Manually assign DHCP IP to the server (if applicable).<br />Manually assign DHCP IP to the server. |  | Optional: \{\} <br /> |
 | `objectUuid` _string_ | The object UUID or id of the network. |  | Optional: \{\} <br /> |
+| `objectUuidRef` _[Reference](#reference)_ | Reference to a Network in gridscale to populate objectUuid. |  | Optional: \{\} <br /> |
+| `objectUuidSelector` _[Selector](#selector)_ | Selector for a Network in gridscale to populate objectUuid. |  | Optional: \{\} <br /> |
 | `ordering` _float_ | DEPRECATED  Defines the ordering of the network interfaces. Lower numbers have lower PCI-IDs. |  | Optional: \{\} <br /> |
 | `rulesV4In` _[NetworkRulesV4InParameters](#networkrulesv4inparameters) array_ | Firewall template rules for inbound traffic - covers ipv4 addresses. |  | Optional: \{\} <br /> |
 | `rulesV4Out` _[NetworkRulesV4OutParameters](#networkrulesv4outparameters) array_ | Firewall template rules for outbound traffic - covers ipv4 addresses. |  | Optional: \{\} <br /> |
@@ -8807,10 +8949,10 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `bootdevice` _boolean_ |  |  |  |
-| `createTime` _string_ |  |  |  |
-| `objectName` _string_ |  |  |  |
-| `objectUuid` _string_ |  |  |  |
+| `bootdevice` _boolean_ | True if the ISO Image is a boot device of this server. |  |  |
+| `createTime` _string_ | The date and time the object was initially created. |  |  |
+| `objectName` _string_ | Name of the server. |  |  |
+| `objectUuid` _string_ | The object UUID or id of the server. |  |  |
 
 
 #### ServerObservation_2
@@ -8874,8 +9016,14 @@ _Appears in:_
 | `hardwareProfile` _string_ | The hardware profile of the Server. Options are default, legacy, nested, cisco_csr, sophos_utm, f5_bigip and q35 at the moment of writing. If it is not set, the backend will set it by default. Check the official docs.<br />Specifies the hardware settings for the virtual machine. Note: hardware_profile and hardware_profile_config parameters can't be used at the same time. |  | Optional: \{\} <br /> |
 | `hardwareProfileConfig` _[HardwareProfileConfigParameters](#hardwareprofileconfigparameters) array_ | Specifies the custom hardware settings for the virtual machine. Note: hardware_profile and hardware_profile_config parameters can't be used at the same time. Note: If hardware_profile_config is set, all fields of hardware_profile_config MUST be set.<br />Specifies the custom hardware settings for the virtual machine. Note: hardware_profile and hardware_profile_config parameters can't be used at the same time. |  | Optional: \{\} <br /> |
 | `ipv4` _string_ | The UUID of the IPv4 address of the server. (***NOTE: The server will NOT automatically be connected to the public network; to give it access to the internet, please add server to the public network.) |  | Optional: \{\} <br /> |
+| `ipv4Ref` _[Reference](#reference)_ | Reference to a IPv4 in gridscale to populate ipv4. |  | Optional: \{\} <br /> |
+| `ipv4Selector` _[Selector](#selector)_ | Selector for a IPv4 in gridscale to populate ipv4. |  | Optional: \{\} <br /> |
 | `ipv6` _string_ | The UUID of the IPv6 address of the server. (***NOTE: The server will NOT automatically be connected to the public network; to give it access to the internet, please add server to the public network.) |  | Optional: \{\} <br /> |
+| `ipv6Ref` _[Reference](#reference)_ | Reference to a IPv6 in gridscale to populate ipv6. |  | Optional: \{\} <br /> |
+| `ipv6Selector` _[Selector](#selector)_ | Selector for a IPv6 in gridscale to populate ipv6. |  | Optional: \{\} <br /> |
 | `isoimage` _string_ | The UUID of an ISO image in gridscale. The server will automatically boot from the ISO if one was added. The UUIDs of ISO images can be found in the expert panel. |  | Optional: \{\} <br /> |
+| `isoimageRef` _[Reference](#reference)_ | Reference to a Isoimage in gridscale to populate isoimage. |  | Optional: \{\} <br /> |
+| `isoimageSelector` _[Selector](#selector)_ | Selector for a Isoimage in gridscale to populate isoimage. |  | Optional: \{\} <br /> |
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  | Optional: \{\} <br /> |
 | `memory` _float_ | The amount of server memory in GB.<br />The amount of server memory in GB. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  | Optional: \{\} <br /> |
@@ -8926,7 +9074,7 @@ _Appears in:_
 
 
 
-Snapshot is the Schema for the Snapshots API. <no value>
+Snapshot is the Schema for the Snapshots API. Manages a storage snapshot in gridscale.
 
 
 
@@ -8955,11 +9103,13 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `labels` _string array_ | List of labels. |  |  |
-| `name` _string_ | The human-readable name of the object |  |  |
-| `objectStorageExport` _[ObjectStorageExportInitParameters](#objectstorageexportinitparameters) array_ | Export snapshot to a object storage |  |  |
-| `rollback` _[RollbackInitParameters](#rollbackinitparameters) array_ | Returns a storage to the state of the selected Snapshot. |  |  |
-| `storageUuid` _string_ | UUID of the storage used to create this snapshot |  |  |
+| `labels` _string array_ | The list of labels.<br />List of labels. |  |  |
+| `name` _string_ | The name of the snapshot.<br />The human-readable name of the object |  |  |
+| `objectStorageExport` _[ObjectStorageExportInitParameters](#objectstorageexportinitparameters) array_ | Export snapshot to a object storage.<br />Export snapshot to a object storage |  |  |
+| `rollback` _[RollbackInitParameters](#rollbackinitparameters) array_ | Returns a storage to the state of the selected Snapshot.<br />Returns a storage to the state of the selected Snapshot. |  |  |
+| `storageUuid` _string_ | UUID of the storage used to create this snapshot.<br />UUID of the storage used to create this snapshot |  |  |
+| `storageUuidRef` _[Reference](#reference)_ | Reference to a Storage in gridscale to populate storageUuid. |  | Optional: \{\} <br /> |
+| `storageUuidSelector` _[Selector](#selector)_ | Selector for a Storage in gridscale to populate storageUuid. |  | Optional: \{\} <br /> |
 
 
 #### SnapshotList
@@ -8993,23 +9143,23 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `capacity` _float_ | The capacity of a storage/ISO image/template/snapshot in GB |  |  |
-| `changeTime` _string_ | Defines the date and time of the last object change |  |  |
-| `createTime` _string_ | Defines the date and time the object was initially created |  |  |
-| `currentPrice` _float_ | The price for the current period since the last bill |  |  |
-| `id` _string_ |  |  |  |
-| `labels` _string array_ | List of labels. |  |  |
-| `licenseProductNo` _float_ | If a template has been used that requires a license key (e.g. Windows Servers) this shows<br />the product_no of the license (see the /prices endpoint for more details) |  |  |
-| `locationCountry` _string_ | The human-readable name of the location |  |  |
-| `locationIata` _string_ | Uses IATA airport code, which works as a location identifier |  |  |
-| `locationName` _string_ | The human-readable name of the location |  |  |
-| `locationUuid` _string_ | The location this object is placed. |  |  |
-| `name` _string_ | The human-readable name of the object |  |  |
-| `objectStorageExport` _[ObjectStorageExportObservation](#objectstorageexportobservation) array_ | Export snapshot to a object storage |  |  |
-| `rollback` _[RollbackObservation](#rollbackobservation) array_ | Returns a storage to the state of the selected Snapshot. |  |  |
-| `status` _string_ | Status indicates the status of the object |  |  |
-| `storageUuid` _string_ | UUID of the storage used to create this snapshot |  |  |
-| `usageInMinutes` _float_ | Total minutes the object has been running |  |  |
+| `capacity` _float_ | The capacity of the snapshot in GB.<br />The capacity of a storage/ISO image/template/snapshot in GB |  |  |
+| `changeTime` _string_ | The date and time of the last snapshot change.<br />Defines the date and time of the last object change |  |  |
+| `createTime` _string_ | The date and time the ip was initially created.<br />Defines the date and time the object was initially created |  |  |
+| `currentPrice` _float_ | The price for the current period since the last bill.<br />The price for the current period since the last bill |  |  |
+| `id` _string_ | ID of the rollback request. It can be any string value. Each rollback request has to have a UNIQUE id. |  |  |
+| `labels` _string array_ | The list of labels.<br />List of labels. |  |  |
+| `licenseProductNo` _float_ | If a template has been used that requires a license key (e.g. Windows Servers) this shows the product_no of the license (see the /prices endpoint for more details).<br />If a template has been used that requires a license key (e.g. Windows Servers) this shows<br />the product_no of the license (see the /prices endpoint for more details) |  |  |
+| `locationCountry` _string_ | The human-readable name of the country of the snapshot.<br />The human-readable name of the location |  |  |
+| `locationIata` _string_ | The IATA airport code, which works as a location identifier.<br />Uses IATA airport code, which works as a location identifier |  |  |
+| `locationName` _string_ | The human-readable name of the location of the snapshot.<br />The human-readable name of the location |  |  |
+| `locationUuid` _string_ | The UUID of the location, that helps to identify which datacenter an object belongs to.<br />The location this object is placed. |  |  |
+| `name` _string_ | The name of the snapshot.<br />The human-readable name of the object |  |  |
+| `objectStorageExport` _[ObjectStorageExportObservation](#objectstorageexportobservation) array_ | Export snapshot to a object storage.<br />Export snapshot to a object storage |  |  |
+| `rollback` _[RollbackObservation](#rollbackobservation) array_ | Returns a storage to the state of the selected Snapshot.<br />Returns a storage to the state of the selected Snapshot. |  |  |
+| `status` _string_ | The status of the snapshot.<br />Status indicates the status of the object |  |  |
+| `storageUuid` _string_ | UUID of the storage used to create this snapshot.<br />UUID of the storage used to create this snapshot |  |  |
+| `usageInMinutes` _float_ | Total minutes the ip has been running.<br />Total minutes the object has been running |  |  |
 
 
 #### SnapshotParameters
@@ -9025,11 +9175,13 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `labels` _string array_ | List of labels. |  | Optional: \{\} <br /> |
-| `name` _string_ | The human-readable name of the object |  | Optional: \{\} <br /> |
-| `objectStorageExport` _[ObjectStorageExportParameters](#objectstorageexportparameters) array_ | Export snapshot to a object storage |  | Optional: \{\} <br /> |
-| `rollback` _[RollbackParameters](#rollbackparameters) array_ | Returns a storage to the state of the selected Snapshot. |  | Optional: \{\} <br /> |
-| `storageUuid` _string_ | UUID of the storage used to create this snapshot |  | Optional: \{\} <br /> |
+| `labels` _string array_ | The list of labels.<br />List of labels. |  | Optional: \{\} <br /> |
+| `name` _string_ | The name of the snapshot.<br />The human-readable name of the object |  | Optional: \{\} <br /> |
+| `objectStorageExport` _[ObjectStorageExportParameters](#objectstorageexportparameters) array_ | Export snapshot to a object storage.<br />Export snapshot to a object storage |  | Optional: \{\} <br /> |
+| `rollback` _[RollbackParameters](#rollbackparameters) array_ | Returns a storage to the state of the selected Snapshot.<br />Returns a storage to the state of the selected Snapshot. |  | Optional: \{\} <br /> |
+| `storageUuid` _string_ | UUID of the storage used to create this snapshot.<br />UUID of the storage used to create this snapshot |  | Optional: \{\} <br /> |
+| `storageUuidRef` _[Reference](#reference)_ | Reference to a Storage in gridscale to populate storageUuid. |  | Optional: \{\} <br /> |
+| `storageUuidSelector` _[Selector](#selector)_ | Selector for a Storage in gridscale to populate storageUuid. |  | Optional: \{\} <br /> |
 
 
 #### SnapshotSpec
@@ -9073,7 +9225,7 @@ _Appears in:_
 
 
 
-Snapshotschedule is the Schema for the Snapshotschedules API. <no value>
+Snapshotschedule is the Schema for the Snapshotschedules API. Manages a storage snapshot schedule.
 
 
 
@@ -9102,12 +9254,14 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `keepSnapshots` _float_ | The amount of Snapshots to keep before overwriting the last created Snapshot |  |  |
-| `labels` _string array_ | List of labels. |  |  |
-| `name` _string_ | The human-readable name of the object |  |  |
-| `nextRuntime` _string_ | The date and time that the snapshot schedule will be run |  |  |
-| `runInterval` _float_ | The interval at which the schedule will run (in minutes) |  |  |
-| `storageUuid` _string_ | UUID of the storage used to create snapshots |  |  |
+| `keepSnapshots` _float_ | The amount of Snapshots to keep before overwriting the last created Snapshot (>=1).<br />The amount of Snapshots to keep before overwriting the last created Snapshot |  |  |
+| `labels` _string array_ | The list of labels.<br />List of labels. |  |  |
+| `name` _string_ | UUID of the snapshot schedule.<br />The human-readable name of the object |  |  |
+| `nextRuntime` _string_ | The date and time that the snapshot schedule will be run.<br />The date and time that the snapshot schedule will be run |  |  |
+| `runInterval` _float_ | The interval at which the schedule will run (in minutes, >=60).<br />The interval at which the schedule will run (in minutes) |  |  |
+| `storageUuid` _string_ | UUID of the storage that the snapshot schedule belongs to.<br />UUID of the storage used to create snapshots |  |  |
+| `storageUuidRef` _[Reference](#reference)_ | Reference to a Storage in gridscale to populate storageUuid. |  | Optional: \{\} <br /> |
+| `storageUuidSelector` _[Selector](#selector)_ | Selector for a Storage in gridscale to populate storageUuid. |  | Optional: \{\} <br /> |
 
 
 #### SnapshotscheduleList
@@ -9141,18 +9295,18 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `changeTime` _string_ | Defines the date and time of the last object change |  |  |
-| `createTime` _string_ | Defines the date and time the object was initially created |  |  |
-| `id` _string_ |  |  |  |
-| `keepSnapshots` _float_ | The amount of Snapshots to keep before overwriting the last created Snapshot |  |  |
-| `labels` _string array_ | List of labels. |  |  |
-| `name` _string_ | The human-readable name of the object |  |  |
-| `nextRuntime` _string_ | The date and time that the snapshot schedule will be run |  |  |
-| `nextRuntimeComputed` _string_ | The date and time that the snapshot schedule will be run. This date and time is computed by gridscale's server. |  |  |
-| `runInterval` _float_ | The interval at which the schedule will run (in minutes) |  |  |
-| `snapshot` _[SnapshotscheduleSnapshotObservation](#snapshotschedulesnapshotobservation) array_ | Related snashots |  |  |
-| `status` _string_ | Status indicates the status of the object |  |  |
-| `storageUuid` _string_ | UUID of the storage used to create snapshots |  |  |
+| `changeTime` _string_ | The date and time of the last snapshot schedule change.<br />Defines the date and time of the last object change |  |  |
+| `createTime` _string_ | The date and time the snapshot schedule was initially created.<br />Defines the date and time the object was initially created |  |  |
+| `id` _string_ | The UUID of the snapshot schedule. |  |  |
+| `keepSnapshots` _float_ | The amount of Snapshots to keep before overwriting the last created Snapshot (>=1).<br />The amount of Snapshots to keep before overwriting the last created Snapshot |  |  |
+| `labels` _string array_ | The list of labels.<br />List of labels. |  |  |
+| `name` _string_ | UUID of the snapshot schedule.<br />The human-readable name of the object |  |  |
+| `nextRuntime` _string_ | The date and time that the snapshot schedule will be run.<br />The date and time that the snapshot schedule will be run |  |  |
+| `nextRuntimeComputed` _string_ | The date and time that the snapshot schedule will be run. This date and time is computed by gridscale's server.<br />The date and time that the snapshot schedule will be run. This date and time is computed by gridscale's server. |  |  |
+| `runInterval` _float_ | The interval at which the schedule will run (in minutes, >=60).<br />The interval at which the schedule will run (in minutes) |  |  |
+| `snapshot` _[SnapshotscheduleSnapshotObservation](#snapshotschedulesnapshotobservation) array_ | Related snapshots.<br />Related snashots |  |  |
+| `status` _string_ | The status of the snapshot schedule.<br />Status indicates the status of the object |  |  |
+| `storageUuid` _string_ | UUID of the storage that the snapshot schedule belongs to.<br />UUID of the storage used to create snapshots |  |  |
 
 
 #### SnapshotscheduleParameters
@@ -9168,12 +9322,14 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `keepSnapshots` _float_ | The amount of Snapshots to keep before overwriting the last created Snapshot |  | Optional: \{\} <br /> |
-| `labels` _string array_ | List of labels. |  | Optional: \{\} <br /> |
-| `name` _string_ | The human-readable name of the object |  | Optional: \{\} <br /> |
-| `nextRuntime` _string_ | The date and time that the snapshot schedule will be run |  | Optional: \{\} <br /> |
-| `runInterval` _float_ | The interval at which the schedule will run (in minutes) |  | Optional: \{\} <br /> |
-| `storageUuid` _string_ | UUID of the storage used to create snapshots |  | Optional: \{\} <br /> |
+| `keepSnapshots` _float_ | The amount of Snapshots to keep before overwriting the last created Snapshot (>=1).<br />The amount of Snapshots to keep before overwriting the last created Snapshot |  | Optional: \{\} <br /> |
+| `labels` _string array_ | The list of labels.<br />List of labels. |  | Optional: \{\} <br /> |
+| `name` _string_ | UUID of the snapshot schedule.<br />The human-readable name of the object |  | Optional: \{\} <br /> |
+| `nextRuntime` _string_ | The date and time that the snapshot schedule will be run.<br />The date and time that the snapshot schedule will be run |  | Optional: \{\} <br /> |
+| `runInterval` _float_ | The interval at which the schedule will run (in minutes, >=60).<br />The interval at which the schedule will run (in minutes) |  | Optional: \{\} <br /> |
+| `storageUuid` _string_ | UUID of the storage that the snapshot schedule belongs to.<br />UUID of the storage used to create snapshots |  | Optional: \{\} <br /> |
+| `storageUuidRef` _[Reference](#reference)_ | Reference to a Storage in gridscale to populate storageUuid. |  | Optional: \{\} <br /> |
+| `storageUuidSelector` _[Selector](#selector)_ | Selector for a Storage in gridscale to populate storageUuid. |  | Optional: \{\} <br /> |
 
 
 
@@ -9191,9 +9347,9 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `createTime` _string_ |  |  |  |
-| `name` _string_ |  |  |  |
-| `objectUuid` _string_ |  |  |  |
+| `createTime` _string_ | The date and time the snapshot schedule was initially created. |  |  |
+| `name` _string_ | UUID of the snapshot schedule. |  |  |
+| `objectUuid` _string_ | UUID of the snapshot. |  |  |
 
 
 
@@ -9271,6 +9427,8 @@ _Appears in:_
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  |  |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  |  |
+| `networkUuidRef` _[Reference](#reference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[Selector](#selector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of MS SQL server service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of MS SQL Server. |  |  |
 | `release` _string_ | The MS SQL server release of this instance. For convenience, please use gscloud to get the list of available MS SQL server service releases.<br />The MS SQL Server release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available MS SQL Server releases. |  |  |
 | `s3Backup` _[S3BackupInitParameters](#s3backupinitparameters) array_ | Allow backup/restore MS SQL server to/from a S3 bucket.<br />Allow backup/restore MS SQL server to/from a S3 bucket. |  |  |
@@ -9363,6 +9521,8 @@ _Appears in:_
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  | Optional: \{\} <br /> |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  | Optional: \{\} <br /> |
+| `networkUuidRef` _[Reference](#reference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[Selector](#selector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of MS SQL server service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of MS SQL Server. |  | Optional: \{\} <br /> |
 | `release` _string_ | The MS SQL server release of this instance. For convenience, please use gscloud to get the list of available MS SQL server service releases.<br />The MS SQL Server release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available MS SQL Server releases. |  | Optional: \{\} <br /> |
 | `s3Backup` _[S3BackupParameters](#s3backupparameters) array_ | Allow backup/restore MS SQL server to/from a S3 bucket.<br />Allow backup/restore MS SQL server to/from a S3 bucket. |  | Optional: \{\} <br /> |
@@ -9574,9 +9734,9 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `createTime` _string_ |  |  |  |
-| `name` _string_ |  |  |  |
-| `objectUuid` _string_ |  |  |  |
+| `createTime` _string_ | The date and time the backup schedule was initially created. |  |  |
+| `name` _string_ | UUID of the backup schedule. |  |  |
+| `objectUuid` _string_ | UUID of the backup. |  |  |
 
 
 
@@ -9595,6 +9755,8 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `objectUuid` _string_ | The object UUID or id of the storage. |  |  |
+| `objectUuidRef` _[Reference](#reference)_ | Reference to a Storage in gridscale to populate objectUuid. |  | Optional: \{\} <br /> |
+| `objectUuidSelector` _[Selector](#selector)_ | Selector for a Storage in gridscale to populate objectUuid. |  | Optional: \{\} <br /> |
 
 
 #### StorageInitParameters_2
@@ -9713,6 +9875,8 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `objectUuid` _string_ | The object UUID or id of the storage. |  | Optional: \{\} <br /> |
+| `objectUuidRef` _[Reference](#reference)_ | Reference to a Storage in gridscale to populate objectUuid. |  | Optional: \{\} <br /> |
+| `objectUuidSelector` _[Selector](#selector)_ | Selector for a Storage in gridscale to populate objectUuid. |  | Optional: \{\} <br /> |
 
 
 #### StorageParameters_2
@@ -9884,6 +10048,8 @@ _Appears in:_
 | `labels` _string array_ | List of labels.<br />List of labels. |  |  |
 | `name` _string_ | The exact name of the template as show in the page Template.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
 | `snapshotUuid` _string_ | Snapshot uuid for template.<br />Snapshot UUID for template. |  |  |
+| `snapshotUuidRef` _[Reference](#reference)_ | Reference to a Snapshot in gridscale to populate snapshotUuid. |  | Optional: \{\} <br /> |
+| `snapshotUuidSelector` _[Selector](#selector)_ | Selector for a Snapshot in gridscale to populate snapshotUuid. |  | Optional: \{\} <br /> |
 
 
 #### TemplateList
@@ -9994,6 +10160,8 @@ _Appears in:_
 | `labels` _string array_ | List of labels.<br />List of labels. |  | Optional: \{\} <br /> |
 | `name` _string_ | The exact name of the template as show in the page Template.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  | Optional: \{\} <br /> |
 | `snapshotUuid` _string_ | Snapshot uuid for template.<br />Snapshot UUID for template. |  | Optional: \{\} <br /> |
+| `snapshotUuidRef` _[Reference](#reference)_ | Reference to a Snapshot in gridscale to populate snapshotUuid. |  | Optional: \{\} <br /> |
+| `snapshotUuidSelector` _[Selector](#selector)_ | Selector for a Snapshot in gridscale to populate snapshotUuid. |  | Optional: \{\} <br /> |
 
 
 #### TemplateSpec
@@ -10369,7 +10537,7 @@ _Appears in:_
 
 
 
-Application is the Schema for the Applications API. <no value>
+Application is the Schema for the Applications API. Manages marketplace applications in Gridscale.
 
 
 
@@ -10389,7 +10557,7 @@ _Appears in:_
 
 
 
-ApplicationImport is the Schema for the ApplicationImports API. <no value>
+ApplicationImport is the Schema for the ApplicationImports API. Manages imported marketplace applications in Gridscale.
 
 
 
@@ -10418,7 +10586,7 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `importUniqueHash` _string_ | Hash of a specific marketplace application that you want to import |  |  |
+| `importUniqueHash` _string_ | Hash of a specific marketplace application that you want to import. A change of this argument necessitates the re-creation of the resource.<br />Hash of a specific marketplace application that you want to import |  |  |
 
 
 #### ApplicationImportList
@@ -10452,38 +10620,38 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `category` _string_ | Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving" |  |  |
-| `changeTime` _string_ | Defines the date and time of the last object change |  |  |
-| `createTime` _string_ | Defines the date and time the object was initially created |  |  |
-| `id` _string_ |  |  |  |
-| `importUniqueHash` _string_ | Hash of a specific marketplace application that you want to import |  |  |
-| `isApplicationOwner` _boolean_ | Whether the you are the owner of application or not |  |  |
-| `isPublishGlobal` _boolean_ | Whether a template is published to other partner or not |  |  |
-| `isPublishGlobalRequested` _boolean_ | Whether a partner wants their tenant template published to other partners |  |  |
-| `isPublishRequested` _boolean_ | Whether the tenants want their template to be published or not |  |  |
-| `isPublished` _boolean_ | Whether the template is published by the partner to their tenant |  |  |
-| `metaAdvices` _string_ |  |  |  |
-| `metaAuthor` _string_ |  |  |  |
-| `metaComponents` _string array_ |  |  |  |
-| `metaFeatures` _string_ |  |  |  |
-| `metaHints` _string_ |  |  |  |
-| `metaIcon` _string_ |  |  |  |
-| `metaLicense` _string_ |  |  |  |
-| `metaOs` _string_ |  |  |  |
-| `metaOverview` _string_ |  |  |  |
-| `metaTermsOfUse` _string_ |  |  |  |
-| `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  |  |
-| `objectStoragePath` _string_ | Path to the images for the application, must be in .gz format and started with s3// |  |  |
-| `publishGlobalRequestedDate` _string_ | The date when a partner requested their tenants template to be published |  |  |
-| `publishRequestedDate` _string_ | The date when the tenant requested their template to be published |  |  |
-| `publishedDate` _string_ | The date when the template is published into other tenant in the same partner |  |  |
-| `publishedGlobalDate` _string_ | The date when a template is published to other partner |  |  |
-| `setupCores` _float_ | Number of server's cores |  |  |
-| `setupMemory` _float_ | The capacity of server's memory in GB |  |  |
-| `setupStorageCapacity` _float_ | The capacity of server's storage in GB |  |  |
-| `status` _string_ | status indicates the status of the object |  |  |
-| `type` _string_ | The type of template |  |  |
-| `uniqueHash` _string_ | Unique hash to allow user to import the self-created marketplace application |  |  |
+| `category` _string_ | Category of marketplace application.<br />Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving" |  |  |
+| `changeTime` _string_ | The date and time of the last marketplace application change.<br />Defines the date and time of the last object change |  |  |
+| `createTime` _string_ | The date and time the marketplace application was initially created.<br />Defines the date and time the object was initially created |  |  |
+| `id` _string_ | The UUID of the marketplace application. |  |  |
+| `importUniqueHash` _string_ | Hash of a specific marketplace application that you want to import. A change of this argument necessitates the re-creation of the resource.<br />Hash of a specific marketplace application that you want to import |  |  |
+| `isApplicationOwner` _boolean_ | Whether the you are the owner of application or not.<br />Whether the you are the owner of application or not |  |  |
+| `isPublishGlobal` _boolean_ | Whether a template is published to other partner or not.<br />Whether a template is published to other partner or not |  |  |
+| `isPublishGlobalRequested` _boolean_ | Whether a partner wants their tenant template published to other partners.<br />Whether a partner wants their tenant template published to other partners |  |  |
+| `isPublishRequested` _boolean_ | Whether the tenants want their template to be published or not.<br />Whether the tenants want their template to be published or not |  |  |
+| `isPublished` _boolean_ | Whether the template is published by the partner to their tenant".<br />Whether the template is published by the partner to their tenant |  |  |
+| `metaAdvices` _string_ | User manual; Wiki URL; ... |  |  |
+| `metaAuthor` _string_ | Author. |  |  |
+| `metaComponents` _string array_ | Components (e.g: MySql, Apache, etc.). |  |  |
+| `metaFeatures` _string_ | List of functions. |  |  |
+| `metaHints` _string_ | Hints. |  |  |
+| `metaIcon` _string_ | base64 encoded image of the icon. |  |  |
+| `metaLicense` _string_ | License number. |  |  |
+| `metaOs` _string_ | Operating system. |  |  |
+| `metaOverview` _string_ | Describes the main function of the application. |  |  |
+| `metaTermsOfUse` _string_ | Terms of use. |  |  |
+| `name` _string_ | The name of the marketplace application.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  |  |
+| `objectStoragePath` _string_ | Path to the images for the application.<br />Path to the images for the application, must be in .gz format and started with s3// |  |  |
+| `publishGlobalRequestedDate` _string_ | The date when a partner requested their tenants template to be published.<br />The date when a partner requested their tenants template to be published |  |  |
+| `publishRequestedDate` _string_ | The date when the tenant requested their template to be published.<br />The date when the tenant requested their template to be published |  |  |
+| `publishedDate` _string_ | The date when the template is published into other tenant in the same partner.<br />The date when the template is published into other tenant in the same partner |  |  |
+| `publishedGlobalDate` _string_ | The date when a template is published to other partner.<br />The date when a template is published to other partner |  |  |
+| `setupCores` _float_ | Number of server's cores.<br />Number of server's cores |  |  |
+| `setupMemory` _float_ | The capacity of server's memory in GB.<br />The capacity of server's memory in GB |  |  |
+| `setupStorageCapacity` _float_ | The capacity of server's storage in GB.<br />The capacity of server's storage in GB |  |  |
+| `status` _string_ | The status of the marketplace application.<br />status indicates the status of the object |  |  |
+| `type` _string_ | The type of template.<br />The type of template |  |  |
+| `uniqueHash` _string_ | Unique hash to allow user to import the self-created marketplace application.<br />Unique hash to allow user to import the self-created marketplace application |  |  |
 
 
 #### ApplicationImportParameters
@@ -10499,7 +10667,7 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `importUniqueHash` _string_ | Hash of a specific marketplace application that you want to import |  | Optional: \{\} <br /> |
+| `importUniqueHash` _string_ | Hash of a specific marketplace application that you want to import. A change of this argument necessitates the re-creation of the resource.<br />Hash of a specific marketplace application that you want to import |  | Optional: \{\} <br /> |
 
 
 #### ApplicationImportSpec
@@ -10551,23 +10719,23 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `category` _string_ | Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving" |  |  |
-| `metaAdvices` _string_ |  |  |  |
-| `metaAuthor` _string_ |  |  |  |
-| `metaComponents` _string array_ |  |  |  |
-| `metaFeatures` _string_ |  |  |  |
-| `metaHints` _string_ |  |  |  |
-| `metaIcon` _string_ |  |  |  |
-| `metaLicense` _string_ |  |  |  |
-| `metaOs` _string_ |  |  |  |
-| `metaOverview` _string_ |  |  |  |
-| `metaTermsOfUse` _string_ |  |  |  |
-| `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  |  |
-| `objectStoragePath` _string_ | Path to the images for the application, must be in .gz format and started with s3// |  |  |
+| `category` _string_ | Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving".<br />Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving" |  |  |
+| `metaAdvices` _string_ | See Argument Reference above. |  |  |
+| `metaAuthor` _string_ | Author. |  |  |
+| `metaComponents` _string array_ | Components (e.g: MySql, Apache, etc.). |  |  |
+| `metaFeatures` _string_ | List of functions. |  |  |
+| `metaHints` _string_ | Hints. |  |  |
+| `metaIcon` _string_ | base64 encoded image of the icon. |  |  |
+| `metaLicense` _string_ | License number. |  |  |
+| `metaOs` _string_ | Operating system. |  |  |
+| `metaOverview` _string_ | Describes the main function of the application. |  |  |
+| `metaTermsOfUse` _string_ | Terms of use. |  |  |
+| `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  |  |
+| `objectStoragePath` _string_ | Path to the images for the application, must be in .gz format and started with s3//.<br />Path to the images for the application, must be in .gz format and started with s3// |  |  |
 | `publish` _boolean_ | Whether you want to publish your application or not |  |  |
-| `setupCores` _float_ | Number of server's cores |  |  |
-| `setupMemory` _float_ | The capacity of server's memory in GB |  |  |
-| `setupStorageCapacity` _float_ | The capacity of server's storage in GB |  |  |
+| `setupCores` _float_ | Number of server's cores.<br />Number of server's cores |  |  |
+| `setupMemory` _float_ | The capacity of server's memory in GB.<br />The capacity of server's memory in GB |  |  |
+| `setupStorageCapacity` _float_ | The capacity of server's storage in GB.<br />The capacity of server's storage in GB |  |  |
 
 
 #### ApplicationList
@@ -10601,38 +10769,38 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `category` _string_ | Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving" |  |  |
-| `changeTime` _string_ | Defines the date and time of the last object change |  |  |
-| `createTime` _string_ | Defines the date and time the object was initially created |  |  |
-| `id` _string_ |  |  |  |
-| `isApplicationOwner` _boolean_ | Whether the you are the owner of application or not |  |  |
-| `isPublishGlobal` _boolean_ | Whether a template is published to other partner or not |  |  |
-| `isPublishGlobalRequested` _boolean_ | Whether a partner wants their tenant template published to other partners |  |  |
-| `isPublishRequested` _boolean_ | Whether the tenants want their template to be published or not |  |  |
-| `isPublished` _boolean_ | Whether the template is published by the partner to their tenant |  |  |
-| `metaAdvices` _string_ |  |  |  |
-| `metaAuthor` _string_ |  |  |  |
-| `metaComponents` _string array_ |  |  |  |
-| `metaFeatures` _string_ |  |  |  |
-| `metaHints` _string_ |  |  |  |
-| `metaIcon` _string_ |  |  |  |
-| `metaLicense` _string_ |  |  |  |
-| `metaOs` _string_ |  |  |  |
-| `metaOverview` _string_ |  |  |  |
-| `metaTermsOfUse` _string_ |  |  |  |
-| `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  |  |
-| `objectStoragePath` _string_ | Path to the images for the application, must be in .gz format and started with s3// |  |  |
+| `category` _string_ | Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving".<br />Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving" |  |  |
+| `changeTime` _string_ | The date and time of the last marketplace application change.<br />Defines the date and time of the last object change |  |  |
+| `createTime` _string_ | The date and time the marketplace application was initially created.<br />Defines the date and time the object was initially created |  |  |
+| `id` _string_ | The UUID of the marketplace application. |  |  |
+| `isApplicationOwner` _boolean_ | Whether the you are the owner of application or not.<br />Whether the you are the owner of application or not |  |  |
+| `isPublishGlobal` _boolean_ | Whether a template is published to other partner or not.<br />Whether a template is published to other partner or not |  |  |
+| `isPublishGlobalRequested` _boolean_ | Whether a partner wants their tenant template published to other partners.<br />Whether a partner wants their tenant template published to other partners |  |  |
+| `isPublishRequested` _boolean_ | Whether the tenants want their template to be published or not.<br />Whether the tenants want their template to be published or not |  |  |
+| `isPublished` _boolean_ | Whether the template is published by the partner to their tenant".<br />Whether the template is published by the partner to their tenant |  |  |
+| `metaAdvices` _string_ | See Argument Reference above. |  |  |
+| `metaAuthor` _string_ | Author. |  |  |
+| `metaComponents` _string array_ | Components (e.g: MySql, Apache, etc.). |  |  |
+| `metaFeatures` _string_ | List of functions. |  |  |
+| `metaHints` _string_ | Hints. |  |  |
+| `metaIcon` _string_ | base64 encoded image of the icon. |  |  |
+| `metaLicense` _string_ | License number. |  |  |
+| `metaOs` _string_ | Operating system. |  |  |
+| `metaOverview` _string_ | Describes the main function of the application. |  |  |
+| `metaTermsOfUse` _string_ | Terms of use. |  |  |
+| `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  |  |
+| `objectStoragePath` _string_ | Path to the images for the application, must be in .gz format and started with s3//.<br />Path to the images for the application, must be in .gz format and started with s3// |  |  |
 | `publish` _boolean_ | Whether you want to publish your application or not |  |  |
-| `publishGlobalRequestedDate` _string_ | The date when a partner requested their tenants template to be published |  |  |
-| `publishRequestedDate` _string_ | The date when the tenant requested their template to be published |  |  |
-| `publishedDate` _string_ | The date when the template is published into other tenant in the same partner |  |  |
-| `publishedGlobalDate` _string_ | The date when a template is published to other partner |  |  |
-| `setupCores` _float_ | Number of server's cores |  |  |
-| `setupMemory` _float_ | The capacity of server's memory in GB |  |  |
-| `setupStorageCapacity` _float_ | The capacity of server's storage in GB |  |  |
-| `status` _string_ | status indicates the status of the object |  |  |
-| `type` _string_ | The type of template |  |  |
-| `uniqueHash` _string_ | Unique hash to allow user to import the self-created marketplace application |  |  |
+| `publishGlobalRequestedDate` _string_ | The date when a partner requested their tenants template to be published.<br />The date when a partner requested their tenants template to be published |  |  |
+| `publishRequestedDate` _string_ | The date when the tenant requested their template to be published.<br />The date when the tenant requested their template to be published |  |  |
+| `publishedDate` _string_ | The date when the template is published into other tenant in the same partner.<br />The date when the template is published into other tenant in the same partner |  |  |
+| `publishedGlobalDate` _string_ | The date when a template is published to other partner.<br />The date when a template is published to other partner |  |  |
+| `setupCores` _float_ | Number of server's cores.<br />Number of server's cores |  |  |
+| `setupMemory` _float_ | The capacity of server's memory in GB.<br />The capacity of server's memory in GB |  |  |
+| `setupStorageCapacity` _float_ | The capacity of server's storage in GB.<br />The capacity of server's storage in GB |  |  |
+| `status` _string_ | The status of the marketplace application.<br />status indicates the status of the object |  |  |
+| `type` _string_ | The type of template.<br />The type of template |  |  |
+| `uniqueHash` _string_ | Unique hash to allow user to import the self-created marketplace application.<br />Unique hash to allow user to import the self-created marketplace application |  |  |
 
 
 #### ApplicationParameters
@@ -10648,23 +10816,23 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `category` _string_ | Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving" |  | Optional: \{\} <br /> |
-| `metaAdvices` _string_ |  |  | Optional: \{\} <br /> |
-| `metaAuthor` _string_ |  |  | Optional: \{\} <br /> |
-| `metaComponents` _string array_ |  |  | Optional: \{\} <br /> |
-| `metaFeatures` _string_ |  |  | Optional: \{\} <br /> |
-| `metaHints` _string_ |  |  | Optional: \{\} <br /> |
-| `metaIcon` _string_ |  |  | Optional: \{\} <br /> |
-| `metaLicense` _string_ |  |  | Optional: \{\} <br /> |
-| `metaOs` _string_ |  |  | Optional: \{\} <br /> |
-| `metaOverview` _string_ |  |  | Optional: \{\} <br /> |
-| `metaTermsOfUse` _string_ |  |  | Optional: \{\} <br /> |
-| `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  | Optional: \{\} <br /> |
-| `objectStoragePath` _string_ | Path to the images for the application, must be in .gz format and started with s3// |  | Optional: \{\} <br /> |
+| `category` _string_ | Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving".<br />Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving" |  | Optional: \{\} <br /> |
+| `metaAdvices` _string_ | See Argument Reference above. |  | Optional: \{\} <br /> |
+| `metaAuthor` _string_ | Author. |  | Optional: \{\} <br /> |
+| `metaComponents` _string array_ | Components (e.g: MySql, Apache, etc.). |  | Optional: \{\} <br /> |
+| `metaFeatures` _string_ | List of functions. |  | Optional: \{\} <br /> |
+| `metaHints` _string_ | Hints. |  | Optional: \{\} <br /> |
+| `metaIcon` _string_ | base64 encoded image of the icon. |  | Optional: \{\} <br /> |
+| `metaLicense` _string_ | License number. |  | Optional: \{\} <br /> |
+| `metaOs` _string_ | Operating system. |  | Optional: \{\} <br /> |
+| `metaOverview` _string_ | Describes the main function of the application. |  | Optional: \{\} <br /> |
+| `metaTermsOfUse` _string_ | Terms of use. |  | Optional: \{\} <br /> |
+| `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  | Optional: \{\} <br /> |
+| `objectStoragePath` _string_ | Path to the images for the application, must be in .gz format and started with s3//.<br />Path to the images for the application, must be in .gz format and started with s3// |  | Optional: \{\} <br /> |
 | `publish` _boolean_ | Whether you want to publish your application or not |  | Optional: \{\} <br /> |
-| `setupCores` _float_ | Number of server's cores |  | Optional: \{\} <br /> |
-| `setupMemory` _float_ | The capacity of server's memory in GB |  | Optional: \{\} <br /> |
-| `setupStorageCapacity` _float_ | The capacity of server's storage in GB |  | Optional: \{\} <br /> |
+| `setupCores` _float_ | Number of server's cores.<br />Number of server's cores |  | Optional: \{\} <br /> |
+| `setupMemory` _float_ | The capacity of server's memory in GB.<br />The capacity of server's memory in GB |  | Optional: \{\} <br /> |
+| `setupStorageCapacity` _float_ | The capacity of server's storage in GB.<br />The capacity of server's storage in GB |  | Optional: \{\} <br /> |
 
 
 #### ApplicationSpec
@@ -10719,7 +10887,7 @@ _Appears in:_
 
 
 
-Application is the Schema for the Applications API. <no value>
+Application is the Schema for the Applications API. Manages marketplace applications in Gridscale.
 
 
 
@@ -10739,7 +10907,7 @@ _Appears in:_
 
 
 
-ApplicationImport is the Schema for the ApplicationImports API. <no value>
+ApplicationImport is the Schema for the ApplicationImports API. Manages imported marketplace applications in Gridscale.
 
 
 
@@ -10768,7 +10936,7 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `importUniqueHash` _string_ | Hash of a specific marketplace application that you want to import |  |  |
+| `importUniqueHash` _string_ | Hash of a specific marketplace application that you want to import. A change of this argument necessitates the re-creation of the resource.<br />Hash of a specific marketplace application that you want to import |  |  |
 
 
 #### ApplicationImportList
@@ -10802,38 +10970,38 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `category` _string_ | Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving" |  |  |
-| `changeTime` _string_ | Defines the date and time of the last object change |  |  |
-| `createTime` _string_ | Defines the date and time the object was initially created |  |  |
-| `id` _string_ |  |  |  |
-| `importUniqueHash` _string_ | Hash of a specific marketplace application that you want to import |  |  |
-| `isApplicationOwner` _boolean_ | Whether the you are the owner of application or not |  |  |
-| `isPublishGlobal` _boolean_ | Whether a template is published to other partner or not |  |  |
-| `isPublishGlobalRequested` _boolean_ | Whether a partner wants their tenant template published to other partners |  |  |
-| `isPublishRequested` _boolean_ | Whether the tenants want their template to be published or not |  |  |
-| `isPublished` _boolean_ | Whether the template is published by the partner to their tenant |  |  |
-| `metaAdvices` _string_ |  |  |  |
-| `metaAuthor` _string_ |  |  |  |
-| `metaComponents` _string array_ |  |  |  |
-| `metaFeatures` _string_ |  |  |  |
-| `metaHints` _string_ |  |  |  |
-| `metaIcon` _string_ |  |  |  |
-| `metaLicense` _string_ |  |  |  |
-| `metaOs` _string_ |  |  |  |
-| `metaOverview` _string_ |  |  |  |
-| `metaTermsOfUse` _string_ |  |  |  |
-| `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  |  |
-| `objectStoragePath` _string_ | Path to the images for the application, must be in .gz format and started with s3// |  |  |
-| `publishGlobalRequestedDate` _string_ | The date when a partner requested their tenants template to be published |  |  |
-| `publishRequestedDate` _string_ | The date when the tenant requested their template to be published |  |  |
-| `publishedDate` _string_ | The date when the template is published into other tenant in the same partner |  |  |
-| `publishedGlobalDate` _string_ | The date when a template is published to other partner |  |  |
-| `setupCores` _float_ | Number of server's cores |  |  |
-| `setupMemory` _float_ | The capacity of server's memory in GB |  |  |
-| `setupStorageCapacity` _float_ | The capacity of server's storage in GB |  |  |
-| `status` _string_ | status indicates the status of the object |  |  |
-| `type` _string_ | The type of template |  |  |
-| `uniqueHash` _string_ | Unique hash to allow user to import the self-created marketplace application |  |  |
+| `category` _string_ | Category of marketplace application.<br />Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving" |  |  |
+| `changeTime` _string_ | The date and time of the last marketplace application change.<br />Defines the date and time of the last object change |  |  |
+| `createTime` _string_ | The date and time the marketplace application was initially created.<br />Defines the date and time the object was initially created |  |  |
+| `id` _string_ | The UUID of the marketplace application. |  |  |
+| `importUniqueHash` _string_ | Hash of a specific marketplace application that you want to import. A change of this argument necessitates the re-creation of the resource.<br />Hash of a specific marketplace application that you want to import |  |  |
+| `isApplicationOwner` _boolean_ | Whether the you are the owner of application or not.<br />Whether the you are the owner of application or not |  |  |
+| `isPublishGlobal` _boolean_ | Whether a template is published to other partner or not.<br />Whether a template is published to other partner or not |  |  |
+| `isPublishGlobalRequested` _boolean_ | Whether a partner wants their tenant template published to other partners.<br />Whether a partner wants their tenant template published to other partners |  |  |
+| `isPublishRequested` _boolean_ | Whether the tenants want their template to be published or not.<br />Whether the tenants want their template to be published or not |  |  |
+| `isPublished` _boolean_ | Whether the template is published by the partner to their tenant".<br />Whether the template is published by the partner to their tenant |  |  |
+| `metaAdvices` _string_ | User manual; Wiki URL; ... |  |  |
+| `metaAuthor` _string_ | Author. |  |  |
+| `metaComponents` _string array_ | Components (e.g: MySql, Apache, etc.). |  |  |
+| `metaFeatures` _string_ | List of functions. |  |  |
+| `metaHints` _string_ | Hints. |  |  |
+| `metaIcon` _string_ | base64 encoded image of the icon. |  |  |
+| `metaLicense` _string_ | License number. |  |  |
+| `metaOs` _string_ | Operating system. |  |  |
+| `metaOverview` _string_ | Describes the main function of the application. |  |  |
+| `metaTermsOfUse` _string_ | Terms of use. |  |  |
+| `name` _string_ | The name of the marketplace application.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  |  |
+| `objectStoragePath` _string_ | Path to the images for the application.<br />Path to the images for the application, must be in .gz format and started with s3// |  |  |
+| `publishGlobalRequestedDate` _string_ | The date when a partner requested their tenants template to be published.<br />The date when a partner requested their tenants template to be published |  |  |
+| `publishRequestedDate` _string_ | The date when the tenant requested their template to be published.<br />The date when the tenant requested their template to be published |  |  |
+| `publishedDate` _string_ | The date when the template is published into other tenant in the same partner.<br />The date when the template is published into other tenant in the same partner |  |  |
+| `publishedGlobalDate` _string_ | The date when a template is published to other partner.<br />The date when a template is published to other partner |  |  |
+| `setupCores` _float_ | Number of server's cores.<br />Number of server's cores |  |  |
+| `setupMemory` _float_ | The capacity of server's memory in GB.<br />The capacity of server's memory in GB |  |  |
+| `setupStorageCapacity` _float_ | The capacity of server's storage in GB.<br />The capacity of server's storage in GB |  |  |
+| `status` _string_ | The status of the marketplace application.<br />status indicates the status of the object |  |  |
+| `type` _string_ | The type of template.<br />The type of template |  |  |
+| `uniqueHash` _string_ | Unique hash to allow user to import the self-created marketplace application.<br />Unique hash to allow user to import the self-created marketplace application |  |  |
 
 
 #### ApplicationImportParameters
@@ -10849,7 +11017,7 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `importUniqueHash` _string_ | Hash of a specific marketplace application that you want to import |  | Optional: \{\} <br /> |
+| `importUniqueHash` _string_ | Hash of a specific marketplace application that you want to import. A change of this argument necessitates the re-creation of the resource.<br />Hash of a specific marketplace application that you want to import |  | Optional: \{\} <br /> |
 
 
 #### ApplicationImportSpec
@@ -10902,23 +11070,23 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `category` _string_ | Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving" |  |  |
-| `metaAdvices` _string_ |  |  |  |
-| `metaAuthor` _string_ |  |  |  |
-| `metaComponents` _string array_ |  |  |  |
-| `metaFeatures` _string_ |  |  |  |
-| `metaHints` _string_ |  |  |  |
-| `metaIcon` _string_ |  |  |  |
-| `metaLicense` _string_ |  |  |  |
-| `metaOs` _string_ |  |  |  |
-| `metaOverview` _string_ |  |  |  |
-| `metaTermsOfUse` _string_ |  |  |  |
-| `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  |  |
-| `objectStoragePath` _string_ | Path to the images for the application, must be in .gz format and started with s3// |  |  |
+| `category` _string_ | Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving".<br />Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving" |  |  |
+| `metaAdvices` _string_ | See Argument Reference above. |  |  |
+| `metaAuthor` _string_ | Author. |  |  |
+| `metaComponents` _string array_ | Components (e.g: MySql, Apache, etc.). |  |  |
+| `metaFeatures` _string_ | List of functions. |  |  |
+| `metaHints` _string_ | Hints. |  |  |
+| `metaIcon` _string_ | base64 encoded image of the icon. |  |  |
+| `metaLicense` _string_ | License number. |  |  |
+| `metaOs` _string_ | Operating system. |  |  |
+| `metaOverview` _string_ | Describes the main function of the application. |  |  |
+| `metaTermsOfUse` _string_ | Terms of use. |  |  |
+| `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  |  |
+| `objectStoragePath` _string_ | Path to the images for the application, must be in .gz format and started with s3//.<br />Path to the images for the application, must be in .gz format and started with s3// |  |  |
 | `publish` _boolean_ | Whether you want to publish your application or not |  |  |
-| `setupCores` _float_ | Number of server's cores |  |  |
-| `setupMemory` _float_ | The capacity of server's memory in GB |  |  |
-| `setupStorageCapacity` _float_ | The capacity of server's storage in GB |  |  |
+| `setupCores` _float_ | Number of server's cores.<br />Number of server's cores |  |  |
+| `setupMemory` _float_ | The capacity of server's memory in GB.<br />The capacity of server's memory in GB |  |  |
+| `setupStorageCapacity` _float_ | The capacity of server's storage in GB.<br />The capacity of server's storage in GB |  |  |
 
 
 #### ApplicationList
@@ -10952,38 +11120,38 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `category` _string_ | Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving" |  |  |
-| `changeTime` _string_ | Defines the date and time of the last object change |  |  |
-| `createTime` _string_ | Defines the date and time the object was initially created |  |  |
-| `id` _string_ |  |  |  |
-| `isApplicationOwner` _boolean_ | Whether the you are the owner of application or not |  |  |
-| `isPublishGlobal` _boolean_ | Whether a template is published to other partner or not |  |  |
-| `isPublishGlobalRequested` _boolean_ | Whether a partner wants their tenant template published to other partners |  |  |
-| `isPublishRequested` _boolean_ | Whether the tenants want their template to be published or not |  |  |
-| `isPublished` _boolean_ | Whether the template is published by the partner to their tenant |  |  |
-| `metaAdvices` _string_ |  |  |  |
-| `metaAuthor` _string_ |  |  |  |
-| `metaComponents` _string array_ |  |  |  |
-| `metaFeatures` _string_ |  |  |  |
-| `metaHints` _string_ |  |  |  |
-| `metaIcon` _string_ |  |  |  |
-| `metaLicense` _string_ |  |  |  |
-| `metaOs` _string_ |  |  |  |
-| `metaOverview` _string_ |  |  |  |
-| `metaTermsOfUse` _string_ |  |  |  |
-| `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  |  |
-| `objectStoragePath` _string_ | Path to the images for the application, must be in .gz format and started with s3// |  |  |
+| `category` _string_ | Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving".<br />Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving" |  |  |
+| `changeTime` _string_ | The date and time of the last marketplace application change.<br />Defines the date and time of the last object change |  |  |
+| `createTime` _string_ | The date and time the marketplace application was initially created.<br />Defines the date and time the object was initially created |  |  |
+| `id` _string_ | The UUID of the marketplace application. |  |  |
+| `isApplicationOwner` _boolean_ | Whether the you are the owner of application or not.<br />Whether the you are the owner of application or not |  |  |
+| `isPublishGlobal` _boolean_ | Whether a template is published to other partner or not.<br />Whether a template is published to other partner or not |  |  |
+| `isPublishGlobalRequested` _boolean_ | Whether a partner wants their tenant template published to other partners.<br />Whether a partner wants their tenant template published to other partners |  |  |
+| `isPublishRequested` _boolean_ | Whether the tenants want their template to be published or not.<br />Whether the tenants want their template to be published or not |  |  |
+| `isPublished` _boolean_ | Whether the template is published by the partner to their tenant".<br />Whether the template is published by the partner to their tenant |  |  |
+| `metaAdvices` _string_ | See Argument Reference above. |  |  |
+| `metaAuthor` _string_ | Author. |  |  |
+| `metaComponents` _string array_ | Components (e.g: MySql, Apache, etc.). |  |  |
+| `metaFeatures` _string_ | List of functions. |  |  |
+| `metaHints` _string_ | Hints. |  |  |
+| `metaIcon` _string_ | base64 encoded image of the icon. |  |  |
+| `metaLicense` _string_ | License number. |  |  |
+| `metaOs` _string_ | Operating system. |  |  |
+| `metaOverview` _string_ | Describes the main function of the application. |  |  |
+| `metaTermsOfUse` _string_ | Terms of use. |  |  |
+| `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  |  |
+| `objectStoragePath` _string_ | Path to the images for the application, must be in .gz format and started with s3//.<br />Path to the images for the application, must be in .gz format and started with s3// |  |  |
 | `publish` _boolean_ | Whether you want to publish your application or not |  |  |
-| `publishGlobalRequestedDate` _string_ | The date when a partner requested their tenants template to be published |  |  |
-| `publishRequestedDate` _string_ | The date when the tenant requested their template to be published |  |  |
-| `publishedDate` _string_ | The date when the template is published into other tenant in the same partner |  |  |
-| `publishedGlobalDate` _string_ | The date when a template is published to other partner |  |  |
-| `setupCores` _float_ | Number of server's cores |  |  |
-| `setupMemory` _float_ | The capacity of server's memory in GB |  |  |
-| `setupStorageCapacity` _float_ | The capacity of server's storage in GB |  |  |
-| `status` _string_ | status indicates the status of the object |  |  |
-| `type` _string_ | The type of template |  |  |
-| `uniqueHash` _string_ | Unique hash to allow user to import the self-created marketplace application |  |  |
+| `publishGlobalRequestedDate` _string_ | The date when a partner requested their tenants template to be published.<br />The date when a partner requested their tenants template to be published |  |  |
+| `publishRequestedDate` _string_ | The date when the tenant requested their template to be published.<br />The date when the tenant requested their template to be published |  |  |
+| `publishedDate` _string_ | The date when the template is published into other tenant in the same partner.<br />The date when the template is published into other tenant in the same partner |  |  |
+| `publishedGlobalDate` _string_ | The date when a template is published to other partner.<br />The date when a template is published to other partner |  |  |
+| `setupCores` _float_ | Number of server's cores.<br />Number of server's cores |  |  |
+| `setupMemory` _float_ | The capacity of server's memory in GB.<br />The capacity of server's memory in GB |  |  |
+| `setupStorageCapacity` _float_ | The capacity of server's storage in GB.<br />The capacity of server's storage in GB |  |  |
+| `status` _string_ | The status of the marketplace application.<br />status indicates the status of the object |  |  |
+| `type` _string_ | The type of template.<br />The type of template |  |  |
+| `uniqueHash` _string_ | Unique hash to allow user to import the self-created marketplace application.<br />Unique hash to allow user to import the self-created marketplace application |  |  |
 
 
 #### ApplicationParameters
@@ -10999,23 +11167,23 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `category` _string_ | Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving" |  | Optional: \{\} <br /> |
-| `metaAdvices` _string_ |  |  | Optional: \{\} <br /> |
-| `metaAuthor` _string_ |  |  | Optional: \{\} <br /> |
-| `metaComponents` _string array_ |  |  | Optional: \{\} <br /> |
-| `metaFeatures` _string_ |  |  | Optional: \{\} <br /> |
-| `metaHints` _string_ |  |  | Optional: \{\} <br /> |
-| `metaIcon` _string_ |  |  | Optional: \{\} <br /> |
-| `metaLicense` _string_ |  |  | Optional: \{\} <br /> |
-| `metaOs` _string_ |  |  | Optional: \{\} <br /> |
-| `metaOverview` _string_ |  |  | Optional: \{\} <br /> |
-| `metaTermsOfUse` _string_ |  |  | Optional: \{\} <br /> |
-| `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  | Optional: \{\} <br /> |
-| `objectStoragePath` _string_ | Path to the images for the application, must be in .gz format and started with s3// |  | Optional: \{\} <br /> |
+| `category` _string_ | Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving".<br />Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving" |  | Optional: \{\} <br /> |
+| `metaAdvices` _string_ | See Argument Reference above. |  | Optional: \{\} <br /> |
+| `metaAuthor` _string_ | Author. |  | Optional: \{\} <br /> |
+| `metaComponents` _string array_ | Components (e.g: MySql, Apache, etc.). |  | Optional: \{\} <br /> |
+| `metaFeatures` _string_ | List of functions. |  | Optional: \{\} <br /> |
+| `metaHints` _string_ | Hints. |  | Optional: \{\} <br /> |
+| `metaIcon` _string_ | base64 encoded image of the icon. |  | Optional: \{\} <br /> |
+| `metaLicense` _string_ | License number. |  | Optional: \{\} <br /> |
+| `metaOs` _string_ | Operating system. |  | Optional: \{\} <br /> |
+| `metaOverview` _string_ | Describes the main function of the application. |  | Optional: \{\} <br /> |
+| `metaTermsOfUse` _string_ | Terms of use. |  | Optional: \{\} <br /> |
+| `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  | Optional: \{\} <br /> |
+| `objectStoragePath` _string_ | Path to the images for the application, must be in .gz format and started with s3//.<br />Path to the images for the application, must be in .gz format and started with s3// |  | Optional: \{\} <br /> |
 | `publish` _boolean_ | Whether you want to publish your application or not |  | Optional: \{\} <br /> |
-| `setupCores` _float_ | Number of server's cores |  | Optional: \{\} <br /> |
-| `setupMemory` _float_ | The capacity of server's memory in GB |  | Optional: \{\} <br /> |
-| `setupStorageCapacity` _float_ | The capacity of server's storage in GB |  | Optional: \{\} <br /> |
+| `setupCores` _float_ | Number of server's cores.<br />Number of server's cores |  | Optional: \{\} <br /> |
+| `setupMemory` _float_ | The capacity of server's memory in GB.<br />The capacity of server's memory in GB |  | Optional: \{\} <br /> |
+| `setupStorageCapacity` _float_ | The capacity of server's storage in GB.<br />The capacity of server's storage in GB |  | Optional: \{\} <br /> |
 
 
 #### ApplicationSpec
@@ -11128,6 +11296,8 @@ _Appears in:_
 | `mysqlSqlMode` _string_ | mysql parameter: SQL Mode. Default: "ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION".<br />SQL Mode. |  |  |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  |  |
+| `networkUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of mysql service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of MySQL service. |  |  |
 | `release` _string_ | The mysql release of this instance. For convenience, please use gscloud to get the list of available mysql service releases.<br />The MySQL release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available MySQL service releases. |  |  |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to MySQL service. |  |  |
@@ -11206,6 +11376,8 @@ _Appears in:_
 | `mysqlSqlMode` _string_ | mysql parameter: SQL Mode. Default: "ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION".<br />SQL Mode. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  | Optional: \{\} <br /> |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  | Optional: \{\} <br /> |
+| `networkUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of mysql service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of MySQL service. |  | Optional: \{\} <br /> |
 | `release` _string_ | The mysql release of this instance. For convenience, please use gscloud to get the list of available mysql service releases.<br />The MySQL release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available MySQL service releases. |  | Optional: \{\} <br /> |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to MySQL service. |  | Optional: \{\} <br /> |
@@ -11320,6 +11492,8 @@ _Appears in:_
 | `mysqlSqlMode` _string_ | mysql parameter: SQL Mode. Default: "ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION".<br />SQL Mode. |  |  |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  |  |
+| `networkUuidRef` _[Reference](#reference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[Selector](#selector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of mysql service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of MySQL service. |  |  |
 | `release` _string_ | The mysql release of this instance. For convenience, please use gscloud to get the list of available mysql service releases.<br />The MySQL release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available MySQL service releases. |  |  |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to MySQL service. |  |  |
@@ -11398,6 +11572,8 @@ _Appears in:_
 | `mysqlSqlMode` _string_ | mysql parameter: SQL Mode. Default: "ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION".<br />SQL Mode. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  | Optional: \{\} <br /> |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  | Optional: \{\} <br /> |
+| `networkUuidRef` _[Reference](#reference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[Selector](#selector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of mysql service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of MySQL service. |  | Optional: \{\} <br /> |
 | `release` _string_ | The mysql release of this instance. For convenience, please use gscloud to get the list of available mysql service releases.<br />The MySQL release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available MySQL service releases. |  | Optional: \{\} <br /> |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to MySQL service. |  | Optional: \{\} <br /> |
@@ -11465,12 +11641,12 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `enabled` _boolean_ |  |  |  |
-| `expirationDays` _float_ |  |  |  |
-| `id` _string_ |  |  |  |
-| `incompleteUploadExpirationDays` _float_ |  |  |  |
-| `noncurrentVersionExpirationDays` _float_ |  |  |  |
-| `prefix` _string_ |  |  |  |
+| `enabled` _boolean_ | Whether the rule is enabled. |  |  |
+| `expirationDays` _float_ | Number of days after which objects are deleted. Default: 365. |  |  |
+| `id` _string_ | Unique identifier for the rule. |  |  |
+| `incompleteUploadExpirationDays` _float_ | Number of days after which incomplete multipart uploads are deleted. Default: 3. |  |  |
+| `noncurrentVersionExpirationDays` _float_ | Number of days after which noncurrent object versions are deleted. Default: 365. |  |  |
+| `prefix` _string_ | Object key prefix identifying one or more objects to which the rule applies. |  |  |
 
 
 #### LifecycleRuleObservation
@@ -11486,12 +11662,12 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `enabled` _boolean_ |  |  |  |
-| `expirationDays` _float_ |  |  |  |
-| `id` _string_ |  |  |  |
-| `incompleteUploadExpirationDays` _float_ |  |  |  |
-| `noncurrentVersionExpirationDays` _float_ |  |  |  |
-| `prefix` _string_ |  |  |  |
+| `enabled` _boolean_ | Whether the rule is enabled. |  |  |
+| `expirationDays` _float_ | Number of days after which objects are deleted. Default: 365. |  |  |
+| `id` _string_ | Unique identifier for the rule. |  |  |
+| `incompleteUploadExpirationDays` _float_ | Number of days after which incomplete multipart uploads are deleted. Default: 3. |  |  |
+| `noncurrentVersionExpirationDays` _float_ | Number of days after which noncurrent object versions are deleted. Default: 365. |  |  |
+| `prefix` _string_ | Object key prefix identifying one or more objects to which the rule applies. |  |  |
 
 
 #### LifecycleRuleParameters
@@ -11507,19 +11683,19 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `enabled` _boolean_ |  |  | Optional: \{\} <br /> |
-| `expirationDays` _float_ |  |  | Optional: \{\} <br /> |
-| `id` _string_ |  |  | Optional: \{\} <br /> |
-| `incompleteUploadExpirationDays` _float_ |  |  | Optional: \{\} <br /> |
-| `noncurrentVersionExpirationDays` _float_ |  |  | Optional: \{\} <br /> |
-| `prefix` _string_ |  |  | Optional: \{\} <br /> |
+| `enabled` _boolean_ | Whether the rule is enabled. |  | Optional: \{\} <br /> |
+| `expirationDays` _float_ | Number of days after which objects are deleted. Default: 365. |  | Optional: \{\} <br /> |
+| `id` _string_ | Unique identifier for the rule. |  | Optional: \{\} <br /> |
+| `incompleteUploadExpirationDays` _float_ | Number of days after which incomplete multipart uploads are deleted. Default: 3. |  | Optional: \{\} <br /> |
+| `noncurrentVersionExpirationDays` _float_ | Number of days after which noncurrent object versions are deleted. Default: 365. |  | Optional: \{\} <br /> |
+| `prefix` _string_ | Object key prefix identifying one or more objects to which the rule applies. |  | Optional: \{\} <br /> |
 
 
 #### StorageAccesskey
 
 
 
-StorageAccesskey is the Schema for the StorageAccesskeys API. <no value>
+StorageAccesskey is the Schema for the StorageAccesskeys API. Manages an access key of an object storage in gridscale.
 
 
 
@@ -11548,8 +11724,8 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `comment` _string_ | Comment for the access_key. |  |  |
-| `userUuid` _string_ | If a user_uuid is set, a user-specific key will get created.<br />If no user_uuid is set along a user with write-access to the contract will still only create<br />a user-specific key for themselves while a user with admin-access to the contract will create<br />a contract-level admin key. |  |  |
+| `comment` _string_ | A comment for the object storage access key.<br />Comment for the access_key. |  |  |
+| `userUuid` _string_ | If a user_uuid is set, a user-specific key will get created. If no user_uuid is set along a user with write-access to the contract will still only create a user-specific key for themselves while a user with admin-access to the contract will create a contract-level admin key.<br />If a user_uuid is set, a user-specific key will get created.<br />If no user_uuid is set along a user with write-access to the contract will still only create<br />a user-specific key for themselves while a user with admin-access to the contract will create<br />a contract-level admin key. |  |  |
 
 
 #### StorageAccesskeyList
@@ -11583,9 +11759,9 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `comment` _string_ | Comment for the access_key. |  |  |
-| `id` _string_ |  |  |  |
-| `userUuid` _string_ | If a user_uuid is set, a user-specific key will get created.<br />If no user_uuid is set along a user with write-access to the contract will still only create<br />a user-specific key for themselves while a user with admin-access to the contract will create<br />a contract-level admin key. |  |  |
+| `comment` _string_ | A comment for the object storage access key.<br />Comment for the access_key. |  |  |
+| `id` _string_ | The access key of the object storage. |  |  |
+| `userUuid` _string_ | If a user_uuid is set, a user-specific key will get created. If no user_uuid is set along a user with write-access to the contract will still only create a user-specific key for themselves while a user with admin-access to the contract will create a contract-level admin key.<br />If a user_uuid is set, a user-specific key will get created.<br />If no user_uuid is set along a user with write-access to the contract will still only create<br />a user-specific key for themselves while a user with admin-access to the contract will create<br />a contract-level admin key. |  |  |
 
 
 #### StorageAccesskeyParameters
@@ -11601,8 +11777,8 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `comment` _string_ | Comment for the access_key. |  | Optional: \{\} <br /> |
-| `userUuid` _string_ | If a user_uuid is set, a user-specific key will get created.<br />If no user_uuid is set along a user with write-access to the contract will still only create<br />a user-specific key for themselves while a user with admin-access to the contract will create<br />a contract-level admin key. |  | Optional: \{\} <br /> |
+| `comment` _string_ | A comment for the object storage access key.<br />Comment for the access_key. |  | Optional: \{\} <br /> |
+| `userUuid` _string_ | If a user_uuid is set, a user-specific key will get created. If no user_uuid is set along a user with write-access to the contract will still only create a user-specific key for themselves while a user with admin-access to the contract will create a contract-level admin key.<br />If a user_uuid is set, a user-specific key will get created.<br />If no user_uuid is set along a user with write-access to the contract will still only create<br />a user-specific key for themselves while a user with admin-access to the contract will create<br />a contract-level admin key. |  | Optional: \{\} <br /> |
 
 
 #### StorageAccesskeySpec
@@ -11645,7 +11821,7 @@ _Appears in:_
 
 
 
-StorageBucket is the Schema for the StorageBuckets API. <no value>
+StorageBucket is the Schema for the StorageBuckets API. Manages an object storage bucket in gridscale.
 
 
 
@@ -11674,11 +11850,11 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `accessKeySecretRef` _[LocalSecretKeySelector](#localsecretkeyselector)_ | The object storage secret_key. |  |  |
-| `bucketName` _string_ | The name of the bucket. |  |  |
-| `lifecycleRule` _[LifecycleRuleInitParameters](#lifecycleruleinitparameters) array_ |  |  |  |
-| `s3Host` _string_ | The S3 host. |  |  |
-| `secretKeySecretRef` _[LocalSecretKeySelector](#localsecretkeyselector)_ | The object storage access_key. |  |  |
+| `accessKeySecretRef` _[LocalSecretKeySelector](#localsecretkeyselector)_ | Access key.<br />The object storage secret_key. |  |  |
+| `bucketName` _string_ | Name of the bucket.<br />The name of the bucket. |  |  |
+| `lifecycleRule` _[LifecycleRuleInitParameters](#lifecycleruleinitparameters) array_ | A list of lifecycle rules for the bucket. Each rule supports the following: |  |  |
+| `s3Host` _string_ | Host of the s3. Default: "gos3.io".<br />The S3 host. |  |  |
+| `secretKeySecretRef` _[LocalSecretKeySelector](#localsecretkeyselector)_ | Secret key.<br />The object storage access_key. |  |  |
 
 
 #### StorageBucketList
@@ -11712,10 +11888,10 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `bucketName` _string_ | The name of the bucket. |  |  |
-| `id` _string_ |  |  |  |
-| `lifecycleRule` _[LifecycleRuleObservation](#lifecycleruleobservation) array_ |  |  |  |
-| `s3Host` _string_ | The S3 host. |  |  |
+| `bucketName` _string_ | Name of the bucket.<br />The name of the bucket. |  |  |
+| `id` _string_ | Unique identifier for the rule. |  |  |
+| `lifecycleRule` _[LifecycleRuleObservation](#lifecycleruleobservation) array_ | A list of lifecycle rules for the bucket. Each rule supports the following: |  |  |
+| `s3Host` _string_ | Host of the s3. Default: "gos3.io".<br />The S3 host. |  |  |
 
 
 #### StorageBucketParameters
@@ -11731,11 +11907,11 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `accessKeySecretRef` _[LocalSecretKeySelector](#localsecretkeyselector)_ | The object storage secret_key. |  | Optional: \{\} <br /> |
-| `bucketName` _string_ | The name of the bucket. |  | Optional: \{\} <br /> |
-| `lifecycleRule` _[LifecycleRuleParameters](#lifecycleruleparameters) array_ |  |  | Optional: \{\} <br /> |
-| `s3Host` _string_ | The S3 host. |  | Optional: \{\} <br /> |
-| `secretKeySecretRef` _[LocalSecretKeySelector](#localsecretkeyselector)_ | The object storage access_key. |  | Optional: \{\} <br /> |
+| `accessKeySecretRef` _[LocalSecretKeySelector](#localsecretkeyselector)_ | Access key.<br />The object storage secret_key. |  | Optional: \{\} <br /> |
+| `bucketName` _string_ | Name of the bucket.<br />The name of the bucket. |  | Optional: \{\} <br /> |
+| `lifecycleRule` _[LifecycleRuleParameters](#lifecycleruleparameters) array_ | A list of lifecycle rules for the bucket. Each rule supports the following: |  | Optional: \{\} <br /> |
+| `s3Host` _string_ | Host of the s3. Default: "gos3.io".<br />The S3 host. |  | Optional: \{\} <br /> |
+| `secretKeySecretRef` _[LocalSecretKeySelector](#localsecretkeyselector)_ | Secret key.<br />The object storage access_key. |  | Optional: \{\} <br /> |
 
 
 #### StorageBucketSpec
@@ -11799,12 +11975,12 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `enabled` _boolean_ |  |  |  |
-| `expirationDays` _float_ |  |  |  |
-| `id` _string_ |  |  |  |
-| `incompleteUploadExpirationDays` _float_ |  |  |  |
-| `noncurrentVersionExpirationDays` _float_ |  |  |  |
-| `prefix` _string_ |  |  |  |
+| `enabled` _boolean_ | Whether the rule is enabled. |  |  |
+| `expirationDays` _float_ | Number of days after which objects are deleted. Default: 365. |  |  |
+| `id` _string_ | Unique identifier for the rule. |  |  |
+| `incompleteUploadExpirationDays` _float_ | Number of days after which incomplete multipart uploads are deleted. Default: 3. |  |  |
+| `noncurrentVersionExpirationDays` _float_ | Number of days after which noncurrent object versions are deleted. Default: 365. |  |  |
+| `prefix` _string_ | Object key prefix identifying one or more objects to which the rule applies. |  |  |
 
 
 #### LifecycleRuleObservation
@@ -11820,12 +11996,12 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `enabled` _boolean_ |  |  |  |
-| `expirationDays` _float_ |  |  |  |
-| `id` _string_ |  |  |  |
-| `incompleteUploadExpirationDays` _float_ |  |  |  |
-| `noncurrentVersionExpirationDays` _float_ |  |  |  |
-| `prefix` _string_ |  |  |  |
+| `enabled` _boolean_ | Whether the rule is enabled. |  |  |
+| `expirationDays` _float_ | Number of days after which objects are deleted. Default: 365. |  |  |
+| `id` _string_ | Unique identifier for the rule. |  |  |
+| `incompleteUploadExpirationDays` _float_ | Number of days after which incomplete multipart uploads are deleted. Default: 3. |  |  |
+| `noncurrentVersionExpirationDays` _float_ | Number of days after which noncurrent object versions are deleted. Default: 365. |  |  |
+| `prefix` _string_ | Object key prefix identifying one or more objects to which the rule applies. |  |  |
 
 
 #### LifecycleRuleParameters
@@ -11841,19 +12017,19 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `enabled` _boolean_ |  |  | Optional: \{\} <br /> |
-| `expirationDays` _float_ |  |  | Optional: \{\} <br /> |
-| `id` _string_ |  |  | Optional: \{\} <br /> |
-| `incompleteUploadExpirationDays` _float_ |  |  | Optional: \{\} <br /> |
-| `noncurrentVersionExpirationDays` _float_ |  |  | Optional: \{\} <br /> |
-| `prefix` _string_ |  |  | Optional: \{\} <br /> |
+| `enabled` _boolean_ | Whether the rule is enabled. |  | Optional: \{\} <br /> |
+| `expirationDays` _float_ | Number of days after which objects are deleted. Default: 365. |  | Optional: \{\} <br /> |
+| `id` _string_ | Unique identifier for the rule. |  | Optional: \{\} <br /> |
+| `incompleteUploadExpirationDays` _float_ | Number of days after which incomplete multipart uploads are deleted. Default: 3. |  | Optional: \{\} <br /> |
+| `noncurrentVersionExpirationDays` _float_ | Number of days after which noncurrent object versions are deleted. Default: 365. |  | Optional: \{\} <br /> |
+| `prefix` _string_ | Object key prefix identifying one or more objects to which the rule applies. |  | Optional: \{\} <br /> |
 
 
 #### StorageAccesskey
 
 
 
-StorageAccesskey is the Schema for the StorageAccesskeys API. <no value>
+StorageAccesskey is the Schema for the StorageAccesskeys API. Manages an access key of an object storage in gridscale.
 
 
 
@@ -11882,8 +12058,8 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `comment` _string_ | Comment for the access_key. |  |  |
-| `userUuid` _string_ | If a user_uuid is set, a user-specific key will get created.<br />If no user_uuid is set along a user with write-access to the contract will still only create<br />a user-specific key for themselves while a user with admin-access to the contract will create<br />a contract-level admin key. |  |  |
+| `comment` _string_ | A comment for the object storage access key.<br />Comment for the access_key. |  |  |
+| `userUuid` _string_ | If a user_uuid is set, a user-specific key will get created. If no user_uuid is set along a user with write-access to the contract will still only create a user-specific key for themselves while a user with admin-access to the contract will create a contract-level admin key.<br />If a user_uuid is set, a user-specific key will get created.<br />If no user_uuid is set along a user with write-access to the contract will still only create<br />a user-specific key for themselves while a user with admin-access to the contract will create<br />a contract-level admin key. |  |  |
 
 
 #### StorageAccesskeyList
@@ -11917,9 +12093,9 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `comment` _string_ | Comment for the access_key. |  |  |
-| `id` _string_ |  |  |  |
-| `userUuid` _string_ | If a user_uuid is set, a user-specific key will get created.<br />If no user_uuid is set along a user with write-access to the contract will still only create<br />a user-specific key for themselves while a user with admin-access to the contract will create<br />a contract-level admin key. |  |  |
+| `comment` _string_ | A comment for the object storage access key.<br />Comment for the access_key. |  |  |
+| `id` _string_ | The access key of the object storage. |  |  |
+| `userUuid` _string_ | If a user_uuid is set, a user-specific key will get created. If no user_uuid is set along a user with write-access to the contract will still only create a user-specific key for themselves while a user with admin-access to the contract will create a contract-level admin key.<br />If a user_uuid is set, a user-specific key will get created.<br />If no user_uuid is set along a user with write-access to the contract will still only create<br />a user-specific key for themselves while a user with admin-access to the contract will create<br />a contract-level admin key. |  |  |
 
 
 #### StorageAccesskeyParameters
@@ -11935,8 +12111,8 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `comment` _string_ | Comment for the access_key. |  | Optional: \{\} <br /> |
-| `userUuid` _string_ | If a user_uuid is set, a user-specific key will get created.<br />If no user_uuid is set along a user with write-access to the contract will still only create<br />a user-specific key for themselves while a user with admin-access to the contract will create<br />a contract-level admin key. |  | Optional: \{\} <br /> |
+| `comment` _string_ | A comment for the object storage access key.<br />Comment for the access_key. |  | Optional: \{\} <br /> |
+| `userUuid` _string_ | If a user_uuid is set, a user-specific key will get created. If no user_uuid is set along a user with write-access to the contract will still only create a user-specific key for themselves while a user with admin-access to the contract will create a contract-level admin key.<br />If a user_uuid is set, a user-specific key will get created.<br />If no user_uuid is set along a user with write-access to the contract will still only create<br />a user-specific key for themselves while a user with admin-access to the contract will create<br />a contract-level admin key. |  | Optional: \{\} <br /> |
 
 
 #### StorageAccesskeySpec
@@ -11980,7 +12156,7 @@ _Appears in:_
 
 
 
-StorageBucket is the Schema for the StorageBuckets API. <no value>
+StorageBucket is the Schema for the StorageBuckets API. Manages an object storage bucket in gridscale.
 
 
 
@@ -12009,11 +12185,11 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `accessKeySecretRef` _[SecretKeySelector](#secretkeyselector)_ | The object storage secret_key. |  |  |
-| `bucketName` _string_ | The name of the bucket. |  |  |
-| `lifecycleRule` _[LifecycleRuleInitParameters](#lifecycleruleinitparameters) array_ |  |  |  |
-| `s3Host` _string_ | The S3 host. |  |  |
-| `secretKeySecretRef` _[SecretKeySelector](#secretkeyselector)_ | The object storage access_key. |  |  |
+| `accessKeySecretRef` _[SecretKeySelector](#secretkeyselector)_ | Access key.<br />The object storage secret_key. |  |  |
+| `bucketName` _string_ | Name of the bucket.<br />The name of the bucket. |  |  |
+| `lifecycleRule` _[LifecycleRuleInitParameters](#lifecycleruleinitparameters) array_ | A list of lifecycle rules for the bucket. Each rule supports the following: |  |  |
+| `s3Host` _string_ | Host of the s3. Default: "gos3.io".<br />The S3 host. |  |  |
+| `secretKeySecretRef` _[SecretKeySelector](#secretkeyselector)_ | Secret key.<br />The object storage access_key. |  |  |
 
 
 #### StorageBucketList
@@ -12047,10 +12223,10 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `bucketName` _string_ | The name of the bucket. |  |  |
-| `id` _string_ |  |  |  |
-| `lifecycleRule` _[LifecycleRuleObservation](#lifecycleruleobservation) array_ |  |  |  |
-| `s3Host` _string_ | The S3 host. |  |  |
+| `bucketName` _string_ | Name of the bucket.<br />The name of the bucket. |  |  |
+| `id` _string_ | Unique identifier for the rule. |  |  |
+| `lifecycleRule` _[LifecycleRuleObservation](#lifecycleruleobservation) array_ | A list of lifecycle rules for the bucket. Each rule supports the following: |  |  |
+| `s3Host` _string_ | Host of the s3. Default: "gos3.io".<br />The S3 host. |  |  |
 
 
 #### StorageBucketParameters
@@ -12066,11 +12242,11 @@ _Appears in:_
 
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
-| `accessKeySecretRef` _[SecretKeySelector](#secretkeyselector)_ | The object storage secret_key. |  | Optional: \{\} <br /> |
-| `bucketName` _string_ | The name of the bucket. |  | Optional: \{\} <br /> |
-| `lifecycleRule` _[LifecycleRuleParameters](#lifecycleruleparameters) array_ |  |  | Optional: \{\} <br /> |
-| `s3Host` _string_ | The S3 host. |  | Optional: \{\} <br /> |
-| `secretKeySecretRef` _[SecretKeySelector](#secretkeyselector)_ | The object storage access_key. |  | Optional: \{\} <br /> |
+| `accessKeySecretRef` _[SecretKeySelector](#secretkeyselector)_ | Access key.<br />The object storage secret_key. |  | Optional: \{\} <br /> |
+| `bucketName` _string_ | Name of the bucket.<br />The name of the bucket. |  | Optional: \{\} <br /> |
+| `lifecycleRule` _[LifecycleRuleParameters](#lifecycleruleparameters) array_ | A list of lifecycle rules for the bucket. Each rule supports the following: |  | Optional: \{\} <br /> |
+| `s3Host` _string_ | Host of the s3. Default: "gos3.io".<br />The S3 host. |  | Optional: \{\} <br /> |
+| `secretKeySecretRef` _[SecretKeySelector](#secretkeyselector)_ | Secret key.<br />The object storage access_key. |  | Optional: \{\} <br /> |
 
 
 #### StorageBucketSpec
@@ -12451,6 +12627,8 @@ _Appears in:_
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  |  |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  |  |
+| `networkUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of Redis cache service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of Redis cache service. |  |  |
 | `release` _string_ | The Redis cache release of this instance. For convenience, please use gscloud to get the list of available Redis cache service releases.<br />The RedisCache release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available Redis cache service releases. |  |  |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to Redis cache service. |  |  |
@@ -12519,6 +12697,8 @@ _Appears in:_
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  | Optional: \{\} <br /> |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  | Optional: \{\} <br /> |
+| `networkUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of Redis cache service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of Redis cache service. |  | Optional: \{\} <br /> |
 | `release` _string_ | The Redis cache release of this instance. For convenience, please use gscloud to get the list of available Redis cache service releases.<br />The RedisCache release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available Redis cache service releases. |  | Optional: \{\} <br /> |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to Redis cache service. |  | Optional: \{\} <br /> |
@@ -12618,6 +12798,8 @@ _Appears in:_
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  |  |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  |  |
+| `networkUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of Redis store service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of Redis store service. |  |  |
 | `release` _string_ | The Redis store release of this instance. For convenience, please use gscloud to get the list of available Redis store service releases.<br />The RedisStore release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available Redis store service releases. |  |  |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to Redis store service. |  |  |
@@ -12708,6 +12890,8 @@ _Appears in:_
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  | Optional: \{\} <br /> |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  | Optional: \{\} <br /> |
+| `networkUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of Redis store service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of Redis store service. |  | Optional: \{\} <br /> |
 | `release` _string_ | The Redis store release of this instance. For convenience, please use gscloud to get the list of available Redis store service releases.<br />The RedisStore release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available Redis store service releases. |  | Optional: \{\} <br /> |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to Redis store service. |  | Optional: \{\} <br /> |
@@ -12797,6 +12981,8 @@ _Appears in:_
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  |  |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  |  |
+| `networkUuidRef` _[Reference](#reference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[Selector](#selector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of Redis cache service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of Redis cache service. |  |  |
 | `release` _string_ | The Redis cache release of this instance. For convenience, please use gscloud to get the list of available Redis cache service releases.<br />The RedisCache release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available Redis cache service releases. |  |  |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to Redis cache service. |  |  |
@@ -12865,6 +13051,8 @@ _Appears in:_
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  | Optional: \{\} <br /> |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  | Optional: \{\} <br /> |
+| `networkUuidRef` _[Reference](#reference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[Selector](#selector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of Redis cache service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of Redis cache service. |  | Optional: \{\} <br /> |
 | `release` _string_ | The Redis cache release of this instance. For convenience, please use gscloud to get the list of available Redis cache service releases.<br />The RedisCache release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available Redis cache service releases. |  | Optional: \{\} <br /> |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to Redis cache service. |  | Optional: \{\} <br /> |
@@ -12965,6 +13153,8 @@ _Appears in:_
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  |  |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  |  |
+| `networkUuidRef` _[Reference](#reference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[Selector](#selector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of Redis store service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of Redis store service. |  |  |
 | `release` _string_ | The Redis store release of this instance. For convenience, please use gscloud to get the list of available Redis store service releases.<br />The RedisStore release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available Redis store service releases. |  |  |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to Redis store service. |  |  |
@@ -13055,6 +13245,8 @@ _Appears in:_
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  | Optional: \{\} <br /> |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  | Optional: \{\} <br /> |
+| `networkUuidRef` _[Reference](#reference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
+| `networkUuidSelector` _[Selector](#selector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of Redis store service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of Redis store service. |  | Optional: \{\} <br /> |
 | `release` _string_ | The Redis store release of this instance. For convenience, please use gscloud to get the list of available Redis store service releases.<br />The RedisStore release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available Redis store service releases. |  | Optional: \{\} <br /> |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to Redis store service. |  | Optional: \{\} <br /> |
@@ -13487,6 +13679,8 @@ _Appears in:_
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  |  |
 | `name` _string_ | The default value is inherited from the source storage instance. A desired name is possible. The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
 | `sourceStorageId` _string_ | The ID of a storage instance which will be cloned.<br />ID of the storage instance that will be cloned. |  |  |
+| `sourceStorageIdRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Storage in gridscale to populate sourceStorageId. |  | Optional: \{\} <br /> |
+| `sourceStorageIdSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Storage in gridscale to populate sourceStorageId. |  | Optional: \{\} <br /> |
 | `storageType` _string_ | The default value is inherited from the source storage instance. A desired storage type is possible. (one of storage, storage_high, storage_insane).<br />(one of storage, storage_high, storage_insane) |  |  |
 
 
@@ -13558,6 +13752,8 @@ _Appears in:_
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  | Optional: \{\} <br /> |
 | `name` _string_ | The default value is inherited from the source storage instance. A desired name is possible. The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  | Optional: \{\} <br /> |
 | `sourceStorageId` _string_ | The ID of a storage instance which will be cloned.<br />ID of the storage instance that will be cloned. |  | Optional: \{\} <br /> |
+| `sourceStorageIdRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Storage in gridscale to populate sourceStorageId. |  | Optional: \{\} <br /> |
+| `sourceStorageIdSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Storage in gridscale to populate sourceStorageId. |  | Optional: \{\} <br /> |
 | `storageType` _string_ | The default value is inherited from the source storage instance. A desired storage type is possible. (one of storage, storage_high, storage_insane).<br />(one of storage, storage_high, storage_insane) |  | Optional: \{\} <br /> |
 
 
@@ -13793,6 +13989,8 @@ _Appears in:_
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  |  |
 | `name` _string_ | The default value is inherited from the source storage instance. A desired name is possible. The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
 | `sourceStorageId` _string_ | The ID of a storage instance which will be cloned.<br />ID of the storage instance that will be cloned. |  |  |
+| `sourceStorageIdRef` _[Reference](#reference)_ | Reference to a Storage in gridscale to populate sourceStorageId. |  | Optional: \{\} <br /> |
+| `sourceStorageIdSelector` _[Selector](#selector)_ | Selector for a Storage in gridscale to populate sourceStorageId. |  | Optional: \{\} <br /> |
 | `storageType` _string_ | The default value is inherited from the source storage instance. A desired storage type is possible. (one of storage, storage_high, storage_insane).<br />(one of storage, storage_high, storage_insane) |  |  |
 
 
@@ -13864,6 +14062,8 @@ _Appears in:_
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  | Optional: \{\} <br /> |
 | `name` _string_ | The default value is inherited from the source storage instance. A desired name is possible. The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  | Optional: \{\} <br /> |
 | `sourceStorageId` _string_ | The ID of a storage instance which will be cloned.<br />ID of the storage instance that will be cloned. |  | Optional: \{\} <br /> |
+| `sourceStorageIdRef` _[Reference](#reference)_ | Reference to a Storage in gridscale to populate sourceStorageId. |  | Optional: \{\} <br /> |
+| `sourceStorageIdSelector` _[Selector](#selector)_ | Selector for a Storage in gridscale to populate sourceStorageId. |  | Optional: \{\} <br /> |
 | `storageType` _string_ | The default value is inherited from the source storage instance. A desired storage type is possible. (one of storage, storage_high, storage_insane).<br />(one of storage, storage_high, storage_insane) |  | Optional: \{\} <br /> |
 
 
