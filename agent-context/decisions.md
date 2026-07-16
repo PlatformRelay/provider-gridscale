@@ -241,3 +241,28 @@ reconciled INBOX (D-012's answer, the v0.1.0-published status, and the two open 
 the archived-uptest counterpoint was offered and declined) — which **weakens story E2-S09** (e2e auth
 smoke): its uptest-dependent acceptance criteria are superseded. The story is kept but flagged as
 needing rescoping against D-012, as are the other stories' uptest/e2e-unblocking assumptions.
+
+---
+
+## D-014 — Story renumbering + autonomous batching for the audit gap-stories → E7 epic, E2-S11
+
+**Date:** 2026-07-16 · **Status:** Decided (coordinator call, within operator authorization).
+**Context:** The operator re-invoked `/agent-loop-auto` ("skip PRs, merge local main for speed, watch
+CI here and there; implement the audit suggestions and new stories; heavily parallelize"). The
+gap-stories doc proposes IDs **E2-S06…S08**, but those IDs are already taken by the *integrated*
+test-hardening batch (BACKLOG "E2 test-hardening batch (S06–S10)", board Batch 2). The research doc's
+**E2-S09** clashes likewise (FuzzGetExternalName).
+**Decision:** Adopt the gap-doc's own fallback — promote the three config-correctness stories to a new
+epic **E7 — Config correctness**: **E7-S01** = ARCH-1 references, **E7-S02** = ARCH-2 metadata keys,
+**E7-S03** = ARCH-3 external-name comment/docs. The rescoped credential-regression story becomes
+**E2-S11** (next free E2 number), scoped per D-012 to its credential-free parts (non-live wiring
+regression test + creds-contract doc); E5-S07…S10 keep their IDs (free). Batching honours the
+collision map: E7-S02 sequenced after E7-S01 (shared `examples-generated/**` regen), E5-S09 alone
+last (repo-wide reformat).
+**Merge model for this session:** per explicit operator directive, lanes merge to **local `main`**
+(rebase + full re-gate on the rebased head + `/tech-review` APPROVE required) and are pushed in
+batches with CI watched — no per-lane PRs. Security/CI-adjacent lanes (E5-S07 gosec scoping, E5-S08/S10
+workflow edits) are within the operator's explicit "implement the audit suggestions" scope; they
+tighten (never loosen) gates. Noted here in lieu of per-PR surfacing.
+**Counterpoint:** renumbering diverges from the reviewed doc's literal IDs — mitigated by this entry +
+board cross-references (traceability preserved: ARCH-n/SEC-1/DIR-2/TEST-3 ↔ new IDs).

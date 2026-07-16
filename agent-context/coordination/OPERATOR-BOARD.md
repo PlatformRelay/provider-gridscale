@@ -36,10 +36,30 @@ MERGEABLE (security/API/release lanes are **surfaced, not auto-merged**).
 | --- | --- | --- | --- | --- |
 | E3-S02b | README enrichment — 32-resource matrix (correct served `names.kind` casing) + community/contributing links | `README.md` | yes | ✅ Integrated — `/tech-review` REQUEST-CHANGES (P1: Kind casing) → **fixed** → re-verified, gates green |
 
-> **Loop stopped here (2026-07-16).** Auto-mergeable backlog **exhausted**. All remaining work is
-> operator-gated — surfaced as **D-008…D-012** in [`INBOX.md`](../INBOX.md): maintainer identity
-> (D-008), real branding (D-009), Marketplace metadata (D-010), the E5 CI/supply-chain epic (D-011),
-> and uptest lab creds (D-012). E3-S02's badges + logo halves are deferred inside D-009/D-011.
+> **Loop stopped here (2026-07-16, morning).** Auto-mergeable backlog **exhausted**. All remaining work
+> was operator-gated — surfaced as **D-008…D-012** in [`INBOX.md`](../INBOX.md). All five have since
+> been answered/resolved; see `decisions.md`.
+
+### Batch 4 — audit gap-stories + research stories (`/agent-loop-auto` 2026-07-16, afternoon)
+
+Operator re-invoked `/agent-loop-auto`: implement the audit suggestions + new stories; merge to local
+`main` directly (no PRs — operator directive "skip prs, merge local main for speed, watch CI"); heavy
+parallelization. Story IDs renumbered per **D-014** (gap E2-S06/07/08 → **E7-S01/02/03**, research
+E2-S09 → **E2-S11**).
+
+| Lane | Story | Owns (disjoint paths) | State |
+| --- | --- | --- | --- |
+| L-REFS | **E7-S01** (ARCH-1, P1) — wire cross-resource `config.Reference{}` edges | `config/gridscale.go`/`config/references.go`, `config/reference_test.go`, `examples-generated/**` (regen), `docs/adr/` (refs ADR) | 🔶 In flight |
+| L-LINT | **E5-S07** (SEC-1, P2) — scope gosec G101/G104 suppressions to generated+test paths | `.golangci.yml` (exclusions block only) | 🔶 In flight |
+| L-CI | **E5-S08 + E5-S10** (DIR-2 partial + TEST-3) — changelog label, Go-version pin ×3, activate `schema-version-diff` gate | `cmd/provider/main.go`, `Makefile` (GO version), `.github/workflows/ci.yml`, `.github/workflows/e2e.yaml`, `hack/check-go-version.sh` | 🔶 In flight |
+| L-CREDGUARD | **E2-S11** (rescoped E2-S09 per D-012) — non-live credential-wiring regression test + creds-contract doc | `internal/clients/*_test.go`, creds-contract doc gap only | 🔶 In flight |
+| L-EXTNAME | **E7-S03** (ARCH-3, P3) — external-name rationale comment + import-format docs | `config/external_name.go` (comment only), `docs/adr/` (external-name note) | 🔶 In flight |
+| L-E8SCOPE | **E8 scope check** (research only) — can Upjet generate the 21 datasources? | none (report → decisions/BACKLOG) | 🔶 In flight |
+
+**Queued batch 5 (after batch 4 merges):** L-META **E7-S02** (metadata keys — sequenced: shares
+`examples-generated/**` regen surface with E7-S01) · L-DEPREC **E4-S05** (deprecation hygiene —
+needs E7-S01's reference edges settled) · L-UPSTREAM **E6-S06** (upstream doc-PR hunt).
+**Queued batch 6 (RUN ALONE, last):** **E5-S09** goimports local-prefix repo-wide reformat.
 
 ## Collision notes
 - L1 and L3 both reference credential setup but touch **different files** — no path collision.

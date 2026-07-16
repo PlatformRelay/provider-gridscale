@@ -73,3 +73,19 @@ OpenSpec change slug: `e2-test-foundation`, `e5-ci-supplychain`, … (lowercase,
   `PlatformRelay/provider-gridscale` — worth a fix (belongs in E5-S03 or a tidy commit).
 - **uptest needs real creds**: E-level tests hit the live gridscale API; keep them behind
   `/test-examples` + nightly, never on every push. Document the creds contract in E2-S05.
+
+## E7 — Config correctness (audit gap-stories, renumbered per D-014)
+
+The 2026-07-15 audit gap-stories proposed IDs `E2-S06…S08`, which clash with the integrated
+test-hardening batch above — renumbered 2026-07-16 (D-014). Story bodies live in
+[AUDIT-GAP-STORIES-2026-07-15.md](AUDIT-GAP-STORIES-2026-07-15.md) (epic-agnostic, as written there):
+
+| Story | Was (gap doc) | Finding | Path-set |
+| --- | --- | --- | --- |
+| **E7-S01** | "E2-S06" | ARCH-1 — wire cross-resource `config.Reference{}` (edge list in [PROVIDER-DOCS-RESEARCH-2026-07-15.md](PROVIDER-DOCS-RESEARCH-2026-07-15.md) Q3) | `config/*.go` (non-test), `examples-generated/**` |
+| **E7-S02** | "E2-S07" | ARCH-2 — `provider-metadata.yaml` title-keyed entries | `config/provider-metadata.yaml`, `apis/generate.go`, `config/metadata_test.go` |
+| **E7-S03** | "E2-S08" | ARCH-3 — external-name rationale comment + import-format docs | `config/external_name.go` (comment), `docs/adr/` |
+
+**E2-S11** (was research "E2-S09", rescoped per D-012 — credential-free parts only): non-live
+credential-wiring regression test (`internal/clients/*_test.go`) + creds-contract doc. E5-S07…S10
+keep their gap-doc IDs. Research stories E4-S05 / E6-S06 / epic E8 as proposed in the research doc.
