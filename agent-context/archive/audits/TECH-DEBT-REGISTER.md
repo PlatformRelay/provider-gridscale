@@ -22,6 +22,8 @@ Severity: P0 (blocker) · P1 (high) · P2 (medium) · P3 (low). Status: NEW / op
 | DIR-3 | Direction | P3 | local-deploy download URL wrong (releases.hashicorp.com) — prior 404 | `Makefile:17` | S | 2026-07-15 | **FIXED** (commit `797adad`, GitHub releases) |
 | ~~DIR-1~~ | Direction | — | WITHDRAWN — GUIDELINES.md/BACKLOG.md/decisions.md/ROADMAP exist on main; based on stale local checkout | `agent-context/GUIDELINES.md:1` | — | 2026-07-15 | WITHDRAWN |
 
+| BRAND-1 | Docs/Branding | P3 | Provider icon is an original PLACEHOLDER (`extensions/icons/icon.svg`); commission a real gridscale-provider brand icon (+ social card) and wire `iconURI`. Per D-009→B, deferred post-v0.1.0. | `extensions/icons/icon.svg`; `docs/assets/branding/` | S | 2026-07-16 | **NEW** (post-v0.1.0) |
+
 ## Summary
 - **Open:** 5 · **Fixed:** 10 (DIR-3, CRED-1/2, DOC-1/3, SEC-1, ARCH-1/2, DIR-2, TEST-3, DOC-2) · **Withdrawn:** 1 (DIR-1) · **Regressed:** 0
 - **2026-07-16 v0.1.0 prep:** all 7 audit UNBLOCKED items cleared + CI green (`3f3508b`). Only OPERATOR-BLOCKED item remaining: **TEST-2 / E2-S04-S05** (uptest needs live lab creds as CI secrets). TEST-1 CI-enforced (coverage 92.7%). DOC-5 addressed via `make check-docs` guard.

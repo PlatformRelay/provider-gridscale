@@ -52,9 +52,9 @@ The people accountable for the health and direction of the repository. Maintaine
 
 **Current maintainers:** Konrad Heimel (@konih)
 
-> The concrete maintainer identities are an **open operator decision** (tracked as **DOC-4**). Once
-> resolved, the authoritative list lives in [`CODEOWNERS`](CODEOWNERS) and [`OWNERS.md`](OWNERS.md);
-> this document intentionally does not duplicate the names.
+> The authoritative maintainer list lives in [`CODEOWNERS`](CODEOWNERS) and [`OWNERS.md`](OWNERS.md);
+> this document intentionally does not duplicate the names. (Maintainer identity was resolved by
+> **D-008** — see [`agent-context/decisions.md`](agent-context/decisions.md).)
 
 ## How decisions are made
 
@@ -66,7 +66,7 @@ The project runs a **spec-driven, decision-logged** workflow (see
    Counterpoints considered*). ADRs are how the project explains **why** it is shaped the way it is.
 
 2. **Decision log — [`agent-context/decisions.md`](agent-context/decisions.md).** Scope-shaping and
-   operator decisions (the `D-nnn` / `DOC-n` series, e.g. **DOC-4** for maintainer identity) are
+   operator decisions (the `D-nnn` series, e.g. **D-008** for maintainer identity) are
    logged here with their counterpoints, then realised through ADRs and implementation lanes.
 
 Implementation lanes are traceable back to a spec under [`openspec/`](openspec/config.yaml) with
@@ -109,8 +109,8 @@ A typical path:
    addition **is** the promotion, and the change is recorded like any other decision.
 
 Maintainers who step back are moved to an emeritus note (or simply removed from the owner files);
-inactive maintainers may be retired by consensus of the active ones. Because the initial maintainer
-roster is still an open decision (**DOC-4**), this process formally begins once that roster is set.
+inactive maintainers may be retired by consensus of the active ones. The initial maintainer roster is set (@konih, per **D-008**); this process governs future
+changes to it.
 
 ## Code of Conduct enforcement
 
