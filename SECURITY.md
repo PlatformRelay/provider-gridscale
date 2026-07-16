@@ -117,35 +117,36 @@ honest about what is shipped versus planned.
 - **No secrets in source control.** gridscale credentials are provided only via
   `ProviderConfig` `secretRef` at runtime (see [Threat Model](#threat-model)).
   Local development / lab credential files (`.envrc`, `*.env`, `.env.local`) are
-  excluded by a `.gitignore` rule so they cannot be committed accidentally. This
-  is a `.gitignore` rule only — automated secret scanning (`gitleaks`,
-  pre-commit) is **planned**, not yet active (see below).
+  excluded by a `.gitignore` rule so they cannot be committed accidentally.
+- **Secret scanning** — `gitleaks` workflow + `.pre-commit-config.yaml` (E5-S03).
+- **Dependency & code scanning** — `govulncheck`, CodeQL, and OpenSSF Scorecard
+  workflows (E5-S01 / E5-S02).
+- **Pinned GitHub Actions** — CI actions pinned to commit SHAs.
+- **Automated dependency updates** — Renovate for Go modules and Actions (E5-S04).
+- **Coverage floor** — Codecov on the hand-authored `config/` + `internal/clients/`
+  surface (`codecov.yml`, E5-S01).
+- **Signed releases** — published XPKG signed with keyless **cosign** and attested
+  with an **SBOM** (E5-S06).
 - **Deliberate Terraform version pin.** `TERRAFORM_VERSION` is pinned to `1.5.7`
   (the last BSL-boundary release) as a considered dependency decision, not an
   incidental one.
 - **Apache-2.0 licensed**, generated tree kept in sync with its `config/` inputs.
 
-### Planned / in progress (Epic E5 — not yet shipped)
+### Still operator-gated
 
-The following controls are on the roadmap and **not yet implemented**. Do not
-assume they are active until the corresponding workflow or config lands:
+- **Live uptest in CI** — lab credentials stay local (D-012); examples are curated
+  for manual / `/test-examples` runs.
+- **Dedicated `security@…` disclosure address** — until set, use GitHub Security
+  Advisories (see above).
 
-- **Secret scanning** — `gitleaks` plus a `pre-commit` hook set (E5-S03). *Planned.*
-- **Dependency & code scanning** — `govulncheck`, GitHub CodeQL, and OpenSSF
-  Scorecard workflows (E5-S01 / E5-S02). *Planned.*
-- **Pinned GitHub Actions** — CI actions pinned to commit SHAs. *Planned.*
-- **Automated dependency updates** — Dependabot/Renovate for Go modules and
-  Actions (E5-S04). *Planned.*
-- **Signed releases** — released XPKG signed with keyless **cosign** and shipped
-  with an **SBOM** (E5-S06). *Planned.*
-
-As these land, this section will be updated to move each item from *planned* to
-*shipped*.
+A concise evidence table for Scorecard-oriented claims lives in
+[`docs/assurance.md`](docs/assurance.md) (E6-S05 stretch).
 
 ## References
 
 - Engineering guidelines (security & supply chain rules):
   [`agent-context/GUIDELINES.md`](agent-context/GUIDELINES.md)
 - Project roadmap: [`docs/ROADMAP.md`](docs/ROADMAP.md)
+- Assurance case (stretch): [`docs/assurance.md`](docs/assurance.md)
 - Code of Conduct: [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md)
 - License: [`LICENSE`](LICENSE)
