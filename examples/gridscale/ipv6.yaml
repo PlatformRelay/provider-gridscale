@@ -1,0 +1,11 @@
+apiVersion: gridscale.gridscale.platformrelay.io/v1alpha1
+kind: IPv6
+metadata:
+  annotations:
+    meta.upbound.io/example-id: gridscale/v1alpha1/ipv6
+  name: example-ipv6
+spec:
+  forProvider:
+    name: example-ipv6
+  providerConfigRef:
+    name: default

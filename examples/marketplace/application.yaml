@@ -1,0 +1,18 @@
+apiVersion: marketplace.gridscale.platformrelay.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    meta.upbound.io/example-id: marketplace/v1alpha1/application
+  name: example-marketplace-application
+spec:
+  forProvider:
+    name: example
+    category: Archiving
+    # Path to the application image in object storage. Must be a .gz archive
+    # reachable at an s3:// URL in your gridscale object storage.
+    objectStoragePath: s3://testsnapshot/test.gz
+    setupCores: 1
+    setupMemory: 1
+    setupStorageCapacity: 1
+  providerConfigRef:
+    name: default
