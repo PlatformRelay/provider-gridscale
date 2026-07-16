@@ -44,7 +44,7 @@ NPROCS ?= 1
 # to half the number of CPU cores.
 GO_TEST_PARALLEL := $(shell echo $$(( $(NPROCS) / 2 )))
 
-GO_REQUIRED_VERSION ?= 1.24
+GO_REQUIRED_VERSION ?= 1.25
 GOLANGCILINT_VERSION ?= 2.12.1
 GO_STATIC_PACKAGES = $(GO_PROJECT)/cmd/provider $(GO_PROJECT)/cmd/generator
 GO_LDFLAGS += -X $(GO_PROJECT)/internal/version.Version=$(VERSION)
@@ -312,7 +312,14 @@ coverage:
 	awk -v t=$$total -v m=$(COVERAGE_MIN) 'BEGIN { exit (t+0 < m+0) }' || { echo "coverage below floor"; exit 1; }
 	@$(OK) unit coverage floor satisfied
 
-.PHONY: vuln test.race tidy-check arch-lint coverage
+# check-docs (DOC-5): fail if the README resource matrix drifts from the
+# generated CRDs (staleness guard until the table is fully generated).
+check-docs:
+	@$(INFO) checking README resource matrix freshness
+	bash hack/check-docs.sh
+	@$(OK) README resource matrix in sync
+
+.PHONY: vuln test.race tidy-check arch-lint coverage check-docs
 
 # ====================================================================================
 # Special Targets
