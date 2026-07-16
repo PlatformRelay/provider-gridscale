@@ -31,22 +31,29 @@ remove here. This repo's INBOX is independent — never coordinate other repos f
 
 ---
 
-## 🔴 Decision (open) — needs your call
+## 🟢 Ready for you — dispatch a signed v0.2.0
 
-**D-020-FU — cosign/extensions fix, DO BEFORE the v0.2.0 release.** `v0.1.1`'s published digest is
-**unsigned**: it was cosign-signed at publish, then icon/readme were `up alpha xpkg append`-ed, which
-changed the digest and invalidated the signature. A naive re-sign is a trap — CI `xpkg build`
-(`build/makelib/xpkg.mk:77`) builds with `--package-root`/`--examples-root` but **no extensions**, so
-rebuild-then-sign would strip the icon/readme and republish an extension-less package.
-- **Option A — leave as tracked debt** (near-term). Functional + listed; only matters for a signed
-  supply-chain release. Zero action.
-- **Option B — wire the fix, then cut a signed `v0.2.0`** (RECOMMENDED before any signed release).
-  Make the release produce one digest that already contains the extensions, then sign THAT: either
-  build-with-extensions (if the pinned CLI supports it) or reorder to **append-then-sign** in
-  `publish-provider-package.yml`. Operator dispatches the actual `v0.2.0` (release = operator-only).
-- **Recommended:** **B — the fix MUST land before v0.2.0.** **Answer / instructions:** _(operator)_
+**D-020-FU is FIXED and landed on `main` (`2e15c3e`, pushed 2026-07-17).** Chosen Option B
+(append-then-sign) — the only viable path, since `crossplane xpkg build` has **no** `--extensions-root`
+(verified) and `build/` is a submodule (so the fix went in `publish-provider-package.yml`, not `xpkg.mk`).
+What the release now does: install a pinned `up` → `up alpha xpkg append --extensions-root=./extensions`
+after `publish` (rewrites the tag to a digest carrying the `io.crossplane.xpkg: upbound` layer) → sign
+job gated on that job's **SUCCESS** (was `always()`, which would have signed the pre-append digest on the
+failure path) → **fail-closed** step that refuses to sign any digest lacking the extensions layer.
+
+**Your move:** review the diff (`git show 2e15c3e`), then **dispatch `publish-provider-package.yml`
+with `version=v0.2.0`**. Release dispatch stays yours. Watch the run: the "Verify extensions present"
+step must pass before "Keyless cosign sign" — that's the guarantee the signed digest carries icon/readme.
+Do **NOT** re-dispatch to "re-sign" v0.1.1 (still strips extensions — the D-020 trap is unchanged for it).
+
+_Caveat (honest):_ the live `up alpha xpkg append` against ghcr was not exercised (production registry;
+classifier-blocked a dry run). Verified offline: flag existence, make-target expansion, and the fail-closed
+predicate against the **real** v0.1.1 manifests (TRUE) + a base-only manifest (fails closed). If append
+misbehaves at dispatch, the fail-closed check aborts before any signature is produced — safe by construction.
 
 ## ✅ Resolved this session (recorded, no further call)
+
+- **D-020-FU (cosign/extensions)** — **FIXED** (`2e15c3e`, above). Closes fully on the signed v0.2.0 dispatch.
 
 - **U-1 (S3/console credentials sensitive)** — **FIXED locally** (`config/sensitive.go`, `8ae7376`):
   5 fields now `SecretKeySelector`/connection-secret, no plaintext creds in CRDs. Upstream **PR #509**

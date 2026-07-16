@@ -1,10 +1,17 @@
 # SESSION-HANDOFF — provider-gridscale
 
-**Session wrap:** 2026-07-17 (audit-mitigation + upstream-PR loop).
-**HEAD:** `origin/main` @ `c38e52b` (LB-1 loadbalancer status fix).
-**Main CI:** all 7 workflows **green** on `c38e52b` (CI, Coverage, CodeQL, Docs Sync, Gitleaks, Govulncheck, Scorecard) — confirmed via `gh run watch` exit 0. (GitHub run-list API returned transient 503s at wrap; the runs themselves are green.)
-**Latest package tag:** `v0.1.1` (published; **unsigned digest** — see D-020-FU).
+**Session wrap:** 2026-07-17b (D-020-FU cosign/extensions fix).
+**HEAD:** `origin/main` @ `2e15c3e` (D-020-FU append-then-sign; ff-merged + pushed).
+**Main CI:** **UNCONFIRMED** — GitHub Actions API in a persistent 503 outage at wrap; could not read run status. The change is Go/docs-neutral (a `workflow_dispatch`-only workflow + an isolated make target, wired into no push-CI path), so push-CI has nothing new to fail on; main was green at `b4782dd`. **Re-check when the API recovers:** `gh run list --branch main`.
+**Latest package tag:** `v0.1.1` (published; **unsigned digest** — the D-020 trap; do NOT re-sign it). Next release **v0.2.0** now self-signs WITH extensions (D-020-FU) — operator dispatches.
 **Merge model:** local rebase + ff-merge → push `main` (no PRs), per operator.
+
+## ⭐ Ready for the operator — dispatch signed v0.2.0
+
+D-020-FU landed (`2e15c3e`). **Dispatch `publish-provider-package.yml` with `version=v0.2.0`** (release
+dispatch is operator-only). The run's "Verify extensions present before signing" step must pass before
+"Keyless cosign sign" — that's the fail-closed guarantee the signed digest carries icon/readme. Then
+v0.2.0's published digest is signed AND extension-bearing. Details in [`../INBOX.md`](../INBOX.md).
 
 ## Repo state (clean)
 

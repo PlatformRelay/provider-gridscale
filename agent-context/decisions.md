@@ -439,6 +439,33 @@ Tracked as **D-020-FU** in `BACKLOG.md`.
 convenient" note (2026-07-16b) — that was reverted; a naive re-dispatch would have shipped an
 extension-less package. The unsigned-digest gap is accepted as low-risk tracked debt until v0.2.0.
 
+## D-020-FU — RESOLVED: append-then-sign wired into the publish workflow
+
+**Date:** 2026-07-17 · **Status:** Implemented — landed `2e15c3e` on `main`; awaiting operator v0.2.0 dispatch to close.
+**Context:** D-020 backlogged "wire `--extensions-root` (or atomic append-then-sign) before a signed release."
+Investigation ruled out the first option: `crossplane xpkg build` (the CLI used by `build/makelib/xpkg.mk`)
+has **no** `--extensions-root` flag — only `--package-root`/`--examples-root`/`--ignore`/`--package-file`.
+Extensions can only be added post-build via `up alpha xpkg append`, which rewrites the tag to a new digest
+carrying an `io.crossplane.xpkg: upbound` layer (confirmed against the real v0.1.1 manifests) and, by its own
+docs, invalidates any prior signature. And `build/` is a git submodule (`crossplane/build`) — must not be
+edited. So the fix lives entirely in `.github/workflows/publish-provider-package.yml` (+ a small repo-Makefile
+target), exactly as the register scoped it.
+**Decision:** **append-then-sign.** In `publish-artifacts`: install a pinned `up` (v0.51.0 — the build system's
+`$(UP)` in `build.init` is a **dangling reference**, defined by no makelib, so it never installed anything) and
+run `make xpkg.append.extensions` (→ `up alpha xpkg append --extensions-root=./extensions <ref>`) **after**
+`publish`, gated on `version != ''`. Harden `sign-and-sbom`: (a) gate on publish-artifacts **SUCCESS** (was
+`always()`, which on an append-failure path would have signed the pre-append extension-less digest — reviving
+the exact bug); (b) a **fail-closed** "Verify extensions present" step that refuses to sign any resolved digest
+whose platform manifests lack the `io.crossplane.xpkg: upbound` layer (survives future reordering / re-dispatch).
+**Verification:** offline only — workflow YAML valid + `actionlint` clean; make target expands correctly; the
+fail-closed jq predicate returns TRUE for both real v0.1.1 children and fails closed on a base-only manifest;
+pinned `up` download HTTP 200 (amd64/arm64); `up version --client` exit 0. **Live `up alpha xpkg append` against
+ghcr was NOT exercised** (production registry; a dry run was classifier-blocked). The fail-closed check is the
+backstop that keeps signing safe even if append no-ops or the tag/digest-input assumption is off.
+**Counterpoint / residual:** the dangling `$(UP)` is a latent build-system bug left untouched (out of scope);
+worth a follow-up to define `UP` properly in `k8s_tools.mk`-style tooling so `build.init` actually installs it.
+Closes fully once the operator dispatches a signed **v0.2.0** and its run's verify step passes.
+
 ## D-021 — Upstream bug fixes: local Upjet overrides + open upstream PRs
 
 **Date:** 2026-07-17 · **Status:** Accepted (operator go-ahead in session)
