@@ -279,3 +279,22 @@ from the gridscale press Logo-Package; ship light/dark variants + primary wordma
 `docs/assets/branding/`; set `meta.crossplane.io/iconURI` to the raw `extensions/icons/icon.svg`
 URL. Closes **BRAND-1**.
 
+---
+
+## D-015 — Epic E8 (datasource support) rescoped to document-omission + track-upstream
+
+**Date:** 2026-07-16 · **Status:** Decided (coordinator call from L-E8SCOPE research; operator may veto).
+**Context:** Research story E8-S01 proposed generating the 21 gridscale Terraform datasources. The
+scope check the research doc itself demanded came back negative: upjet v2.2.1's `NewProvider`
+extracts only `ResourceSchemas` (`pkg/config/provider.go:322-327`); `DataSourceSchemas` is never
+referenced anywhere in upjet; all include-lists target resources only. No upstream upjet issue tracks
+datasource generation (gh search: 0 relevant hits).
+**Decision:** E8 is **not implementable today** → rescope to (1) document the omission + the partial
+workaround (Observe-Only MRs via `managementPolicies: ["Observe"]` cover the 19 resource-twinned
+datasources for UUID-known imports; no name→UUID lookup; `backup_list`/`public_network` not coverable),
+and (2) file an upstream upjet feature request for `DataSourceSchemas` support — **queued as an
+operator-visible task** (outward-facing; not filed autonomously). Actual generation deferred until
+upjet supports it.
+**Counterpoint:** implementing datasource codegen ourselves in a fork was considered and rejected —
+maintenance burden far exceeds the P2 UX value; PaaS `service_template_uuid` lookup pain is real but
+survivable with documented UUIDs.
