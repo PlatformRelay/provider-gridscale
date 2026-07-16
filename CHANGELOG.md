@@ -12,6 +12,10 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 ### Bug Fixes
 
+- **integration:** Cite D-012 for coverage-widen; switch Codecov to tokenless OIDC [05114ed](https://github.com/platformrelay/provider-gridscale/commit/05114edea04414d41b2f7aa7d07e72c187c49dd9)
+
+- **lint:** Repair dead zz_ generated-file glob + correct goimports local-prefix (LINT-1/DIR-2) [1e9cfe1](https://github.com/platformrelay/provider-gridscale/commit/1e9cfe107307761deac32d024ea217e99a33c696)
+
 - **lint:** Scope gosec G101/G104 suppression to tests only (SEC-1) [04f4527](https://github.com/platformrelay/provider-gridscale/commit/04f452789477c641a84e59802db8563fa4096d1b)
 
 - **deps:** Bump go 1.26.5 + x/net v0.55.0 (govulncheck GO-2026-5856/5026/4918) ([#10](https://github.com/platformrelay/provider-gridscale/pull/10))[d75721e](https://github.com/platformrelay/provider-gridscale/commit/d75721e674b5ec130f9e2af62b335d8ecedefa03)
@@ -24,7 +28,24 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 - **quality:** Add vuln/race/tidy/arch-lint make targets (E2-S06/S07/S08/S10) [418957f](https://github.com/platformrelay/provider-gridscale/commit/418957fa7fb9e78719fb879eea3bd9edf56b886b)
 
 
+### CI/CD
+
+- Renovate go-version matcher; visible unsigned-publish warning; cliff skips changelog commits (CI-02/03) [d936e5a](https://github.com/platformrelay/provider-gridscale/commit/d936e5a70d0174881aaea41f03a71f848c6c95c8)
+
+- **release:** Keyless cosign signing + SBOM on publish (E5-S06) [88f5326](https://github.com/platformrelay/provider-gridscale/commit/88f5326ab27ba8d19ad34b3a871be57c1ed61d75)
+
+- **release:** Renovate tuning + git-cliff changelog + workflow (E5-S04/S05) [467b919](https://github.com/platformrelay/provider-gridscale/commit/467b919551c7de1c810b7cad03cb618ee3953d94)
+
+- **security:** Add gitleaks config/workflow + pre-commit hooks (E5-S03) [6a4d384](https://github.com/platformrelay/provider-gridscale/commit/6a4d3841cb3a2791800f2a014e079af6c659005e)
+
+- **supply-chain:** Add coverage/govulncheck/scorecard/codeql workflows (E5-S01/S02) [119e2de](https://github.com/platformrelay/provider-gridscale/commit/119e2de656473658decf8b15e179f651b7e80144)
+
+
 ### Documentation
+
+- **readme:** Add logo + badge row + docs/examples pointers (E3-S02/S04) [eec5d77](https://github.com/platformrelay/provider-gridscale/commit/eec5d77751b1957bd19cf60c3be591116fea53b6)
+
+- **governance:** Name @konih as maintainer (DOC-4) [f79d1a0](https://github.com/platformrelay/provider-gridscale/commit/f79d1a0807139a948ab16af5369552ce460b5d4e)
 
 - **coordination:** Consolidate operator decision set + reconcile govulncheck (D-007..D-012) [ab8a86e](https://github.com/platformrelay/provider-gridscale/commit/ab8a86e53b4913349f8946d8bec545c661b3f818)
 
@@ -51,6 +72,8 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 ### Features
 
+- **marketplace:** Add crossplane.yaml metadata + marketplace readme (E3-S03) [8ed8ec5](https://github.com/platformrelay/provider-gridscale/commit/8ed8ec5ff2200cd360a65bdc39e7e6716ee67d56)
+
 - **branding:** Add provider icon + light/dark variants (E3-S01, placeholder) [df4a3ec](https://github.com/platformrelay/provider-gridscale/commit/df4a3ecf86f6440e5dbb9d8d7534a5129d166c35)
 
 
@@ -60,6 +83,8 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 
 ### Tests
+
+- **clients:** Cover credential resolution; widen coverage floor to internal/clients (E2-S03/D-007) [5d054e5](https://github.com/platformrelay/provider-gridscale/commit/5d054e55c3463d4f48d33a1ea9076c5093524abf)
 
 - **config:** Coverage floor target scoped to ./config (E2-S03) [2faf26c](https://github.com/platformrelay/provider-gridscale/commit/2faf26c2e62d7a5f1ede507dbfaecfa65f26cdab)
 
