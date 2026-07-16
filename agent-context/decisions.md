@@ -387,3 +387,19 @@ this repository** so Actions can use `GITHUB_TOKEN` instead of a packages PAT fo
 creating public from the start. Marketplace *listing* (`--publish`) is a separate draft→published
 step and may still need Upbound Slack review for first public package.
 
+---
+
+## D-017b — No personal PAT in Actions secrets (match kollect/mkurator) — operator 2026-07-16
+
+**Date:** 2026-07-16 · **Status:** Accepted (operator direction).
+**Context:** Operator rejected storing a personal classic PAT as `GHCR_PAT` in repo secrets.
+**Decision:** Delete `GHCR_PAT`. Pass `${{ github.token }}` into the upstream reusable workflow's
+required secret slot (still named `GHCR_PAT` upstream) and use `github.token` +
+`packages: write` / `id-token: write` for `sign-and-sbom` — same pattern as `kollect` /
+`mkurator` `release.yaml`. Retain only Upbound **robot** secrets (`XPKG_MIRROR_*`) for the
+Marketplace mirror. Operator should revoke the PAT that was briefly uploaded.
+**Counterpoint:** upstream `publish-provider.yml` hard-requires a secret named `GHCR_PAT` and logs
+in as `repository_owner`; mapping `github.token` into that slot is a naming wart but avoids forking
+the reusable workflow. If login-as-owner fails again, inline a local publish job (kollect-style)
+instead of reintroducing a PAT.
+
