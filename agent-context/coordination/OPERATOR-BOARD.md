@@ -1,6 +1,6 @@
 # OPERATOR-BOARD — provider-gridscale (lanes + locks)
 
-Coordinator: session wrap 2026-07-16. Base: `origin/main` @ `3edc5f0`.
+Coordinator: session wrap 2026-07-16 (CI-red fix landed). Base: `origin/main` @ `d275897`.
 **No lanes In-flight.** Auto-mergeable backlog exhausted. See
 [`SESSION-HANDOFF.md`](SESSION-HANDOFF.md) for next entry points.
 
@@ -78,9 +78,14 @@ IDs renumbered per **D-014** (gap E2-S06/07/08 → **E7-S01/02/03**, research E2
 | L-EXAMPLES | **E4-S02** curated examples index | ✅ Integrated (`fdbf300`) |
 | L-ASSURE | **E6-S05** stretch assurance docs | ✅ Integrated (`3edc5f0`) |
 
-> **Session wrap complete** — HEAD `3edc5f0`. Prefer Marketplace/install tag **v0.1.1**.
-> **CI note:** push @ `3edc5f0` left the primary **CI** workflow **failed** (other gates green) —
-> diagnose before next coding loop; see SESSION-HANDOFF.
+### Batch 8 — CI restore (2026-07-16 wrap)
+
+| Lane | Story | State |
+| --- | --- | --- |
+| L-CIRED | Restore green `main` CI — filesystem CRD generate drift + `hack/metadatafix` lint + `docs/api` sync | ✅ Integrated (`d8433f5`+`d275897`) |
+
+> **Session wrap complete** — HEAD `d275897`. Prefer Marketplace/install tag **v0.1.1**.
+> Primary CI green on `d8433f5`; Docs Sync green on `d275897`. See SESSION-HANDOFF.
 
 ## Deferred / blocked (not board lanes)
 

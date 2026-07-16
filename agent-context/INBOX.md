@@ -4,8 +4,8 @@ Items needing the operator. **Decisions** carry full Context + Options (one mark
 **Answer** field. When answered, record in [`decisions.md`](decisions.md) (with counterpoints) and
 remove here. This repo's INBOX is independent — never coordinate other repos from here.
 
-> **Handoff 2026-07-16 wrap:** `main` @ `3edc5f0`; Marketplace **v0.1.1**. See
-> [`coordination/SESSION-HANDOFF.md`](coordination/SESSION-HANDOFF.md).
+> **Handoff 2026-07-16 wrap:** `main` @ `d275897`; Marketplace **v0.1.1**. Primary CI restored
+> (`d8433f5`+`d275897`). See [`coordination/SESSION-HANDOFF.md`](coordination/SESSION-HANDOFF.md).
 
 ---
 
@@ -32,10 +32,6 @@ remove here. This repo's INBOX is independent — never coordinate other repos f
 
 1. **Revoke the old classic PAT** that was briefly stored as `GHCR_PAT` (local PAT in
    `.envrc` only — do **not** put it in Actions secrets).
-2. **Diagnose red CI on `main` @ `3edc5f0`** — primary **CI** workflow failed
-   ([run 29515604942](https://github.com/PlatformRelay/provider-gridscale/actions/runs/29515604942));
-   Gitleaks / Scorecard / Govulncheck / Coverage / Docs Sync were green. Next coding loop should
-   not assume `main` is fully green until this is fixed or explained.
 
 ### Non-blocking / optional
 
@@ -44,11 +40,13 @@ remove here. This repo's INBOX is independent — never coordinate other repos f
   (content already on `main`).
 - Upjet `DataSourceSchemas` feature request (D-015) — do not auto-file.
 - Optional: close upstream TF #188; nudge doc drafts #467/#468 (D-016).
+- Optional: refresh stale `docs/ROADMAP.md` “Where we are” table.
 
 ---
 
 ## Reference — resolved / no action
 
+- **Red primary CI @ `3edc5f0`** — fixed (`d8433f5` generate+lint; `d275897` docs/api sync).
 - D-007…D-017b, audit-gap E7 + E5-S07…S10, CRED live smoke, BRAND-1 / D-009b, Batch 7 polish —
   see `decisions.md` / SESSION-HANDOFF.
 - E2-S04/S05 uptest — **intentionally skipped** (D-012 → B).
