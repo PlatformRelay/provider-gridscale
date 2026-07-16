@@ -51,6 +51,22 @@ jobs:
         run: |
           make crddiff
 
+      - name: Get modified native schema
+        id: modified-schema
+        uses: tj-actions/changed-files@9426d40962ed5378910ee2e21d5f8c6fcbf2dd96 # v47.0.6
+        with:
+          files: |
+            config/schema.json
+      # schema-version-diff runs only on pull requests that modify the native
+      # Terraform provider schema (config/schema.json): it diffs schema versions
+      # against the PR base branch (GITHUB_BASE_REF), so it needs a PR context
+      # and is skipped cleanly on push and on PRs without schema changes.
+      - name: Report native schema version changes
+        if: github.event_name == 'pull_request' && steps.modified-schema.outputs.any_changed == 'true'
+        run: |
+          git fetch origin "+refs/heads/${GITHUB_BASE_REF}:refs/heads/${GITHUB_BASE_REF}" --no-tags
+          make schema-version-diff
+
 
   lint:
     runs-on: ubuntu-24.04
