@@ -4,10 +4,8 @@ Items needing the operator. **Decisions** carry full Context + Options (one mark
 **Answer** field. When answered, record in [`decisions.md`](decisions.md) (with counterpoints) and
 remove here. This repo's INBOX is independent — never coordinate other repos from here.
 
-> **Status 2026-07-16:** D-017 — public Upbound + GHCR package linked. **No personal PAT** in
-> secrets. Publish workflow is **inlined** (upstream reusable cannot receive `github.token` — empty
-> password). Only Upbound robot `XPKG_MIRROR_*` secrets remain. `sign-and-sbom` already green on
-> existing `v0.1.0`.
+> **Handoff 2026-07-16 evening:** coding loop idle — see
+> [`coordination/SESSION-HANDOFF.md`](coordination/SESSION-HANDOFF.md). No open decisions.
 
 ---
 
@@ -19,30 +17,26 @@ remove here. This repo's INBOX is independent — never coordinate other repos f
 
 ## Operator tasks
 
-### Publish unblock (remaining)
-
-1. **Revoke the classic PAT** that was briefly stored as `GHCR_PAT` (even though the secret is
-   deleted — rotate/revoke at GitHub → Settings → Developer settings → PATs). Keep a local PAT in
-   `.envrc` only if you need it for `gh` CLI; CI must not use it.
-2. **Re-dispatch publish** (after the workflow change lands on `main`):
-   ```bash
-   gh workflow run publish-provider-package.yml -R PlatformRelay/provider-gridscale -f version=v0.1.0
-   ```
-3. **Upbound Marketplace listing** — repo is public but `publishPolicy: draft`. When rate-limit
-   clears:
+1. **Revoke the old classic PAT** that was briefly stored as `GHCR_PAT` (new local PAT is in
+   `.envrc` only — do **not** put it in Actions secrets).
+2. **Watch / finish `v0.1.0` publish** — inlined workflow run:
+   https://github.com/PlatformRelay/provider-gridscale/actions/runs/29510417338  
+   Re-dispatch if needed:
+   `gh workflow run publish-provider-package.yml -R PlatformRelay/provider-gridscale -f version=v0.1.0`
+3. **Publish Upbound Marketplace listing** (repo public, still `publishPolicy: draft`):
    ```bash
    up repository update provider-gridscale --private=false --publish --force --organization=platformrelay
    ```
    First public listing may need Upbound review via Crossplane Slack `#upbound`.
 
-### Other (non-blocking)
+### Non-blocking
 
-- **Upjet feature request — `DataSourceSchemas` (from D-015; outward-facing, do not auto-file).**
-- **Optional — close stale upstream #188 / nudge doc drafts (from D-016 / E6-S06).**
+- Upjet `DataSourceSchemas` feature request (D-015) — outward-facing; do not auto-file.
+- Optional: close upstream #188; nudge doc drafts #467/#468 (D-016).
 
 ---
 
 ## Reference — resolved / no action
 
-- D-007…D-017 (see `decisions.md`). GHCR package linked to `PlatformRelay/provider-gridscale` and
-  public. Publish/sign uses `github.token` (no PAT). Upbound robot secrets retained for mirror only.
+- D-007…D-017b, audit-gap E7 + E5-S07…S10 + E4-S05 + E6-S06, CRED live smoke, v0.1.0 on public
+  linked GHCR — see `decisions.md` / SESSION-HANDOFF.
