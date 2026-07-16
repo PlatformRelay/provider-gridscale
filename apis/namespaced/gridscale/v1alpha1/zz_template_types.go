@@ -27,7 +27,16 @@ type TemplateInitParameters_2 struct {
 
 	// Snapshot uuid for template.
 	// Snapshot UUID for template.
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/gridscale/v1alpha1.Snapshot
 	SnapshotUUID *string `json:"snapshotUuid,omitempty" tf:"snapshot_uuid,omitempty"`
+
+	// Reference to a Snapshot in gridscale to populate snapshotUuid.
+	// +kubebuilder:validation:Optional
+	SnapshotUUIDRef *v1.NamespacedReference `json:"snapshotUuidRef,omitempty" tf:"-"`
+
+	// Selector for a Snapshot in gridscale to populate snapshotUuid.
+	// +kubebuilder:validation:Optional
+	SnapshotUUIDSelector *v1.NamespacedSelector `json:"snapshotUuidSelector,omitempty" tf:"-"`
 }
 
 type TemplateObservation_2 struct {
@@ -127,8 +136,17 @@ type TemplateParameters_2 struct {
 
 	// Snapshot uuid for template.
 	// Snapshot UUID for template.
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/gridscale/v1alpha1.Snapshot
 	// +kubebuilder:validation:Optional
 	SnapshotUUID *string `json:"snapshotUuid,omitempty" tf:"snapshot_uuid,omitempty"`
+
+	// Reference to a Snapshot in gridscale to populate snapshotUuid.
+	// +kubebuilder:validation:Optional
+	SnapshotUUIDRef *v1.NamespacedReference `json:"snapshotUuidRef,omitempty" tf:"-"`
+
+	// Selector for a Snapshot in gridscale to populate snapshotUuid.
+	// +kubebuilder:validation:Optional
+	SnapshotUUIDSelector *v1.NamespacedSelector `json:"snapshotUuidSelector,omitempty" tf:"-"`
 }
 
 // TemplateSpec defines the desired state of Template
@@ -168,7 +186,6 @@ type Template struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.snapshotUuid) || (has(self.initProvider) && has(self.initProvider.snapshotUuid))",message="spec.forProvider.snapshotUuid is a required parameter"
 	Spec   TemplateSpec   `json:"spec"`
 	Status TemplateStatus `json:"status,omitempty"`
 }

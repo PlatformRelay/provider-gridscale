@@ -18,8 +18,12 @@ spec:
       mode: http
       targetPort: 80
     labels: []
-    listenIpv4Uuid: ${gridscale_ipv4.lb.id}
-    listenIpv6Uuid: ${gridscale_ipv6.lb.id}
+    listenIpv4UuidSelector:
+      matchLabels:
+        testing.upbound.io/example-name: lb
+    listenIpv6UuidSelector:
+      matchLabels:
+        testing.upbound.io/example-name: lb
     name: test-lb
     redirectHttpToHttps: false
     timeouts:

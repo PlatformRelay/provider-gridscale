@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: StorageBucket is the Schema for the StorageBuckets API. <no value>
+        description: StorageBucket is the Schema for the StorageBuckets API. Manages
+          an object storage bucket in gridscale.
         properties:
           apiVersion:
             description: |-
@@ -59,7 +60,9 @@ spec:
               forProvider:
                 properties:
                   accessKeySecretRef:
-                    description: The object storage secret_key.
+                    description: |-
+                      Access key.
+                      The object storage secret_key.
                     properties:
                       key:
                         type: string
@@ -71,30 +74,48 @@ spec:
                     - name
                     type: object
                   bucketName:
-                    description: The name of the bucket.
+                    description: |-
+                      Name of the bucket.
+                      The name of the bucket.
                     type: string
                   lifecycleRule:
+                    description: 'A list of lifecycle rules for the bucket. Each rule
+                      supports the following:'
                     items:
                       properties:
                         enabled:
+                          description: Whether the rule is enabled.
                           type: boolean
                         expirationDays:
+                          description: 'Number of days after which objects are deleted.
+                            Default: 365.'
                           type: number
                         id:
+                          description: Unique identifier for the rule.
                           type: string
                         incompleteUploadExpirationDays:
+                          description: 'Number of days after which incomplete multipart
+                            uploads are deleted. Default: 3.'
                           type: number
                         noncurrentVersionExpirationDays:
+                          description: 'Number of days after which noncurrent object
+                            versions are deleted. Default: 365.'
                           type: number
                         prefix:
+                          description: Object key prefix identifying one or more objects
+                            to which the rule applies.
                           type: string
                       type: object
                     type: array
                   s3Host:
-                    description: The S3 host.
+                    description: |-
+                      Host of the s3. Default: "gos3.io".
+                      The S3 host.
                     type: string
                   secretKeySecretRef:
-                    description: The object storage access_key.
+                    description: |-
+                      Secret key.
+                      The object storage access_key.
                     properties:
                       key:
                         type: string
@@ -120,7 +141,9 @@ spec:
                   autoscaler.
                 properties:
                   accessKeySecretRef:
-                    description: The object storage secret_key.
+                    description: |-
+                      Access key.
+                      The object storage secret_key.
                     properties:
                       key:
                         type: string
@@ -132,30 +155,48 @@ spec:
                     - name
                     type: object
                   bucketName:
-                    description: The name of the bucket.
+                    description: |-
+                      Name of the bucket.
+                      The name of the bucket.
                     type: string
                   lifecycleRule:
+                    description: 'A list of lifecycle rules for the bucket. Each rule
+                      supports the following:'
                     items:
                       properties:
                         enabled:
+                          description: Whether the rule is enabled.
                           type: boolean
                         expirationDays:
+                          description: 'Number of days after which objects are deleted.
+                            Default: 365.'
                           type: number
                         id:
+                          description: Unique identifier for the rule.
                           type: string
                         incompleteUploadExpirationDays:
+                          description: 'Number of days after which incomplete multipart
+                            uploads are deleted. Default: 3.'
                           type: number
                         noncurrentVersionExpirationDays:
+                          description: 'Number of days after which noncurrent object
+                            versions are deleted. Default: 365.'
                           type: number
                         prefix:
+                          description: Object key prefix identifying one or more objects
+                            to which the rule applies.
                           type: string
                       type: object
                     type: array
                   s3Host:
-                    description: The S3 host.
+                    description: |-
+                      Host of the s3. Default: "gos3.io".
+                      The S3 host.
                     type: string
                   secretKeySecretRef:
-                    description: The object storage access_key.
+                    description: |-
+                      Secret key.
+                      The object storage access_key.
                     properties:
                       key:
                         type: string
@@ -245,29 +286,46 @@ spec:
               atProvider:
                 properties:
                   bucketName:
-                    description: The name of the bucket.
+                    description: |-
+                      Name of the bucket.
+                      The name of the bucket.
                     type: string
                   id:
+                    description: Unique identifier for the rule.
                     type: string
                   lifecycleRule:
+                    description: 'A list of lifecycle rules for the bucket. Each rule
+                      supports the following:'
                     items:
                       properties:
                         enabled:
+                          description: Whether the rule is enabled.
                           type: boolean
                         expirationDays:
+                          description: 'Number of days after which objects are deleted.
+                            Default: 365.'
                           type: number
                         id:
+                          description: Unique identifier for the rule.
                           type: string
                         incompleteUploadExpirationDays:
+                          description: 'Number of days after which incomplete multipart
+                            uploads are deleted. Default: 3.'
                           type: number
                         noncurrentVersionExpirationDays:
+                          description: 'Number of days after which noncurrent object
+                            versions are deleted. Default: 365.'
                           type: number
                         prefix:
+                          description: Object key prefix identifying one or more objects
+                            to which the rule applies.
                           type: string
                       type: object
                     type: array
                   s3Host:
-                    description: The S3 host.
+                    description: |-
+                      Host of the s3. Default: "gos3.io".
+                      The S3 host.
                     type: string
                 type: object
               conditions:

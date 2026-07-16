@@ -30,7 +30,16 @@ type CloneInitParameters struct {
 
 	// The ID of a storage instance which will be cloned.
 	// ID of the storage instance that will be cloned.
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/cluster/gridscale/v1alpha1.Storage
 	SourceStorageID *string `json:"sourceStorageId,omitempty" tf:"source_storage_id,omitempty"`
+
+	// Reference to a Storage in gridscale to populate sourceStorageId.
+	// +kubebuilder:validation:Optional
+	SourceStorageIDRef *v1.Reference `json:"sourceStorageIdRef,omitempty" tf:"-"`
+
+	// Selector for a Storage in gridscale to populate sourceStorageId.
+	// +kubebuilder:validation:Optional
+	SourceStorageIDSelector *v1.Selector `json:"sourceStorageIdSelector,omitempty" tf:"-"`
 
 	// The default value is inherited from the source storage instance. A desired storage type is possible. (one of storage, storage_high, storage_insane).
 	// (one of storage, storage_high, storage_insane)
@@ -126,8 +135,17 @@ type CloneParameters struct {
 
 	// The ID of a storage instance which will be cloned.
 	// ID of the storage instance that will be cloned.
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/cluster/gridscale/v1alpha1.Storage
 	// +kubebuilder:validation:Optional
 	SourceStorageID *string `json:"sourceStorageId,omitempty" tf:"source_storage_id,omitempty"`
+
+	// Reference to a Storage in gridscale to populate sourceStorageId.
+	// +kubebuilder:validation:Optional
+	SourceStorageIDRef *v1.Reference `json:"sourceStorageIdRef,omitempty" tf:"-"`
+
+	// Selector for a Storage in gridscale to populate sourceStorageId.
+	// +kubebuilder:validation:Optional
+	SourceStorageIDSelector *v1.Selector `json:"sourceStorageIdSelector,omitempty" tf:"-"`
 
 	// The default value is inherited from the source storage instance. A desired storage type is possible. (one of storage, storage_high, storage_insane).
 	// (one of storage, storage_high, storage_insane)
@@ -171,9 +189,8 @@ type CloneStatus struct {
 type Clone struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.sourceStorageId) || (has(self.initProvider) && has(self.initProvider.sourceStorageId))",message="spec.forProvider.sourceStorageId is a required parameter"
-	Spec   CloneSpec   `json:"spec"`
-	Status CloneStatus `json:"status,omitempty"`
+	Spec              CloneSpec   `json:"spec"`
+	Status            CloneStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

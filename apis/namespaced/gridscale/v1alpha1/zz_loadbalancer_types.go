@@ -57,7 +57,16 @@ type ForwardingRuleInitParameters struct {
 
 	// The UUID of a custom certificate.
 	// The UUID of a custom certificate.
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/ssl/v1alpha1.Certificate
 	CertificateUUID *string `json:"certificateUuid,omitempty" tf:"certificate_uuid,omitempty"`
+
+	// Reference to a Certificate in ssl to populate certificateUuid.
+	// +kubebuilder:validation:Optional
+	CertificateUUIDRef *v1.NamespacedReference `json:"certificateUuidRef,omitempty" tf:"-"`
+
+	// Selector for a Certificate in ssl to populate certificateUuid.
+	// +kubebuilder:validation:Optional
+	CertificateUUIDSelector *v1.NamespacedSelector `json:"certificateUuidSelector,omitempty" tf:"-"`
 
 	// A valid domain name that points to the loadbalancer's IP address.
 	// A valid domain name that points to the loadbalancer's IP address.
@@ -103,8 +112,17 @@ type ForwardingRuleParameters struct {
 
 	// The UUID of a custom certificate.
 	// The UUID of a custom certificate.
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/ssl/v1alpha1.Certificate
 	// +kubebuilder:validation:Optional
 	CertificateUUID *string `json:"certificateUuid,omitempty" tf:"certificate_uuid,omitempty"`
+
+	// Reference to a Certificate in ssl to populate certificateUuid.
+	// +kubebuilder:validation:Optional
+	CertificateUUIDRef *v1.NamespacedReference `json:"certificateUuidRef,omitempty" tf:"-"`
+
+	// Selector for a Certificate in ssl to populate certificateUuid.
+	// +kubebuilder:validation:Optional
+	CertificateUUIDSelector *v1.NamespacedSelector `json:"certificateUuidSelector,omitempty" tf:"-"`
 
 	// A valid domain name that points to the loadbalancer's IP address.
 	// A valid domain name that points to the loadbalancer's IP address.
@@ -148,11 +166,29 @@ type LoadbalancerInitParameters struct {
 
 	// The UUID of the IPv4 address the load balancer will listen to for incoming requests.
 	// The UUID of the IPv4 address the Load balancer will listen to for incoming requests.
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/gridscale/v1alpha1.IPv4
 	ListenIPv4UUID *string `json:"listenIpv4Uuid,omitempty" tf:"listen_ipv4_uuid,omitempty"`
+
+	// Reference to a IPv4 in gridscale to populate listenIpv4Uuid.
+	// +kubebuilder:validation:Optional
+	ListenIPv4UUIDRef *v1.NamespacedReference `json:"listenIpv4UuidRef,omitempty" tf:"-"`
+
+	// Selector for a IPv4 in gridscale to populate listenIpv4Uuid.
+	// +kubebuilder:validation:Optional
+	ListenIPv4UUIDSelector *v1.NamespacedSelector `json:"listenIpv4UuidSelector,omitempty" tf:"-"`
 
 	// The UUID of the IPv6 address the load balancer will listen to for incoming requests.
 	// The UUID of the IPv6 address the Load balancer will listen to for incoming requests.
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/gridscale/v1alpha1.IPv6
 	ListenIPv6UUID *string `json:"listenIpv6Uuid,omitempty" tf:"listen_ipv6_uuid,omitempty"`
+
+	// Reference to a IPv6 in gridscale to populate listenIpv6Uuid.
+	// +kubebuilder:validation:Optional
+	ListenIPv6UUIDRef *v1.NamespacedReference `json:"listenIpv6UuidRef,omitempty" tf:"-"`
+
+	// Selector for a IPv6 in gridscale to populate listenIpv6Uuid.
+	// +kubebuilder:validation:Optional
+	ListenIPv6UUIDSelector *v1.NamespacedSelector `json:"listenIpv6UuidSelector,omitempty" tf:"-"`
 
 	// The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.
 	// The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters
@@ -239,13 +275,31 @@ type LoadbalancerParameters struct {
 
 	// The UUID of the IPv4 address the load balancer will listen to for incoming requests.
 	// The UUID of the IPv4 address the Load balancer will listen to for incoming requests.
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/gridscale/v1alpha1.IPv4
 	// +kubebuilder:validation:Optional
 	ListenIPv4UUID *string `json:"listenIpv4Uuid,omitempty" tf:"listen_ipv4_uuid,omitempty"`
 
+	// Reference to a IPv4 in gridscale to populate listenIpv4Uuid.
+	// +kubebuilder:validation:Optional
+	ListenIPv4UUIDRef *v1.NamespacedReference `json:"listenIpv4UuidRef,omitempty" tf:"-"`
+
+	// Selector for a IPv4 in gridscale to populate listenIpv4Uuid.
+	// +kubebuilder:validation:Optional
+	ListenIPv4UUIDSelector *v1.NamespacedSelector `json:"listenIpv4UuidSelector,omitempty" tf:"-"`
+
 	// The UUID of the IPv6 address the load balancer will listen to for incoming requests.
 	// The UUID of the IPv6 address the Load balancer will listen to for incoming requests.
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/gridscale/v1alpha1.IPv6
 	// +kubebuilder:validation:Optional
 	ListenIPv6UUID *string `json:"listenIpv6Uuid,omitempty" tf:"listen_ipv6_uuid,omitempty"`
+
+	// Reference to a IPv6 in gridscale to populate listenIpv6Uuid.
+	// +kubebuilder:validation:Optional
+	ListenIPv6UUIDRef *v1.NamespacedReference `json:"listenIpv6UuidRef,omitempty" tf:"-"`
+
+	// Selector for a IPv6 in gridscale to populate listenIpv6Uuid.
+	// +kubebuilder:validation:Optional
+	ListenIPv6UUIDSelector *v1.NamespacedSelector `json:"listenIpv6UuidSelector,omitempty" tf:"-"`
 
 	// The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.
 	// The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters
@@ -302,8 +356,6 @@ type Loadbalancer struct {
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.algorithm) || (has(self.initProvider) && has(self.initProvider.algorithm))",message="spec.forProvider.algorithm is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.backendServer) || (has(self.initProvider) && has(self.initProvider.backendServer))",message="spec.forProvider.backendServer is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.forwardingRule) || (has(self.initProvider) && has(self.initProvider.forwardingRule))",message="spec.forProvider.forwardingRule is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.listenIpv4Uuid) || (has(self.initProvider) && has(self.initProvider.listenIpv4Uuid))",message="spec.forProvider.listenIpv4Uuid is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.listenIpv6Uuid) || (has(self.initProvider) && has(self.initProvider.listenIpv6Uuid))",message="spec.forProvider.listenIpv6Uuid is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.redirectHttpToHttps) || (has(self.initProvider) && has(self.initProvider.redirectHttpToHttps))",message="spec.forProvider.redirectHttpToHttps is a required parameter"
 	Spec   LoadbalancerSpec   `json:"spec"`

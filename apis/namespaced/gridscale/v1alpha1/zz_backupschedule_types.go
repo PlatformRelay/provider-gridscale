@@ -16,111 +16,161 @@ import (
 
 type BackupscheduleInitParameters struct {
 
+	// The status of the schedule active or not.
 	// The status of the schedule active or not
 	Active *bool `json:"active,omitempty" tf:"active,omitempty"`
 
 	// UUID of the location where your backup is stored.
+	// UUID of the location where your backup is stored.
 	BackupLocationUUID *string `json:"backupLocationUuid,omitempty" tf:"backup_location_uuid,omitempty"`
 
+	// The amount of Snapshots to keep before overwriting the last created Snapshot (>=1).
 	// The amount of storage backups to keep before overwriting the last created backup
 	KeepBackups *float64 `json:"keepBackups,omitempty" tf:"keep_backups,omitempty"`
 
+	// UUID of the backup schedule.
 	// The human-readable name of the object
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// The date and time that the backup schedule will be run.
 	// The date and time that the storage backup schedule will be run. Format: "2006-01-02 15:04:05"
 	NextRuntime *string `json:"nextRuntime,omitempty" tf:"next_runtime,omitempty"`
 
+	// The interval at which the schedule will run (in minutes, >=60).
 	// The interval at which the schedule will run (in minutes)
 	RunInterval *float64 `json:"runInterval,omitempty" tf:"run_interval,omitempty"`
 
+	// UUID of the storage that the backup schedule belongs to.
 	// UUID of the storage used to create storage backups
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/gridscale/v1alpha1.Storage
 	StorageUUID *string `json:"storageUuid,omitempty" tf:"storage_uuid,omitempty"`
+
+	// Reference to a Storage in gridscale to populate storageUuid.
+	// +kubebuilder:validation:Optional
+	StorageUUIDRef *v1.NamespacedReference `json:"storageUuidRef,omitempty" tf:"-"`
+
+	// Selector for a Storage in gridscale to populate storageUuid.
+	// +kubebuilder:validation:Optional
+	StorageUUIDSelector *v1.NamespacedSelector `json:"storageUuidSelector,omitempty" tf:"-"`
 }
 
 type BackupscheduleObservation struct {
 
+	// The status of the schedule active or not.
 	// The status of the schedule active or not
 	Active *bool `json:"active,omitempty" tf:"active,omitempty"`
 
 	// The human-readable name of backup location. It supports the full UTF-8 character set, with a maximum of 64 characters.
+	// The human-readable name of backup location. It supports the full UTF-8 character set, with a maximum of 64 characters.
 	BackupLocationName *string `json:"backupLocationName,omitempty" tf:"backup_location_name,omitempty"`
 
 	// UUID of the location where your backup is stored.
+	// UUID of the location where your backup is stored.
 	BackupLocationUUID *string `json:"backupLocationUuid,omitempty" tf:"backup_location_uuid,omitempty"`
 
+	// The date and time of the last backup schedule change.
 	// Defines the date and time of the last object change
 	ChangeTime *string `json:"changeTime,omitempty" tf:"change_time,omitempty"`
 
+	// The date and time the backup schedule was initially created.
 	// Defines the date and time the object was initially created
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
 
+	// The UUID of the backup schedule.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// The amount of Snapshots to keep before overwriting the last created Snapshot (>=1).
 	// The amount of storage backups to keep before overwriting the last created backup
 	KeepBackups *float64 `json:"keepBackups,omitempty" tf:"keep_backups,omitempty"`
 
+	// UUID of the backup schedule.
 	// The human-readable name of the object
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// The date and time that the backup schedule will be run.
 	// The date and time that the storage backup schedule will be run. Format: "2006-01-02 15:04:05"
 	NextRuntime *string `json:"nextRuntime,omitempty" tf:"next_runtime,omitempty"`
 
+	// The date and time that the backup schedule will be run. This date and time is computed by gridscale's server.
 	// The date and time that the storage backup schedule will be run. This date and time is computed by gridscale's server.
 	NextRuntimeComputed *string `json:"nextRuntimeComputed,omitempty" tf:"next_runtime_computed,omitempty"`
 
+	// The interval at which the schedule will run (in minutes, >=60).
 	// The interval at which the schedule will run (in minutes)
 	RunInterval *float64 `json:"runInterval,omitempty" tf:"run_interval,omitempty"`
 
+	// The status of the backup schedule.
 	// Status indicates the status of the object
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
+	// Related backups.
 	// Related backups
 	StorageBackups []StorageBackupsObservation `json:"storageBackups,omitempty" tf:"storage_backups,omitempty"`
 
+	// UUID of the storage that the backup schedule belongs to.
 	// UUID of the storage used to create storage backups
 	StorageUUID *string `json:"storageUuid,omitempty" tf:"storage_uuid,omitempty"`
 }
 
 type BackupscheduleParameters struct {
 
+	// The status of the schedule active or not.
 	// The status of the schedule active or not
 	// +kubebuilder:validation:Optional
 	Active *bool `json:"active,omitempty" tf:"active,omitempty"`
 
 	// UUID of the location where your backup is stored.
+	// UUID of the location where your backup is stored.
 	// +kubebuilder:validation:Optional
 	BackupLocationUUID *string `json:"backupLocationUuid,omitempty" tf:"backup_location_uuid,omitempty"`
 
+	// The amount of Snapshots to keep before overwriting the last created Snapshot (>=1).
 	// The amount of storage backups to keep before overwriting the last created backup
 	// +kubebuilder:validation:Optional
 	KeepBackups *float64 `json:"keepBackups,omitempty" tf:"keep_backups,omitempty"`
 
+	// UUID of the backup schedule.
 	// The human-readable name of the object
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// The date and time that the backup schedule will be run.
 	// The date and time that the storage backup schedule will be run. Format: "2006-01-02 15:04:05"
 	// +kubebuilder:validation:Optional
 	NextRuntime *string `json:"nextRuntime,omitempty" tf:"next_runtime,omitempty"`
 
+	// The interval at which the schedule will run (in minutes, >=60).
 	// The interval at which the schedule will run (in minutes)
 	// +kubebuilder:validation:Optional
 	RunInterval *float64 `json:"runInterval,omitempty" tf:"run_interval,omitempty"`
 
+	// UUID of the storage that the backup schedule belongs to.
 	// UUID of the storage used to create storage backups
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/gridscale/v1alpha1.Storage
 	// +kubebuilder:validation:Optional
 	StorageUUID *string `json:"storageUuid,omitempty" tf:"storage_uuid,omitempty"`
+
+	// Reference to a Storage in gridscale to populate storageUuid.
+	// +kubebuilder:validation:Optional
+	StorageUUIDRef *v1.NamespacedReference `json:"storageUuidRef,omitempty" tf:"-"`
+
+	// Selector for a Storage in gridscale to populate storageUuid.
+	// +kubebuilder:validation:Optional
+	StorageUUIDSelector *v1.NamespacedSelector `json:"storageUuidSelector,omitempty" tf:"-"`
 }
 
 type StorageBackupsInitParameters struct {
 }
 
 type StorageBackupsObservation struct {
+
+	// The date and time the backup schedule was initially created.
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
 
+	// UUID of the backup schedule.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// UUID of the backup.
 	ObjectUUID *string `json:"objectUuid,omitempty" tf:"object_uuid,omitempty"`
 }
 
@@ -154,7 +204,7 @@ type BackupscheduleStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Backupschedule is the Schema for the Backupschedules API. <no value>
+// Backupschedule is the Schema for the Backupschedules API. Manages a storage backup schedule.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
@@ -168,7 +218,6 @@ type Backupschedule struct {
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.nextRuntime) || (has(self.initProvider) && has(self.initProvider.nextRuntime))",message="spec.forProvider.nextRuntime is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.runInterval) || (has(self.initProvider) && has(self.initProvider.runInterval))",message="spec.forProvider.runInterval is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.storageUuid) || (has(self.initProvider) && has(self.initProvider.storageUuid))",message="spec.forProvider.storageUuid is a required parameter"
 	Spec   BackupscheduleSpec   `json:"spec"`
 	Status BackupscheduleStatus `json:"status,omitempty"`
 }

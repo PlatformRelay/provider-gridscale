@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Isoimage is the Schema for the Isoimages API. <no value>
+        description: Isoimage is the Schema for the Isoimages API. Manages an ISO
+          Image in Gridscale.
         properties:
           apiVersion:
             description: |-
@@ -59,18 +60,22 @@ spec:
               forProvider:
                 properties:
                   labels:
-                    description: List of labels.
+                    description: |-
+                      List of labels in the format [ "label1", "label2" ].
+                      List of labels.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   name:
-                    description: The human-readable name of the object. It supports
-                      the full UTF-8 character set, with a maximum of 64 characters.
+                    description: |-
+                      The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.
+                      The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.
                     type: string
                   sourceUrl:
-                    description: Contains the source URL of the ISO image that it
-                      was originally fetched from.
+                    description: |-
+                      Contains the source URL of the ISO Image that it was originally fetched from.
+                      Contains the source URL of the ISO image that it was originally fetched from.
                     type: string
                 type: object
               initProvider:
@@ -87,18 +92,22 @@ spec:
                   autoscaler.
                 properties:
                   labels:
-                    description: List of labels.
+                    description: |-
+                      List of labels in the format [ "label1", "label2" ].
+                      List of labels.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   name:
-                    description: The human-readable name of the object. It supports
-                      the full UTF-8 character set, with a maximum of 64 characters.
+                    description: |-
+                      The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.
+                      The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.
                     type: string
                   sourceUrl:
-                    description: Contains the source URL of the ISO image that it
-                      was originally fetched from.
+                    description: |-
+                      Contains the source URL of the ISO Image that it was originally fetched from.
+                      Contains the source URL of the ISO image that it was originally fetched from.
                     type: string
                 type: object
               managementPolicies:
@@ -174,80 +183,112 @@ spec:
               atProvider:
                 properties:
                   capacity:
-                    description: The capacity of a storage/ISO image/template/snapshot
-                      in GB.
+                    description: |-
+                      The capacity of a storage/ISO Image/template/snapshot in GB.
+                      The capacity of a storage/ISO image/template/snapshot in GB.
                     type: number
                   changeTime:
-                    description: The date and time of the last object change.
+                    description: |-
+                      The date and time of the last object change.
+                      The date and time of the last object change.
                     type: string
                   createTime:
-                    description: The date and time the object was initially created.
+                    description: |-
+                      The date and time the object was initially created.
+                      The date and time the object was initially created.
                     type: string
                   currentPrice:
-                    description: Defines the price for the current period since the
-                      last bill.
+                    description: |-
+                      Defines the price for the current period since the last bill.
+                      Defines the price for the current period since the last bill.
                     type: number
                   description:
-                    description: Description of the ISO image.
+                    description: |-
+                      Description of the template.
+                      Description of the ISO image.
                     type: string
                   id:
+                    description: The UUID of the ISO Image.
                     type: string
                   labels:
-                    description: List of labels.
+                    description: |-
+                      List of labels in the format [ "label1", "label2" ].
+                      List of labels.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   locationCountry:
-                    description: Two digit country code (ISO 3166-2) of the location
-                      where this object is placed.
+                    description: |-
+                      Two digit country code (ISO 3166-2) of the location where this object is placed.
+                      Two digit country code (ISO 3166-2) of the location where this object is placed.
                     type: string
                   locationIata:
-                    description: Uses IATA airport code, which works as a location
-                      identifier
+                    description: |-
+                      Uses IATA airport code, which works as a location identifier.
+                      Uses IATA airport code, which works as a location identifier
                     type: string
                   locationName:
-                    description: The human-readable name of the location. It supports
-                      the full UTF-8 character set, with a maximum of 64 characters
+                    description: |-
+                      The human-readable name of the location. It supports the full UTF-8 character set, with a maximum of 64 characters.
+                      The human-readable name of the location. It supports the full UTF-8 character set, with a maximum of 64 characters
                     type: string
                   locationUuid:
-                    description: The location this object is placed.
+                    description: |-
+                      The location this object is placed.
+                      The location this object is placed.
                     type: string
                   name:
-                    description: The human-readable name of the object. It supports
-                      the full UTF-8 character set, with a maximum of 64 characters.
+                    description: |-
+                      The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.
+                      The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.
                     type: string
                   private:
-                    description: The object is private, the value will be true. Otherwise
-                      the value will be false.
+                    description: |-
+                      The object is private, the value will be true. Otherwise the value will be false.
+                      The object is private, the value will be true. Otherwise the value will be false.
                     type: boolean
                   server:
-                    description: The information about servers which are related to
-                      this ISO image.
+                    description: |-
+                      The information about servers which are related to this ISO Image.
+                      The information about servers which are related to this ISO image.
                     items:
                       properties:
                         bootdevice:
+                          description: True if the ISO Image is a boot device of this
+                            server.
                           type: boolean
                         createTime:
+                          description: The date and time the object was initially
+                            created.
                           type: string
                         objectName:
+                          description: Name of the server.
                           type: string
                         objectUuid:
+                          description: The object UUID or id of the server.
                           type: string
                       type: object
                     type: array
                   sourceUrl:
-                    description: Contains the source URL of the ISO image that it
-                      was originally fetched from.
+                    description: |-
+                      Contains the source URL of the ISO Image that it was originally fetched from.
+                      Contains the source URL of the ISO image that it was originally fetched from.
                     type: string
                   status:
-                    description: Status indicates the status of the object
+                    description: |-
+                      Status indicates the status of the object.
+                      Status indicates the status of the object
                     type: string
                   usageInMinutes:
-                    description: Total minutes the object has been running.
+                    description: |-
+                      Total minutes the object has been running.
+                      Total minutes the object has been running.
                     type: number
                   version:
-                    description: Upstream version of the ISO image release
+                    description: |-
+                      The version of the ISO Image.
+                      Upstream version of the ISO image release
                     type: string
                 type: object
               conditions:

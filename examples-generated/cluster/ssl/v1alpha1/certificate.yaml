@@ -37,13 +37,19 @@ spec:
     - host: ${gridscale_ipv4.server.ip}
       weight: 100
     forwardingRule:
-    - certificateUuid: ${gridscale_ssl_certificate.ssl-certificate-john.id}
+    - certificateUuidSelector:
+        matchLabels:
+          testing.upbound.io/example-name: ssl-certificate-john
       listenPort: 80
       mode: http
       targetPort: 80
     labels: []
-    listenIpv4Uuid: ${gridscale_ipv4.lb.id}
-    listenIpv6Uuid: ${gridscale_ipv6.lb.id}
+    listenIpv4UuidSelector:
+      matchLabels:
+        testing.upbound.io/example-name: lb
+    listenIpv6UuidSelector:
+      matchLabels:
+        testing.upbound.io/example-name: lb
     name: john's lb
     redirectHttpToHttps: false
     timeouts:

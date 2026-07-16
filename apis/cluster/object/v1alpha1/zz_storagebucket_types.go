@@ -14,101 +14,135 @@ import (
 )
 
 type LifecycleRuleInitParameters struct {
+
+	// Whether the rule is enabled.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
+	// Number of days after which objects are deleted. Default: 365.
 	ExpirationDays *float64 `json:"expirationDays,omitempty" tf:"expiration_days,omitempty"`
 
+	// Unique identifier for the rule.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// Number of days after which incomplete multipart uploads are deleted. Default: 3.
 	IncompleteUploadExpirationDays *float64 `json:"incompleteUploadExpirationDays,omitempty" tf:"incomplete_upload_expiration_days,omitempty"`
 
+	// Number of days after which noncurrent object versions are deleted. Default: 365.
 	NoncurrentVersionExpirationDays *float64 `json:"noncurrentVersionExpirationDays,omitempty" tf:"noncurrent_version_expiration_days,omitempty"`
 
+	// Object key prefix identifying one or more objects to which the rule applies.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 }
 
 type LifecycleRuleObservation struct {
+
+	// Whether the rule is enabled.
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
+	// Number of days after which objects are deleted. Default: 365.
 	ExpirationDays *float64 `json:"expirationDays,omitempty" tf:"expiration_days,omitempty"`
 
+	// Unique identifier for the rule.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// Number of days after which incomplete multipart uploads are deleted. Default: 3.
 	IncompleteUploadExpirationDays *float64 `json:"incompleteUploadExpirationDays,omitempty" tf:"incomplete_upload_expiration_days,omitempty"`
 
+	// Number of days after which noncurrent object versions are deleted. Default: 365.
 	NoncurrentVersionExpirationDays *float64 `json:"noncurrentVersionExpirationDays,omitempty" tf:"noncurrent_version_expiration_days,omitempty"`
 
+	// Object key prefix identifying one or more objects to which the rule applies.
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 }
 
 type LifecycleRuleParameters struct {
 
+	// Whether the rule is enabled.
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled" tf:"enabled,omitempty"`
 
+	// Number of days after which objects are deleted. Default: 365.
 	// +kubebuilder:validation:Optional
 	ExpirationDays *float64 `json:"expirationDays,omitempty" tf:"expiration_days,omitempty"`
 
+	// Unique identifier for the rule.
 	// +kubebuilder:validation:Optional
 	ID *string `json:"id" tf:"id,omitempty"`
 
+	// Number of days after which incomplete multipart uploads are deleted. Default: 3.
 	// +kubebuilder:validation:Optional
 	IncompleteUploadExpirationDays *float64 `json:"incompleteUploadExpirationDays,omitempty" tf:"incomplete_upload_expiration_days,omitempty"`
 
+	// Number of days after which noncurrent object versions are deleted. Default: 365.
 	// +kubebuilder:validation:Optional
 	NoncurrentVersionExpirationDays *float64 `json:"noncurrentVersionExpirationDays,omitempty" tf:"noncurrent_version_expiration_days,omitempty"`
 
+	// Object key prefix identifying one or more objects to which the rule applies.
 	// +kubebuilder:validation:Optional
 	Prefix *string `json:"prefix,omitempty" tf:"prefix,omitempty"`
 }
 
 type StorageBucketInitParameters struct {
 
+	// Access key.
 	// The object storage secret_key.
 	AccessKeySecretRef v1.SecretKeySelector `json:"accessKeySecretRef" tf:"-"`
 
+	// Name of the bucket.
 	// The name of the bucket.
 	BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
 
+	// A list of lifecycle rules for the bucket. Each rule supports the following:
 	LifecycleRule []LifecycleRuleInitParameters `json:"lifecycleRule,omitempty" tf:"lifecycle_rule,omitempty"`
 
+	// Host of the s3. Default: "gos3.io".
 	// The S3 host.
 	S3Host *string `json:"s3Host,omitempty" tf:"s3_host,omitempty"`
 
+	// Secret key.
 	// The object storage access_key.
 	SecretKeySecretRef v1.SecretKeySelector `json:"secretKeySecretRef" tf:"-"`
 }
 
 type StorageBucketObservation struct {
 
+	// Name of the bucket.
 	// The name of the bucket.
 	BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
 
+	// Unique identifier for the rule.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// A list of lifecycle rules for the bucket. Each rule supports the following:
 	LifecycleRule []LifecycleRuleObservation `json:"lifecycleRule,omitempty" tf:"lifecycle_rule,omitempty"`
 
+	// Host of the s3. Default: "gos3.io".
 	// The S3 host.
 	S3Host *string `json:"s3Host,omitempty" tf:"s3_host,omitempty"`
 }
 
 type StorageBucketParameters struct {
 
+	// Access key.
 	// The object storage secret_key.
 	// +kubebuilder:validation:Optional
 	AccessKeySecretRef v1.SecretKeySelector `json:"accessKeySecretRef" tf:"-"`
 
+	// Name of the bucket.
 	// The name of the bucket.
 	// +kubebuilder:validation:Optional
 	BucketName *string `json:"bucketName,omitempty" tf:"bucket_name,omitempty"`
 
+	// A list of lifecycle rules for the bucket. Each rule supports the following:
 	// +kubebuilder:validation:Optional
 	LifecycleRule []LifecycleRuleParameters `json:"lifecycleRule,omitempty" tf:"lifecycle_rule,omitempty"`
 
+	// Host of the s3. Default: "gos3.io".
 	// The S3 host.
 	// +kubebuilder:validation:Optional
 	S3Host *string `json:"s3Host,omitempty" tf:"s3_host,omitempty"`
 
+	// Secret key.
 	// The object storage access_key.
 	// +kubebuilder:validation:Optional
 	SecretKeySecretRef v1.SecretKeySelector `json:"secretKeySecretRef" tf:"-"`
@@ -141,7 +175,7 @@ type StorageBucketStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// StorageBucket is the Schema for the StorageBuckets API. <no value>
+// StorageBucket is the Schema for the StorageBuckets API. Manages an object storage bucket in gridscale.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

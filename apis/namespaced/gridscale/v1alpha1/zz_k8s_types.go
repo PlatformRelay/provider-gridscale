@@ -118,7 +118,16 @@ type K8SInitParameters struct {
 
 	// DEPRECATED  Security zone UUID linked to the Kubernetes resource. If security_zone_uuid is not set, the default security zone will be created (if it doesn't exist) and linked. A change of this argument necessitates the re-creation of the resource.
 	// Security zone UUID linked to PaaS service.
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/paas/v1alpha1.Securityzone
 	SecurityZoneUUID *string `json:"securityZoneUuid,omitempty" tf:"security_zone_uuid,omitempty"`
+
+	// Reference to a Securityzone in paas to populate securityZoneUuid.
+	// +kubebuilder:validation:Optional
+	SecurityZoneUUIDRef *v1.NamespacedReference `json:"securityZoneUuidRef,omitempty" tf:"-"`
+
+	// Selector for a Securityzone in paas to populate securityZoneUuid.
+	// +kubebuilder:validation:Optional
+	SecurityZoneUUIDSelector *v1.NamespacedSelector `json:"securityZoneUuidSelector,omitempty" tf:"-"`
 
 	// Enable surge node to avoid resources shortage during the cluster upgrade (Default: true).
 	// Enable surge node to avoid resources shortage during the cluster upgrade.
@@ -414,8 +423,17 @@ type K8SParameters struct {
 
 	// DEPRECATED  Security zone UUID linked to the Kubernetes resource. If security_zone_uuid is not set, the default security zone will be created (if it doesn't exist) and linked. A change of this argument necessitates the re-creation of the resource.
 	// Security zone UUID linked to PaaS service.
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/paas/v1alpha1.Securityzone
 	// +kubebuilder:validation:Optional
 	SecurityZoneUUID *string `json:"securityZoneUuid,omitempty" tf:"security_zone_uuid,omitempty"`
+
+	// Reference to a Securityzone in paas to populate securityZoneUuid.
+	// +kubebuilder:validation:Optional
+	SecurityZoneUUIDRef *v1.NamespacedReference `json:"securityZoneUuidRef,omitempty" tf:"-"`
+
+	// Selector for a Securityzone in paas to populate securityZoneUuid.
+	// +kubebuilder:validation:Optional
+	SecurityZoneUUIDSelector *v1.NamespacedSelector `json:"securityZoneUuidSelector,omitempty" tf:"-"`
 
 	// Enable surge node to avoid resources shortage during the cluster upgrade (Default: true).
 	// Enable surge node to avoid resources shortage during the cluster upgrade.

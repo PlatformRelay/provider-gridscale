@@ -1,13 +1,13 @@
 name: gridscale/gridscale
 resources:
-    ISO Image:
+    gridscale_isoimage:
         subCategory: ""
         description: Manages an ISO Image in Gridscale.
         name: ISO Image
         title: ISO Image
         argumentDocs:
             bootdevice: '- True if the ISO Image is a boot device of this server.'
-            capacity: '- The capacity of a storage/ISO Image/ISO Image/snapshot in GB.'
+            capacity: '- The capacity of a storage/ISO Image/template/snapshot in GB.'
             change_time: '- The date and time of the last object change.'
             create: '- (Default value is "5m" - 5 minutes) Used for creating a resource.'
             create_time: '- The date and time the object was initially created.'
@@ -1297,7 +1297,7 @@ resources:
             usage_in_minutes: '- Total minutes the object has been running.'
             version: '- The version of the template.'
         importStatements: []
-    imported marketplace application:
+    gridscale_marketplace_application_import:
         subCategory: ""
         description: Manages imported marketplace applications in Gridscale.
         name: imported marketplace application
@@ -1338,7 +1338,7 @@ resources:
             type: '- The type of template.'
             unique_hash: '- Unique hash to allow user to import the self-created marketplace application.'
         importStatements: []
-    marketplace application:
+    gridscale_marketplace_application:
         subCategory: ""
         description: Manages marketplace applications in Gridscale.
         name: marketplace application
@@ -1379,7 +1379,7 @@ resources:
             unique_hash: '- Unique hash to allow user to import the self-created marketplace application.'
             update: '- (Default value is "5m" - 5 minutes) Used for updating a resource.'
         importStatements: []
-    object storage access key:
+    gridscale_object_storage_accesskey:
         subCategory: ""
         description: Manages an access key of an object storage in gridscale.
         name: object storage access key
@@ -1393,7 +1393,7 @@ resources:
             secret_key: '- Secret key of an object storage.'
             user_uuid: '- (Optional, Computed) If a user_uuid is set, a user-specific key will get created. If no user_uuid is set along a user with write-access to the contract will still only create a user-specific key for themselves while a user with admin-access to the contract will create a contract-level admin key.'
         importStatements: []
-    object storage bucket:
+    gridscale_object_storage_bucket:
         subCategory: ""
         description: Manages an object storage bucket in gridscale.
         name: object storage bucket
@@ -1413,7 +1413,7 @@ resources:
             s3_host: '- (Required, Force New) Host of the s3. Default: "gos3.io".'
             secret_key: '- (Required, Force New) Secret key.'
         importStatements: []
-    storage backup schedule:
+    gridscale_backupschedule:
         subCategory: ""
         description: Manages a storage backup schedule.
         name: storage backup schedule
@@ -1438,7 +1438,7 @@ resources:
             storage_uuid: '- (Required) UUID of the storage that the backup schedule belongs to.'
             update: '- (Default value is "5m" - 5 minutes) Used for updating a resource.'
         importStatements: []
-    storage snapshot:
+    gridscale_snapshot:
         subCategory: ""
         description: Manages a storage snapshot in gridscale.
         name: storage snapshot
@@ -1472,7 +1472,7 @@ resources:
             update: '- (Default value is "5m" - 5 minutes) Used for updating a resource.'
             usage_in_minutes: '- Total minutes the ip has been running.'
         importStatements: []
-    storage snapshot schedule:
+    gridscale_snapshotschedule:
         subCategory: ""
         description: Manages a storage snapshot schedule.
         name: storage snapshot schedule

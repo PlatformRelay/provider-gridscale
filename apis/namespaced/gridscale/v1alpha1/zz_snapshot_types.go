@@ -16,61 +16,78 @@ import (
 
 type ObjectStorageExportInitParameters struct {
 
+	// Access key.
 	// Access key
 	AccessKeySecretRef v1.LocalSecretKeySelector `json:"accessKeySecretRef" tf:"-"`
 
+	// Bucket name.
 	// Bucket name
 	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
 
+	// Host of object storage. Must be of URL type, e.g., https://gos3.io
 	// Host of object storage. Must be of URL type. E.g: https://gos3.io
 	Host *string `json:"host,omitempty" tf:"host,omitempty"`
 
+	// Name of file (include file path).
 	// Name of file (include file path)
 	Object *string `json:"object,omitempty" tf:"object,omitempty"`
 
+	// Privacy.
 	Private *bool `json:"private,omitempty" tf:"private,omitempty"`
 
+	// Secret key.
 	// Secret key
 	SecretKeySecretRef v1.LocalSecretKeySelector `json:"secretKeySecretRef" tf:"-"`
 }
 
 type ObjectStorageExportObservation struct {
 
+	// Bucket name.
 	// Bucket name
 	Bucket *string `json:"bucket,omitempty" tf:"bucket,omitempty"`
 
+	// Host of object storage. Must be of URL type, e.g., https://gos3.io
 	// Host of object storage. Must be of URL type. E.g: https://gos3.io
 	Host *string `json:"host,omitempty" tf:"host,omitempty"`
 
+	// Name of file (include file path).
 	// Name of file (include file path)
 	Object *string `json:"object,omitempty" tf:"object,omitempty"`
 
+	// Privacy.
 	Private *bool `json:"private,omitempty" tf:"private,omitempty"`
 
+	// The status of the snapshot.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
 type ObjectStorageExportParameters struct {
 
+	// Access key.
 	// Access key
 	// +kubebuilder:validation:Optional
 	AccessKeySecretRef v1.LocalSecretKeySelector `json:"accessKeySecretRef" tf:"-"`
 
+	// Bucket name.
 	// Bucket name
 	// +kubebuilder:validation:Optional
 	Bucket *string `json:"bucket" tf:"bucket,omitempty"`
 
+	// Host of object storage. Must be of URL type, e.g., https://gos3.io
 	// Host of object storage. Must be of URL type. E.g: https://gos3.io
 	// +kubebuilder:validation:Optional
 	Host *string `json:"host" tf:"host,omitempty"`
 
+	// Name of file (include file path).
 	// Name of file (include file path)
 	// +kubebuilder:validation:Optional
 	Object *string `json:"object" tf:"object,omitempty"`
 
+	// Privacy.
 	// +kubebuilder:validation:Optional
 	Private *bool `json:"private" tf:"private,omitempty"`
 
+	// Secret key.
 	// Secret key
 	// +kubebuilder:validation:Optional
 	SecretKeySecretRef v1.LocalSecretKeySelector `json:"secretKeySecretRef" tf:"-"`
@@ -78,22 +95,27 @@ type ObjectStorageExportParameters struct {
 
 type RollbackInitParameters struct {
 
+	// ID of the rollback request. It can be any string value. Each rollback request has to have a UNIQUE id.
 	// ID of the rollback request. Each rollback request has to have a unique id. ID can be any string value.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type RollbackObservation struct {
 
+	// ID of the rollback request. It can be any string value. Each rollback request has to have a UNIQUE id.
 	// ID of the rollback request. Each rollback request has to have a unique id. ID can be any string value.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// The time when rollback request is fulfilled.
 	RollbackTime *string `json:"rollbackTime,omitempty" tf:"rollback_time,omitempty"`
 
+	// The status of the snapshot.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
 type RollbackParameters struct {
 
+	// ID of the rollback request. It can be any string value. Each rollback request has to have a UNIQUE id.
 	// ID of the rollback request. Each rollback request has to have a unique id. ID can be any string value.
 	// +kubebuilder:validation:Optional
 	ID *string `json:"id" tf:"id,omitempty"`
@@ -101,100 +123,145 @@ type RollbackParameters struct {
 
 type SnapshotInitParameters struct {
 
+	// The list of labels.
 	// List of labels.
 	// +listType=set
 	Labels []*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// The name of the snapshot.
 	// The human-readable name of the object
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// Export snapshot to a object storage.
 	// Export snapshot to a object storage
 	ObjectStorageExport []ObjectStorageExportInitParameters `json:"objectStorageExport,omitempty" tf:"object_storage_export,omitempty"`
 
 	// Returns a storage to the state of the selected Snapshot.
+	// Returns a storage to the state of the selected Snapshot.
 	Rollback []RollbackInitParameters `json:"rollback,omitempty" tf:"rollback,omitempty"`
 
+	// UUID of the storage used to create this snapshot.
 	// UUID of the storage used to create this snapshot
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/gridscale/v1alpha1.Storage
 	StorageUUID *string `json:"storageUuid,omitempty" tf:"storage_uuid,omitempty"`
+
+	// Reference to a Storage in gridscale to populate storageUuid.
+	// +kubebuilder:validation:Optional
+	StorageUUIDRef *v1.NamespacedReference `json:"storageUuidRef,omitempty" tf:"-"`
+
+	// Selector for a Storage in gridscale to populate storageUuid.
+	// +kubebuilder:validation:Optional
+	StorageUUIDSelector *v1.NamespacedSelector `json:"storageUuidSelector,omitempty" tf:"-"`
 }
 
 type SnapshotObservation struct {
 
+	// The capacity of the snapshot in GB.
 	// The capacity of a storage/ISO image/template/snapshot in GB
 	Capacity *float64 `json:"capacity,omitempty" tf:"capacity,omitempty"`
 
+	// The date and time of the last snapshot change.
 	// Defines the date and time of the last object change
 	ChangeTime *string `json:"changeTime,omitempty" tf:"change_time,omitempty"`
 
+	// The date and time the ip was initially created.
 	// Defines the date and time the object was initially created
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
 
+	// The price for the current period since the last bill.
 	// The price for the current period since the last bill
 	CurrentPrice *float64 `json:"currentPrice,omitempty" tf:"current_price,omitempty"`
 
+	// ID of the rollback request. It can be any string value. Each rollback request has to have a UNIQUE id.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// The list of labels.
 	// List of labels.
 	// +listType=set
 	Labels []*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// If a template has been used that requires a license key (e.g. Windows Servers) this shows the product_no of the license (see the /prices endpoint for more details).
 	// If a template has been used that requires a license key (e.g. Windows Servers) this shows
 	// the product_no of the license (see the /prices endpoint for more details)
 	LicenseProductNo *float64 `json:"licenseProductNo,omitempty" tf:"license_product_no,omitempty"`
 
+	// The human-readable name of the country of the snapshot.
 	// The human-readable name of the location
 	LocationCountry *string `json:"locationCountry,omitempty" tf:"location_country,omitempty"`
 
+	// The IATA airport code, which works as a location identifier.
 	// Uses IATA airport code, which works as a location identifier
 	LocationIata *string `json:"locationIata,omitempty" tf:"location_iata,omitempty"`
 
+	// The human-readable name of the location of the snapshot.
 	// The human-readable name of the location
 	LocationName *string `json:"locationName,omitempty" tf:"location_name,omitempty"`
 
+	// The UUID of the location, that helps to identify which datacenter an object belongs to.
 	// The location this object is placed.
 	LocationUUID *string `json:"locationUuid,omitempty" tf:"location_uuid,omitempty"`
 
+	// The name of the snapshot.
 	// The human-readable name of the object
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// Export snapshot to a object storage.
 	// Export snapshot to a object storage
 	ObjectStorageExport []ObjectStorageExportObservation `json:"objectStorageExport,omitempty" tf:"object_storage_export,omitempty"`
 
 	// Returns a storage to the state of the selected Snapshot.
+	// Returns a storage to the state of the selected Snapshot.
 	Rollback []RollbackObservation `json:"rollback,omitempty" tf:"rollback,omitempty"`
 
+	// The status of the snapshot.
 	// Status indicates the status of the object
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
+	// UUID of the storage used to create this snapshot.
 	// UUID of the storage used to create this snapshot
 	StorageUUID *string `json:"storageUuid,omitempty" tf:"storage_uuid,omitempty"`
 
+	// Total minutes the ip has been running.
 	// Total minutes the object has been running
 	UsageInMinutes *float64 `json:"usageInMinutes,omitempty" tf:"usage_in_minutes,omitempty"`
 }
 
 type SnapshotParameters struct {
 
+	// The list of labels.
 	// List of labels.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	Labels []*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// The name of the snapshot.
 	// The human-readable name of the object
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// Export snapshot to a object storage.
 	// Export snapshot to a object storage
 	// +kubebuilder:validation:Optional
 	ObjectStorageExport []ObjectStorageExportParameters `json:"objectStorageExport,omitempty" tf:"object_storage_export,omitempty"`
 
 	// Returns a storage to the state of the selected Snapshot.
+	// Returns a storage to the state of the selected Snapshot.
 	// +kubebuilder:validation:Optional
 	Rollback []RollbackParameters `json:"rollback,omitempty" tf:"rollback,omitempty"`
 
+	// UUID of the storage used to create this snapshot.
 	// UUID of the storage used to create this snapshot
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/gridscale/v1alpha1.Storage
 	// +kubebuilder:validation:Optional
 	StorageUUID *string `json:"storageUuid,omitempty" tf:"storage_uuid,omitempty"`
+
+	// Reference to a Storage in gridscale to populate storageUuid.
+	// +kubebuilder:validation:Optional
+	StorageUUIDRef *v1.NamespacedReference `json:"storageUuidRef,omitempty" tf:"-"`
+
+	// Selector for a Storage in gridscale to populate storageUuid.
+	// +kubebuilder:validation:Optional
+	StorageUUIDSelector *v1.NamespacedSelector `json:"storageUuidSelector,omitempty" tf:"-"`
 }
 
 // SnapshotSpec defines the desired state of Snapshot
@@ -224,7 +291,7 @@ type SnapshotStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Snapshot is the Schema for the Snapshots API. <no value>
+// Snapshot is the Schema for the Snapshots API. Manages a storage snapshot in gridscale.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
@@ -234,7 +301,6 @@ type Snapshot struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.storageUuid) || (has(self.initProvider) && has(self.initProvider.storageUuid))",message="spec.forProvider.storageUuid is a required parameter"
 	Spec   SnapshotSpec   `json:"spec"`
 	Status SnapshotStatus `json:"status,omitempty"`
 }

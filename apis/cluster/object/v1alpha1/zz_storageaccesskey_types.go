@@ -15,9 +15,11 @@ import (
 
 type StorageAccesskeyInitParameters struct {
 
+	// A comment for the object storage access key.
 	// Comment for the access_key.
 	Comment *string `json:"comment,omitempty" tf:"comment,omitempty"`
 
+	// If a user_uuid is set, a user-specific key will get created. If no user_uuid is set along a user with write-access to the contract will still only create a user-specific key for themselves while a user with admin-access to the contract will create a contract-level admin key.
 	// If a user_uuid is set, a user-specific key will get created.
 	// If no user_uuid is set along a user with write-access to the contract will still only create
 	// a user-specific key for themselves while a user with admin-access to the contract will create
@@ -27,11 +29,14 @@ type StorageAccesskeyInitParameters struct {
 
 type StorageAccesskeyObservation struct {
 
+	// A comment for the object storage access key.
 	// Comment for the access_key.
 	Comment *string `json:"comment,omitempty" tf:"comment,omitempty"`
 
+	// The access key of the object storage.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// If a user_uuid is set, a user-specific key will get created. If no user_uuid is set along a user with write-access to the contract will still only create a user-specific key for themselves while a user with admin-access to the contract will create a contract-level admin key.
 	// If a user_uuid is set, a user-specific key will get created.
 	// If no user_uuid is set along a user with write-access to the contract will still only create
 	// a user-specific key for themselves while a user with admin-access to the contract will create
@@ -41,10 +46,12 @@ type StorageAccesskeyObservation struct {
 
 type StorageAccesskeyParameters struct {
 
+	// A comment for the object storage access key.
 	// Comment for the access_key.
 	// +kubebuilder:validation:Optional
 	Comment *string `json:"comment,omitempty" tf:"comment,omitempty"`
 
+	// If a user_uuid is set, a user-specific key will get created. If no user_uuid is set along a user with write-access to the contract will still only create a user-specific key for themselves while a user with admin-access to the contract will create a contract-level admin key.
 	// If a user_uuid is set, a user-specific key will get created.
 	// If no user_uuid is set along a user with write-access to the contract will still only create
 	// a user-specific key for themselves while a user with admin-access to the contract will create
@@ -80,7 +87,7 @@ type StorageAccesskeyStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// StorageAccesskey is the Schema for the StorageAccesskeys API. <no value>
+// StorageAccesskey is the Schema for the StorageAccesskeys API. Manages an access key of an object storage in gridscale.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

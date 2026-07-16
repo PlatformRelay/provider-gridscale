@@ -15,85 +15,109 @@ import (
 
 type IsoimageInitParameters struct {
 
+	// List of labels in the format [ "label1", "label2" ].
 	// List of labels.
 	// +listType=set
 	Labels []*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.
+	// The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// Contains the source URL of the ISO Image that it was originally fetched from.
 	// Contains the source URL of the ISO image that it was originally fetched from.
 	SourceURL *string `json:"sourceUrl,omitempty" tf:"source_url,omitempty"`
 }
 
 type IsoimageObservation struct {
 
+	// The capacity of a storage/ISO Image/template/snapshot in GB.
 	// The capacity of a storage/ISO image/template/snapshot in GB.
 	Capacity *float64 `json:"capacity,omitempty" tf:"capacity,omitempty"`
 
 	// The date and time of the last object change.
+	// The date and time of the last object change.
 	ChangeTime *string `json:"changeTime,omitempty" tf:"change_time,omitempty"`
 
+	// The date and time the object was initially created.
 	// The date and time the object was initially created.
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
 
 	// Defines the price for the current period since the last bill.
+	// Defines the price for the current period since the last bill.
 	CurrentPrice *float64 `json:"currentPrice,omitempty" tf:"current_price,omitempty"`
 
+	// Description of the template.
 	// Description of the ISO image.
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// The UUID of the ISO Image.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// List of labels in the format [ "label1", "label2" ].
 	// List of labels.
 	// +listType=set
 	Labels []*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// Two digit country code (ISO 3166-2) of the location where this object is placed.
+	// Two digit country code (ISO 3166-2) of the location where this object is placed.
 	LocationCountry *string `json:"locationCountry,omitempty" tf:"location_country,omitempty"`
 
+	// Uses IATA airport code, which works as a location identifier.
 	// Uses IATA airport code, which works as a location identifier
 	LocationIata *string `json:"locationIata,omitempty" tf:"location_iata,omitempty"`
 
+	// The human-readable name of the location. It supports the full UTF-8 character set, with a maximum of 64 characters.
 	// The human-readable name of the location. It supports the full UTF-8 character set, with a maximum of 64 characters
 	LocationName *string `json:"locationName,omitempty" tf:"location_name,omitempty"`
 
 	// The location this object is placed.
+	// The location this object is placed.
 	LocationUUID *string `json:"locationUuid,omitempty" tf:"location_uuid,omitempty"`
 
+	// The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.
 	// The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// The object is private, the value will be true. Otherwise the value will be false.
+	// The object is private, the value will be true. Otherwise the value will be false.
 	Private *bool `json:"private,omitempty" tf:"private,omitempty"`
 
+	// The information about servers which are related to this ISO Image.
 	// The information about servers which are related to this ISO image.
 	Server []ServerObservation `json:"server,omitempty" tf:"server,omitempty"`
 
+	// Contains the source URL of the ISO Image that it was originally fetched from.
 	// Contains the source URL of the ISO image that it was originally fetched from.
 	SourceURL *string `json:"sourceUrl,omitempty" tf:"source_url,omitempty"`
 
+	// Status indicates the status of the object.
 	// Status indicates the status of the object
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
 	// Total minutes the object has been running.
+	// Total minutes the object has been running.
 	UsageInMinutes *float64 `json:"usageInMinutes,omitempty" tf:"usage_in_minutes,omitempty"`
 
+	// The version of the ISO Image.
 	// Upstream version of the ISO image release
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
 type IsoimageParameters struct {
 
+	// List of labels in the format [ "label1", "label2" ].
 	// List of labels.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	Labels []*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
 	// The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.
+	// The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// Contains the source URL of the ISO Image that it was originally fetched from.
 	// Contains the source URL of the ISO image that it was originally fetched from.
 	// +kubebuilder:validation:Optional
 	SourceURL *string `json:"sourceUrl,omitempty" tf:"source_url,omitempty"`
@@ -103,12 +127,17 @@ type ServerInitParameters struct {
 }
 
 type ServerObservation struct {
+
+	// True if the ISO Image is a boot device of this server.
 	Bootdevice *bool `json:"bootdevice,omitempty" tf:"bootdevice,omitempty"`
 
+	// The date and time the object was initially created.
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
 
+	// Name of the server.
 	ObjectName *string `json:"objectName,omitempty" tf:"object_name,omitempty"`
 
+	// The object UUID or id of the server.
 	ObjectUUID *string `json:"objectUuid,omitempty" tf:"object_uuid,omitempty"`
 }
 
@@ -142,7 +171,7 @@ type IsoimageStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Isoimage is the Schema for the Isoimages API. <no value>
+// Isoimage is the Schema for the Isoimages API. Manages an ISO Image in Gridscale.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

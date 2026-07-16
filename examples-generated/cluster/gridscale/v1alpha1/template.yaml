@@ -9,7 +9,9 @@ metadata:
 spec:
   forProvider:
     name: newname
-    snapshotUuid: ${gridscale_snapshot.foo.id}
+    snapshotUuidSelector:
+      matchLabels:
+        testing.upbound.io/example-name: foo
     timeouts:
     - create: 10m
 

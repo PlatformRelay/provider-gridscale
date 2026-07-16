@@ -9,6 +9,7 @@
 package v1alpha1
 
 import (
+	"github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 
@@ -67,6 +68,16 @@ func (in *CloneInitParameters) DeepCopyInto(out *CloneInitParameters) {
 		in, out := &in.SourceStorageID, &out.SourceStorageID
 		*out = new(string)
 		**out = **in
+	}
+	if in.SourceStorageIDRef != nil {
+		in, out := &in.SourceStorageIDRef, &out.SourceStorageIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.SourceStorageIDSelector != nil {
+		in, out := &in.SourceStorageIDSelector, &out.SourceStorageIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.StorageType != nil {
 		in, out := &in.StorageType, &out.StorageType
@@ -256,6 +267,16 @@ func (in *CloneParameters) DeepCopyInto(out *CloneParameters) {
 		in, out := &in.SourceStorageID, &out.SourceStorageID
 		*out = new(string)
 		**out = **in
+	}
+	if in.SourceStorageIDRef != nil {
+		in, out := &in.SourceStorageIDRef, &out.SourceStorageIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.SourceStorageIDSelector != nil {
+		in, out := &in.SourceStorageIDSelector, &out.SourceStorageIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.StorageType != nil {
 		in, out := &in.StorageType, &out.StorageType

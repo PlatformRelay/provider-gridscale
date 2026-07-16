@@ -17,6 +17,11 @@
 // Generate documentation from Terraform docs.
 //go:generate go run github.com/crossplane/upjet/v2/cmd/scraper -n ${TERRAFORM_PROVIDER_SOURCE} -r ../.work/${TERRAFORM_PROVIDER_SOURCE}/${TERRAFORM_DOCS_PATH} -o ../config/provider-metadata.yaml
 
+// Correct upstream doc-title metadata keys (8 entries keyed by human title
+// instead of gridscale_* resource name) and a corrupted capacity description,
+// so the scraped argument docs attach to the right CRDs. Idempotent.
+//go:generate go run ../hack/metadatafix ../config/provider-metadata.yaml
+
 // Run Upjet generator
 //go:generate go run ../cmd/generator/main.go ..
 

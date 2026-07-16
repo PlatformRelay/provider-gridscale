@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Application is the Schema for the Applications API. <no value>
+        description: Application is the Schema for the Applications API. Manages marketplace
+          applications in Gridscale.
         properties:
           apiVersion:
             description: |-
@@ -59,52 +60,70 @@ spec:
               forProvider:
                 properties:
                   category:
-                    description: 'Category of marketplace application. Accepted values:
-                      "CMS", "project management", "Adminpanel", "Collaboration",
-                      "Cloud Storage", "Archiving"'
+                    description: |-
+                      Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving".
+                      Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving"
                     type: string
                   metaAdvices:
+                    description: See Argument Reference above.
                     type: string
                   metaAuthor:
+                    description: Author.
                     type: string
                   metaComponents:
+                    description: 'Components (e.g: MySql, Apache, etc.).'
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   metaFeatures:
+                    description: List of functions.
                     type: string
                   metaHints:
+                    description: Hints.
                     type: string
                   metaIcon:
+                    description: base64 encoded image of the icon.
                     type: string
                   metaLicense:
+                    description: License number.
                     type: string
                   metaOs:
+                    description: Operating system.
                     type: string
                   metaOverview:
+                    description: Describes the main function of the application.
                     type: string
                   metaTermsOfUse:
+                    description: Terms of use.
                     type: string
                   name:
-                    description: The human-readable name of the object. It supports
-                      the full UTF-8 character set, with a maximum of 64 characters
+                    description: |-
+                      The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.
+                      The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters
                     type: string
                   objectStoragePath:
-                    description: Path to the images for the application, must be in
-                      .gz format and started with s3//
+                    description: |-
+                      Path to the images for the application, must be in .gz format and started with s3//.
+                      Path to the images for the application, must be in .gz format and started with s3//
                     type: string
                   publish:
                     description: Whether you want to publish your application or not
                     type: boolean
                   setupCores:
-                    description: Number of server's cores
+                    description: |-
+                      Number of server's cores.
+                      Number of server's cores
                     type: number
                   setupMemory:
-                    description: The capacity of server's memory in GB
+                    description: |-
+                      The capacity of server's memory in GB.
+                      The capacity of server's memory in GB
                     type: number
                   setupStorageCapacity:
-                    description: The capacity of server's storage in GB
+                    description: |-
+                      The capacity of server's storage in GB.
+                      The capacity of server's storage in GB
                     type: number
                 type: object
               initProvider:
@@ -121,52 +140,70 @@ spec:
                   autoscaler.
                 properties:
                   category:
-                    description: 'Category of marketplace application. Accepted values:
-                      "CMS", "project management", "Adminpanel", "Collaboration",
-                      "Cloud Storage", "Archiving"'
+                    description: |-
+                      Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving".
+                      Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving"
                     type: string
                   metaAdvices:
+                    description: See Argument Reference above.
                     type: string
                   metaAuthor:
+                    description: Author.
                     type: string
                   metaComponents:
+                    description: 'Components (e.g: MySql, Apache, etc.).'
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   metaFeatures:
+                    description: List of functions.
                     type: string
                   metaHints:
+                    description: Hints.
                     type: string
                   metaIcon:
+                    description: base64 encoded image of the icon.
                     type: string
                   metaLicense:
+                    description: License number.
                     type: string
                   metaOs:
+                    description: Operating system.
                     type: string
                   metaOverview:
+                    description: Describes the main function of the application.
                     type: string
                   metaTermsOfUse:
+                    description: Terms of use.
                     type: string
                   name:
-                    description: The human-readable name of the object. It supports
-                      the full UTF-8 character set, with a maximum of 64 characters
+                    description: |-
+                      The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.
+                      The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters
                     type: string
                   objectStoragePath:
-                    description: Path to the images for the application, must be in
-                      .gz format and started with s3//
+                    description: |-
+                      Path to the images for the application, must be in .gz format and started with s3//.
+                      Path to the images for the application, must be in .gz format and started with s3//
                     type: string
                   publish:
                     description: Whether you want to publish your application or not
                     type: boolean
                   setupCores:
-                    description: Number of server's cores
+                    description: |-
+                      Number of server's cores.
+                      Number of server's cores
                     type: number
                   setupMemory:
-                    description: The capacity of server's memory in GB
+                    description: |-
+                      The capacity of server's memory in GB.
+                      The capacity of server's memory in GB
                     type: number
                   setupStorageCapacity:
-                    description: The capacity of server's storage in GB
+                    description: |-
+                      The capacity of server's storage in GB.
+                      The capacity of server's storage in GB
                     type: number
                 type: object
               managementPolicies:
@@ -258,105 +295,143 @@ spec:
               atProvider:
                 properties:
                   category:
-                    description: 'Category of marketplace application. Accepted values:
-                      "CMS", "project management", "Adminpanel", "Collaboration",
-                      "Cloud Storage", "Archiving"'
+                    description: |-
+                      Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving".
+                      Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving"
                     type: string
                   changeTime:
-                    description: Defines the date and time of the last object change
+                    description: |-
+                      The date and time of the last marketplace application change.
+                      Defines the date and time of the last object change
                     type: string
                   createTime:
-                    description: Defines the date and time the object was initially
-                      created
+                    description: |-
+                      The date and time the marketplace application was initially created.
+                      Defines the date and time the object was initially created
                     type: string
                   id:
+                    description: The UUID of the marketplace application.
                     type: string
                   isApplicationOwner:
-                    description: Whether the you are the owner of application or not
+                    description: |-
+                      Whether the you are the owner of application or not.
+                      Whether the you are the owner of application or not
                     type: boolean
                   isPublishGlobal:
-                    description: Whether a template is published to other partner
-                      or not
+                    description: |-
+                      Whether a template is published to other partner or not.
+                      Whether a template is published to other partner or not
                     type: boolean
                   isPublishGlobalRequested:
-                    description: Whether a partner wants their tenant template published
-                      to other partners
+                    description: |-
+                      Whether a partner wants their tenant template published to other partners.
+                      Whether a partner wants their tenant template published to other partners
                     type: boolean
                   isPublishRequested:
-                    description: Whether the tenants want their template to be published
-                      or not
+                    description: |-
+                      Whether the tenants want their template to be published or not.
+                      Whether the tenants want their template to be published or not
                     type: boolean
                   isPublished:
-                    description: Whether the template is published by the partner
-                      to their tenant
+                    description: |-
+                      Whether the template is published by the partner to their tenant".
+                      Whether the template is published by the partner to their tenant
                     type: boolean
                   metaAdvices:
+                    description: See Argument Reference above.
                     type: string
                   metaAuthor:
+                    description: Author.
                     type: string
                   metaComponents:
+                    description: 'Components (e.g: MySql, Apache, etc.).'
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   metaFeatures:
+                    description: List of functions.
                     type: string
                   metaHints:
+                    description: Hints.
                     type: string
                   metaIcon:
+                    description: base64 encoded image of the icon.
                     type: string
                   metaLicense:
+                    description: License number.
                     type: string
                   metaOs:
+                    description: Operating system.
                     type: string
                   metaOverview:
+                    description: Describes the main function of the application.
                     type: string
                   metaTermsOfUse:
+                    description: Terms of use.
                     type: string
                   name:
-                    description: The human-readable name of the object. It supports
-                      the full UTF-8 character set, with a maximum of 64 characters
+                    description: |-
+                      The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.
+                      The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters
                     type: string
                   objectStoragePath:
-                    description: Path to the images for the application, must be in
-                      .gz format and started with s3//
+                    description: |-
+                      Path to the images for the application, must be in .gz format and started with s3//.
+                      Path to the images for the application, must be in .gz format and started with s3//
                     type: string
                   publish:
                     description: Whether you want to publish your application or not
                     type: boolean
                   publishGlobalRequestedDate:
-                    description: The date when a partner requested their tenants template
-                      to be published
+                    description: |-
+                      The date when a partner requested their tenants template to be published.
+                      The date when a partner requested their tenants template to be published
                     type: string
                   publishRequestedDate:
-                    description: The date when the tenant requested their template
-                      to be published
+                    description: |-
+                      The date when the tenant requested their template to be published.
+                      The date when the tenant requested their template to be published
                     type: string
                   publishedDate:
-                    description: The date when the template is published into other
-                      tenant in the same partner
+                    description: |-
+                      The date when the template is published into other tenant in the same partner.
+                      The date when the template is published into other tenant in the same partner
                     type: string
                   publishedGlobalDate:
-                    description: The date when a template is published to other partner
+                    description: |-
+                      The date when a template is published to other partner.
+                      The date when a template is published to other partner
                     type: string
                   setupCores:
-                    description: Number of server's cores
+                    description: |-
+                      Number of server's cores.
+                      Number of server's cores
                     type: number
                   setupMemory:
-                    description: The capacity of server's memory in GB
+                    description: |-
+                      The capacity of server's memory in GB.
+                      The capacity of server's memory in GB
                     type: number
                   setupStorageCapacity:
-                    description: The capacity of server's storage in GB
+                    description: |-
+                      The capacity of server's storage in GB.
+                      The capacity of server's storage in GB
                     type: number
                   status:
-                    description: status indicates the status of the object
+                    description: |-
+                      The status of the marketplace application.
+                      status indicates the status of the object
                     type: string
                   type:
-                    description: The type of template
+                    description: |-
+                      The type of template.
+                      The type of template
                     type: string
                   uniqueHash:
-                    description: Unique hash to allow user to import the self-created
-                      marketplace application
+                    description: |-
+                      Unique hash to allow user to import the self-created marketplace application.
+                      Unique hash to allow user to import the self-created marketplace application
                     type: string
                 type: object
               conditions:

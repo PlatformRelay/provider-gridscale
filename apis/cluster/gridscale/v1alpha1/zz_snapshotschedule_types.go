@@ -15,101 +15,147 @@ import (
 
 type SnapshotscheduleInitParameters struct {
 
+	// The amount of Snapshots to keep before overwriting the last created Snapshot (>=1).
 	// The amount of Snapshots to keep before overwriting the last created Snapshot
 	KeepSnapshots *float64 `json:"keepSnapshots,omitempty" tf:"keep_snapshots,omitempty"`
 
+	// The list of labels.
 	// List of labels.
 	// +listType=set
 	Labels []*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// UUID of the snapshot schedule.
 	// The human-readable name of the object
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// The date and time that the snapshot schedule will be run.
 	// The date and time that the snapshot schedule will be run
 	NextRuntime *string `json:"nextRuntime,omitempty" tf:"next_runtime,omitempty"`
 
+	// The interval at which the schedule will run (in minutes, >=60).
 	// The interval at which the schedule will run (in minutes)
 	RunInterval *float64 `json:"runInterval,omitempty" tf:"run_interval,omitempty"`
 
+	// UUID of the storage that the snapshot schedule belongs to.
 	// UUID of the storage used to create snapshots
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/cluster/gridscale/v1alpha1.Storage
 	StorageUUID *string `json:"storageUuid,omitempty" tf:"storage_uuid,omitempty"`
+
+	// Reference to a Storage in gridscale to populate storageUuid.
+	// +kubebuilder:validation:Optional
+	StorageUUIDRef *v1.Reference `json:"storageUuidRef,omitempty" tf:"-"`
+
+	// Selector for a Storage in gridscale to populate storageUuid.
+	// +kubebuilder:validation:Optional
+	StorageUUIDSelector *v1.Selector `json:"storageUuidSelector,omitempty" tf:"-"`
 }
 
 type SnapshotscheduleObservation struct {
 
+	// The date and time of the last snapshot schedule change.
 	// Defines the date and time of the last object change
 	ChangeTime *string `json:"changeTime,omitempty" tf:"change_time,omitempty"`
 
+	// The date and time the snapshot schedule was initially created.
 	// Defines the date and time the object was initially created
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
 
+	// The UUID of the snapshot schedule.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// The amount of Snapshots to keep before overwriting the last created Snapshot (>=1).
 	// The amount of Snapshots to keep before overwriting the last created Snapshot
 	KeepSnapshots *float64 `json:"keepSnapshots,omitempty" tf:"keep_snapshots,omitempty"`
 
+	// The list of labels.
 	// List of labels.
 	// +listType=set
 	Labels []*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// UUID of the snapshot schedule.
 	// The human-readable name of the object
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// The date and time that the snapshot schedule will be run.
 	// The date and time that the snapshot schedule will be run
 	NextRuntime *string `json:"nextRuntime,omitempty" tf:"next_runtime,omitempty"`
 
 	// The date and time that the snapshot schedule will be run. This date and time is computed by gridscale's server.
+	// The date and time that the snapshot schedule will be run. This date and time is computed by gridscale's server.
 	NextRuntimeComputed *string `json:"nextRuntimeComputed,omitempty" tf:"next_runtime_computed,omitempty"`
 
+	// The interval at which the schedule will run (in minutes, >=60).
 	// The interval at which the schedule will run (in minutes)
 	RunInterval *float64 `json:"runInterval,omitempty" tf:"run_interval,omitempty"`
 
+	// Related snapshots.
 	// Related snashots
 	Snapshot []SnapshotscheduleSnapshotObservation `json:"snapshot,omitempty" tf:"snapshot,omitempty"`
 
+	// The status of the snapshot schedule.
 	// Status indicates the status of the object
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
+	// UUID of the storage that the snapshot schedule belongs to.
 	// UUID of the storage used to create snapshots
 	StorageUUID *string `json:"storageUuid,omitempty" tf:"storage_uuid,omitempty"`
 }
 
 type SnapshotscheduleParameters struct {
 
+	// The amount of Snapshots to keep before overwriting the last created Snapshot (>=1).
 	// The amount of Snapshots to keep before overwriting the last created Snapshot
 	// +kubebuilder:validation:Optional
 	KeepSnapshots *float64 `json:"keepSnapshots,omitempty" tf:"keep_snapshots,omitempty"`
 
+	// The list of labels.
 	// List of labels.
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	Labels []*string `json:"labels,omitempty" tf:"labels,omitempty"`
 
+	// UUID of the snapshot schedule.
 	// The human-readable name of the object
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// The date and time that the snapshot schedule will be run.
 	// The date and time that the snapshot schedule will be run
 	// +kubebuilder:validation:Optional
 	NextRuntime *string `json:"nextRuntime,omitempty" tf:"next_runtime,omitempty"`
 
+	// The interval at which the schedule will run (in minutes, >=60).
 	// The interval at which the schedule will run (in minutes)
 	// +kubebuilder:validation:Optional
 	RunInterval *float64 `json:"runInterval,omitempty" tf:"run_interval,omitempty"`
 
+	// UUID of the storage that the snapshot schedule belongs to.
 	// UUID of the storage used to create snapshots
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/cluster/gridscale/v1alpha1.Storage
 	// +kubebuilder:validation:Optional
 	StorageUUID *string `json:"storageUuid,omitempty" tf:"storage_uuid,omitempty"`
+
+	// Reference to a Storage in gridscale to populate storageUuid.
+	// +kubebuilder:validation:Optional
+	StorageUUIDRef *v1.Reference `json:"storageUuidRef,omitempty" tf:"-"`
+
+	// Selector for a Storage in gridscale to populate storageUuid.
+	// +kubebuilder:validation:Optional
+	StorageUUIDSelector *v1.Selector `json:"storageUuidSelector,omitempty" tf:"-"`
 }
 
 type SnapshotscheduleSnapshotInitParameters struct {
 }
 
 type SnapshotscheduleSnapshotObservation struct {
+
+	// The date and time the snapshot schedule was initially created.
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
 
+	// UUID of the snapshot schedule.
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// UUID of the snapshot.
 	ObjectUUID *string `json:"objectUuid,omitempty" tf:"object_uuid,omitempty"`
 }
 
@@ -143,7 +189,7 @@ type SnapshotscheduleStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// Snapshotschedule is the Schema for the Snapshotschedules API. <no value>
+// Snapshotschedule is the Schema for the Snapshotschedules API. Manages a storage snapshot schedule.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
@@ -155,7 +201,6 @@ type Snapshotschedule struct {
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.keepSnapshots) || (has(self.initProvider) && has(self.initProvider.keepSnapshots))",message="spec.forProvider.keepSnapshots is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.name) || (has(self.initProvider) && has(self.initProvider.name))",message="spec.forProvider.name is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.runInterval) || (has(self.initProvider) && has(self.initProvider.runInterval))",message="spec.forProvider.runInterval is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.storageUuid) || (has(self.initProvider) && has(self.initProvider.storageUuid))",message="spec.forProvider.storageUuid is a required parameter"
 	Spec   SnapshotscheduleSpec   `json:"spec"`
 	Status SnapshotscheduleStatus `json:"status,omitempty"`
 }

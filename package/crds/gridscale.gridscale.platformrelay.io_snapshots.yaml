@@ -34,7 +34,8 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Snapshot is the Schema for the Snapshots API. <no value>
+        description: Snapshot is the Schema for the Snapshots API. Manages a storage
+          snapshot in gridscale.
         properties:
           apiVersion:
             description: |-
@@ -73,20 +74,28 @@ spec:
               forProvider:
                 properties:
                   labels:
-                    description: List of labels.
+                    description: |-
+                      The list of labels.
+                      List of labels.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   name:
-                    description: The human-readable name of the object
+                    description: |-
+                      The name of the snapshot.
+                      The human-readable name of the object
                     type: string
                   objectStorageExport:
-                    description: Export snapshot to a object storage
+                    description: |-
+                      Export snapshot to a object storage.
+                      Export snapshot to a object storage
                     items:
                       properties:
                         accessKeySecretRef:
-                          description: Access key
+                          description: |-
+                            Access key.
+                            Access key
                           properties:
                             key:
                               description: The key to select.
@@ -103,19 +112,27 @@ spec:
                           - namespace
                           type: object
                         bucket:
-                          description: Bucket name
+                          description: |-
+                            Bucket name.
+                            Bucket name
                           type: string
                         host:
-                          description: 'Host of object storage. Must be of URL type.
-                            E.g: https://gos3.io'
+                          description: |-
+                            Host of object storage. Must be of URL type, e.g., https://gos3.io
+                            Host of object storage. Must be of URL type. E.g: https://gos3.io
                           type: string
                         object:
-                          description: Name of file (include file path)
+                          description: |-
+                            Name of file (include file path).
+                            Name of file (include file path)
                           type: string
                         private:
+                          description: Privacy.
                           type: boolean
                         secretKeySecretRef:
-                          description: Secret key
+                          description: |-
+                            Secret key.
+                            Secret key
                           properties:
                             key:
                               description: The key to select.
@@ -134,18 +151,97 @@ spec:
                       type: object
                     type: array
                   rollback:
-                    description: Returns a storage to the state of the selected Snapshot.
+                    description: |-
+                      Returns a storage to the state of the selected Snapshot.
+                      Returns a storage to the state of the selected Snapshot.
                     items:
                       properties:
                         id:
-                          description: ID of the rollback request. Each rollback request
-                            has to have a unique id. ID can be any string value.
+                          description: |-
+                            ID of the rollback request. It can be any string value. Each rollback request has to have a UNIQUE id.
+                            ID of the rollback request. Each rollback request has to have a unique id. ID can be any string value.
                           type: string
                       type: object
                     type: array
                   storageUuid:
-                    description: UUID of the storage used to create this snapshot
+                    description: |-
+                      UUID of the storage used to create this snapshot.
+                      UUID of the storage used to create this snapshot
                     type: string
+                  storageUuidRef:
+                    description: Reference to a Storage in gridscale to populate storageUuid.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  storageUuidSelector:
+                    description: Selector for a Storage in gridscale to populate storageUuid.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
                 type: object
               initProvider:
                 description: |-
@@ -161,20 +257,28 @@ spec:
                   autoscaler.
                 properties:
                   labels:
-                    description: List of labels.
+                    description: |-
+                      The list of labels.
+                      List of labels.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   name:
-                    description: The human-readable name of the object
+                    description: |-
+                      The name of the snapshot.
+                      The human-readable name of the object
                     type: string
                   objectStorageExport:
-                    description: Export snapshot to a object storage
+                    description: |-
+                      Export snapshot to a object storage.
+                      Export snapshot to a object storage
                     items:
                       properties:
                         accessKeySecretRef:
-                          description: Access key
+                          description: |-
+                            Access key.
+                            Access key
                           properties:
                             key:
                               description: The key to select.
@@ -191,19 +295,27 @@ spec:
                           - namespace
                           type: object
                         bucket:
-                          description: Bucket name
+                          description: |-
+                            Bucket name.
+                            Bucket name
                           type: string
                         host:
-                          description: 'Host of object storage. Must be of URL type.
-                            E.g: https://gos3.io'
+                          description: |-
+                            Host of object storage. Must be of URL type, e.g., https://gos3.io
+                            Host of object storage. Must be of URL type. E.g: https://gos3.io
                           type: string
                         object:
-                          description: Name of file (include file path)
+                          description: |-
+                            Name of file (include file path).
+                            Name of file (include file path)
                           type: string
                         private:
+                          description: Privacy.
                           type: boolean
                         secretKeySecretRef:
-                          description: Secret key
+                          description: |-
+                            Secret key.
+                            Secret key
                           properties:
                             key:
                               description: The key to select.
@@ -225,18 +337,97 @@ spec:
                       type: object
                     type: array
                   rollback:
-                    description: Returns a storage to the state of the selected Snapshot.
+                    description: |-
+                      Returns a storage to the state of the selected Snapshot.
+                      Returns a storage to the state of the selected Snapshot.
                     items:
                       properties:
                         id:
-                          description: ID of the rollback request. Each rollback request
-                            has to have a unique id. ID can be any string value.
+                          description: |-
+                            ID of the rollback request. It can be any string value. Each rollback request has to have a UNIQUE id.
+                            ID of the rollback request. Each rollback request has to have a unique id. ID can be any string value.
                           type: string
                       type: object
                     type: array
                   storageUuid:
-                    description: UUID of the storage used to create this snapshot
+                    description: |-
+                      UUID of the storage used to create this snapshot.
+                      UUID of the storage used to create this snapshot
                     type: string
+                  storageUuidRef:
+                    description: Reference to a Storage in gridscale to populate storageUuid.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  storageUuidSelector:
+                    description: Selector for a Storage in gridscale to populate storageUuid.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
                 type: object
               managementPolicies:
                 default:
@@ -329,100 +520,136 @@ spec:
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
                 || (has(self.initProvider) && has(self.initProvider.name))'
-            - message: spec.forProvider.storageUuid is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.storageUuid)
-                || (has(self.initProvider) && has(self.initProvider.storageUuid))'
           status:
             description: SnapshotStatus defines the observed state of Snapshot.
             properties:
               atProvider:
                 properties:
                   capacity:
-                    description: The capacity of a storage/ISO image/template/snapshot
-                      in GB
+                    description: |-
+                      The capacity of the snapshot in GB.
+                      The capacity of a storage/ISO image/template/snapshot in GB
                     type: number
                   changeTime:
-                    description: Defines the date and time of the last object change
+                    description: |-
+                      The date and time of the last snapshot change.
+                      Defines the date and time of the last object change
                     type: string
                   createTime:
-                    description: Defines the date and time the object was initially
-                      created
+                    description: |-
+                      The date and time the ip was initially created.
+                      Defines the date and time the object was initially created
                     type: string
                   currentPrice:
-                    description: The price for the current period since the last bill
+                    description: |-
+                      The price for the current period since the last bill.
+                      The price for the current period since the last bill
                     type: number
                   id:
+                    description: ID of the rollback request. It can be any string
+                      value. Each rollback request has to have a UNIQUE id.
                     type: string
                   labels:
-                    description: List of labels.
+                    description: |-
+                      The list of labels.
+                      List of labels.
                     items:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
                   licenseProductNo:
                     description: |-
+                      If a template has been used that requires a license key (e.g. Windows Servers) this shows the product_no of the license (see the /prices endpoint for more details).
                       If a template has been used that requires a license key (e.g. Windows Servers) this shows
                       the product_no of the license (see the /prices endpoint for more details)
                     type: number
                   locationCountry:
-                    description: The human-readable name of the location
+                    description: |-
+                      The human-readable name of the country of the snapshot.
+                      The human-readable name of the location
                     type: string
                   locationIata:
-                    description: Uses IATA airport code, which works as a location
-                      identifier
+                    description: |-
+                      The IATA airport code, which works as a location identifier.
+                      Uses IATA airport code, which works as a location identifier
                     type: string
                   locationName:
-                    description: The human-readable name of the location
+                    description: |-
+                      The human-readable name of the location of the snapshot.
+                      The human-readable name of the location
                     type: string
                   locationUuid:
-                    description: The location this object is placed.
+                    description: |-
+                      The UUID of the location, that helps to identify which datacenter an object belongs to.
+                      The location this object is placed.
                     type: string
                   name:
-                    description: The human-readable name of the object
+                    description: |-
+                      The name of the snapshot.
+                      The human-readable name of the object
                     type: string
                   objectStorageExport:
-                    description: Export snapshot to a object storage
+                    description: |-
+                      Export snapshot to a object storage.
+                      Export snapshot to a object storage
                     items:
                       properties:
                         bucket:
-                          description: Bucket name
+                          description: |-
+                            Bucket name.
+                            Bucket name
                           type: string
                         host:
-                          description: 'Host of object storage. Must be of URL type.
-                            E.g: https://gos3.io'
+                          description: |-
+                            Host of object storage. Must be of URL type, e.g., https://gos3.io
+                            Host of object storage. Must be of URL type. E.g: https://gos3.io
                           type: string
                         object:
-                          description: Name of file (include file path)
+                          description: |-
+                            Name of file (include file path).
+                            Name of file (include file path)
                           type: string
                         private:
+                          description: Privacy.
                           type: boolean
                         status:
+                          description: The status of the snapshot.
                           type: string
                       type: object
                     type: array
                   rollback:
-                    description: Returns a storage to the state of the selected Snapshot.
+                    description: |-
+                      Returns a storage to the state of the selected Snapshot.
+                      Returns a storage to the state of the selected Snapshot.
                     items:
                       properties:
                         id:
-                          description: ID of the rollback request. Each rollback request
-                            has to have a unique id. ID can be any string value.
+                          description: |-
+                            ID of the rollback request. It can be any string value. Each rollback request has to have a UNIQUE id.
+                            ID of the rollback request. Each rollback request has to have a unique id. ID can be any string value.
                           type: string
                         rollbackTime:
+                          description: The time when rollback request is fulfilled.
                           type: string
                         status:
+                          description: The status of the snapshot.
                           type: string
                       type: object
                     type: array
                   status:
-                    description: Status indicates the status of the object
+                    description: |-
+                      The status of the snapshot.
+                      Status indicates the status of the object
                     type: string
                   storageUuid:
-                    description: UUID of the storage used to create this snapshot
+                    description: |-
+                      UUID of the storage used to create this snapshot.
+                      UUID of the storage used to create this snapshot
                     type: string
                   usageInMinutes:
-                    description: Total minutes the object has been running
+                    description: |-
+                      Total minutes the ip has been running.
+                      Total minutes the object has been running
                     type: number
                 type: object
               conditions:

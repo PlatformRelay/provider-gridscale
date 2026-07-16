@@ -9,7 +9,9 @@ metadata:
 spec:
   forProvider:
     name: john's storage clone
-    sourceStorageId: ${gridscale_storage.storage-clone-john.id}
+    sourceStorageIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: storage-clone-john
     timeouts:
     - create: 10m
 

@@ -614,13 +614,40 @@ type ServerInitParameters_2 struct {
 	HardwareProfileConfig []HardwareProfileConfigInitParameters `json:"hardwareProfileConfig,omitempty" tf:"hardware_profile_config,omitempty"`
 
 	// The UUID of the IPv4 address of the server. (***NOTE: The server will NOT automatically be connected to the public network; to give it access to the internet, please add server to the public network.)
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/gridscale/v1alpha1.IPv4
 	IPv4 *string `json:"ipv4,omitempty" tf:"ipv4,omitempty"`
 
+	// Reference to a IPv4 in gridscale to populate ipv4.
+	// +kubebuilder:validation:Optional
+	IPv4Ref *v1.NamespacedReference `json:"ipv4Ref,omitempty" tf:"-"`
+
+	// Selector for a IPv4 in gridscale to populate ipv4.
+	// +kubebuilder:validation:Optional
+	IPv4Selector *v1.NamespacedSelector `json:"ipv4Selector,omitempty" tf:"-"`
+
 	// The UUID of the IPv6 address of the server. (***NOTE: The server will NOT automatically be connected to the public network; to give it access to the internet, please add server to the public network.)
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/gridscale/v1alpha1.IPv6
 	IPv6 *string `json:"ipv6,omitempty" tf:"ipv6,omitempty"`
 
+	// Reference to a IPv6 in gridscale to populate ipv6.
+	// +kubebuilder:validation:Optional
+	IPv6Ref *v1.NamespacedReference `json:"ipv6Ref,omitempty" tf:"-"`
+
+	// Selector for a IPv6 in gridscale to populate ipv6.
+	// +kubebuilder:validation:Optional
+	IPv6Selector *v1.NamespacedSelector `json:"ipv6Selector,omitempty" tf:"-"`
+
 	// The UUID of an ISO image in gridscale. The server will automatically boot from the ISO if one was added. The UUIDs of ISO images can be found in the expert panel.
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/gridscale/v1alpha1.Isoimage
 	Isoimage *string `json:"isoimage,omitempty" tf:"isoimage,omitempty"`
+
+	// Reference to a Isoimage in gridscale to populate isoimage.
+	// +kubebuilder:validation:Optional
+	IsoimageRef *v1.NamespacedReference `json:"isoimageRef,omitempty" tf:"-"`
+
+	// Selector for a Isoimage in gridscale to populate isoimage.
+	// +kubebuilder:validation:Optional
+	IsoimageSelector *v1.NamespacedSelector `json:"isoimageSelector,omitempty" tf:"-"`
 
 	// List of labels in the format [ "label1", "label2" ].
 	// List of labels.
@@ -664,7 +691,16 @@ type ServerNetworkInitParameters struct {
 	IP *string `json:"ip,omitempty" tf:"ip,omitempty"`
 
 	// The object UUID or id of the network.
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/gridscale/v1alpha1.Network
 	ObjectUUID *string `json:"objectUuid,omitempty" tf:"object_uuid,omitempty"`
+
+	// Reference to a Network in gridscale to populate objectUuid.
+	// +kubebuilder:validation:Optional
+	ObjectUUIDRef *v1.NamespacedReference `json:"objectUuidRef,omitempty" tf:"-"`
+
+	// Selector for a Network in gridscale to populate objectUuid.
+	// +kubebuilder:validation:Optional
+	ObjectUUIDSelector *v1.NamespacedSelector `json:"objectUuidSelector,omitempty" tf:"-"`
 
 	// DEPRECATED  Defines the ordering of the network interfaces. Lower numbers have lower PCI-IDs.
 	Ordering *float64 `json:"ordering,omitempty" tf:"ordering,omitempty"`
@@ -745,8 +781,17 @@ type ServerNetworkParameters struct {
 	IP *string `json:"ip,omitempty" tf:"ip,omitempty"`
 
 	// The object UUID or id of the network.
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/gridscale/v1alpha1.Network
 	// +kubebuilder:validation:Optional
-	ObjectUUID *string `json:"objectUuid" tf:"object_uuid,omitempty"`
+	ObjectUUID *string `json:"objectUuid,omitempty" tf:"object_uuid,omitempty"`
+
+	// Reference to a Network in gridscale to populate objectUuid.
+	// +kubebuilder:validation:Optional
+	ObjectUUIDRef *v1.NamespacedReference `json:"objectUuidRef,omitempty" tf:"-"`
+
+	// Selector for a Network in gridscale to populate objectUuid.
+	// +kubebuilder:validation:Optional
+	ObjectUUIDSelector *v1.NamespacedSelector `json:"objectUuidSelector,omitempty" tf:"-"`
 
 	// DEPRECATED  Defines the ordering of the network interfaces. Lower numbers have lower PCI-IDs.
 	// +kubebuilder:validation:Optional
@@ -890,16 +935,43 @@ type ServerParameters_2 struct {
 	HardwareProfileConfig []HardwareProfileConfigParameters `json:"hardwareProfileConfig,omitempty" tf:"hardware_profile_config,omitempty"`
 
 	// The UUID of the IPv4 address of the server. (***NOTE: The server will NOT automatically be connected to the public network; to give it access to the internet, please add server to the public network.)
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/gridscale/v1alpha1.IPv4
 	// +kubebuilder:validation:Optional
 	IPv4 *string `json:"ipv4,omitempty" tf:"ipv4,omitempty"`
 
+	// Reference to a IPv4 in gridscale to populate ipv4.
+	// +kubebuilder:validation:Optional
+	IPv4Ref *v1.NamespacedReference `json:"ipv4Ref,omitempty" tf:"-"`
+
+	// Selector for a IPv4 in gridscale to populate ipv4.
+	// +kubebuilder:validation:Optional
+	IPv4Selector *v1.NamespacedSelector `json:"ipv4Selector,omitempty" tf:"-"`
+
 	// The UUID of the IPv6 address of the server. (***NOTE: The server will NOT automatically be connected to the public network; to give it access to the internet, please add server to the public network.)
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/gridscale/v1alpha1.IPv6
 	// +kubebuilder:validation:Optional
 	IPv6 *string `json:"ipv6,omitempty" tf:"ipv6,omitempty"`
 
+	// Reference to a IPv6 in gridscale to populate ipv6.
+	// +kubebuilder:validation:Optional
+	IPv6Ref *v1.NamespacedReference `json:"ipv6Ref,omitempty" tf:"-"`
+
+	// Selector for a IPv6 in gridscale to populate ipv6.
+	// +kubebuilder:validation:Optional
+	IPv6Selector *v1.NamespacedSelector `json:"ipv6Selector,omitempty" tf:"-"`
+
 	// The UUID of an ISO image in gridscale. The server will automatically boot from the ISO if one was added. The UUIDs of ISO images can be found in the expert panel.
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/gridscale/v1alpha1.Isoimage
 	// +kubebuilder:validation:Optional
 	Isoimage *string `json:"isoimage,omitempty" tf:"isoimage,omitempty"`
+
+	// Reference to a Isoimage in gridscale to populate isoimage.
+	// +kubebuilder:validation:Optional
+	IsoimageRef *v1.NamespacedReference `json:"isoimageRef,omitempty" tf:"-"`
+
+	// Selector for a Isoimage in gridscale to populate isoimage.
+	// +kubebuilder:validation:Optional
+	IsoimageSelector *v1.NamespacedSelector `json:"isoimageSelector,omitempty" tf:"-"`
 
 	// List of labels in the format [ "label1", "label2" ].
 	// List of labels.
@@ -940,7 +1012,16 @@ type ServerParameters_2 struct {
 type StorageInitParameters struct {
 
 	// The object UUID or id of the storage.
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/gridscale/v1alpha1.Storage
 	ObjectUUID *string `json:"objectUuid,omitempty" tf:"object_uuid,omitempty"`
+
+	// Reference to a Storage in gridscale to populate objectUuid.
+	// +kubebuilder:validation:Optional
+	ObjectUUIDRef *v1.NamespacedReference `json:"objectUuidRef,omitempty" tf:"-"`
+
+	// Selector for a Storage in gridscale to populate objectUuid.
+	// +kubebuilder:validation:Optional
+	ObjectUUIDSelector *v1.NamespacedSelector `json:"objectUuidSelector,omitempty" tf:"-"`
 }
 
 type StorageObservation struct {
@@ -985,8 +1066,17 @@ type StorageObservation struct {
 type StorageParameters struct {
 
 	// The object UUID or id of the storage.
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/gridscale/v1alpha1.Storage
 	// +kubebuilder:validation:Optional
-	ObjectUUID *string `json:"objectUuid" tf:"object_uuid,omitempty"`
+	ObjectUUID *string `json:"objectUuid,omitempty" tf:"object_uuid,omitempty"`
+
+	// Reference to a Storage in gridscale to populate objectUuid.
+	// +kubebuilder:validation:Optional
+	ObjectUUIDRef *v1.NamespacedReference `json:"objectUuidRef,omitempty" tf:"-"`
+
+	// Selector for a Storage in gridscale to populate objectUuid.
+	// +kubebuilder:validation:Optional
+	ObjectUUIDSelector *v1.NamespacedSelector `json:"objectUuidSelector,omitempty" tf:"-"`
 }
 
 // ServerSpec defines the desired state of Server

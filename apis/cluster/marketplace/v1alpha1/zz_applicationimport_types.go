@@ -15,101 +15,135 @@ import (
 
 type ApplicationImportInitParameters struct {
 
+	// Hash of a specific marketplace application that you want to import. A change of this argument necessitates the re-creation of the resource.
 	// Hash of a specific marketplace application that you want to import
 	ImportUniqueHash *string `json:"importUniqueHash,omitempty" tf:"import_unique_hash,omitempty"`
 }
 
 type ApplicationImportObservation struct {
 
+	// Category of marketplace application.
 	// Category of marketplace application. Accepted values: "CMS", "project management", "Adminpanel", "Collaboration", "Cloud Storage", "Archiving"
 	Category *string `json:"category,omitempty" tf:"category,omitempty"`
 
+	// The date and time of the last marketplace application change.
 	// Defines the date and time of the last object change
 	ChangeTime *string `json:"changeTime,omitempty" tf:"change_time,omitempty"`
 
+	// The date and time the marketplace application was initially created.
 	// Defines the date and time the object was initially created
 	CreateTime *string `json:"createTime,omitempty" tf:"create_time,omitempty"`
 
+	// The UUID of the marketplace application.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// Hash of a specific marketplace application that you want to import. A change of this argument necessitates the re-creation of the resource.
 	// Hash of a specific marketplace application that you want to import
 	ImportUniqueHash *string `json:"importUniqueHash,omitempty" tf:"import_unique_hash,omitempty"`
 
+	// Whether the you are the owner of application or not.
 	// Whether the you are the owner of application or not
 	IsApplicationOwner *bool `json:"isApplicationOwner,omitempty" tf:"is_application_owner,omitempty"`
 
+	// Whether a template is published to other partner or not.
 	// Whether a template is published to other partner or not
 	IsPublishGlobal *bool `json:"isPublishGlobal,omitempty" tf:"is_publish_global,omitempty"`
 
+	// Whether a partner wants their tenant template published to other partners.
 	// Whether a partner wants their tenant template published to other partners
 	IsPublishGlobalRequested *bool `json:"isPublishGlobalRequested,omitempty" tf:"is_publish_global_requested,omitempty"`
 
+	// Whether the tenants want their template to be published or not.
 	// Whether the tenants want their template to be published or not
 	IsPublishRequested *bool `json:"isPublishRequested,omitempty" tf:"is_publish_requested,omitempty"`
 
+	// Whether the template is published by the partner to their tenant".
 	// Whether the template is published by the partner to their tenant
 	IsPublished *bool `json:"isPublished,omitempty" tf:"is_published,omitempty"`
 
+	// User manual; Wiki URL; ...
 	MetaAdvices *string `json:"metaAdvices,omitempty" tf:"meta_advices,omitempty"`
 
+	// Author.
 	MetaAuthor *string `json:"metaAuthor,omitempty" tf:"meta_author,omitempty"`
 
+	// Components (e.g: MySql, Apache, etc.).
 	// +listType=set
 	MetaComponents []*string `json:"metaComponents,omitempty" tf:"meta_components,omitempty"`
 
+	// List of functions.
 	MetaFeatures *string `json:"metaFeatures,omitempty" tf:"meta_features,omitempty"`
 
+	// Hints.
 	MetaHints *string `json:"metaHints,omitempty" tf:"meta_hints,omitempty"`
 
+	// base64 encoded image of the icon.
 	MetaIcon *string `json:"metaIcon,omitempty" tf:"meta_icon,omitempty"`
 
+	// License number.
 	MetaLicense *string `json:"metaLicense,omitempty" tf:"meta_license,omitempty"`
 
+	// Operating system.
 	MetaOs *string `json:"metaOs,omitempty" tf:"meta_os,omitempty"`
 
+	// Describes the main function of the application.
 	MetaOverview *string `json:"metaOverview,omitempty" tf:"meta_overview,omitempty"`
 
+	// Terms of use.
 	MetaTermsOfUse *string `json:"metaTermsOfUse,omitempty" tf:"meta_terms_of_use,omitempty"`
 
+	// The name of the marketplace application.
 	// The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
+	// Path to the images for the application.
 	// Path to the images for the application, must be in .gz format and started with s3//
 	ObjectStoragePath *string `json:"objectStoragePath,omitempty" tf:"object_storage_path,omitempty"`
 
+	// The date when a partner requested their tenants template to be published.
 	// The date when a partner requested their tenants template to be published
 	PublishGlobalRequestedDate *string `json:"publishGlobalRequestedDate,omitempty" tf:"publish_global_requested_date,omitempty"`
 
+	// The date when the tenant requested their template to be published.
 	// The date when the tenant requested their template to be published
 	PublishRequestedDate *string `json:"publishRequestedDate,omitempty" tf:"publish_requested_date,omitempty"`
 
+	// The date when the template is published into other tenant in the same partner.
 	// The date when the template is published into other tenant in the same partner
 	PublishedDate *string `json:"publishedDate,omitempty" tf:"published_date,omitempty"`
 
+	// The date when a template is published to other partner.
 	// The date when a template is published to other partner
 	PublishedGlobalDate *string `json:"publishedGlobalDate,omitempty" tf:"published_global_date,omitempty"`
 
+	// Number of server's cores.
 	// Number of server's cores
 	SetupCores *float64 `json:"setupCores,omitempty" tf:"setup_cores,omitempty"`
 
+	// The capacity of server's memory in GB.
 	// The capacity of server's memory in GB
 	SetupMemory *float64 `json:"setupMemory,omitempty" tf:"setup_memory,omitempty"`
 
+	// The capacity of server's storage in GB.
 	// The capacity of server's storage in GB
 	SetupStorageCapacity *float64 `json:"setupStorageCapacity,omitempty" tf:"setup_storage_capacity,omitempty"`
 
+	// The status of the marketplace application.
 	// status indicates the status of the object
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
+	// The type of template.
 	// The type of template
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
+	// Unique hash to allow user to import the self-created marketplace application.
 	// Unique hash to allow user to import the self-created marketplace application
 	UniqueHash *string `json:"uniqueHash,omitempty" tf:"unique_hash,omitempty"`
 }
 
 type ApplicationImportParameters struct {
 
+	// Hash of a specific marketplace application that you want to import. A change of this argument necessitates the re-creation of the resource.
 	// Hash of a specific marketplace application that you want to import
 	// +kubebuilder:validation:Optional
 	ImportUniqueHash *string `json:"importUniqueHash,omitempty" tf:"import_unique_hash,omitempty"`
@@ -142,7 +176,7 @@ type ApplicationImportStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:storageversion
 
-// ApplicationImport is the Schema for the ApplicationImports API. <no value>
+// ApplicationImport is the Schema for the ApplicationImports API. Manages imported marketplace applications in Gridscale.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
