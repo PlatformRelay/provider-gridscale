@@ -22,11 +22,19 @@ remove here. This repo's INBOX is independent — never coordinate other repos f
 ### CRED — GHCR signing + Upbound mirror (2026-07-16)
 
 - [x] Upbound robot → Actions secrets `XPKG_MIRROR_TOKEN` / `XPKG_MIRROR_ACCESS_ID` (operator).
-- [x] GHCR package linked to repo (operator, Package settings → Manage Actions access).
+- [x] GHCR package linked to repo (operator).
 - [x] `tag.yaml` self-contained (agent).
-- [ ] Re-dispatch after workflow uses `github.token` for GHCR:
-  `gh workflow run publish-provider-package.yml -R PlatformRelay/provider-gridscale -f version=v0.1.0`
-- Optional: delete stale repo secret `GHCR_PAT` once a green publish proves the linked-token path.
+- [x] **sign-and-sbom green** on run [29509707113](https://github.com/PlatformRelay/provider-gridscale/actions/runs/29509707113)
+      — `github.token` + linked package signed + attested existing `v0.1.0`.
+- [ ] **Still need:** refresh repo secret `GHCR_PAT` with a classic PAT that has
+      `write:packages` **and** `read:packages`. Upstream publish login uses
+      `username=PlatformRelay` + that secret; `github.token` is denied there (same run).
+      Mirror job never ran because publish-artifacts failed first.
+      ```bash
+      # from provider-gridscale/ after direnv allow — PAT must include packages scopes
+      gh secret set GHCR_PAT -R PlatformRelay/provider-gridscale < <(printenv GITHUB_TOKEN)
+      gh workflow run publish-provider-package.yml -R PlatformRelay/provider-gridscale -f version=v0.1.0
+      ```
 
 ### Other (non-blocking)
 

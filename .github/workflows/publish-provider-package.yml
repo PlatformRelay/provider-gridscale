@@ -22,12 +22,11 @@ jobs:
       go-version: ${{ github.event.inputs.go-version }}
       cleanup-disk: true
     secrets:
-      # Package is linked to this repo (operator 2026-07-16), so the job-scoped
-      # GITHUB_TOKEN can push/read. Pass it as GHCR_PAT to the reusable workflow
-      # (its input name is fixed upstream). A classic PAT is no longer required
-      # for day-2 publishes; keep secrets.GHCR_PAT around only as a break-glass
-      # for creating *new* unlinked org packages.
-      GHCR_PAT: ${{ github.token }}
+      # Reusable upstream login uses username=org ("PlatformRelay") + this secret.
+      # github.token fails that login (actor username required) — proven 2026-07-16
+      # run 29509707113. Keep a classic PAT here with write:packages + read:packages.
+      # sign-and-sbom below uses github.token against the linked package instead.
+      GHCR_PAT: ${{ secrets.GHCR_PAT }}
       XPKG_MIRROR_TOKEN: ${{ secrets.XPKG_MIRROR_TOKEN }}
       XPKG_MIRROR_ACCESS_ID: ${{ secrets.XPKG_MIRROR_ACCESS_ID }}
 
