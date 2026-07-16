@@ -234,7 +234,7 @@ datasources without a resource twin (notably `backup_list` and `public_network`)
 have no Crossplane equivalent until upstream upjet adds datasource support.
 
 Install from the [Upbound Marketplace](https://marketplace.upbound.io/providers/platformrelay/provider-gridscale)
-or GHCR (`ghcr.io/platformrelay/provider-gridscale:v0.1.0`).
+or GHCR (`ghcr.io/platformrelay/provider-gridscale:v0.1.1`).
 
 ## Developing
 
