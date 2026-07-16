@@ -60,11 +60,17 @@ E2-S09 → **E2-S11**).
 
 | Lane | Story | Owns (disjoint paths) | State |
 | --- | --- | --- | --- |
-| L-META | **E7-S02** (ARCH-2) — close remaining metadata REQs (`config/metadata_test.go` + filesystem gap) | `config/metadata_test.go`, `hack/metadatafix/**` (if needed), `config/provider-metadata.yaml` | 🔶 In flight |
-| L-DEPREC | **E4-S05** — deprecation hygiene (examples + README matrix flags) | `examples/**` (non-generated curated), `README.md` (deprec notes only) | 🔶 In flight |
-| L-UPSTREAM | **E6-S06** — upstream doc/feature PR hunt | `agent-context/decisions.md`, `agent-context/BACKLOG.md` (+ optional upstream PRs) | 🔶 In flight |
+| L-META | **E7-S02** (ARCH-2) — close remaining metadata REQs (`config/metadata_test.go` + filesystem gap) | `config/metadata_test.go`, `hack/metadatafix/**` (if needed), `config/provider-metadata.yaml` | ✅ Integrated |
+| L-DEPREC | **E4-S05** — deprecation hygiene (examples + README matrix flags) | `examples/**` (non-generated curated), `README.md` (deprec notes only) | ✅ Integrated |
+| L-UPSTREAM | **E6-S06** — upstream doc/feature PR hunt | `agent-context/decisions.md`, `agent-context/BACKLOG.md` (+ optional upstream PRs) | ✅ Integrated |
 
-**Batch 6:** **E5-S09** goimports — **already landed** (`1e9cfe1` / DIR-2); verify-only, no further reformat needed.
+### Batch 6 — goimports (RUN ALONE)
+
+| Lane | Story | State |
+| --- | --- | --- |
+| L-GOIMPORTS | **E5-S09** — goimports local-prefix | ✅ Already integrated (`1e9cfe1`); verified 2026-07-16: prefix=`github.com/PlatformRelay/provider-gridscale`, `goimports -l` clean on hand-authored packages |
+
+> **Loop complete (2026-07-16 evening resume).** Auto-mergeable audit-gap backlog exhausted. Remaining operator items stay in INBOX (GHCR_PAT read, Upbound mirror token, optional upjet DataSourceSchemas request, optional upstream #188 close nudge).
 
 ## Collision notes
 - L1 and L3 both reference credential setup but touch **different files** — no path collision.
