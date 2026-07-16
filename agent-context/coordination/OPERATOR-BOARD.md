@@ -70,7 +70,10 @@ E2-S09 → **E2-S11**).
 | --- | --- | --- |
 | L-GOIMPORTS | **E5-S09** — goimports local-prefix | ✅ Already integrated (`1e9cfe1`); verified 2026-07-16: prefix=`github.com/PlatformRelay/provider-gridscale`, `goimports -l` clean on hand-authored packages |
 
-> **Loop complete (2026-07-16 evening resume).** Auto-mergeable audit-gap backlog exhausted. Remaining operator items stay in INBOX (GHCR_PAT read, Upbound mirror token, optional upjet DataSourceSchemas request, optional upstream #188 close nudge).
+> **Loop complete (2026-07-16 evening resume).** Auto-mergeable audit-gap backlog exhausted.
+> **Operator 2026-07-16 later:** refreshed local `.envrc` (`GITHUB_TOKEN` + Upbound **robot**
+> `XPKG_MIRROR_*`); still need those values in **Actions secrets** + JWT typo check (`eeyJ`→`eyJ`).
+> Agent fixing `tag.yaml` (self-contained; upstream lost `workflow_call`). See D-016 / INBOX how-to.
 
 ## Collision notes
 - L1 and L3 both reference credential setup but touch **different files** — no path collision.

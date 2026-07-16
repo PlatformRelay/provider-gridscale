@@ -4,81 +4,90 @@ Items needing the operator. **Decisions** carry full Context + Options (one mark
 **Answer** field. When answered, record in [`decisions.md`](decisions.md) (with counterpoints) and
 remove here. This repo's INBOX is independent — never coordinate other repos from here.
 
-> **Loop status (2026-07-16, `/agent-loop-auto`):** the auto-mergeable backlog is **exhausted** and
-> most of the earlier operator-gated batch is now **resolved**. Parallel work since these were written
-> landed maintainer identity (**D-008**), Marketplace metadata (**D-010**), and the whole E5
-> CI/supply-chain epic (**D-011**) — all on `main`, all 6 CI workflows green — so those have moved to
-> [`decisions.md`](decisions.md). Branding (**D-009**) is **closed** — the operator confirmed **B**
-> 2026-07-16 via `/operator-inbox` (placeholder ships; override window closed; BRAND-1 tracks the real
-> icon). **D-012 answered B 2026-07-16** (manual smoke only). **D-013 answered A 2026-07-16** (PR #7
-> reconcile-then-merge — actioned, merging today). **v0.1.0 is published to ghcr**; what still needs
-> the operator: the **two cred fixes** below (GHCR_PAT `read:packages` for signing; refresh the
-> Upbound mirror token) and the `tag.yaml` workflow-SHA repin.
+> **Status 2026-07-16 evening:** decisions D-008…D-015 closed. v0.1.0 is on ghcr. Operator refreshed
+> local creds in `.envrc` (classic `GITHUB_TOKEN` PAT + Upbound **robot** mirror token). Remaining:
+> push those into **GitHub Actions secrets**, fix a likely typo in the robot JWT, then re-dispatch
+> publish. `tag.yaml` pin is being fixed on `main` (self-contained workflow — upstream lost
+> `workflow_call`).
 
 ---
 
 ## Decisions (open)
 
-> **Reconciled 2026-07-16:** **D-008** (maintainer identity → A), **D-010** (Marketplace metadata → A),
-> and **D-011** (E5 CI/supply-chain epic → A) were all **resolved by parallel work** and are now logged
-> in [`decisions.md`](decisions.md) — removed from this open list per the INBOX rule. **D-009**
-> (branding icon) is **closed** (see below). **D-012** was answered **B** by the operator
-> 2026-07-16 (manual smoke only — lab access lapses after the interview process) → `decisions.md`.
-> **D-013** (PR #7) was answered **A** 2026-07-16 → `decisions.md`. **No decisions remain open.**
-
-_(**D-009 ANSWERED/CLOSED 2026-07-16 → decisions.md** — operator **CONFIRMED B** via `/operator-inbox`:
-ship v0.1.0 with the placeholder icon; the coordinator's decide-B-and-ask-later call stands and the
-override window is closed. Real commissioned icon stays tracked as post-release item **BRAND-1**;
-`iconURI` in `package/crossplane.yaml` stays unset until BRAND-1 lands. Operator rationale: a
-subjective design call shouldn't reopen a published release.)_
-
-_(**D-012 ANSWERED 2026-07-16 → decisions.md** — operator chose **B**: manual smoke tests only, no
-automated uptest/CI creds — lab access is interview-time-boxed and will lapse, so CI secrets would go
-permanently red. Counterpoint logged: capture one archived local uptest run while access still exists.)_
+**None.**
 
 ---
 
 ## Operator tasks
 
-- **Upjet feature request — `DataSourceSchemas` (from D-015; outward-facing, do not auto-file).**
-  Epic E8 needs upstream upjet to generate from Terraform `DataSourceSchemas` (today only
-  `ResourceSchemas` are extracted). Please file a feature request on the upjet repo when ready —
-  draft angle: "support generating Observe-only MR types from provider `DataSourceSchemas`". Lane
-  L-E8SCOPE deliberately did **not** open the issue. No in-repo code blocked on this.
+### CRED — GHCR signing + Upbound mirror (in progress 2026-07-16)
 
-- **Optional — close stale upstream #188 / nudge doc drafts (from D-016 / E6-S06).** Backup-location
-  issue [gridscale/terraform-provider-gridscale#188](https://github.com/gridscale/terraform-provider-gridscale/issues/188)
-  is still open though PR [#193](https://github.com/gridscale/terraform-provider-gridscale/pull/193)
-  merged in 2022 (fields already in our CRDs). Doc drafts [#467](https://github.com/gridscale/terraform-provider-gridscale/pull/467)
-  / [#468](https://github.com/gridscale/terraform-provider-gridscale/pull/468) are 9 months stale;
-  file-rename recipe lives in D-016 if you want a stronger PR.
+1. **`GHCR_PAT` needs `read:packages` (or link the package).** The repo secret `GHCR_PAT` is what
+   `publish-provider-package.yml` / `sign-and-sbom` uses — **not** the local `.envrc` `GITHUB_TOKEN`
+   unless you copy it into that secret. See **How-to** below. Then re-dispatch:
+   `gh workflow run publish-provider-package.yml -R PlatformRelay/provider-gridscale -f version=v0.1.0`
+2. **Upbound mirror robot token regenerated (operator, 2026-07-16).** Local `.envrc` now has
+   `XPKG_MIRROR_TOKEN` + `XPKG_MIRROR_ACCESS_ID` from an Upbound **robot** account (not a user PAT).
+   **Must also update the GitHub Actions secrets** of the same names (still dated 2026-07-15 in the
+   repo). **Check for typo:** the JWT in `.envrc` currently starts with `eeyJ…` — valid JWTs start
+   with `eyJ…`. Drop the leading `e` if that was a paste error, then `gh secret set`.
+3. **`tag.yaml` repin** — agent actioning: replace broken reusable-workflow call with a
+   self-contained Tag workflow (upstream `tag.yml` no longer offers `workflow_call`).
+
+### Other (non-blocking)
+
+- **Upjet feature request — `DataSourceSchemas` (from D-015; outward-facing, do not auto-file).**
+- **Optional — close stale upstream #188 / nudge doc drafts (from D-016 / E6-S06).**
+
+---
+
+## How-to — grant GHCR read for signing (pick one)
+
+### Option A — regenerate / edit the PAT used as `GHCR_PAT` (simplest)
+
+1. GitHub → Settings → Developer settings → Personal access tokens (classic).
+2. Create or edit a token with **both** `write:packages` **and** `read:packages` (and `repo` if you
+   also use it for private ops). `write:packages` alone is not enough for `crane digest` on an
+   org package the token just pushed in some org visibility setups.
+3. Set the **repo secret** (this is what CI reads):
+   ```bash
+   gh secret set GHCR_PAT -R PlatformRelay/provider-gridscale
+   # paste the PAT when prompted
+   ```
+4. Re-dispatch publish with `version=v0.1.0` so `sign-and-sbom` can `crane digest` + cosign.
+
+If your local `.envrc` `GITHUB_TOKEN` already has those scopes, you can pipe it into the secret
+without printing it:
+```bash
+# from provider-gridscale/, after direnv allow — do NOT echo the value
+gh secret set GHCR_PAT -R PlatformRelay/provider-gridscale < <(printenv GITHUB_TOKEN)
+```
+
+### Option B — link the org GHCR package to this repository
+
+So the default `GITHUB_TOKEN` in Actions can read/write the package (still requires workflow change
+if the sign job keeps using `secrets.GHCR_PAT`):
+
+1. Open https://github.com/orgs/PlatformRelay/packages?repo_name=provider-gridscale
+   (or Packages → `provider-gridscale` → Package settings).
+2. **Manage Actions access** → add `PlatformRelay/provider-gridscale` with **Read and write**.
+3. Optionally tighten package visibility. Then either keep using an updated `GHCR_PAT` (A) **or**
+   change `sign-and-sbom` login to `${{ secrets.GITHUB_TOKEN }}` / `github.actor` after linking.
+
+**Agent cannot complete A/B without a packages-capable token in this shell** (org package API was
+Forbidden with current auth). Operator must set the secret or link the package once.
+
+### Upbound robot → Actions secrets
+
+```bash
+# Fix JWT typo in .envrc first if it starts with eeyJ (should be eyJ), then:
+gh secret set XPKG_MIRROR_TOKEN -R PlatformRelay/provider-gridscale < <(printenv XPKG_MIRROR_TOKEN)
+gh secret set XPKG_MIRROR_ACCESS_ID -R PlatformRelay/provider-gridscale < <(printenv XPKG_MIRROR_ACCESS_ID)
+```
 
 ---
 
 ## Reference — resolved / no action
 
-- **D-007 (logged 2026-07-16)** — the `govulncheck` remediation (Go 1.26.5 + `x/net` v0.55.0) **already
-  landed** on `main` (`d75721e`); the previously-open INBOX security item was **stale** and has been
-  reconciled into [`decisions.md`](decisions.md) (with a process note that a surfaced security/deps
-  change merged before being logged). `main` green; no action needed.
-- **CRED-1/CRED-2 live-validated (2026-07-15)** — end-to-end proof the credential wiring (`b16b5a2`)
-  works: authenticated to the live gridscale API, created + deleted a real Server, verified gone via
-  API. Single manual smoke test; automated coverage tracked under **D-012**.
-- **AUDIT 2026-07-15** — baseline health audit → NEEDS-WORK for v0.1.0; the 2×P0 (CRED-1/2) + DOC-1 +
-  DOC-3 have since landed. Report → [HEALTH-AUDIT-2026-07-15.md](archive/audits/HEALTH-AUDIT-2026-07-15.md).
-- **E6-S05 (assurance case / SCA-remediation policy)** — **stretch / out of scope** per D-004→A; no
-  action unless the operator widens scope.
-
-- **PR #7 `audit-gap-stories` — ACTIONED 2026-07-16 (D-013 → A, merging today).** The draft
-  gap-stories + docs-research PR is being reconciled-then-merged (rebase) per the operator's
-  `/operator-inbox` answer: its stale 2026-07-15 `INBOX.md` edits are dropped (restored to
-  `origin/main`) and uptest-dependent stories (esp. **E2-S09**) are annotated as superseded/needing
-  rescope against **D-012** (manual smoke only). No operator action needed.
-
-- ~~DECISION — RELEASE v0.1.0 — awaiting operator go-ahead~~ — **superseded 2026-07-16:** v0.1.0 was
-  published (see next item); stale awaiting-go-ahead block removed during inbox reconciliation.
-
-- **RELEASE v0.1.0 — PUBLISHED to ghcr; 2 operator cred fixes for full supply-chain.** `v0.1.0` (tag on `a3d7131`) is **published to `ghcr.io/platformrelay/provider-gridscale`** (the `publish-artifacts` job succeeded). Two follow-ups need YOUR creds — both surfaced, both operator-side:
-  1. **Signing (cosign/SBOM) — `GHCR_PAT` lacks package READ.** The keyless-cosign job now runs (decoupled from the mirror, `65b56ec`) but `crane digest ...:v0.1.0` returns **DENIED**: `GHCR_PAT` can push but not read the manifest. Grant `GHCR_PAT` `read:packages` (or link the org package to this repo so `GITHUB_TOKEN` can read it), then re-dispatch `publish-provider-package.yml -f version=v0.1.0` — the job will sign + attest the existing digest.
-  2. **Upbound mirror — invalid/expired creds.** `mirror-to-additional-registry` fails at **Login to Mirror Registry**; `XPKG_MIRROR_TOKEN`/`XPKG_MIRROR_ACCESS_ID` (set 2026-07-15) are rejected by `xpkg.upbound.io`. Refresh the Upbound Marketplace robot token, then re-dispatch.
-  Also: `tag.yaml` is broken (pins a `crossplane-contrib/provider-workflows/tag.yml` SHA lacking `workflow_call`) — I created the `v0.1.0` git tag directly instead; worth repinning that reusable ref.
+- D-007…D-015, CRED-1/2 live smoke, AUDIT 2026-07-15, PR #7, RELEASE v0.1.0 published to ghcr —
+  see `decisions.md` / prior INBOX history.

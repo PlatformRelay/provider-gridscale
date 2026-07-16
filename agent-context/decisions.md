@@ -340,3 +340,24 @@ body cites #200/#194; note supersedes or complements draft #467/#468.
 Copilot drafts — deferred to avoid duplicate PRs; patch recipe kept above. (2) A hand-rolled
 `Location` MR type here would paper over #187 for Crossplane users but forks the resource surface
 from upstream TF forever — rejected for this lane.
+
+## D-016 — Supply-chain follow-ups after v0.1.0 (operator 2026-07-16)
+
+**Date:** 2026-07-16 · **Status:** In progress (operator + agent split).
+**Context:** v0.1.0 artifacts are on `ghcr.io/platformrelay/provider-gridscale`, but cosign/SBOM
+failed because `GHCR_PAT` could push and not read, and the Upbound mirror login rejected the old
+token. Operator regenerated a local classic `GITHUB_TOKEN` and a new Upbound **robot** token
+(`XPKG_MIRROR_*` in `.envrc`).
+**Decision:**
+1. **GHCR** — operator (or agent with a packages-capable token) updates repo secret `GHCR_PAT` to a
+   PAT with `read:packages` + `write:packages`, **or** links the org package to this repo and (if
+   desired) switches the sign job to `GITHUB_TOKEN`. Then re-dispatch publish for `v0.1.0`.
+2. **Upbound** — treat mirror creds as a **robot** account JWT + access id (not a user PAT). Copy
+   from `.envrc` into Actions secrets `XPKG_MIRROR_TOKEN` / `XPKG_MIRROR_ACCESS_ID`. Watch for JWT
+   paste typos (`eeyJ` vs `eyJ`).
+3. **`tag.yaml`** — agent replaces the broken reusable-workflow pin with a **self-contained** Tag
+   workflow (upstream `tag.yml` no longer exposes `workflow_call`).
+**Counterpoints (kept):** linking the package (B) is nicer long-term than a long-lived PAT, but the
+current sign job hard-codes `secrets.GHCR_PAT`, so A (update the secret) unblocks signing with zero
+workflow change. Robot tokens are correct for Marketplace mirrors; documenting that avoids the next
+session trying a user PAT again.
