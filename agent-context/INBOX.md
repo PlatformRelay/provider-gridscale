@@ -4,11 +4,10 @@ Items needing the operator. **Decisions** carry full Context + Options (one mark
 **Answer** field. When answered, record in [`decisions.md`](decisions.md) (with counterpoints) and
 remove here. This repo's INBOX is independent — never coordinate other repos from here.
 
-> **Status 2026-07-16 evening:** decisions D-008…D-015 closed. v0.1.0 is on ghcr. Operator refreshed
-> local creds in `.envrc` (classic `GITHUB_TOKEN` PAT + Upbound **robot** mirror token). Remaining:
-> push those into **GitHub Actions secrets**, fix a likely typo in the robot JWT, then re-dispatch
-> publish. `tag.yaml` pin is being fixed on `main` (self-contained workflow — upstream lost
-> `workflow_call`).
+> **Status 2026-07-16 evening:** decisions D-008…D-015 closed. v0.1.0 is on ghcr. Operator set
+> Actions secrets `XPKG_MIRROR_TOKEN` + `XPKG_MIRROR_ACCESS_ID` (robot) and linked the GHCR package
+> to this repo. Workflow updated to use `github.token` for GHCR push/sign (old `GHCR_PAT` was
+> denied at login). Re-dispatch publish after that lands on `main`.
 
 ---
 
@@ -20,19 +19,14 @@ remove here. This repo's INBOX is independent — never coordinate other repos f
 
 ## Operator tasks
 
-### CRED — GHCR signing + Upbound mirror (in progress 2026-07-16)
+### CRED — GHCR signing + Upbound mirror (2026-07-16)
 
-1. **`GHCR_PAT` needs `read:packages` (or link the package).** The repo secret `GHCR_PAT` is what
-   `publish-provider-package.yml` / `sign-and-sbom` uses — **not** the local `.envrc` `GITHUB_TOKEN`
-   unless you copy it into that secret. See **How-to** below. Then re-dispatch:
-   `gh workflow run publish-provider-package.yml -R PlatformRelay/provider-gridscale -f version=v0.1.0`
-2. **Upbound mirror robot token regenerated (operator, 2026-07-16).** Local `.envrc` now has
-   `XPKG_MIRROR_TOKEN` + `XPKG_MIRROR_ACCESS_ID` from an Upbound **robot** account (not a user PAT).
-   **Must also update the GitHub Actions secrets** of the same names (still dated 2026-07-15 in the
-   repo). **Check for typo:** the JWT in `.envrc` currently starts with `eeyJ…` — valid JWTs start
-   with `eyJ…`. Drop the leading `e` if that was a paste error, then `gh secret set`.
-3. **`tag.yaml` repin** — agent actioning: replace broken reusable-workflow call with a
-   self-contained Tag workflow (upstream `tag.yml` no longer offers `workflow_call`).
+- [x] Upbound robot → Actions secrets `XPKG_MIRROR_TOKEN` / `XPKG_MIRROR_ACCESS_ID` (operator).
+- [x] GHCR package linked to repo (operator, Package settings → Manage Actions access).
+- [x] `tag.yaml` self-contained (agent).
+- [ ] Re-dispatch after workflow uses `github.token` for GHCR:
+  `gh workflow run publish-provider-package.yml -R PlatformRelay/provider-gridscale -f version=v0.1.0`
+- Optional: delete stale repo secret `GHCR_PAT` once a green publish proves the linked-token path.
 
 ### Other (non-blocking)
 

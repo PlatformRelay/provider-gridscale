@@ -22,10 +22,12 @@ jobs:
       go-version: ${{ github.event.inputs.go-version }}
       cleanup-disk: true
     secrets:
-      # A classic PAT with write:packages is required to CREATE a new org-level
-      # ghcr package; the default GITHUB_TOKEN can only push to a package that
-      # already exists and is linked to the repo.
-      GHCR_PAT: ${{ secrets.GHCR_PAT }}
+      # Package is linked to this repo (operator 2026-07-16), so the job-scoped
+      # GITHUB_TOKEN can push/read. Pass it as GHCR_PAT to the reusable workflow
+      # (its input name is fixed upstream). A classic PAT is no longer required
+      # for day-2 publishes; keep secrets.GHCR_PAT around only as a break-glass
+      # for creating *new* unlinked org packages.
+      GHCR_PAT: ${{ github.token }}
       XPKG_MIRROR_TOKEN: ${{ secrets.XPKG_MIRROR_TOKEN }}
       XPKG_MIRROR_ACCESS_ID: ${{ secrets.XPKG_MIRROR_ACCESS_ID }}
 
@@ -80,14 +82,13 @@ jobs:
       - name: Log in to GHCR
         if: steps.guard.outputs.proceed == 'true'
         # Keyless removes the signing key, but cosign still writes the
-        # signature/attestation OCI artifacts to ghcr, so registry auth is
-        # still required. GHCR_PAT already exists as a repo secret; this is not
-        # a private *signing* key.
+        # signature/attestation OCI artifacts to ghcr. Use GITHUB_TOKEN now that
+        # the org package is linked to this repo with Actions read/write.
         uses: docker/login-action@af1e73f918a031802d376d3c8bbc3fe56130a9b0 # v4.4.0
         with:
           registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GHCR_PAT }}
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
 
       - name: Install crane
         if: steps.guard.outputs.proceed == 'true'
