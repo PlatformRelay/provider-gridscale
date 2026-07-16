@@ -10,20 +10,23 @@ professional, releasable OSS product. Private lane detail lives in
 
 ## Where we are
 
-`provider-gridscale` **generates and builds** today: 32 resources across 8 API groups
-(`gridscale`, `marketplace`, `mysql8`, `object`, `paas`, `redis`, `ssl`, `storage`), controllers
-and CRDs wired, strict `golangci-lint` (47 linters). What's missing is everything that makes a
-provider *trustworthy and adoptable*: tests, docs, branding, hardened CI, and governance.
+`provider-gridscale` is a **published, trustworthy** provider today: 32 resources across 8 API
+groups (`gridscale`, `marketplace`, `mysql8`, `object`, `paas`, `redis`, `ssl`, `storage`),
+controllers and CRDs wired, strict `golangci-lint` (47 linters), and the full E1–E7 build-out below
+has landed on `main`. The provider is listed on the Upbound Marketplace at
+[`v0.1.1`](https://marketplace.upbound.io/providers/platformrelay/provider-gridscale). Remaining work
+is incremental hardening (see [`agent-context/BACKLOG.md`](../agent-context/BACKLOG.md)) and the
+operator-gated live `uptest` lane (needs lab credentials).
 
 | Dimension | Status |
 | --- | --- |
 | Resource coverage / codegen | ✅ complete — 32 resources, `make generate` green |
-| Tests | ❌ zero `*_test.go`, no uptest examples wired |
-| Branding / Marketplace | ❌ `icon.svg` empty, README stub, no package metadata |
-| Documentation | ⚠️ 1-page README only, no API reference, no ADRs |
-| CI / supply chain | ⚠️ stock upjet CI; no coverage, scans, changelog, signing |
-| Community health | ⚠️ template CODEOWNERS/OWNERS/CoC; no CONTRIBUTING/SECURITY |
-| Spec-driven harness | ❌ none — this backlog establishes it |
+| Tests | ✅ unit + CRD golden-contract + fuzz + credential-wiring tests; coverage floor CI-enforced (`make coverage`, ~90% vs 70% floor); race/arch-lint/tidy targets. Live `uptest` wired but operator-gated (lab creds) |
+| Branding / Marketplace | ✅ gridscale icon + package metadata; listed on Upbound Marketplace at `v0.1.1` with unaffiliation disclaimer |
+| Documentation | ✅ full README (quick-start, resource matrix, install), generated CRD API reference (`docs/api/`), ADRs, curated + generated examples |
+| CI / supply chain | ✅ coverage, govulncheck, CodeQL, Scorecard, gitleaks; keyless cosign signing + SBOM attest on publish; SHA-pinned actions |
+| Community health | ✅ `CONTRIBUTING`/`SECURITY`/`GOVERNANCE`/CoC 2.1, assigned `CODEOWNERS`/`OWNERS`, issue/PR templates |
+| Spec-driven harness | ✅ OpenSpec changes + ADRs + traceable backlog committed (visible maturity signal) |
 
 ## Epics
 

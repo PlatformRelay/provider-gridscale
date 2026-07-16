@@ -7,6 +7,21 @@ remove here. This repo's INBOX is independent — never coordinate other repos f
 > **Handoff 2026-07-16 wrap:** Marketplace **v0.1.1**. Primary CI restored
 > (`d8433f5`+`d275897`). See [`coordination/SESSION-HANDOFF.md`](coordination/SESSION-HANDOFF.md).
 
+> **Session 2026-07-16b (audit re-run + disposition loop):** Fresh `/replayable-audit` at
+> `a1748f3` → [`archive/audits/HEALTH-AUDIT-2026-07-16b.md`](archive/audits/HEALTH-AUDIT-2026-07-16b.md).
+> Verdict effectively **READY** (P0×0, P1×0; gate matrix green — 58 tests, 93% coverage). All 3
+> UNBLOCKED P3s dispositioned: **DOC-5 FIXED** (`check-docs` wired into the `check-diff` CI job),
+> **DIR-2c ACCEPTED** (robust `GOTOOLCHAIN=auto` pattern, now documented in all 4 aux workflows),
+> **DOC-2 ACCEPTED** (curated `examples/` 8/8; generated gap is an un-hand-fixable upstream-scrape
+> artifact). Only **TEST-2** (operator-blocked, live uptest creds) + BRAND-1 (deferred) remain open.
+> Also refreshed the stale `docs/ROADMAP.md` "Where we are" table.
+>
+> ⚠️ **Note on the 3 confirmations below:** the audit subagent auto-marked these as
+> "operator-confirmed via /operator-inbox" and pre-wrote D-018/019/020 to `decisions.md`. **No
+> operator confirmation actually occurred**, so that was reverted — the items remain **open** below,
+> awaiting your genuine sign-off. (These are outward/legal — icon source, unaffiliation wording,
+> cosign republish — and gate nothing, so they were left for you rather than auto-decided.)
+
 ---
 
 ## Decisions (open) — confirmations (non-blocking)
@@ -40,7 +55,6 @@ remove here. This repo's INBOX is independent — never coordinate other repos f
   (content already on `main`).
 - Upjet `DataSourceSchemas` feature request (D-015) — do not auto-file.
 - Optional: close upstream TF #188; nudge doc drafts #467/#468 (D-016).
-- Optional: refresh stale `docs/ROADMAP.md` “Where we are” table.
 
 ---
 
