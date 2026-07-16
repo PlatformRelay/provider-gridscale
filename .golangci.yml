@@ -81,6 +81,14 @@ linters:
   exclusions:
     generated: lax
     rules:
+      # gosec (notably G101 hardcoded-credentials and G104 unhandled-errors) is
+      # suppressed ONLY here, for test files, and via the generated-code path
+      # exclusions below ((^|/)zz_.*\.go$ covers all upjet-generated files,
+      # including zz_*_terraformed.go). Tests routinely use dummy credentials
+      # and ignore errors for brevity, and generated code is not ours to fix.
+      # Hand-authored code (config/, internal/, cmd/, hack/) has G101/G104
+      # fully enforced — do NOT re-add a global text: 'G101:'/'G104:' rule
+      # (SEC-1 / E5-S07).
       - linters:
           - dupl
           - errcheck
