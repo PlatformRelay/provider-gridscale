@@ -49,17 +49,22 @@ E2-S09 → **E2-S11**).
 
 | Lane | Story | Owns (disjoint paths) | State |
 | --- | --- | --- | --- |
-| L-REFS | **E7-S01** (ARCH-1, P1) — wire cross-resource `config.Reference{}` edges | `config/gridscale.go`/`config/references.go`, `config/reference_test.go`, `examples-generated/**` (regen), `docs/adr/` (refs ADR) | 🔶 In flight |
-| L-LINT | **E5-S07** (SEC-1, P2) — scope gosec G101/G104 suppressions to generated+test paths | `.golangci.yml` (exclusions block only) | 🔶 In flight |
-| L-CI | **E5-S08 + E5-S10** (DIR-2 partial + TEST-3) — changelog label, Go-version pin ×3, activate `schema-version-diff` gate | `cmd/provider/main.go`, `Makefile` (GO version), `.github/workflows/ci.yml`, `.github/workflows/e2e.yaml`, `hack/check-go-version.sh` | 🔶 In flight |
-| L-CREDGUARD | **E2-S11** (rescoped E2-S09 per D-012) — non-live credential-wiring regression test + creds-contract doc | `internal/clients/*_test.go`, creds-contract doc gap only | 🔶 In flight |
-| L-EXTNAME | **E7-S03** (ARCH-3, P3) — external-name rationale comment + import-format docs | `config/external_name.go` (comment only), `docs/adr/` (external-name note) | 🔶 In flight |
-| L-E8SCOPE | **E8 scope check** (research only) — can Upjet generate the 21 datasources? | none (report → decisions/BACKLOG) | 🔶 In flight |
+| L-REFS | **E7-S01** (ARCH-1, P1) — wire cross-resource `config.Reference{}` edges | `config/gridscale.go`/`config/references.go`, `config/reference_test.go`, `examples-generated/**` (regen), `docs/adr/` (refs ADR) | ✅ Integrated (`9ebca1d`+`b8fe841`) |
+| L-LINT | **E5-S07** (SEC-1, P2) — scope gosec G101/G104 suppressions to generated+test paths | `.golangci.yml` (exclusions block only) | ✅ Integrated (`4438b32`) |
+| L-CI | **E5-S08 + E5-S10** (DIR-2 partial + TEST-3) — changelog label, Go-version pin ×3, activate `schema-version-diff` gate | `cmd/provider/main.go`, `Makefile` (GO version), `.github/workflows/ci.yml`, `.github/workflows/e2e.yaml`, `hack/check-go-version.sh` | ✅ Integrated (`c44e178`+`a58b174`) |
+| L-CREDGUARD | **E2-S11** (rescoped E2-S09 per D-012) — non-live credential-wiring regression test + creds-contract doc | `internal/clients/*_test.go`, creds-contract doc gap only | ✅ Integrated (`be73bd8`; README already docs uuid/token contract) |
+| L-EXTNAME | **E7-S03** (ARCH-3, P3) — external-name rationale comment + import-format docs | `config/external_name.go` (comment only), `docs/adr/` (external-name note) | ✅ Integrated (`921ac95`) |
+| L-E8SCOPE | **E8 scope check** (research only) — can Upjet generate the 21 datasources? | none (report → decisions/BACKLOG) | ✅ Integrated (`6622354` → D-015) |
 
-**Queued batch 5 (after batch 4 merges):** L-META **E7-S02** (metadata keys — sequenced: shares
-`examples-generated/**` regen surface with E7-S01) · L-DEPREC **E4-S05** (deprecation hygiene —
-needs E7-S01's reference edges settled) · L-UPSTREAM **E6-S06** (upstream doc-PR hunt).
-**Queued batch 6 (RUN ALONE, last):** **E5-S09** goimports local-prefix repo-wide reformat.
+### Batch 5 — after batch 4 (`/agent-loop-auto` resume 2026-07-16 evening)
+
+| Lane | Story | Owns (disjoint paths) | State |
+| --- | --- | --- | --- |
+| L-META | **E7-S02** (ARCH-2) — close remaining metadata REQs (`config/metadata_test.go` + filesystem gap) | `config/metadata_test.go`, `hack/metadatafix/**` (if needed), `config/provider-metadata.yaml` | 🔶 In flight |
+| L-DEPREC | **E4-S05** — deprecation hygiene (examples + README matrix flags) | `examples/**` (non-generated curated), `README.md` (deprec notes only) | 🔶 In flight |
+| L-UPSTREAM | **E6-S06** — upstream doc/feature PR hunt | `agent-context/decisions.md`, `agent-context/BACKLOG.md` (+ optional upstream PRs) | 🔶 In flight |
+
+**Batch 6:** **E5-S09** goimports — **already landed** (`1e9cfe1` / DIR-2); verify-only, no further reformat needed.
 
 ## Collision notes
 - L1 and L3 both reference credential setup but touch **different files** — no path collision.
