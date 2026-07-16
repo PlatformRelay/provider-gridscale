@@ -103,3 +103,5 @@ E2-S05). Running out-of-cluster also needs the `terraform` 1.5.7 binary on `$PAT
   DOC-3 have since landed. Report → [HEALTH-AUDIT-2026-07-15.md](archive/audits/HEALTH-AUDIT-2026-07-15.md).
 - **E6-S05 (assurance case / SCA-remediation policy)** — **stretch / out of scope** per D-004→A; no
   action unless the operator widens scope.
+
+- **DECISION — RELEASE v0.1.0 — awaiting operator go-ahead.** `main` is release-ready (zero UNBLOCKED backlog items; all 6 CI workflows green incl. `check-diff`; coverage 92.7 percent; audit HEALTH-AUDIT-2026-07-16). I **deliberately did NOT auto-cut the release** — it is public + signed + irreversible and a second agent-loop session was concurrently pushing to `origin/main` (tag-race / double-publish risk). Two things needed from you: (1) confirm the other session on this repo is stopped; (2) say "release" and I run `gh workflow run tag.yaml -f version=v0.1.0` then `publish-provider-package.yml -f version=v0.1.0` (signing needs the explicit version). Full runbook in agent memory `v010-release-runbook`.
