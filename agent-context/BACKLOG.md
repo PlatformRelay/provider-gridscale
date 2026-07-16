@@ -7,10 +7,13 @@ Public build order: [docs/ROADMAP.md](../docs/ROADMAP.md). OpenSpec changes: `op
 | Phase | State |
 | --- | --- |
 | Codegen (E6g-S01 in kaddy's terms) | **complete** — 32 resources generated & building |
-| Design (this harness: openspec, ADRs, ROADMAP, backlog) | **in progress** — E1 lane |
-| Implementation E1–E6 | **pending** — `/agent-loop` |
+| Design (openspec, ADRs, ROADMAP, backlog) | **complete** — E1 landed |
+| Implementation E1–E7 + Batch 7 polish | **complete** on `main` @ `3edc5f0` (see OPERATOR-BOARD) |
 | E4-S04 (docs site) | **dropped** (D-002→A, provider-native docs) |
-| E5-S06 (signing), E6-S05 (assurance) | **stretch** |
+| E2-S04/S05 uptest | **intentionally skipped** (D-012→B — manual smoke only) |
+| E6-S05 (assurance) | **landed** (`3edc5f0`); was stretch |
+| E8 datasources | **rescoped** (D-015) — document omission + track upstream; no codegen |
+| Next | **P0:** restore green primary CI on `main` (check-diff + lint); then ROADMAP “Where we are” refresh |
 
 ## E2 test-hardening batch (S06–S10) — ported from kollect's test tooling
 

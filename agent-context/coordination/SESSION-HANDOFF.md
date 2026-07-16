@@ -1,61 +1,69 @@
 # SESSION-HANDOFF — provider-gridscale
 
-**Session end:** 2026-07-16 evening (agent-loop-auto resume + supply-chain wrap).
-**HEAD:** `origin/main` @ `1f8a20b` (inline publish with `github.token`).
-**Merge model this session:** local ff-merge → push `main` (no PRs), per operator.
+**Session wrap:** 2026-07-16 (inventory + merge check + cleanup).
+**HEAD:** `origin/main` @ `3edc5f0`.
+**Latest package tag:** `v0.1.1` (published + icon/readme extensions appended).
+**Merge model:** local ff-merge → push `main` (no PRs), per operator.
 
 ## Repo state
 
 | Area | State |
 | --- | --- |
-| Audit-gap / E7 / batch 4–6 | **Exhausted** — all board lanes ✅ Integrated |
-| `main` CI (push gates) | Green on latest push (Gitleaks/Scorecard/Govulncheck/Coverage) |
-| Publish `v0.1.0` | **In flight / watch** — [run 29510417338](https://github.com/PlatformRelay/provider-gridscale/actions/runs/29510417338) (inlined workflow). Prior run: `sign-and-sbom` green on existing digest; upstream reusable login failed (empty password). |
-| GHCR package | Public + **linked** to `PlatformRelay/provider-gridscale` |
-| Upbound repo | `platformrelay/provider-gridscale` **public**, `publishPolicy: draft` (listing not published yet) |
-| Actions secrets | **No personal PAT.** Only `XPKG_MIRROR_*` (+ legacy uptest secrets). Local PAT stays in gitignored `.envrc`. |
-| Open decisions | **None** (D-007…D-017b logged) |
+| Auto-mergeable backlog (E1–E7 + Batch 7) | **Exhausted** — board lanes ✅ Integrated; no In-flight |
+| Open PRs | **None** |
+| `main` CI (push @ `3edc5f0`) | **Primary CI failed** ([run 29515604942](https://github.com/PlatformRelay/provider-gridscale/actions/runs/29515604942)): `check-diff` (dirty `zz_filesystem_types.go` + filesystem CRDs after `make generate`) + `lint` (`gocyclo` / `staticcheck` in `hack/metadatafix`). Gitleaks / Scorecard / Govulncheck / Coverage / Docs Sync / unit-tests / local-deploy **green**. CodeQL was still in progress at wrap. |
+| Marketplace | https://marketplace.upbound.io/providers/platformrelay/provider-gridscale/v0.1.1 — disclaimer + icon live |
+| Publish / GHCR | Inlined publish with `github.token` (no personal PAT secret). Prefer install tag **`v0.1.1`** |
+| Worktrees | Cleaned (`.worktrees/`, `.claude/worktrees/`); only main checkout remains |
+| Local branches | Only `main` |
+| Stale remotes (superseded; optional delete) | `origin/add-config-unit-tests`, `origin/feat/official-gridscale-logo`, `origin/fix-credential-wiring`, `origin/rewrite-readme-gridscale`, `origin/worktree-gridscale-audit-2026-07-15` |
 
 ## What landed this session (high signal)
 
-- Batch 4 leftovers merged: E7-S01 refs, E2-S11 cred tests, E5-S07/S08/S10, E7-S03, D-015 (E8 unsupported).
-- Batch 5: E7-S02 metadata tests + filesystem stub, E4-S05 deprec docs, E6-S06 upstream triage (D-016).
-- Supply chain: drop `GHCR_PAT`; inline `publish-provider-package.yml` (kollect/mkurator model); D-017/D-017b.
+| SHA | Summary |
+| --- | --- |
+| `64fc363` | Marketplace icon + extensions layout |
+| `b5acc41` | Unaffiliation disclaimer (README/docs/Marketplace meta) |
+| `c15a328`…`bcc0ba0` | E3-S04 badge + E8 limitations + v0.1.1 hints |
+| `58f1103`+`2384fe4` | E4-S01 `check-api-docs` + regenerated `docs/api/` |
+| `fdbf300` | E4-S02 examples index + ApplicationImport |
+| `3edc5f0` | E6-S05 assurance case + SECURITY supply-chain refresh |
 
-## Learnings (for next session / harness)
+Earlier same-day (already on `main` before wrap): audit-gap E7 / E2-S11 / E5-S07–S10, credential wiring, branding Bildmarke (D-009b), publish/sign with `github.token` (D-017b).
 
-1. **`github.token` cannot be passed as a secret into an external reusable workflow** — arrives empty (`Password required`). Inline the job or keep publish in-repo (like kollect/mkurator).
-2. **Classic PAT scope header** often omits `read:packages` even when package read works via `write:packages` — not an org block.
-3. **Upbound** `up repository update --publish` is rate-limited right after create; visibility is set at create (`--private` omitted → public).
-4. **Isolation worktrees go stale** — rebase onto live `main` + re-gate before every ff-merge (already in agent-loop-auto).
+## Learnings
 
-**Proposed skill tweak (needs operator OK before editing):** in
-`.claude/skills/agent-loop-auto/SKILL.md` (or provider AGENTS), note that provider publish must not
-map `github.token` → upstream `GHCR_PAT` secret slots across repos.
+1. **Same-tag re-push does not refresh Marketplace `recognizedAnnotations`** — cut a new semver (hence `v0.1.1`).
+2. **`up alpha xpkg append` invalidates prior keyless cosign** — re-sign after append if Scorecard/supply-chain demo needs a valid signature on the current digest.
+3. **Stale worktree branches look “ahead” of `main` by SHA** even when content already landed via rebase/cherry-pick — compare file presence / board Integrated, don’t ff-merge obsolete tips.
+4. **`github.token` cannot fill upstream reusable `GHCR_PAT` secret slots** — keep publish inlined (kollect/mkurator pattern).
 
-## Next `/agent-loop-auto` entry points
+## Next entry points / leftovers (priority)
 
-Audit-gap auto-mergeable backlog is **empty**. Pick from ROADMAP remainder / operator INBOX:
-
-| Priority | Candidate | Notes |
+| Priority | Item | Notes |
 | --- | --- | --- |
-| Op | Finish publish + Upbound `--publish` | Watch run 29510417338; then `up repository update … --publish` |
-| Op | Revoke old PAT that briefly lived as `GHCR_PAT` | New PAT already in `.envrc` |
-| P2 | **E3-S04** badge wiring | README — after E5 jobs exist (mostly do) |
-| P2 | **E4-S01** `crd-ref-docs` / `make docs` | `docs/api/` |
-| P3 | **E4-S02** curated example per API group | Partial already (marketplace/ipv6) |
-| Stretch | E8 | Document-only per D-015 until upjet supports datasources |
-| Blocked | E2-S04/S05 uptest | D-012 → manual smoke only; do not wire CI creds |
+| **P0** | Fix red `main` CI @ `3edc5f0` | `check-diff`: regenerate/commit filesystem CRD drift; `lint`: reduce `injectMissingResourceStubs` cyclo + fix QF1001 in `hack/metadatafix` |
+| Op | Revoke old classic PAT that briefly was `GHCR_PAT` | Local `.envrc` only — never reintroduce as Actions secret |
+| Op | Confirm INBOX wording (icon source, unaffiliation text, optional cosign re-sign) | Non-blocking confirmations |
+| Doc | Refresh `docs/ROADMAP.md` “Where we are” table | Still describes day-0 scaffold (zero tests / empty icon) — stale vs `main` |
+| Optional | Delete superseded remote branches listed above | Content already on `main`; wrap left remotes untouched |
+| Optional | Close upstream TF #188; nudge doc drafts #467/#468 | D-016 — outward, non-blocking |
+| Stretch | File upjet `DataSourceSchemas` FR | D-015 — **do not auto-file** |
+| **Blocked** | E2-S04 / E2-S05 uptest | **D-012 → B** — manual smoke only; do not wire CI lab creds |
 
-## In flight / cleanup
+**Honest backlog answer:** auto-mergeable *feature* stories are **empty**. Real leftover work is (1) **restore green `main` CI**, (2) operator confirmations / PAT revoke, (3) stale ROADMAP prose, (4) intentionally skipped uptest (D-012).
 
-- Publish workflow run may still be building (`publish-artifacts`).
-- Stale local worktrees under `.claude/worktrees/` and `.worktrees/` — safe to prune when idle
-  (`git worktree prune` / remove locked leftovers from earlier sessions).
-- No claimed board lanes — next loop should claim before dispatch.
+## In flight / cleanup status
+
+- **No lanes In-flight** — see [`OPERATOR-BOARD.md`](OPERATOR-BOARD.md).
+- Worktrees pruned; local lane branches deleted.
+- Open PRs: none. Nothing left to ff-merge.
 
 ## Do not
 
 - Reintroduce a personal PAT as an Actions secret.
-- Auto-file outward Upjet / upstream PRs without operator.
-- Parallelize machine-locked e2e (none planned under D-012).
+- Wire uptest / nightly lab creds (D-012).
+- Auto-file the upjet datasource feature request (D-015).
+- Expect same-tag re-push to refresh Marketplace annotations — cut a new semver.
+- Hand-edit generated trees (`apis/**/zz_*.go`, `internal/controller/**`, `package/crds/**`).
+- Bump `TERRAFORM_VERSION` past 1.5.7 (BSL pin).
