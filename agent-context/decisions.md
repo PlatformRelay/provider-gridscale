@@ -124,10 +124,10 @@ correctly named at line ~53.
 
 ---
 
-## D-009 — E3-S01 branding icon → B (ship placeholder for v0.1.0) — COORDINATOR decision
+## D-009 — E3-S01 branding icon → B (ship placeholder for v0.1.0) — CONFIRMED by operator
 
-**Date:** 2026-07-16 · **Status:** **Coordinator decision** under the operator's standing
-"decide-for-B-and-ask-later" latitude — **the operator can override this.**
+**Date:** 2026-07-16 · **Status:** Accepted — coordinator decision **confirmed B by the operator
+2026-07-16** via `/operator-inbox`; override window closed (see Addendum).
 **Context:** `extensions/icons/icon.svg` (+ light/dark variants under `docs/assets/branding/`) landed
 as a **placeholder** (`df4a3ec`) — an original, neutral, valid SVG that renders correctly. The open
 question was whether v0.1.0 must wait on a real commissioned brand icon before publishing to the
@@ -141,6 +141,12 @@ Consequently `iconURI` is intentionally left out of `package/crossplane.yaml` fo
 impression** than a commissioned brand mark — accepted, revisit post-v0.1.0 under BRAND-1. Because
 this is a coordinator call rather than an operator answer, it is recorded explicitly so the operator
 can reverse it (choose option A/C) before the release is cut.
+
+**Addendum (2026-07-16):** the operator **CONFIRMED option B** via `/operator-inbox` — the
+coordinator's earlier decide-B-and-ask-later call stands and the **override window is closed**
+(v0.1.0 is published to ghcr). A real commissioned icon remains tracked as post-release item
+**BRAND-1**. Operator's rationale: a subjective design call shouldn't reopen a published release.
+Decision closed; no branding work gates anything until BRAND-1 is picked up.
 
 ---
 
@@ -186,3 +192,52 @@ assurance case stay out/stretch) — a weaker signal than full supply-chain pari
 proportionate for a generated provider's first release. Cosign signing/SBOM only run when
 `publish-provider-package.yml` is dispatched with an explicit version input; an input-less run emits a
 visible "package will be UNSIGNED" warning (by design) rather than failing.
+
+---
+
+## D-012 — E2-S04/S05 uptest e2e coverage → B (manual smoke tests only; no automated uptest)
+
+**Date:** 2026-07-16 · **Decision (operator):** Option **B** — the single manual smoke test (real
+Server create/delete against the live gridscale API, 2026-07-15) stays the e2e evidence; do **not**
+wire lab creds as CI secrets or build the nightly/`/test-examples` uptest wiring.
+**Operator's rationale:** lab access is tied to the interview process and **will be lost when it
+ends** — CI secrets would break shortly after wiring (permanently red nightly, dead automation).
+Manual smoke tests only for now.
+**Options considered:** A — lab creds as CI secrets + automated uptest / **B — manual smoke evidence
+(chosen; hardened from "later milestone" to "not for now" given the credential horizon)** / C — defer.
+**Counterpoints (kept):** the time-boxed access argues for capturing more evidence *while it still
+exists*: (1) one full local uptest run of the curated smoke subset, artifacts archived in-repo as
+durable e2e evidence — no CI secrets involved; (2) the E2-S05 creds-contract doc can be written
+credential-free so any future lab or user creds plug in without redesign. If/when access lapses,
+uptest lanes should be re-labelled **operator-blocked-indefinitely** (not "later milestone") so no
+loop re-surfaces them as ready work.
+**Status:** decided.
+
+**Addendum (2026-07-16):** the counterpoint's "one archived local uptest run while access exists" was
+offered to the operator directly and **declined** — the 2026-07-15 manual smoke test stands as the
+sole e2e evidence. Counterpoint closed; no further uptest work of any kind unless the operator reopens it.
+
+---
+
+## D-013 — PR #7 `audit-gap-stories` — how to land → A (reconcile-then-merge)
+
+**Date:** 2026-07-16 · **Status:** Accepted — operator chose **A** via `/operator-inbox` 2026-07-16.
+**Context:** PR #7 (branch `audit-gap-stories`, opened 2026-07-15 as a draft marked "for operator
+review — do not auto-merge") adds two docs-only artifacts: `agent-context/AUDIT-GAP-STORIES-2026-07-15.md`
+(7 INVEST stories translating the untracked baseline-audit findings — E2-S06…S08, E5-S07…S10) and
+`agent-context/PROVIDER-DOCS-RESEARCH-2026-07-15.md` (gridscale API + TF-provider research, incl.
+proposed E2-S09 / E4-S05 / E6-S06 / epic E8). The PR predates a day of parallel `main` movement
+(v0.1.0 published to ghcr; D-008…D-012 resolved), so it could not land untouched.
+**Options considered:** **A — reconcile-then-merge (chosen)** · B — merge as-is · C — leave as
+draft · D — close.
+**Decision:** Reconcile the branch against today's `main`, then merge (rebase, the repo's customary
+method): restore `agent-context/INBOX.md` on the branch to the current `origin/main` version (the PR
+must not carry INBOX changes), annotate uptest-dependent stories against D-012, mark ready, merge on
+green CI, delete the branch.
+**Counterpoints (the caveats that motivated reconciliation, kept):** (1) the PR edits
+`agent-context/INBOX.md` from a **stale 2026-07-15 state** — merging as-is would have clobbered the
+reconciled INBOX (D-012's answer, the v0.1.0-published status, and the two open cred follow-ups);
+(2) **D-012 postdates the PR** — answered **B** 2026-07-16 (manual smoke only, no automated uptest;
+the archived-uptest counterpoint was offered and declined) — which **weakens story E2-S09** (e2e auth
+smoke): its uptest-dependent acceptance criteria are superseded. The story is kept but flagged as
+needing rescoping against D-012, as are the other stories' uptest/e2e-unblocking assumptions.
