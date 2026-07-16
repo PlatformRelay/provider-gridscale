@@ -11,7 +11,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/PlatformRelay/provider-gridscale)](https://goreportcard.com/report/github.com/PlatformRelay/provider-gridscale)
 [![Go Version](https://img.shields.io/github/go-mod/go-version/PlatformRelay/provider-gridscale)](https://github.com/PlatformRelay/provider-gridscale/blob/main/go.mod)
 [![Release](https://img.shields.io/github/v/release/PlatformRelay/provider-gridscale?include_prereleases&sort=semver)](https://github.com/PlatformRelay/provider-gridscale/releases)
-[![Marketplace](https://img.shields.io/badge/Upbound%20Marketplace-v0.1.0-blue)](https://marketplace.upbound.io/providers/platformrelay/provider-gridscale)
+[![Marketplace](https://img.shields.io/badge/Upbound%20Marketplace-v0.1.1-blue)](https://marketplace.upbound.io/providers/platformrelay/provider-gridscale)
 [![License](https://img.shields.io/github/license/PlatformRelay/provider-gridscale)](LICENSE)
 
 </div>
