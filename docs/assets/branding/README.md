@@ -1,35 +1,24 @@
-# Branding assets (placeholder)
+# Branding assets — official gridscale mark
 
-> **Status: PLACEHOLDER — pending operator/designer sign-off.**
-> These are neutral, original geometric marks provided so the provider renders
-> recognisably on the Upbound Marketplace and in docs. They are **not** an official
-> brand and are **not** gridscale's trademarked logo. Replace them with an
-> operator/designer-approved brand identity before treating this as final.
-
-## The mark
-
-A rounded square framing a 3x3 grid, with two accent nodes highlighted on the
-diagonal — an abstract "grid of scale" motif. It is intentionally simple so it
-stays legible from 32px up to 256px, uses flat fills only, and has no external
-references, gradients, fonts, or scripts.
+> **Source:** gridscale press **Logo-Package** (Bildmarke / figurative mark + primary
+> wordmark), downloaded from
+> [gridscale Presse-Downloads](https://gridscale.io/about-us/public-relations/).
+> Logo © gridscale GmbH. Used here to identify this Crossplane provider for the
+> gridscale cloud — not a custom commissioned mark.
 
 ## Files
 
-| File | Background | Use |
-| --- | --- | --- |
-| `../../../extensions/icons/icon.svg` | brand navy | Provider package icon (Marketplace). Source of truth for the mark. |
-| `icon-light.svg` | light (`#F4F7FB`) | Docs / sites with light backgrounds. |
-| `icon-dark.svg` | dark (`#0E1729`) | Docs / sites with dark backgrounds. |
+| File | Use |
+| --- | --- |
+| `../../../extensions/icons/icon.svg` | Marketplace / package icon (midnight-blue Bildmarke) |
+| `icon-light.svg` (+ `.png`) | Docs on light backgrounds |
+| `icon-dark.svg` (+ `.png`) | Docs on dark backgrounds |
+| `logo-primary-midnightblue.svg` | Optional full wordmark (light UI) |
+| `logo-primary-white.svg` | Optional full wordmark (dark UI) |
 
-## Usage guidance
+## Usage
 
-- Keep the icon **square**; do not stretch or crop.
-- Preserve clear space around the mark equal to roughly the corner radius.
-- Prefer the variant that matches the surrounding background for contrast.
-- Do not recolour arbitrarily; if a new palette is needed, take it to the
-  operator/designer as part of the brand sign-off.
-
-## Scope note
-
-Wiring the icon into `package/crossplane.yaml` marketplace metadata is handled
-separately (release-adjacent). This directory only provides the asset files.
+- Prefer the **Bildmarke** (square figurative mark) at small sizes / Marketplace tiles.
+- Prefer the **primary wordmark** only where horizontal space allows and the
+  surrounding UI is clearly “about gridscale.”
+- Do not recolour or redraw the mark; swap to the provided light/dark variant instead.

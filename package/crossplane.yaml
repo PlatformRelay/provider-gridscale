@@ -16,6 +16,8 @@ metadata:
       infrastructure declaratively from a Crossplane control plane. See the
       Marketplace README for install, credentials, and ProviderConfig setup.
     friendly-name.meta.crossplane.io/provider-gridscale: gridscale provider
+    # Official gridscale figurative mark (press Logo-Package Bildmarke).
+    meta.crossplane.io/iconURI: https://raw.githubusercontent.com/PlatformRelay/provider-gridscale/main/extensions/icons/icon.svg
 spec:
   capabilities:
     - SafeStart
