@@ -32,6 +32,7 @@ func GetProvider() *ujconfig.Provider {
 		// add custom config functions
 		configureGridscale,
 		configureReferences,
+		configureSensitiveFields,
 	} {
 		configure(pc)
 	}
@@ -57,6 +58,7 @@ func GetProviderNamespaced() *ujconfig.Provider {
 		// add custom config functions
 		configureGridscale,
 		configureReferences,
+		configureSensitiveFields,
 	} {
 		configure(pc)
 	}

@@ -21,7 +21,7 @@ func (mg *Postgresql) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this Postgresql
 func (tr *Postgresql) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"password": "status.atProvider.password", "username": "status.atProvider.username"}
+	return map[string]string{"password": "status.atProvider.password", "pgaudit_log_access_key": "pgauditLogAccessKeySecretRef", "pgaudit_log_secret_key": "pgauditLogSecretKeySecretRef", "username": "status.atProvider.username"}
 }
 
 // GetObservation of this Postgresql

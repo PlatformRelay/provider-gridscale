@@ -21,7 +21,7 @@ func (mg *K8S) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this K8S
 func (tr *K8S) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"kubeconfig": "status.atProvider.kubeconfig"}
+	return map[string]string{"kubeconfig": "status.atProvider.kubeconfig", "log_delivery_access_key": "logDeliveryAccessKeySecretRef", "log_delivery_secret_key": "logDeliverySecretKeySecretRef"}
 }
 
 // GetObservation of this K8S

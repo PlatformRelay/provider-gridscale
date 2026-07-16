@@ -2408,9 +2408,9 @@ func (in *K8SInitParameters) DeepCopyInto(out *K8SInitParameters) {
 		*out = new(bool)
 		**out = **in
 	}
-	if in.LogDeliveryAccessKey != nil {
-		in, out := &in.LogDeliveryAccessKey, &out.LogDeliveryAccessKey
-		*out = new(string)
+	if in.LogDeliveryAccessKeySecretRef != nil {
+		in, out := &in.LogDeliveryAccessKeySecretRef, &out.LogDeliveryAccessKeySecretRef
+		*out = new(v1.SecretKeySelector)
 		**out = **in
 	}
 	if in.LogDeliveryBucket != nil {
@@ -2428,9 +2428,9 @@ func (in *K8SInitParameters) DeepCopyInto(out *K8SInitParameters) {
 		*out = new(float64)
 		**out = **in
 	}
-	if in.LogDeliverySecretKey != nil {
-		in, out := &in.LogDeliverySecretKey, &out.LogDeliverySecretKey
-		*out = new(string)
+	if in.LogDeliverySecretKeySecretRef != nil {
+		in, out := &in.LogDeliverySecretKeySecretRef, &out.LogDeliverySecretKeySecretRef
+		*out = new(v1.SecretKeySelector)
 		**out = **in
 	}
 	if in.Name != nil {
@@ -2690,11 +2690,6 @@ func (in *K8SObservation) DeepCopyInto(out *K8SObservation) {
 		*out = new(bool)
 		**out = **in
 	}
-	if in.LogDeliveryAccessKey != nil {
-		in, out := &in.LogDeliveryAccessKey, &out.LogDeliveryAccessKey
-		*out = new(string)
-		**out = **in
-	}
 	if in.LogDeliveryBucket != nil {
 		in, out := &in.LogDeliveryBucket, &out.LogDeliveryBucket
 		*out = new(string)
@@ -2708,11 +2703,6 @@ func (in *K8SObservation) DeepCopyInto(out *K8SObservation) {
 	if in.LogDeliveryInterval != nil {
 		in, out := &in.LogDeliveryInterval, &out.LogDeliveryInterval
 		*out = new(float64)
-		**out = **in
-	}
-	if in.LogDeliverySecretKey != nil {
-		in, out := &in.LogDeliverySecretKey, &out.LogDeliverySecretKey
-		*out = new(string)
 		**out = **in
 	}
 	if in.Name != nil {
@@ -2878,9 +2868,9 @@ func (in *K8SParameters) DeepCopyInto(out *K8SParameters) {
 		*out = new(bool)
 		**out = **in
 	}
-	if in.LogDeliveryAccessKey != nil {
-		in, out := &in.LogDeliveryAccessKey, &out.LogDeliveryAccessKey
-		*out = new(string)
+	if in.LogDeliveryAccessKeySecretRef != nil {
+		in, out := &in.LogDeliveryAccessKeySecretRef, &out.LogDeliveryAccessKeySecretRef
+		*out = new(v1.SecretKeySelector)
 		**out = **in
 	}
 	if in.LogDeliveryBucket != nil {
@@ -2898,9 +2888,9 @@ func (in *K8SParameters) DeepCopyInto(out *K8SParameters) {
 		*out = new(float64)
 		**out = **in
 	}
-	if in.LogDeliverySecretKey != nil {
-		in, out := &in.LogDeliverySecretKey, &out.LogDeliverySecretKey
-		*out = new(string)
+	if in.LogDeliverySecretKeySecretRef != nil {
+		in, out := &in.LogDeliverySecretKeySecretRef, &out.LogDeliverySecretKeySecretRef
+		*out = new(v1.SecretKeySelector)
 		**out = **in
 	}
 	if in.Name != nil {
@@ -6980,9 +6970,9 @@ func (in *PostgresqlInitParameters) DeepCopyInto(out *PostgresqlInitParameters) 
 		*out = new(string)
 		**out = **in
 	}
-	if in.PgauditLogAccessKey != nil {
-		in, out := &in.PgauditLogAccessKey, &out.PgauditLogAccessKey
-		*out = new(string)
+	if in.PgauditLogAccessKeySecretRef != nil {
+		in, out := &in.PgauditLogAccessKeySecretRef, &out.PgauditLogAccessKeySecretRef
+		*out = new(v1.SecretKeySelector)
 		**out = **in
 	}
 	if in.PgauditLogBucket != nil {
@@ -6995,9 +6985,9 @@ func (in *PostgresqlInitParameters) DeepCopyInto(out *PostgresqlInitParameters) 
 		*out = new(float64)
 		**out = **in
 	}
-	if in.PgauditLogSecretKey != nil {
-		in, out := &in.PgauditLogSecretKey, &out.PgauditLogSecretKey
-		*out = new(string)
+	if in.PgauditLogSecretKeySecretRef != nil {
+		in, out := &in.PgauditLogSecretKeySecretRef, &out.PgauditLogSecretKeySecretRef
+		*out = new(v1.SecretKeySelector)
 		**out = **in
 	}
 	if in.PgauditLogServerURL != nil {
@@ -7175,11 +7165,6 @@ func (in *PostgresqlObservation) DeepCopyInto(out *PostgresqlObservation) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.PgauditLogAccessKey != nil {
-		in, out := &in.PgauditLogAccessKey, &out.PgauditLogAccessKey
-		*out = new(string)
-		**out = **in
-	}
 	if in.PgauditLogBucket != nil {
 		in, out := &in.PgauditLogBucket, &out.PgauditLogBucket
 		*out = new(string)
@@ -7188,11 +7173,6 @@ func (in *PostgresqlObservation) DeepCopyInto(out *PostgresqlObservation) {
 	if in.PgauditLogRotationFrequency != nil {
 		in, out := &in.PgauditLogRotationFrequency, &out.PgauditLogRotationFrequency
 		*out = new(float64)
-		**out = **in
-	}
-	if in.PgauditLogSecretKey != nil {
-		in, out := &in.PgauditLogSecretKey, &out.PgauditLogSecretKey
-		*out = new(string)
 		**out = **in
 	}
 	if in.PgauditLogServerURL != nil {
@@ -7286,9 +7266,9 @@ func (in *PostgresqlParameters) DeepCopyInto(out *PostgresqlParameters) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.PgauditLogAccessKey != nil {
-		in, out := &in.PgauditLogAccessKey, &out.PgauditLogAccessKey
-		*out = new(string)
+	if in.PgauditLogAccessKeySecretRef != nil {
+		in, out := &in.PgauditLogAccessKeySecretRef, &out.PgauditLogAccessKeySecretRef
+		*out = new(v1.SecretKeySelector)
 		**out = **in
 	}
 	if in.PgauditLogBucket != nil {
@@ -7301,9 +7281,9 @@ func (in *PostgresqlParameters) DeepCopyInto(out *PostgresqlParameters) {
 		*out = new(float64)
 		**out = **in
 	}
-	if in.PgauditLogSecretKey != nil {
-		in, out := &in.PgauditLogSecretKey, &out.PgauditLogSecretKey
-		*out = new(string)
+	if in.PgauditLogSecretKeySecretRef != nil {
+		in, out := &in.PgauditLogSecretKeySecretRef, &out.PgauditLogSecretKeySecretRef
+		*out = new(v1.SecretKeySelector)
 		**out = **in
 	}
 	if in.PgauditLogServerURL != nil {
@@ -8792,11 +8772,6 @@ func (in *ServerObservation_2) DeepCopyInto(out *ServerObservation_2) {
 	}
 	if in.ChangeTime != nil {
 		in, out := &in.ChangeTime, &out.ChangeTime
-		*out = new(string)
-		**out = **in
-	}
-	if in.ConsoleToken != nil {
-		in, out := &in.ConsoleToken, &out.ConsoleToken
 		*out = new(string)
 		**out = **in
 	}

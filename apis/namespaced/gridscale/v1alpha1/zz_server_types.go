@@ -845,10 +845,6 @@ type ServerObservation_2 struct {
 	// Defines the date and time of the last object change.
 	ChangeTime *string `json:"changeTime,omitempty" tf:"change_time,omitempty"`
 
-	// The token used by the panel to open the websocket VNC connection to the server console.
-	// The token used by the panel to open the websocket VNC connection to the server console.
-	ConsoleToken *string `json:"consoleToken,omitempty" tf:"console_token,omitempty"`
-
 	// The number of server cores.
 	// The number of server cores.
 	Cores *float64 `json:"cores,omitempty" tf:"cores,omitempty"`

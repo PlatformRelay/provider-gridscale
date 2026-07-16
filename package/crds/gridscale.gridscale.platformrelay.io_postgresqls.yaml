@@ -175,11 +175,25 @@ spec:
                       Performance class of PostgreSQL service. Available performance classes at the time of writing: standard, high, insane, ultra.
                       Performance class of PostgreSQL service.
                     type: string
-                  pgauditLogAccessKey:
+                  pgauditLogAccessKeySecretRef:
                     description: |-
                       Access key used to authenticate against Object Storage server.
                       Access key used to authenticate against Object Storage server.
-                    type: string
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
                   pgauditLogBucket:
                     description: |-
                       Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key.
@@ -190,11 +204,25 @@ spec:
                       Rotation (in minutes) for audit logs. Logs are uploaded to Object Storage once rotated. Default is 5 minutes.
                       Rotation (in minutes) for audit logs. Logs are uploaded to Object Storage once rotated.
                     type: number
-                  pgauditLogSecretKey:
+                  pgauditLogSecretKeySecretRef:
                     description: |-
                       Secret key used to authenticate against Object Storage server.
                       Secret key used to authenticate against Object Storage server.
-                    type: string
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
                   pgauditLogServerUrl:
                     description: |-
                       Object Storage server URL the bucket is located on.
@@ -327,11 +355,25 @@ spec:
                       Performance class of PostgreSQL service. Available performance classes at the time of writing: standard, high, insane, ultra.
                       Performance class of PostgreSQL service.
                     type: string
-                  pgauditLogAccessKey:
+                  pgauditLogAccessKeySecretRef:
                     description: |-
                       Access key used to authenticate against Object Storage server.
                       Access key used to authenticate against Object Storage server.
-                    type: string
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
                   pgauditLogBucket:
                     description: |-
                       Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key.
@@ -342,11 +384,25 @@ spec:
                       Rotation (in minutes) for audit logs. Logs are uploaded to Object Storage once rotated. Default is 5 minutes.
                       Rotation (in minutes) for audit logs. Logs are uploaded to Object Storage once rotated.
                     type: number
-                  pgauditLogSecretKey:
+                  pgauditLogSecretKeySecretRef:
                     description: |-
                       Secret key used to authenticate against Object Storage server.
                       Secret key used to authenticate against Object Storage server.
-                    type: string
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
                   pgauditLogServerUrl:
                     description: |-
                       Object Storage server URL the bucket is located on.
@@ -525,11 +581,6 @@ spec:
                       Performance class of PostgreSQL service. Available performance classes at the time of writing: standard, high, insane, ultra.
                       Performance class of PostgreSQL service.
                     type: string
-                  pgauditLogAccessKey:
-                    description: |-
-                      Access key used to authenticate against Object Storage server.
-                      Access key used to authenticate against Object Storage server.
-                    type: string
                   pgauditLogBucket:
                     description: |-
                       Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key.
@@ -540,11 +591,6 @@ spec:
                       Rotation (in minutes) for audit logs. Logs are uploaded to Object Storage once rotated. Default is 5 minutes.
                       Rotation (in minutes) for audit logs. Logs are uploaded to Object Storage once rotated.
                     type: number
-                  pgauditLogSecretKey:
-                    description: |-
-                      Secret key used to authenticate against Object Storage server.
-                      Secret key used to authenticate against Object Storage server.
-                    type: string
                   pgauditLogServerUrl:
                     description: |-
                       Object Storage server URL the bucket is located on.

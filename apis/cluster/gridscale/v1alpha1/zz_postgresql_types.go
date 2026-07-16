@@ -47,7 +47,7 @@ type PostgresqlInitParameters struct {
 
 	// Access key used to authenticate against Object Storage server.
 	// Access key used to authenticate against Object Storage server.
-	PgauditLogAccessKey *string `json:"pgauditLogAccessKey,omitempty" tf:"pgaudit_log_access_key,omitempty"`
+	PgauditLogAccessKeySecretRef *v1.SecretKeySelector `json:"pgauditLogAccessKeySecretRef,omitempty" tf:"-"`
 
 	// Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key.
 	// Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key.
@@ -59,7 +59,7 @@ type PostgresqlInitParameters struct {
 
 	// Secret key used to authenticate against Object Storage server.
 	// Secret key used to authenticate against Object Storage server.
-	PgauditLogSecretKey *string `json:"pgauditLogSecretKey,omitempty" tf:"pgaudit_log_secret_key,omitempty"`
+	PgauditLogSecretKeySecretRef *v1.SecretKeySelector `json:"pgauditLogSecretKeySecretRef,omitempty" tf:"-"`
 
 	// Object Storage server URL the bucket is located on.
 	// Object Storage server URL the bucket is located on.
@@ -129,10 +129,6 @@ type PostgresqlObservation struct {
 	// Performance class of PostgreSQL service.
 	PerformanceClass *string `json:"performanceClass,omitempty" tf:"performance_class,omitempty"`
 
-	// Access key used to authenticate against Object Storage server.
-	// Access key used to authenticate against Object Storage server.
-	PgauditLogAccessKey *string `json:"pgauditLogAccessKey,omitempty" tf:"pgaudit_log_access_key,omitempty"`
-
 	// Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key.
 	// Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key.
 	PgauditLogBucket *string `json:"pgauditLogBucket,omitempty" tf:"pgaudit_log_bucket,omitempty"`
@@ -140,10 +136,6 @@ type PostgresqlObservation struct {
 	// Rotation (in minutes) for audit logs. Logs are uploaded to Object Storage once rotated. Default is 5 minutes.
 	// Rotation (in minutes) for audit logs. Logs are uploaded to Object Storage once rotated.
 	PgauditLogRotationFrequency *float64 `json:"pgauditLogRotationFrequency,omitempty" tf:"pgaudit_log_rotation_frequency,omitempty"`
-
-	// Secret key used to authenticate against Object Storage server.
-	// Secret key used to authenticate against Object Storage server.
-	PgauditLogSecretKey *string `json:"pgauditLogSecretKey,omitempty" tf:"pgaudit_log_secret_key,omitempty"`
 
 	// Object Storage server URL the bucket is located on.
 	// Object Storage server URL the bucket is located on.
@@ -214,7 +206,7 @@ type PostgresqlParameters struct {
 	// Access key used to authenticate against Object Storage server.
 	// Access key used to authenticate against Object Storage server.
 	// +kubebuilder:validation:Optional
-	PgauditLogAccessKey *string `json:"pgauditLogAccessKey,omitempty" tf:"pgaudit_log_access_key,omitempty"`
+	PgauditLogAccessKeySecretRef *v1.SecretKeySelector `json:"pgauditLogAccessKeySecretRef,omitempty" tf:"-"`
 
 	// Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key.
 	// Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key.
@@ -229,7 +221,7 @@ type PostgresqlParameters struct {
 	// Secret key used to authenticate against Object Storage server.
 	// Secret key used to authenticate against Object Storage server.
 	// +kubebuilder:validation:Optional
-	PgauditLogSecretKey *string `json:"pgauditLogSecretKey,omitempty" tf:"pgaudit_log_secret_key,omitempty"`
+	PgauditLogSecretKeySecretRef *v1.SecretKeySelector `json:"pgauditLogSecretKeySecretRef,omitempty" tf:"-"`
 
 	// Object Storage server URL the bucket is located on.
 	// Object Storage server URL the bucket is located on.

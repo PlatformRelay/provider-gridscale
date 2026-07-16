@@ -1813,11 +1813,6 @@ spec:
                   changeTime:
                     description: Defines the date and time of the last object change.
                     type: string
-                  consoleToken:
-                    description: |-
-                      The token used by the panel to open the websocket VNC connection to the server console.
-                      The token used by the panel to open the websocket VNC connection to the server console.
-                    type: string
                   cores:
                     description: |-
                       The number of server cores.

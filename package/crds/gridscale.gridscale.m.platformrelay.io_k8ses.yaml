@@ -99,10 +99,19 @@ spec:
                   logDelivery:
                     description: Enable control plane log delivery.
                     type: boolean
-                  logDeliveryAccessKey:
+                  logDeliveryAccessKeySecretRef:
                     description: Access key used to authenticate against Object Storage
                       endpoint.
-                    type: string
+                    properties:
+                      key:
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    type: object
                   logDeliveryBucket:
                     description: Bucket to upload logs to.
                     type: string
@@ -114,10 +123,19 @@ spec:
                     description: Time interval (in min), at which log files will be
                       delivered, unless file size limit is reached first.
                     type: number
-                  logDeliverySecretKey:
+                  logDeliverySecretKeySecretRef:
                     description: Secret key used to authenticate against Object Storage
                       endpoint.
-                    type: string
+                    properties:
+                      key:
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    type: object
                   name:
                     description: |-
                       The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.
@@ -316,10 +334,19 @@ spec:
                   logDelivery:
                     description: Enable control plane log delivery.
                     type: boolean
-                  logDeliveryAccessKey:
+                  logDeliveryAccessKeySecretRef:
                     description: Access key used to authenticate against Object Storage
                       endpoint.
-                    type: string
+                    properties:
+                      key:
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    type: object
                   logDeliveryBucket:
                     description: Bucket to upload logs to.
                     type: string
@@ -331,10 +358,19 @@ spec:
                     description: Time interval (in min), at which log files will be
                       delivered, unless file size limit is reached first.
                     type: number
-                  logDeliverySecretKey:
+                  logDeliverySecretKeySecretRef:
                     description: Secret key used to authenticate against Object Storage
                       endpoint.
-                    type: string
+                    properties:
+                      key:
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    type: object
                   name:
                     description: |-
                       The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.
@@ -620,10 +656,6 @@ spec:
                   logDelivery:
                     description: Enable control plane log delivery.
                     type: boolean
-                  logDeliveryAccessKey:
-                    description: Access key used to authenticate against Object Storage
-                      endpoint.
-                    type: string
                   logDeliveryBucket:
                     description: Bucket to upload logs to.
                     type: string
@@ -635,10 +667,6 @@ spec:
                     description: Time interval (in min), at which log files will be
                       delivered, unless file size limit is reached first.
                     type: number
-                  logDeliverySecretKey:
-                    description: Secret key used to authenticate against Object Storage
-                      endpoint.
-                    type: string
                   name:
                     description: |-
                       The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.

@@ -49,7 +49,7 @@ type K8SInitParameters struct {
 	LogDelivery *bool `json:"logDelivery,omitempty" tf:"log_delivery,omitempty"`
 
 	// Access key used to authenticate against Object Storage endpoint.
-	LogDeliveryAccessKey *string `json:"logDeliveryAccessKey,omitempty" tf:"log_delivery_access_key,omitempty"`
+	LogDeliveryAccessKeySecretRef *v1.SecretKeySelector `json:"logDeliveryAccessKeySecretRef,omitempty" tf:"-"`
 
 	// Bucket to upload logs to.
 	LogDeliveryBucket *string `json:"logDeliveryBucket,omitempty" tf:"log_delivery_bucket,omitempty"`
@@ -61,7 +61,7 @@ type K8SInitParameters struct {
 	LogDeliveryInterval *float64 `json:"logDeliveryInterval,omitempty" tf:"log_delivery_interval,omitempty"`
 
 	// Secret key used to authenticate against Object Storage endpoint.
-	LogDeliverySecretKey *string `json:"logDeliverySecretKey,omitempty" tf:"log_delivery_secret_key,omitempty"`
+	LogDeliverySecretKeySecretRef *v1.SecretKeySelector `json:"logDeliverySecretKeySecretRef,omitempty" tf:"-"`
 
 	// The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.
 	// The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.
@@ -190,9 +190,6 @@ type K8SObservation struct {
 	// Enable control plane log delivery.
 	LogDelivery *bool `json:"logDelivery,omitempty" tf:"log_delivery,omitempty"`
 
-	// Access key used to authenticate against Object Storage endpoint.
-	LogDeliveryAccessKey *string `json:"logDeliveryAccessKey,omitempty" tf:"log_delivery_access_key,omitempty"`
-
 	// Bucket to upload logs to.
 	LogDeliveryBucket *string `json:"logDeliveryBucket,omitempty" tf:"log_delivery_bucket,omitempty"`
 
@@ -201,9 +198,6 @@ type K8SObservation struct {
 
 	// Time interval (in min), at which log files will be delivered, unless file size limit is reached first.
 	LogDeliveryInterval *float64 `json:"logDeliveryInterval,omitempty" tf:"log_delivery_interval,omitempty"`
-
-	// Secret key used to authenticate against Object Storage endpoint.
-	LogDeliverySecretKey *string `json:"logDeliverySecretKey,omitempty" tf:"log_delivery_secret_key,omitempty"`
 
 	// The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.
 	// The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.
@@ -328,7 +322,7 @@ type K8SParameters struct {
 
 	// Access key used to authenticate against Object Storage endpoint.
 	// +kubebuilder:validation:Optional
-	LogDeliveryAccessKey *string `json:"logDeliveryAccessKey,omitempty" tf:"log_delivery_access_key,omitempty"`
+	LogDeliveryAccessKeySecretRef *v1.SecretKeySelector `json:"logDeliveryAccessKeySecretRef,omitempty" tf:"-"`
 
 	// Bucket to upload logs to.
 	// +kubebuilder:validation:Optional
@@ -344,7 +338,7 @@ type K8SParameters struct {
 
 	// Secret key used to authenticate against Object Storage endpoint.
 	// +kubebuilder:validation:Optional
-	LogDeliverySecretKey *string `json:"logDeliverySecretKey,omitempty" tf:"log_delivery_secret_key,omitempty"`
+	LogDeliverySecretKeySecretRef *v1.SecretKeySelector `json:"logDeliverySecretKeySecretRef,omitempty" tf:"-"`
 
 	// The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.
 	// The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.
