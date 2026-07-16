@@ -1,0 +1,13 @@
+apiVersion: marketplace.gridscale.platformrelay.io/v1alpha1
+kind: ApplicationImport
+metadata:
+  annotations:
+    meta.upbound.io/example-id: marketplace/v1alpha1/applicationimport
+  name: example-marketplace-application-import
+spec:
+  forProvider:
+    # Hash of a marketplace application to import. Replace with a real value
+    # from the gridscale marketplace catalogue before applying.
+    importUniqueHash: REPLACE_WITH_MARKETPLACE_APPLICATION_HASH
+  providerConfigRef:
+    name: default
