@@ -1214,11 +1214,11 @@ _Appears in:_
 | `kubeApiserverLogEnabled` _boolean_ | Enable kube-apiserver logs. |  |  |
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  |  |
 | `logDelivery` _boolean_ | Enable control plane log delivery. |  |  |
-| `logDeliveryAccessKey` _string_ | Access key used to authenticate against Object Storage endpoint. |  |  |
+| `logDeliveryAccessKeySecretRef` _[LocalSecretKeySelector](#localsecretkeyselector)_ | Access key used to authenticate against Object Storage endpoint. |  |  |
 | `logDeliveryBucket` _string_ | Bucket to upload logs to. |  |  |
 | `logDeliveryEndpoint` _string_ | Object Storage endpoint URL the bucket is located on. |  |  |
 | `logDeliveryInterval` _float_ | Time interval (in min), at which log files will be delivered, unless file size limit is reached first. |  |  |
-| `logDeliverySecretKey` _string_ | Secret key used to authenticate against Object Storage endpoint. |  |  |
+| `logDeliverySecretKeySecretRef` _[LocalSecretKeySelector](#localsecretkeyselector)_ | Secret key used to authenticate against Object Storage endpoint. |  |  |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
 | `nodePool` _[NodePoolInitParameters](#nodepoolinitparameters) array_ | The collection of node pool specifications. Mutiple node pools can be defined with multiple node_pool blocks. The node pool block supports the following arguments:<br />Define a node pool and its attributes. |  |  |
 | `oidcCaPem` _string_ | Custom CA from customer in pem format as string.<br />Custom CA from customer in pem format as string. |  |  |
@@ -1302,11 +1302,9 @@ _Appears in:_
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  |  |
 | `listenPort` _[K8SListenPortObservation](#k8slistenportobservation) array_ | The port number where this k8s service accepts connections. |  |  |
 | `logDelivery` _boolean_ | Enable control plane log delivery. |  |  |
-| `logDeliveryAccessKey` _string_ | Access key used to authenticate against Object Storage endpoint. |  |  |
 | `logDeliveryBucket` _string_ | Bucket to upload logs to. |  |  |
 | `logDeliveryEndpoint` _string_ | Object Storage endpoint URL the bucket is located on. |  |  |
 | `logDeliveryInterval` _float_ | Time interval (in min), at which log files will be delivered, unless file size limit is reached first. |  |  |
-| `logDeliverySecretKey` _string_ | Secret key used to authenticate against Object Storage endpoint. |  |  |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
 | `networkUuid` _string_ | DEPRECATED  Network UUID containing security zone, which is linked to the k8s cluster.<br />Network UUID containing security zone |  |  |
 | `nodePool` _[NodePoolObservation](#nodepoolobservation) array_ | The collection of node pool specifications. Mutiple node pools can be defined with multiple node_pool blocks. The node pool block supports the following arguments:<br />Define a node pool and its attributes. |  |  |
@@ -1350,11 +1348,11 @@ _Appears in:_
 | `kubeApiserverLogEnabled` _boolean_ | Enable kube-apiserver logs. |  | Optional: \{\} <br /> |
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  | Optional: \{\} <br /> |
 | `logDelivery` _boolean_ | Enable control plane log delivery. |  | Optional: \{\} <br /> |
-| `logDeliveryAccessKey` _string_ | Access key used to authenticate against Object Storage endpoint. |  | Optional: \{\} <br /> |
+| `logDeliveryAccessKeySecretRef` _[LocalSecretKeySelector](#localsecretkeyselector)_ | Access key used to authenticate against Object Storage endpoint. |  | Optional: \{\} <br /> |
 | `logDeliveryBucket` _string_ | Bucket to upload logs to. |  | Optional: \{\} <br /> |
 | `logDeliveryEndpoint` _string_ | Object Storage endpoint URL the bucket is located on. |  | Optional: \{\} <br /> |
 | `logDeliveryInterval` _float_ | Time interval (in min), at which log files will be delivered, unless file size limit is reached first. |  | Optional: \{\} <br /> |
-| `logDeliverySecretKey` _string_ | Secret key used to authenticate against Object Storage endpoint. |  | Optional: \{\} <br /> |
+| `logDeliverySecretKeySecretRef` _[LocalSecretKeySelector](#localsecretkeyselector)_ | Secret key used to authenticate against Object Storage endpoint. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  | Optional: \{\} <br /> |
 | `nodePool` _[NodePoolParameters](#nodepoolparameters) array_ | The collection of node pool specifications. Mutiple node pools can be defined with multiple node_pool blocks. The node pool block supports the following arguments:<br />Define a node pool and its attributes. |  | Optional: \{\} <br /> |
 | `oidcCaPem` _string_ | Custom CA from customer in pem format as string.<br />Custom CA from customer in pem format as string. |  | Optional: \{\} <br /> |
@@ -3098,10 +3096,10 @@ _Appears in:_
 | `networkUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `networkUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of PostgreSQL service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of PostgreSQL service. |  |  |
-| `pgauditLogAccessKey` _string_ | Access key used to authenticate against Object Storage server.<br />Access key used to authenticate against Object Storage server. |  |  |
+| `pgauditLogAccessKeySecretRef` _[LocalSecretKeySelector](#localsecretkeyselector)_ | Access key used to authenticate against Object Storage server.<br />Access key used to authenticate against Object Storage server. |  |  |
 | `pgauditLogBucket` _string_ | Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key.<br />Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key. |  |  |
 | `pgauditLogRotationFrequency` _float_ | Rotation (in minutes) for audit logs. Logs are uploaded to Object Storage once rotated. Default is 5 minutes.<br />Rotation (in minutes) for audit logs. Logs are uploaded to Object Storage once rotated. |  |  |
-| `pgauditLogSecretKey` _string_ | Secret key used to authenticate against Object Storage server.<br />Secret key used to authenticate against Object Storage server. |  |  |
+| `pgauditLogSecretKeySecretRef` _[LocalSecretKeySelector](#localsecretkeyselector)_ | Secret key used to authenticate against Object Storage server.<br />Secret key used to authenticate against Object Storage server. |  |  |
 | `pgauditLogServerUrl` _string_ | Object Storage server URL the bucket is located on.<br />Object Storage server URL the bucket is located on. |  |  |
 | `release` _string_ | The PostgreSQL release of this instance. For convenience, please use gscloud to get the list of available PostgreSQL service releases.<br />The PostgreSQL release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available PostgreSQL service releases. |  |  |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to PostgreSQL service. |  |  |
@@ -3169,10 +3167,8 @@ _Appears in:_
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  |  |
 | `performanceClass` _string_ | Performance class of PostgreSQL service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of PostgreSQL service. |  |  |
-| `pgauditLogAccessKey` _string_ | Access key used to authenticate against Object Storage server.<br />Access key used to authenticate against Object Storage server. |  |  |
 | `pgauditLogBucket` _string_ | Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key.<br />Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key. |  |  |
 | `pgauditLogRotationFrequency` _float_ | Rotation (in minutes) for audit logs. Logs are uploaded to Object Storage once rotated. Default is 5 minutes.<br />Rotation (in minutes) for audit logs. Logs are uploaded to Object Storage once rotated. |  |  |
-| `pgauditLogSecretKey` _string_ | Secret key used to authenticate against Object Storage server.<br />Secret key used to authenticate against Object Storage server. |  |  |
 | `pgauditLogServerUrl` _string_ | Object Storage server URL the bucket is located on.<br />Object Storage server URL the bucket is located on. |  |  |
 | `release` _string_ | The PostgreSQL release of this instance. For convenience, please use gscloud to get the list of available PostgreSQL service releases.<br />The PostgreSQL release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available PostgreSQL service releases. |  |  |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to PostgreSQL service. |  |  |
@@ -3202,10 +3198,10 @@ _Appears in:_
 | `networkUuidRef` _[NamespacedReference](#namespacedreference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `networkUuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of PostgreSQL service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of PostgreSQL service. |  | Optional: \{\} <br /> |
-| `pgauditLogAccessKey` _string_ | Access key used to authenticate against Object Storage server.<br />Access key used to authenticate against Object Storage server. |  | Optional: \{\} <br /> |
+| `pgauditLogAccessKeySecretRef` _[LocalSecretKeySelector](#localsecretkeyselector)_ | Access key used to authenticate against Object Storage server.<br />Access key used to authenticate against Object Storage server. |  | Optional: \{\} <br /> |
 | `pgauditLogBucket` _string_ | Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key.<br />Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key. |  | Optional: \{\} <br /> |
 | `pgauditLogRotationFrequency` _float_ | Rotation (in minutes) for audit logs. Logs are uploaded to Object Storage once rotated. Default is 5 minutes.<br />Rotation (in minutes) for audit logs. Logs are uploaded to Object Storage once rotated. |  | Optional: \{\} <br /> |
-| `pgauditLogSecretKey` _string_ | Secret key used to authenticate against Object Storage server.<br />Secret key used to authenticate against Object Storage server. |  | Optional: \{\} <br /> |
+| `pgauditLogSecretKeySecretRef` _[LocalSecretKeySelector](#localsecretkeyselector)_ | Secret key used to authenticate against Object Storage server.<br />Secret key used to authenticate against Object Storage server. |  | Optional: \{\} <br /> |
 | `pgauditLogServerUrl` _string_ | Object Storage server URL the bucket is located on.<br />Object Storage server URL the bucket is located on. |  | Optional: \{\} <br /> |
 | `release` _string_ | The PostgreSQL release of this instance. For convenience, please use gscloud to get the list of available PostgreSQL service releases.<br />The PostgreSQL release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available PostgreSQL service releases. |  | Optional: \{\} <br /> |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to PostgreSQL service. |  | Optional: \{\} <br /> |
@@ -3878,7 +3874,6 @@ _Appears in:_
 | `autoRecovery` _boolean_ | If the server should be auto-started in case of a failure (default=true).<br />If the server should be auto-started in case of a failure (default=true). |  |  |
 | `availabilityZone` _string_ | Defines which Availability-Zone the Server is placed.<br />Defines which Availability-Zone the Server is placed. |  |  |
 | `changeTime` _string_ | Defines the date and time of the last object change. |  |  |
-| `consoleToken` _string_ | The token used by the panel to open the websocket VNC connection to the server console.<br />The token used by the panel to open the websocket VNC connection to the server console. |  |  |
 | `cores` _float_ | The number of server cores.<br />The number of server cores. |  |  |
 | `createTime` _string_ | Defines the date and time the object was initially created. |  |  |
 | `currentPrice` _float_ | The price for the current period since the last bill. |  |  |
@@ -6299,11 +6294,11 @@ _Appears in:_
 | `kubeApiserverLogEnabled` _boolean_ | Enable kube-apiserver logs. |  |  |
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  |  |
 | `logDelivery` _boolean_ | Enable control plane log delivery. |  |  |
-| `logDeliveryAccessKey` _string_ | Access key used to authenticate against Object Storage endpoint. |  |  |
+| `logDeliveryAccessKeySecretRef` _[SecretKeySelector](#secretkeyselector)_ | Access key used to authenticate against Object Storage endpoint. |  |  |
 | `logDeliveryBucket` _string_ | Bucket to upload logs to. |  |  |
 | `logDeliveryEndpoint` _string_ | Object Storage endpoint URL the bucket is located on. |  |  |
 | `logDeliveryInterval` _float_ | Time interval (in min), at which log files will be delivered, unless file size limit is reached first. |  |  |
-| `logDeliverySecretKey` _string_ | Secret key used to authenticate against Object Storage endpoint. |  |  |
+| `logDeliverySecretKeySecretRef` _[SecretKeySelector](#secretkeyselector)_ | Secret key used to authenticate against Object Storage endpoint. |  |  |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
 | `nodePool` _[NodePoolInitParameters](#nodepoolinitparameters) array_ | The collection of node pool specifications. Mutiple node pools can be defined with multiple node_pool blocks. The node pool block supports the following arguments:<br />Define a node pool and its attributes. |  |  |
 | `oidcCaPem` _string_ | Custom CA from customer in pem format as string.<br />Custom CA from customer in pem format as string. |  |  |
@@ -6387,11 +6382,9 @@ _Appears in:_
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  |  |
 | `listenPort` _[K8SListenPortObservation](#k8slistenportobservation) array_ | The port number where this k8s service accepts connections. |  |  |
 | `logDelivery` _boolean_ | Enable control plane log delivery. |  |  |
-| `logDeliveryAccessKey` _string_ | Access key used to authenticate against Object Storage endpoint. |  |  |
 | `logDeliveryBucket` _string_ | Bucket to upload logs to. |  |  |
 | `logDeliveryEndpoint` _string_ | Object Storage endpoint URL the bucket is located on. |  |  |
 | `logDeliveryInterval` _float_ | Time interval (in min), at which log files will be delivered, unless file size limit is reached first. |  |  |
-| `logDeliverySecretKey` _string_ | Secret key used to authenticate against Object Storage endpoint. |  |  |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
 | `networkUuid` _string_ | DEPRECATED  Network UUID containing security zone, which is linked to the k8s cluster.<br />Network UUID containing security zone |  |  |
 | `nodePool` _[NodePoolObservation](#nodepoolobservation) array_ | The collection of node pool specifications. Mutiple node pools can be defined with multiple node_pool blocks. The node pool block supports the following arguments:<br />Define a node pool and its attributes. |  |  |
@@ -6435,11 +6428,11 @@ _Appears in:_
 | `kubeApiserverLogEnabled` _boolean_ | Enable kube-apiserver logs. |  | Optional: \{\} <br /> |
 | `labels` _string array_ | List of labels in the format [ "label1", "label2" ].<br />List of labels. |  | Optional: \{\} <br /> |
 | `logDelivery` _boolean_ | Enable control plane log delivery. |  | Optional: \{\} <br /> |
-| `logDeliveryAccessKey` _string_ | Access key used to authenticate against Object Storage endpoint. |  | Optional: \{\} <br /> |
+| `logDeliveryAccessKeySecretRef` _[SecretKeySelector](#secretkeyselector)_ | Access key used to authenticate against Object Storage endpoint. |  | Optional: \{\} <br /> |
 | `logDeliveryBucket` _string_ | Bucket to upload logs to. |  | Optional: \{\} <br /> |
 | `logDeliveryEndpoint` _string_ | Object Storage endpoint URL the bucket is located on. |  | Optional: \{\} <br /> |
 | `logDeliveryInterval` _float_ | Time interval (in min), at which log files will be delivered, unless file size limit is reached first. |  | Optional: \{\} <br /> |
-| `logDeliverySecretKey` _string_ | Secret key used to authenticate against Object Storage endpoint. |  | Optional: \{\} <br /> |
+| `logDeliverySecretKeySecretRef` _[SecretKeySelector](#secretkeyselector)_ | Secret key used to authenticate against Object Storage endpoint. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  | Optional: \{\} <br /> |
 | `nodePool` _[NodePoolParameters](#nodepoolparameters) array_ | The collection of node pool specifications. Mutiple node pools can be defined with multiple node_pool blocks. The node pool block supports the following arguments:<br />Define a node pool and its attributes. |  | Optional: \{\} <br /> |
 | `oidcCaPem` _string_ | Custom CA from customer in pem format as string.<br />Custom CA from customer in pem format as string. |  | Optional: \{\} <br /> |
@@ -8190,10 +8183,10 @@ _Appears in:_
 | `networkUuidRef` _[Reference](#reference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `networkUuidSelector` _[Selector](#selector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of PostgreSQL service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of PostgreSQL service. |  |  |
-| `pgauditLogAccessKey` _string_ | Access key used to authenticate against Object Storage server.<br />Access key used to authenticate against Object Storage server. |  |  |
+| `pgauditLogAccessKeySecretRef` _[SecretKeySelector](#secretkeyselector)_ | Access key used to authenticate against Object Storage server.<br />Access key used to authenticate against Object Storage server. |  |  |
 | `pgauditLogBucket` _string_ | Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key.<br />Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key. |  |  |
 | `pgauditLogRotationFrequency` _float_ | Rotation (in minutes) for audit logs. Logs are uploaded to Object Storage once rotated. Default is 5 minutes.<br />Rotation (in minutes) for audit logs. Logs are uploaded to Object Storage once rotated. |  |  |
-| `pgauditLogSecretKey` _string_ | Secret key used to authenticate against Object Storage server.<br />Secret key used to authenticate against Object Storage server. |  |  |
+| `pgauditLogSecretKeySecretRef` _[SecretKeySelector](#secretkeyselector)_ | Secret key used to authenticate against Object Storage server.<br />Secret key used to authenticate against Object Storage server. |  |  |
 | `pgauditLogServerUrl` _string_ | Object Storage server URL the bucket is located on.<br />Object Storage server URL the bucket is located on. |  |  |
 | `release` _string_ | The PostgreSQL release of this instance. For convenience, please use gscloud to get the list of available PostgreSQL service releases.<br />The PostgreSQL release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available PostgreSQL service releases. |  |  |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to PostgreSQL service. |  |  |
@@ -8261,10 +8254,8 @@ _Appears in:_
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters. |  |  |
 | `networkUuid` _string_ | The UUID of the network that the service is attached to.<br />The UUID of the network that the service is attached to. |  |  |
 | `performanceClass` _string_ | Performance class of PostgreSQL service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of PostgreSQL service. |  |  |
-| `pgauditLogAccessKey` _string_ | Access key used to authenticate against Object Storage server.<br />Access key used to authenticate against Object Storage server. |  |  |
 | `pgauditLogBucket` _string_ | Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key.<br />Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key. |  |  |
 | `pgauditLogRotationFrequency` _float_ | Rotation (in minutes) for audit logs. Logs are uploaded to Object Storage once rotated. Default is 5 minutes.<br />Rotation (in minutes) for audit logs. Logs are uploaded to Object Storage once rotated. |  |  |
-| `pgauditLogSecretKey` _string_ | Secret key used to authenticate against Object Storage server.<br />Secret key used to authenticate against Object Storage server. |  |  |
 | `pgauditLogServerUrl` _string_ | Object Storage server URL the bucket is located on.<br />Object Storage server URL the bucket is located on. |  |  |
 | `release` _string_ | The PostgreSQL release of this instance. For convenience, please use gscloud to get the list of available PostgreSQL service releases.<br />The PostgreSQL release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available PostgreSQL service releases. |  |  |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to PostgreSQL service. |  |  |
@@ -8294,10 +8285,10 @@ _Appears in:_
 | `networkUuidRef` _[Reference](#reference)_ | Reference to a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `networkUuidSelector` _[Selector](#selector)_ | Selector for a Network in gridscale to populate networkUuid. |  | Optional: \{\} <br /> |
 | `performanceClass` _string_ | Performance class of PostgreSQL service. Available performance classes at the time of writing: standard, high, insane, ultra.<br />Performance class of PostgreSQL service. |  | Optional: \{\} <br /> |
-| `pgauditLogAccessKey` _string_ | Access key used to authenticate against Object Storage server.<br />Access key used to authenticate against Object Storage server. |  | Optional: \{\} <br /> |
+| `pgauditLogAccessKeySecretRef` _[SecretKeySelector](#secretkeyselector)_ | Access key used to authenticate against Object Storage server.<br />Access key used to authenticate against Object Storage server. |  | Optional: \{\} <br /> |
 | `pgauditLogBucket` _string_ | Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key.<br />Object Storage bucket to upload audit logs to. For pgAudit to be enabled these additional parameters need to be configured: pgaudit_log_server_url, pgaudit_log_access_key, pgaudit_log_secret_key. |  | Optional: \{\} <br /> |
 | `pgauditLogRotationFrequency` _float_ | Rotation (in minutes) for audit logs. Logs are uploaded to Object Storage once rotated. Default is 5 minutes.<br />Rotation (in minutes) for audit logs. Logs are uploaded to Object Storage once rotated. |  | Optional: \{\} <br /> |
-| `pgauditLogSecretKey` _string_ | Secret key used to authenticate against Object Storage server.<br />Secret key used to authenticate against Object Storage server. |  | Optional: \{\} <br /> |
+| `pgauditLogSecretKeySecretRef` _[SecretKeySelector](#secretkeyselector)_ | Secret key used to authenticate against Object Storage server.<br />Secret key used to authenticate against Object Storage server. |  | Optional: \{\} <br /> |
 | `pgauditLogServerUrl` _string_ | Object Storage server URL the bucket is located on.<br />Object Storage server URL the bucket is located on. |  | Optional: \{\} <br /> |
 | `release` _string_ | The PostgreSQL release of this instance. For convenience, please use gscloud to get the list of available PostgreSQL service releases.<br />The PostgreSQL release of this instance.\n<br />For convenience, please use gscloud https://github.com/gridscale/gscloud to get the list of available PostgreSQL service releases. |  | Optional: \{\} <br /> |
 | `securityZoneUuid` _string_ | DEPRECATED  The UUID of the security zone that the service is attached to.<br />Security zone UUID linked to PostgreSQL service. |  | Optional: \{\} <br /> |
@@ -8971,7 +8962,6 @@ _Appears in:_
 | `autoRecovery` _boolean_ | If the server should be auto-started in case of a failure (default=true).<br />If the server should be auto-started in case of a failure (default=true). |  |  |
 | `availabilityZone` _string_ | Defines which Availability-Zone the Server is placed.<br />Defines which Availability-Zone the Server is placed. |  |  |
 | `changeTime` _string_ | Defines the date and time of the last object change. |  |  |
-| `consoleToken` _string_ | The token used by the panel to open the websocket VNC connection to the server console.<br />The token used by the panel to open the websocket VNC connection to the server console. |  |  |
 | `cores` _float_ | The number of server cores.<br />The number of server cores. |  |  |
 | `createTime` _string_ | Defines the date and time the object was initially created. |  |  |
 | `currentPrice` _float_ | The price for the current period since the last bill. |  |  |
