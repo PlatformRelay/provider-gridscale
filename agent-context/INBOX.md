@@ -24,6 +24,30 @@ remove here. This repo's INBOX is independent — never coordinate other repos f
 
 ---
 
+## Decisions (open) — security (needs a call)
+
+**S1. U-1 — upstream sensitive-flag bug leaks S3 creds to plaintext in our CRDs.** A proactive
+upstream bug hunt found that `gridscale/terraform-provider-gridscale` (v2.3.0 **and** HEAD,
+unreported) omits `Sensitive: true` on 5 credential fields:
+`k8s.log_delivery_access_key`/`_secret_key`, `postgresql.pgaudit_log_access_key`/`_secret_key`
+(core S3 creds), and `server.console_token` (lower-tier). Because our baked `config/schema.json`
+inherits `sensitive: false`, Upjet renders these as plain `type: string` in the generated CRDs
+(bare `*string`, not `SecretKeySelector`) — so those S3 credentials are persisted **in plaintext**
+in the Kubernetes CR. Same resources correctly mark `password`/`kubeconfig` sensitive, so this is an
+upstream oversight, not by design. Full register row: `archive/audits/TECH-DEBT-REGISTER.md` (U-1).
+- **Option A — Upstream PR** (add `Sensitive: true` to the 5 fields). Trivial, safe, self-contained;
+  aligns with the standing "hunt upstream bugs → open PR upstream" practice. Outward action under
+  your gh identity, so it needs your go-ahead. Once merged + we re-vendor the schema, Upjet routes
+  them into connection Secrets automatically — no local override needed.
+- **Option B — Local Upjet override + regenerate** (mark the fields sensitive in `config/`, then
+  `make generate`). Fixes our provider immediately without waiting on upstream. **Blocked locally:**
+  `make generate` needs `terraform 1.5.7` on PATH (not available in this session); the lane can run
+  once tooling is available or you run the regen.
+- **Recommended:** **A + B** — file the upstream PR (durable fix) *and* land the local override so
+  v0.1.0 doesn't ship plaintext S3 creds in the interim. **Answer / instructions:** _(operator)_
+
+---
+
 ## Decisions (open) — confirmations (non-blocking)
 
 1. **Marketplace icon source** — used operator `.cache/gridscale.svg` (+ PNG) for
