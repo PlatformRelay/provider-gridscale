@@ -3,6 +3,7 @@ package clients
 import (
 	"context"
 	"encoding/json"
+	"strings"
 
 	"github.com/crossplane/crossplane-runtime/v2/pkg/resource"
 	"github.com/pkg/errors"
@@ -22,6 +23,7 @@ const (
 	errTrackUsage           = "cannot track ProviderConfig usage"
 	errExtractCredentials   = "cannot extract credentials"
 	errUnmarshalCredentials = "cannot unmarshal gridscale credentials as JSON"
+	errBuildConfiguration   = "cannot build gridscale provider configuration"
 
 	// credential secret keys, matching the gridscale Terraform provider schema
 	keyUUID   = "uuid"
@@ -56,16 +58,35 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 		}
 
 		// Set credentials in Terraform provider configuration.
-		ps.Configuration = buildProviderConfiguration(creds)
+		config, err := buildProviderConfiguration(creds)
+		if err != nil {
+			return ps, errors.Wrap(err, errBuildConfiguration)
+		}
+		ps.Configuration = config
 		return ps, nil
 	}
 }
 
 // buildProviderConfiguration maps the extracted credential secret into the
 // gridscale Terraform provider configuration. uuid (User-UUID) and token
-// (API-token) are always mapped; api_url is only passed through when the
-// secret provides a non-empty value so we never inject an empty override.
-func buildProviderConfiguration(creds map[string]string) map[string]any {
+// (API-token) are required and always mapped; api_url is only passed through
+// when the secret provides a non-empty value so we never inject an empty
+// override. A secret missing (or holding empty) required keys is rejected
+// with a descriptive error instead of handing empty credentials to Terraform,
+// where auth would only fail later with a cryptic provider error
+// (regression guard for audit findings CRED-1/CRED-2).
+func buildProviderConfiguration(creds map[string]string) (map[string]any, error) {
+	var missing []string
+	for _, key := range []string{keyUUID, keyToken} {
+		if creds[key] == "" {
+			missing = append(missing, key)
+		}
+	}
+	if len(missing) > 0 {
+		return nil, errors.Errorf("missing required key(s) in credentials secret JSON: %s (the gridscale provider requires %q and %q)",
+			strings.Join(missing, ", "), keyUUID, keyToken)
+	}
+
 	config := map[string]any{
 		keyUUID:  creds[keyUUID],
 		keyToken: creds[keyToken],
@@ -73,7 +94,7 @@ func buildProviderConfiguration(creds map[string]string) map[string]any {
 	if apiURL := creds[keyAPIURL]; apiURL != "" {
 		config[keyAPIURL] = apiURL
 	}
-	return config
+	return config, nil
 }
 
 func toSharedPCSpec(pc *clusterv1beta1.ProviderConfig) (*namespacedv1beta1.ProviderConfigSpec, error) {
