@@ -11,6 +11,7 @@
 | File | Use |
 | --- | --- |
 | `../../../extensions/icons/icon.svg` | Marketplace / package icon (midnight-blue Bildmarke) |
+| `../../../extensions/icons/icon.png` | Same mark, 512×512 PNG |
 | `icon-light.svg` (+ `.png`) | Docs on light backgrounds |
 | `icon-dark.svg` (+ `.png`) | Docs on dark backgrounds |
 | `logo-primary-midnightblue.svg` | Optional full wordmark (light UI) |

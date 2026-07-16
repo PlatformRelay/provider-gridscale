@@ -17,6 +17,9 @@ metadata:
       Marketplace README for install, credentials, and ProviderConfig setup.
     friendly-name.meta.crossplane.io/provider-gridscale: gridscale provider
     # Official gridscale figurative mark (press Logo-Package Bildmarke).
+    # Package-local copy lives at extensions/icons/icon.svg and is appended to
+    # published versions via `up alpha xpkg append --extensions-root=./extensions`.
+    # iconURI is the Marketplace/GitHub fallback when the package layer has no icon yet.
     meta.crossplane.io/iconURI: https://raw.githubusercontent.com/PlatformRelay/provider-gridscale/main/extensions/icons/icon.svg
 spec:
   capabilities:
