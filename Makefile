@@ -241,8 +241,9 @@ schema-version-diff:
 # docs (E4-S01): render the generated CRD API reference from the Go API types
 # under apis/** into docs/api/ using elastic/crd-ref-docs. Runs via
 # `go run @pinned-version` so no separate install step is needed, consistent
-# with the other tool targets. Deterministic: re-running produces no diff, so a
-# CI sync-check can diff docs/api/ later. Config lives in .crd-ref-docs.yaml.
+# with the other tool targets. Deterministic: re-running produces no diff, so
+# `make check-api-docs` (and the docs-sync CI workflow) can gate on drift.
+# Config lives in .crd-ref-docs.yaml.
 CRD_REF_DOCS_VERSION ?= v0.2.0
 docs:
 	@$(INFO) generating CRD API reference
@@ -254,7 +255,13 @@ docs:
 		--output-path=docs/api/
 	@$(OK) generating CRD API reference
 
-.PHONY: docs cobertura submodules fallthrough run crds.clean
+# check-api-docs (E4-S01): regenerate docs/api/ and fail if committed output drifts.
+# Hermetic: the script invokes crd-ref-docs via `go run` and does not need the
+# build/ submodule (unlike targets that rely on $(INFO)/$(OK) macros).
+check-api-docs:
+	bash hack/check-api-docs.sh
+
+.PHONY: docs check-api-docs cobertura submodules fallthrough run crds.clean
 
 # ====================================================================================
 # Dev Quality (local) targets
