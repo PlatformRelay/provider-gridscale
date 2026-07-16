@@ -12,6 +12,9 @@ control plane.
 > **Status:** pre-1.0 (v0.1.x). APIs are generated and may change between
 > releases; not yet recommended for production-critical workloads.
 
+> **Unaffiliated.** This is a community PlatformRelay project. It is **not**
+> affiliated with, endorsed by, or an official product of gridscale GmbH.
+
 ## Resources covered
 
 The provider surfaces gridscale resource groups including:

@@ -5,6 +5,10 @@
 > [gridscale Presse-Downloads](https://gridscale.io/about-us/public-relations/).
 > Logo © gridscale GmbH. Used here to identify this Crossplane provider for the
 > gridscale cloud — not a custom commissioned mark.
+>
+> **Affiliation:** this repository is a community PlatformRelay project. It is **not**
+> affiliated with, endorsed by, or an official product of gridscale GmbH. Use of the
+> press mark does not imply endorsement.
 
 ## Files
 

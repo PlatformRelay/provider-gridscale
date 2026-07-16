@@ -10,11 +10,15 @@ metadata:
       A Crossplane provider for gridscale IaaS, generated with Upjet on top of
       the gridscale Terraform provider. Manages gridscale servers, storages,
       networks, load balancers, managed databases (PaaS), object storage, SSL
-      certificates, and more as Kubernetes custom resources.
+      certificates, and more as Kubernetes custom resources. Community
+      PlatformRelay project — not affiliated with, endorsed by, or an official
+      product of gridscale GmbH.
     meta.crossplane.io/readme: |
       `provider-gridscale` lets you provision and manage gridscale cloud
-      infrastructure declaratively from a Crossplane control plane. See the
-      Marketplace README for install, credentials, and ProviderConfig setup.
+      infrastructure declaratively from a Crossplane control plane. This is a
+      community PlatformRelay project and is not affiliated with, endorsed by,
+      or an official product of gridscale GmbH. See the Marketplace README for
+      install, credentials, and ProviderConfig setup.
     friendly-name.meta.crossplane.io/provider-gridscale: gridscale provider
     # Official gridscale figurative mark (press Logo-Package Bildmarke).
     # Package-local copy lives at extensions/icons/icon.svg and is appended to

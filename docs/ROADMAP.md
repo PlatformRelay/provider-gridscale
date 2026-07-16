@@ -5,6 +5,9 @@ professional, releasable OSS product. Private lane detail lives in
 [`agent-context/BACKLOG.md`](../agent-context/BACKLOG.md); OpenSpec changes live under
 [`openspec/changes/`](../openspec/changes/).
 
+> **Unaffiliated.** This is a community PlatformRelay project — **not** affiliated with, endorsed by,
+> or an official product of gridscale GmbH.
+
 ## Where we are
 
 `provider-gridscale` **generates and builds** today: 32 resources across 8 API groups

@@ -26,6 +26,10 @@ storage, and more) as Kubernetes Custom Resources, so you can provision and
 manage gridscale infrastructure declaratively through a Crossplane control
 plane.
 
+> **Unaffiliated.** This is a community [PlatformRelay](https://github.com/PlatformRelay)
+> project. It is **not** affiliated with, endorsed by, or an official product of
+> [gridscale GmbH](https://gridscale.io/).
+
 The provider ships **both** cluster-scoped and namespaced `ProviderConfig`
 APIs:
 
