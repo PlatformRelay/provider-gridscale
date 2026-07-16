@@ -64,8 +64,9 @@ values before applying against a live gridscale account.
 - The five gridscale primitives (`Server`, `Network`, `Storage`, `Sshkey`,
   `IPv4`) are standalone and independently apply-able.
 - `redis/Cache`, `paas/Securityzone` and `mysql8/MySQL8` are standalone: their
-  `networkUuid` / `securityZoneUuid` fields are optional (gridscale provisions a
-  dedicated security zone when omitted).
+  `networkUuid` field is optional (gridscale provisions a dedicated security
+  zone when omitted). Prefer `networkUuid` over the deprecated
+  `securityZoneUuid` if you do set a network.
 - `storage/StorageImport` needs a `storageBackupId` — a cross-resource
   dependency on an existing storage backup. A placeholder UUID is used; replace
   it before applying.

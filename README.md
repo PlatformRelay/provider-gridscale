@@ -167,7 +167,7 @@ generated casing), so they can be copied straight into a manifest's `kind:`.
 
 | API group     | Managed resources (`Kind`) |
 | ------------- | -------------------------- |
-| `gridscale`   | `Backupschedule`, `Filesystem`, `Firewall`, `IPv4`, `IPv6`, `Isoimage`, `K8S`, `Loadbalancer`, `Mariadb`, `Memcached`, `MySQL`, `Network`, `Paas`, `Postgresql`, `Server`, `Snapshot`, `Snapshotschedule`, `Sqlserver`, `Sshkey`, `Storage`, `Template` |
+| `gridscale`   | `Backupschedule`, `Filesystem`, `Firewall`, `IPv4`, `IPv6`, `Isoimage`, `K8S`, `Loadbalancer`, `Mariadb`, `Memcached` †, `MySQL` †, `Network`, `Paas`, `Postgresql`, `Server`, `Snapshot`, `Snapshotschedule`, `Sqlserver`, `Sshkey`, `Storage`, `Template` |
 | `marketplace` | `Application`, `ApplicationImport` |
 | `mysql8`      | `MySQL8` |
 | `object`      | `StorageAccesskey`, `StorageBucket` |
@@ -176,10 +176,28 @@ generated casing), so they can be copied straight into a manifest's `kind:`.
 | `ssl`         | `Certificate` |
 | `storage`     | `Clone`, `StorageImport` |
 
+† Upstream-deprecated — see [Deprecations](#deprecations) below.
+
 The authoritative schema for every resource is its CRD under
 [`package/crds/`](package/crds/) (and the generated
 [API reference](docs/api/)); `kubectl explain <resource>` works once the
 provider is installed.
+
+### Deprecations
+
+These come from the upstream
+[gridscale Terraform provider](https://registry.terraform.io/providers/gridscale/gridscale/latest)
+and surface unchanged in generated CRD field descriptions. Prefer the
+replacements below when writing new manifests (curated examples under
+[`examples/`](examples/) already avoid the deprecated fields).
+
+| Deprecated | Replacement / guidance |
+| ---------- | ---------------------- |
+| `securityZoneUuid` / `security_zone_uuid` (all PaaS-style resources) | Use `networkUuid` / `network_uuid` instead. Cross-resource references are wired only to `network_uuid`. |
+| `Memcached` (`gridscale_memcached`) | Entire resource is upstream-deprecated. Prefer another cache offering (e.g. Redis `Cache` / `Store`) for new work. |
+| `MySQL` (`gridscale_mysql`, MySQL 5.7) | Migrate to `MySQL8` (`gridscale_mysql8_0`, kind `MySQL8` in the `mysql8` group). |
+| `K8S` `networkUuid` / `network_uuid` | Upstream-deprecated on Kubernetes clusters specifically (unlike other PaaS resources). Prefer omitting it, or use `k8sPrivateNetworkUuid` when attaching nodes to a private network. Do **not** fall back to `securityZoneUuid`. |
+| `Server` `network[].ordering` | Upstream-deprecated. Network interface order follows the order of `network` entries; do not set `ordering`. |
 
 ## Developing
 
