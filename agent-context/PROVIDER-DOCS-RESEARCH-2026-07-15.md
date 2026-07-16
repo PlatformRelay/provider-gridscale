@@ -133,7 +133,7 @@ Traceability: research item → disposition.
 | #5 Deprecation hygiene (Q5) | **NEW → E4-S05** (below). |
 | #6 Provider tunables & rate limits (Q2.3) | **Fold into L1-CRED**; tracked as a REQ note (below). |
 | #7 Upstream PR hunt (Q5) | **NEW → E6-S06** (below). |
-| #8 e2e auth smoke test (Q6) | **NEW → E2-S09** (extends E2-S05). |
+| #8 e2e auth smoke test (Q6) | **NEW → E2-S09** (extends E2-S05) — **flagged: needs rescope against D-012 (2026-07-16, manual smoke only / no uptest); see story note below.** |
 
 ---
 
@@ -150,7 +150,7 @@ Traceability: research item → disposition.
   - Given a datasource for which gridscale requires a lookup key that's absent (edge), when reconciled, then it reports a clear "not found / ambiguous" condition.
 - **Done when:**
   - [ ] REQ-E8-S01-01 — datasources generated. **Level:** M · **Test:** `apis/**` datasource types exist for the 21 · **Verify:** `make generate && make reviewable`
-  - [ ] REQ-E8-S01-02 — one datasource e2e smoke. **Level:** E · **Test:** `examples/**/<datasource>.yaml` · **Verify:** uptest on `/test-examples`
+  - [ ] REQ-E8-S01-02 — one datasource e2e smoke. **Level:** E · **Test:** `examples/**/<datasource>.yaml` · **Verify:** uptest on `/test-examples` — **D-012 note (2026-07-16): superseded; no automated uptest. Rescope this REQ (manual smoke evidence or drop the E-level REQ) before laning E8.**
   - [ ] ADR recording the datasource generation approach (Upjet observe-only vs custom).
 - **Touches:** `config/`, `apis/**` (generated), `examples/**`. **Depends on:** L1-CRED (needs auth to e2e). **Sequence:** after references (E2-S06) so datasource+reference UX is coherent.
 
@@ -180,6 +180,17 @@ Traceability: research item → disposition.
 - **Touches:** upstream repo (PRs) + `agent-context/decisions.md`. **Depends on:** none. **Note:** read-only w.r.t. this repo's code.
 
 ## E2-S09 (NEW) — e2e auth smoke test (P2, extends E2-S05)
+
+> **⚠ RESCOPE REQUIRED — superseded by D-012 (2026-07-16, postdates this doc; see `decisions.md`,
+> logged via D-013):** the operator decided **manual smoke tests only — no automated uptest, no lab
+> creds as CI secrets** (lab access is interview-time-boxed and will lapse; the archived-uptest
+> counterpoint was offered and declined). Consequently every uptest-dependent acceptance criterion
+> below (`UPTEST_CLOUD_CREDENTIALS`, `/test-examples` e2e, REQ-E2-S09-01's uptest annotation +
+> e2e-run Verify, the E2-S05/L1-CRED e2e sequencing) is **superseded**. The story is **kept** — a
+> credential-regression guard remains a real need — but it must be **rescoped against D-012** before
+> laning (e.g. toward the credential-free parts: the REQ-E2-S09-02 creds-contract doc, and/or a
+> non-live regression test of the credential wiring). Do not lane as written.
+
 **As a** maintainer **I want** an e2e smoke that authenticates with real `uuid`/`token` and creates one trivial resource **so that** a credential-wiring regression like CRED-1/2 fails CI instead of shipping.
 - Resolves research **Q6** (no example exercises auth; would have caught CRED-2 at build time).
 - **Acceptance:**
