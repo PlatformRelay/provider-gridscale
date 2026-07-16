@@ -1,9 +1,5 @@
 # Usage
 
-Replace `icon.svg` with an image of your choice to be used as an icon for this Provider.
-
-The image must:
-
-- be named `icon.svg`
-- have square dimensions
-- be a valid [SVG](https://www.svgviewer.dev/)
+`icon.svg` is the official **gridscale figurative mark** (Bildmarke) from the
+gridscale press Logo-Package. Keep square dimensions; do not recolour — swap to
+`docs/assets/branding/icon-{light,dark}.svg` for contrast instead.
