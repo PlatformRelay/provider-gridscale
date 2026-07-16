@@ -26,6 +26,8 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
         with:
+          # go.mod pins `toolchain go1.26.5`; with GOTOOLCHAIN=auto this
+          # base version transparently fetches the module's toolchain.
           go-version: '1.25'
           check-latest: true
 

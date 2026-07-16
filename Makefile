@@ -333,9 +333,11 @@ go-version-check:
 	bash hack/check-go-version.sh
 	@$(OK) Go versions consistent
 
-# Run the drift guard in CI without touching ci.yml: check-diff already runs
-# in its own CI job, so making it depend on go-version-check wires the guard in.
-check-diff: go-version-check
+# Run the drift guards in CI without touching ci.yml: check-diff already runs
+# in its own CI job, so making it depend on these targets wires the guards in.
+# go-version-check (DIR-2) guards Go-version drift; check-docs (DOC-5) guards the
+# README resource matrix against the generated CRDs.
+check-diff: go-version-check check-docs
 
 .PHONY: vuln test.race tidy-check arch-lint coverage check-docs go-version-check
 
