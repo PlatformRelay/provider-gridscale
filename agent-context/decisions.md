@@ -266,3 +266,16 @@ workflow edits) are within the operator's explicit "implement the audit suggesti
 tighten (never loosen) gates. Noted here in lieu of per-PR surfacing.
 **Counterpoint:** renumbering diverges from the reviewed doc's literal IDs — mitigated by this entry +
 board cross-references (traceability preserved: ARCH-n/SEC-1/DIR-2/TEST-3 ↔ new IDs).
+
+---
+
+## D-009b — BRAND-1 resolved → use official gridscale Bildmarke — operator 2026-07-16
+
+**Date:** 2026-07-16 · **Status:** Accepted (operator direction).
+**Context:** Operator rejected custom/AI-generated provider marks: "the gridscale provider
+should just use the gridscale logo."
+**Decision:** Replace the placeholder icon with the official figurative mark (Bildmarke)
+from the gridscale press Logo-Package; ship light/dark variants + primary wordmarks under
+`docs/assets/branding/`; set `meta.crossplane.io/iconURI` to the raw `extensions/icons/icon.svg`
+URL. Closes **BRAND-1**.
+
