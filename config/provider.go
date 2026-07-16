@@ -33,6 +33,7 @@ func GetProvider() *ujconfig.Provider {
 		configureGridscale,
 		configureReferences,
 		configureSensitiveFields,
+		configureLoadbalancer,
 	} {
 		configure(pc)
 	}
@@ -59,6 +60,7 @@ func GetProviderNamespaced() *ujconfig.Provider {
 		configureGridscale,
 		configureReferences,
 		configureSensitiveFields,
+		configureLoadbalancer,
 	} {
 		configure(pc)
 	}

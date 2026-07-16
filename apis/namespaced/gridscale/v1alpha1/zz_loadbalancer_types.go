@@ -217,10 +217,6 @@ type LoadbalancerInitParameters struct {
 	// Whether the load balancer is forced to redirect requests from HTTP to HTTPS.
 	// Whether the Load balancer is forced to redirect requests from HTTP to HTTPS
 	RedirectHTTPToHTTPS *bool `json:"redirectHttpToHttps,omitempty" tf:"redirect_http_to_https,omitempty"`
-
-	// The status of the load balancer.
-	// Status indicates the status of the object.
-	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
 type LoadbalancerObservation struct {
@@ -330,11 +326,6 @@ type LoadbalancerParameters struct {
 	// Whether the Load balancer is forced to redirect requests from HTTP to HTTPS
 	// +kubebuilder:validation:Optional
 	RedirectHTTPToHTTPS *bool `json:"redirectHttpToHttps,omitempty" tf:"redirect_http_to_https,omitempty"`
-
-	// The status of the load balancer.
-	// Status indicates the status of the object.
-	// +kubebuilder:validation:Optional
-	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 }
 
 // LoadbalancerSpec defines the desired state of Loadbalancer

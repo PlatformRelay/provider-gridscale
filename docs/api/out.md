@@ -1524,7 +1524,6 @@ _Appears in:_
 | `listenIpv6UuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a IPv6 in gridscale to populate listenIpv6Uuid. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  |  |
 | `redirectHttpToHttps` _boolean_ | Whether the load balancer is forced to redirect requests from HTTP to HTTPS.<br />Whether the Load balancer is forced to redirect requests from HTTP to HTTPS |  |  |
-| `status` _string_ | The status of the load balancer.<br />Status indicates the status of the object. |  |  |
 
 
 #### LoadbalancerList
@@ -1596,7 +1595,6 @@ _Appears in:_
 | `listenIpv6UuidSelector` _[NamespacedSelector](#namespacedselector)_ | Selector for a IPv6 in gridscale to populate listenIpv6Uuid. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  | Optional: \{\} <br /> |
 | `redirectHttpToHttps` _boolean_ | Whether the load balancer is forced to redirect requests from HTTP to HTTPS.<br />Whether the Load balancer is forced to redirect requests from HTTP to HTTPS |  | Optional: \{\} <br /> |
-| `status` _string_ | The status of the load balancer.<br />Status indicates the status of the object. |  | Optional: \{\} <br /> |
 
 
 #### LoadbalancerSpec
@@ -6605,7 +6603,6 @@ _Appears in:_
 | `listenIpv6UuidSelector` _[Selector](#selector)_ | Selector for a IPv6 in gridscale to populate listenIpv6Uuid. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  |  |
 | `redirectHttpToHttps` _boolean_ | Whether the load balancer is forced to redirect requests from HTTP to HTTPS.<br />Whether the Load balancer is forced to redirect requests from HTTP to HTTPS |  |  |
-| `status` _string_ | The status of the load balancer.<br />Status indicates the status of the object. |  |  |
 
 
 #### LoadbalancerList
@@ -6677,7 +6674,6 @@ _Appears in:_
 | `listenIpv6UuidSelector` _[Selector](#selector)_ | Selector for a IPv6 in gridscale to populate listenIpv6Uuid. |  | Optional: \{\} <br /> |
 | `name` _string_ | The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters.<br />The human-readable name of the object. It supports the full UTF-8 character set, with a maximum of 64 characters |  | Optional: \{\} <br /> |
 | `redirectHttpToHttps` _boolean_ | Whether the load balancer is forced to redirect requests from HTTP to HTTPS.<br />Whether the Load balancer is forced to redirect requests from HTTP to HTTPS |  | Optional: \{\} <br /> |
-| `status` _string_ | The status of the load balancer.<br />Status indicates the status of the object. |  | Optional: \{\} <br /> |
 
 
 #### LoadbalancerSpec

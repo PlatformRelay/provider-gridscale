@@ -458,11 +458,6 @@ spec:
                       Whether the load balancer is forced to redirect requests from HTTP to HTTPS.
                       Whether the Load balancer is forced to redirect requests from HTTP to HTTPS
                     type: boolean
-                  status:
-                    description: |-
-                      The status of the load balancer.
-                      Status indicates the status of the object.
-                    type: string
                 type: object
               initProvider:
                 description: |-
@@ -862,11 +857,6 @@ spec:
                       Whether the load balancer is forced to redirect requests from HTTP to HTTPS.
                       Whether the Load balancer is forced to redirect requests from HTTP to HTTPS
                     type: boolean
-                  status:
-                    description: |-
-                      The status of the load balancer.
-                      Status indicates the status of the object.
-                    type: string
                 type: object
               managementPolicies:
                 default:
