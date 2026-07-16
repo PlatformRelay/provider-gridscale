@@ -89,3 +89,15 @@ test-hardening batch above — renumbered 2026-07-16 (D-014). Story bodies live 
 **E2-S11** (was research "E2-S09", rescoped per D-012 — credential-free parts only): non-live
 credential-wiring regression test (`internal/clients/*_test.go`) + creds-contract doc. E5-S07…S10
 keep their gap-doc IDs. Research stories E4-S05 / E6-S06 / epic E8 as proposed in the research doc.
+
+## E6-S06 — Upstream TF-provider triage (D-016, 2026-07-16)
+
+Research Q5 closed in [`decisions.md`](decisions.md) **D-016** — summary for lane planners:
+
+| Upstream | Action for *this* provider |
+| --- | --- |
+| Doc #200 / #194 | Track open drafts [#467](https://github.com/gridscale/terraform-provider-gridscale/pull/467) / [#468](https://github.com/gridscale/terraform-provider-gridscale/pull/468); no in-repo code work. File-rename follow-up only if drafts stall (recipe in D-016). |
+| Feature #187 location | **track-upstream** — no `gridscale_location` in schema; do not hand-implement. |
+| Feature #188 backup location | **done upstream** (PR #193 merged); already in our `BackupSchedule` CRDs. No lane. |
+
+No new stories spawned from this triage.

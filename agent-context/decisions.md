@@ -298,3 +298,45 @@ upjet supports it.
 **Counterpoint:** implementing datasource codegen ourselves in a fork was considered and rejected —
 maintenance burden far exceeds the P2 UX value; PaaS `service_template_uuid` lookup pain is real but
 survivable with documented UUIDs.
+
+---
+
+## D-016 — E6-S06 upstream doc/feature PR hunt (gridscale TF provider)
+
+**Date:** 2026-07-16 · **Status:** Decided (L-UPSTREAM / E6-S06 lane; coordinator may promote).
+**Context:** Research Q5 / story E6-S06 asked us to open (or decline) doc-fix PRs for upstream
+issues [#200](https://github.com/gridscale/terraform-provider-gridscale/issues/200) /
+[#194](https://github.com/gridscale/terraform-provider-gridscale/issues/194), and to triage feature
+gaps [#187](https://github.com/gridscale/terraform-provider-gridscale/issues/187) /
+[#188](https://github.com/gridscale/terraform-provider-gridscale/issues/188). Inspected 2026-07-16
+via `gh` against `gridscale/terraform-provider-gridscale` (all four issues still **OPEN**).
+
+### REQ-E6-S06-01 — doc bugs: PRs already open (no new PR from this lane)
+
+| Issue | Upstream PR | State | Notes |
+| --- | --- | --- | --- |
+| #200 (`paas_securityzone` sidebar) | [#467](https://github.com/gridscale/terraform-provider-gridscale/pull/467) | open **draft** (Copilot, 2025-09-29) | Fixes `sidebar_current` in `website/docs/{r,d}/securityzone.html.md` to `…-paas-securityzone`. Does **not** rename the files. |
+| #194 (`postgresql` page name) | [#468](https://github.com/gridscale/terraform-provider-gridscale/pull/468) | open **draft** (Copilot, 2025-09-29) | Fixes sidebar label in `website/gridscale.erb` (`gridscale_postgres` → `gridscale_postgresql`). Does **not** rename `website/docs/r/postgres.html.md`. |
+
+**Decision:** Treat REQ-E6-S06-01 as **satisfied by existing upstream PRs** — do **not** open competing
+PRs from this lane (no `konih` fork; drafts already close #200/#194; outward noise risk). Decline
+filing *additional* doc PRs for that reason.
+**Ready patch (operator, if drafts stall / registry URL path still wrong):** rename
+`website/docs/r/securityzone.html.md` → `paas_securityzone.html.md` and
+`website/docs/r/postgres.html.md` → `postgresql.html.md` (and matching `website/docs/d/` twins if
+present), plus any `website/gridscale.erb` href updates — that matches the issue authors' diagnosis
+and fixes the registry path slug (`/securityzone`, `/postgres`) that #467/#468 leave untouched.
+Draft PR body sketch: title `docs: rename securityzone/postgres pages to match resource names`;
+body cites #200/#194; note supersedes or complements draft #467/#468.
+
+### REQ-E6-S06-02 — feature gaps triage
+
+| Issue | Triage | Rationale |
+| --- | --- | --- |
+| **#187** location resource/datasource | **track-upstream** | Still open since 2021; labels `new-resource`/`new-data-source`; assignee `@nvthongswansea`. Closed-unmerged attempt [#192](https://github.com/gridscale/terraform-provider-gridscale/pull/192) (2022-02-09). `gsclient-go` [#208](https://github.com/gridscale/gsclient-go/issues/208) closed. Our baked schema has **no** `gridscale_location` in resource or datasource schemas — locations remain UUID-only fields on other resources. **Do not implement here** (would be custom non-generated surface ahead of TF provider). Revisit only if upstream ships the resource and we regenerate. |
+| **#188** backup location on backup schedule | **already upstream (stale issue)** | Upstream [#193](https://github.com/gridscale/terraform-provider-gridscale/pull/193) **merged** 2022-02-09 (`Allow to set backup location when creating a backup schedule`). Schema already exposes `backup_location_uuid` / `backup_location_name` on `gridscale_backupschedule`; our CRDs already surface `spec.forProvider.backupLocationUuid` / status `backupLocationName`. Issue #188 was never closed — no implement-here work. Optional operator nudge to close #188 as completed. |
+
+**Counterpoints:** (1) Opening our own file-rename doc PRs could land faster than 9-month-stale
+Copilot drafts — deferred to avoid duplicate PRs; patch recipe kept above. (2) A hand-rolled
+`Location` MR type here would paper over #187 for Crossplane users but forks the resource surface
+from upstream TF forever — rejected for this lane.

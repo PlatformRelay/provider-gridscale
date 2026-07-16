@@ -38,6 +38,23 @@ permanently red. Counterpoint logged: capture one archived local uptest run whil
 
 ---
 
+## Operator tasks
+
+- **Upjet feature request — `DataSourceSchemas` (from D-015; outward-facing, do not auto-file).**
+  Epic E8 needs upstream upjet to generate from Terraform `DataSourceSchemas` (today only
+  `ResourceSchemas` are extracted). Please file a feature request on the upjet repo when ready —
+  draft angle: "support generating Observe-only MR types from provider `DataSourceSchemas`". Lane
+  L-E8SCOPE deliberately did **not** open the issue. No in-repo code blocked on this.
+
+- **Optional — close stale upstream #188 / nudge doc drafts (from D-016 / E6-S06).** Backup-location
+  issue [gridscale/terraform-provider-gridscale#188](https://github.com/gridscale/terraform-provider-gridscale/issues/188)
+  is still open though PR [#193](https://github.com/gridscale/terraform-provider-gridscale/pull/193)
+  merged in 2022 (fields already in our CRDs). Doc drafts [#467](https://github.com/gridscale/terraform-provider-gridscale/pull/467)
+  / [#468](https://github.com/gridscale/terraform-provider-gridscale/pull/468) are 9 months stale;
+  file-rename recipe lives in D-016 if you want a stronger PR.
+
+---
+
 ## Reference — resolved / no action
 
 - **D-007 (logged 2026-07-16)** — the `govulncheck` remediation (Go 1.26.5 + `x/net` v0.55.0) **already
