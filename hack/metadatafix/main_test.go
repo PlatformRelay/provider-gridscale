@@ -5,6 +5,72 @@ import (
 	"testing"
 )
 
+// TestInjectMissingResourceStubs_InsertsAlphabetically asserts a schema
+// resource absent from scraped metadata gets a minimal stub entry, inserted
+// before the next existing key in alphabetical order.
+func TestInjectMissingResourceStubs_InsertsAlphabetically(t *testing.T) {
+	in := "name: gridscale/gridscale\nresources:\n" +
+		"    gridscale_backupschedule:\n" +
+		"        name: backup\n" +
+		"    gridscale_firewall:\n" +
+		"        name: fw\n"
+
+	got := injectMissingResourceStubs(in, []string{
+		"gridscale_backupschedule",
+		"gridscale_filesystem",
+		"gridscale_firewall",
+	})
+
+	wantKey := "    gridscale_filesystem:\n"
+	if !strings.Contains(got, wantKey) {
+		t.Fatalf("expected stub key %q in output, got:\n%s", wantKey, got)
+	}
+	backupAt := strings.Index(got, "    gridscale_backupschedule:\n")
+	fsAt := strings.Index(got, wantKey)
+	fwAt := strings.Index(got, "    gridscale_firewall:\n")
+	if backupAt < 0 || fsAt < 0 || fwAt < 0 {
+		t.Fatalf("missing expected keys in output:\n%s", got)
+	}
+	if !(backupAt < fsAt && fsAt < fwAt) {
+		t.Errorf("stub not inserted alphabetically: backup=%d filesystem=%d firewall=%d\n%s", backupAt, fsAt, fwAt, got)
+	}
+	if !strings.Contains(got, "        name: gridscale_filesystem\n") {
+		t.Errorf("stub missing name field, got:\n%s", got)
+	}
+	if !strings.Contains(got, "        importStatements: []\n") {
+		t.Errorf("stub missing importStatements, got:\n%s", got)
+	}
+}
+
+// TestInjectMissingResourceStubs_Idempotent asserts a second pass is a no-op
+// when the stub (or a real scraped entry) is already present.
+func TestInjectMissingResourceStubs_Idempotent(t *testing.T) {
+	in := "resources:\n" +
+		"    gridscale_filesystem:\n" +
+		"        name: already-there\n" +
+		"        title: custom\n"
+
+	got := injectMissingResourceStubs(in, []string{"gridscale_filesystem"})
+	if got != in {
+		t.Errorf("existing entry should be left untouched\nwant:\n%s\ngot:\n%s", in, got)
+	}
+
+	once := injectMissingResourceStubs("resources:\n", []string{"gridscale_filesystem"})
+	twice := injectMissingResourceStubs(once, []string{"gridscale_filesystem"})
+	if once != twice {
+		t.Errorf("inject(inject(x)) != inject(x)\nonce:\n%s\ntwice:\n%s", once, twice)
+	}
+}
+
+// TestInjectMissingResourceStubs_NoSchemaNoop asserts an empty schema list
+// leaves content unchanged (tool must not invent keys without schema).
+func TestInjectMissingResourceStubs_NoSchemaNoop(t *testing.T) {
+	in := "resources:\n    gridscale_server:\n        name: s\n"
+	if got := injectMissingResourceStubs(in, nil); got != in {
+		t.Errorf("nil schema keys should be a no-op\ngot:\n%s", got)
+	}
+}
+
 // TestFixMetadata_ReKeyRules asserts each of the eight title→gridscale_* key
 // rewrites maps correctly: the gridscale_* key appears and the original title
 // key is gone. Each case feeds a minimal YAML snippet with the title key line.

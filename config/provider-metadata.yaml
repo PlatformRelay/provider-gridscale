@@ -31,6 +31,13 @@ resources:
             usage_in_minutes: '- Total minutes the object has been running.'
             version: '- The version of the ISO Image.'
         importStatements: []
+    gridscale_filesystem:
+        subCategory: ""
+        description: Manages a gridscale_filesystem resource. Stub entry - upstream provider docs were not scraped for this resource.
+        name: gridscale_filesystem
+        title: gridscale_filesystem
+        argumentDocs: {}
+        importStatements: []
     gridscale_firewall:
         subCategory: ""
         description: Manages a firewall in gridscale.
