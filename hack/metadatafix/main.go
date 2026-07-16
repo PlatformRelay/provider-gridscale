@@ -125,6 +125,67 @@ func existingResourceKeys(content string) map[string]struct{} {
 	return out
 }
 
+// missingSchemaKeys returns schema resource names absent from present metadata.
+func missingSchemaKeys(present map[string]struct{}, schemaKeys []string) []string {
+	missing := make([]string, 0)
+	for _, key := range schemaKeys {
+		if _, ok := present[key]; ok {
+			continue
+		}
+		missing = append(missing, key)
+	}
+	return missing
+}
+
+// sortedKnownKeys returns present ∪ missing in alphabetical order for neighbour lookup.
+func sortedKnownKeys(present map[string]struct{}, missing []string) []string {
+	known := make([]string, 0, len(present)+len(missing))
+	for k := range present {
+		known = append(known, k)
+	}
+	known = append(known, missing...)
+	sort.Strings(known)
+	return known
+}
+
+// nextExistingNeighbour returns the alphabetically next key that already exists
+// in present (skipping yet-to-be-inserted missing keys). Empty if none.
+func nextExistingNeighbour(key string, known []string, present map[string]struct{}) string {
+	for _, k := range known {
+		if k <= key {
+			continue
+		}
+		if _, ok := present[k]; ok {
+			return k
+		}
+	}
+	return ""
+}
+
+// appendStub appends stub at EOF, ensuring a separating newline when needed.
+func appendStub(content, stub string) string {
+	if content != "" && !strings.HasSuffix(content, "\n") {
+		content += "\n"
+	}
+	return content + stub
+}
+
+// insertStub places a stub before insertBefore's key line, or appends if the
+// neighbour is missing / unreformatted.
+func insertStub(content, key, insertBefore string) string {
+	stub := stubResourceEntry(key)
+	if insertBefore == "" {
+		return appendStub(content, stub)
+	}
+	needle := resourceKeyLine(insertBefore) + "\n"
+	idx := strings.Index(content, needle)
+	if idx < 0 {
+		// Neighbour line was reformatted — fall through to append.
+		return content + stub
+	}
+	return content[:idx] + stub + content[idx:]
+}
+
 // injectMissingResourceStubs inserts a minimal stub for each schema resource
 // that has no metadata entry yet. Stubs are placed immediately before the next
 // existing resource key in alphabetical order (or appended under resources: if
@@ -134,54 +195,15 @@ func injectMissingResourceStubs(content string, schemaKeys []string) string {
 		return content
 	}
 	present := existingResourceKeys(content)
-	missing := make([]string, 0)
-	for _, key := range schemaKeys {
-		if _, ok := present[key]; ok {
-			continue
-		}
-		missing = append(missing, key)
-	}
+	missing := missingSchemaKeys(present, schemaKeys)
 	if len(missing) == 0 {
 		return content
 	}
 	sort.Strings(missing)
-
-	// Known keys sorted so we can find the insertion neighbour for each stub.
-	known := make([]string, 0, len(present)+len(missing))
-	for k := range present {
-		known = append(known, k)
-	}
-	known = append(known, missing...)
-	sort.Strings(known)
+	known := sortedKnownKeys(present, missing)
 
 	for _, key := range missing {
-		stub := stubResourceEntry(key)
-		insertBefore := ""
-		for _, k := range known {
-			if k > key {
-				if _, ok := present[k]; ok {
-					insertBefore = k
-					break
-				}
-			}
-		}
-		if insertBefore != "" {
-			needle := resourceKeyLine(insertBefore) + "\n"
-			idx := strings.Index(content, needle)
-			if idx < 0 {
-				// Fall through to append if the neighbour line was reformatted.
-				content += stub
-			} else {
-				content = content[:idx] + stub + content[idx:]
-			}
-		} else {
-			// No later neighbour: append after the last line, preserving a
-			// trailing newline if the file already had one.
-			if content != "" && !strings.HasSuffix(content, "\n") {
-				content += "\n"
-			}
-			content += stub
-		}
+		content = insertStub(content, key, nextExistingNeighbour(key, known, present))
 		present[key] = struct{}{}
 	}
 	return content

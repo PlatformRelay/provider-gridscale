@@ -34,7 +34,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Filesystem is the Schema for the Filesystems API. <no value>
+        description: Filesystem is the Schema for the Filesystems API. Manages a gridscale_filesystem
+          resource. Stub entry - upstream provider docs were not scraped for this
+          resource.
         properties:
           apiVersion:
             description: |-

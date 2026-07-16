@@ -31,7 +31,7 @@ func TestInjectMissingResourceStubs_InsertsAlphabetically(t *testing.T) {
 	if backupAt < 0 || fsAt < 0 || fwAt < 0 {
 		t.Fatalf("missing expected keys in output:\n%s", got)
 	}
-	if !(backupAt < fsAt && fsAt < fwAt) {
+	if backupAt >= fsAt || fsAt >= fwAt {
 		t.Errorf("stub not inserted alphabetically: backup=%d filesystem=%d firewall=%d\n%s", backupAt, fsAt, fwAt, got)
 	}
 	if !strings.Contains(got, "        name: gridscale_filesystem\n") {
