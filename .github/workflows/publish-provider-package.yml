@@ -62,7 +62,7 @@ jobs:
         run: |
           set -euo pipefail
           if [ -z "${VERSION}" ]; then
-            echo "No explicit 'version' input provided; skipping keyless signing + SBOM." >&2
+            echo "::warning::No explicit version input provided; skipping keyless signing + SBOM - the published package will be UNSIGNED. Re-dispatch with an explicit version to sign."
             echo "The reusable publish workflow derives a git-describe version that" >&2
             echo "cannot be reliably reproduced here. Re-run with an explicit version" >&2
             echo "(e.g. v1.0.0) to sign and attest the published package." >&2

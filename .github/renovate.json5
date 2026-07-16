@@ -33,6 +33,7 @@
       "fileMatch": ["^\\.github\\/workflows\\/[^/]+\\.ya?ml$"],
       "matchStrings": [
         "GO_VERSION: '(?<currentValue>.*?)'\\n"
+        ,"go-version: '(?<currentValue>.*?)'\\n"
       ],
       "datasourceTemplate": "golang-version",
       "depNameTemplate": "golang"
