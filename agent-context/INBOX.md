@@ -4,9 +4,10 @@ Items needing the operator. **Decisions** carry full Context + Options (one mark
 **Answer** field. When answered, record in [`decisions.md`](decisions.md) (with counterpoints) and
 remove here. This repo's INBOX is independent — never coordinate other repos from here.
 
-> **Status 2026-07-16:** D-017 — public Upbound + GHCR package linked to this repo. **No personal
-> PAT in repo secrets** (kollect/mkurator model: `github.token` + `packages: write`). `GHCR_PAT`
-> secret **deleted**. Only Upbound robot mirror creds remain as secrets.
+> **Status 2026-07-16:** D-017 — public Upbound + GHCR package linked. **No personal PAT** in
+> secrets. Publish workflow is **inlined** (upstream reusable cannot receive `github.token` — empty
+> password). Only Upbound robot `XPKG_MIRROR_*` secrets remain. `sign-and-sbom` already green on
+> existing `v0.1.0`.
 
 ---
 

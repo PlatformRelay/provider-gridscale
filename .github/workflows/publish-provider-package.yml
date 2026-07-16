@@ -1,5 +1,11 @@
 name: Publish Provider Package
 
+# Local publish/sign (kollect/mkurator model): github.token + packages:write +
+# keyless cosign. No personal PAT. Upstream crossplane-contrib reusable workflow
+# requires a secret named GHCR_PAT and cannot receive github.token across repos
+# (arrives empty → "Password required") — so we inline the publish steps here.
+# Upbound mirror still uses the org robot token pair (XPKG_MIRROR_*).
+
 on:
   workflow_dispatch:
     inputs:
@@ -9,56 +15,125 @@ on:
         required: false
       go-version:
         description: 'Go version to use if building needs to be done'
-        default: '1.24'
+        default: '1.26.5'
         required: false
 
-jobs:
-  # Upstream reusable workflow still names its GHCR login secret "GHCR_PAT", but
-  # we pass github.token — same model as kollect/mkurator release.yaml (packages:
-  # write + linked org package; no personal PAT in repo secrets). Upbound mirror
-  # still uses the robot token pair (appropriate long-lived org credential).
-  publish-provider-package:
-    permissions:
-      contents: read
-      packages: write
-    uses: crossplane-contrib/provider-workflows/.github/workflows/publish-provider.yml@451c4dc6ad3691b0a702a997a0ac24e8bbc8bbaa # main
-    with:
-      repository: provider-gridscale
-      registry_org: platformrelay
-      version: ${{ github.event.inputs.version }}
-      go-version: ${{ github.event.inputs.go-version }}
-      cleanup-disk: true
-    secrets:
-      GHCR_PAT: ${{ github.token }}
-      XPKG_MIRROR_TOKEN: ${{ secrets.XPKG_MIRROR_TOKEN }}
-      XPKG_MIRROR_ACCESS_ID: ${{ secrets.XPKG_MIRROR_ACCESS_ID }}
+env:
+  DOCKER_BUILDX_VERSION: 'v0.20.1'
+  CROSSPLANE_REGORG: ghcr.io/platformrelay
+  MIRROR_REGORG: xpkg.upbound.io/platformrelay
+  IMAGE: ghcr.io/platformrelay/provider-gridscale
 
-  # Supply-chain hardening: keyless (Sigstore OIDC) cosign signature + SBOM
-  # attestation for the published provider xpkg. Matches kollect/mkurator:
-  # GITHUB_TOKEN + packages:write + id-token:write — no PAT.
-  sign-and-sbom:
-    needs: publish-provider-package
-    # Run even if the reusable publish job reports failure (e.g. the optional
-    # xpkg.upbound.io mirror sub-job fails on creds): the ghcr artifact is
-    # already pushed by publish-artifacts, so signing must not be coupled to
-    # the mirror. The crane-digest step is the real guard (fails cleanly if the
-    # version tag was not published).
-    if: ${{ !cancelled() && github.event.inputs.version != '' }}
+jobs:
+  publish-artifacts:
     runs-on: ubuntu-24.04
     permissions:
-      id-token: write
-      packages: write
       contents: read
-    env:
-      IMAGE: ghcr.io/platformrelay/provider-gridscale
-      VERSION: ${{ github.event.inputs.version }}
+      packages: write
     steps:
-      - name: Check version input
-        id: guard
+      - name: Cleanup Disk
+        uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be # v1.3.1
+        with:
+          android: true
+          dotnet: true
+          haskell: true
+          tool-cache: true
+          large-packages: false
+          swap-storage: false
+
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@2b82ce82d56a2a04d2637cd93a637ae1b359c0a7 # v2
+        with:
+          platforms: all
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@885d1462b80bc1c1c7f0b00334ad271f09369c55 # v2
+        with:
+          version: ${{ env.DOCKER_BUILDX_VERSION }}
+          install: true
+
+      - name: Log in to GHCR
+        uses: docker/login-action@af1e73f918a031802d376d3c8bbc3fe56130a9b0 # v4.4.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ github.token }}
+
+      - name: Checkout
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
+        with:
+          submodules: true
+          # Prefer the release tag when publishing a named version so the
+          # artifact matches the git tag (same as the upstream reusable job).
+          ref: ${{ github.event.inputs.version != '' && github.event.inputs.version || github.ref }}
+
+      - name: Fetch History
+        run: git fetch --prune --unshallow || true
+
+      - name: Setup Go
+        uses: actions/setup-go@6edd4406fa81c3da01a34fa6f6343087c207a568 # v3
+        with:
+          go-version: ${{ github.event.inputs.go-version }}
+
+      - name: Find the Go Build Cache
+        id: go_cache
         run: |
-          set -euo pipefail
-          if [ -z "${VERSION}" ]; then
-            echo "::warning::No explicit version input provided; skipping keyless signing + SBOM - the published package will be UNSIGNED. Re-dispatch with an explicit version to sign."
+          echo "cache=$(make go.cachedir)" >> "$GITHUB_OUTPUT"
+          echo "mod_cache=$(make go.mod.cachedir)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache the Go Build Cache
+        uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4
+        with:
+          path: ${{ steps.go_cache.outputs.cache }}
+          key: ${{ runner.os }}-build-publish-artifacts-${{ hashFiles('**/go.sum') }}
+          restore-keys: ${{ runner.os }}-build-publish-artifacts-
+
+      - name: Cache Go Dependencies
+        uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf # v4
+        with:
+          path: ${{ steps.go_cache.outputs.mod_cache }}
+          key: ${{ runner.os }}-pkg-${{ hashFiles('**/go.sum') }}
+          restore-keys: ${{ runner.os }}-pkg-
+
+      - name: Vendor Dependencies
+        run: make vendor vendor.check
+
+      - name: Build Artifacts
+        run: |
+          make -j \
+            XPKG_REG_ORGS="${{ env.CROSSPLANE_REGORG }}" \
+            XPKG_REG_ORGS_NO_PROMOTE="${{ env.CROSSPLANE_REGORG }}" \
+            BRANCH_NAME="main" \
+            ${{ github.event.inputs.version != '' && format('VERSION={0}', github.event.inputs.version) || '' }} \
+            build.all
+        env:
+          BUILD_ARGS: "--load"
+
+      - name: Publish Artifacts
+        run: |
+          make -j \
+            XPKG_REG_ORGS="${{ env.CROSSPLANE_REGORG }}" \
+            XPKG_REG_ORGS_NO_PROMOTE="${{ env.CROSSPLANE_REGORG }}" \
+            BRANCH_NAME="main" \
+            ${{ github.event.inputs.version != '' && format('VERSION={0}', github.event.inputs.version) || '' }} \
+            publish
+
+  mirror-to-upbound:
+    needs: publish-artifacts
+    runs-on: ubuntu-24.04
+    if: ${{ github.event.inputs.version != '' }}
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - name: Check mirror credentials
+        id: guard
+        env:
+          MIRROR_ID: ${{ secrets.XPKG_MIRROR_ACCESS_ID }}
+          MIRROR_TOKEN: ${{ secrets.XPKG_MIRROR_TOKEN }}
+        run: |
+          if [ -z "${MIRROR_ID}" ] || [ -z "${MIRROR_TOKEN}" ]; then
+            echo "::warning::XPKG_MIRROR_* secrets unset; skipping Upbound mirror"
             echo "proceed=false" >> "$GITHUB_OUTPUT"
           else
             echo "proceed=true" >> "$GITHUB_OUTPUT"
@@ -72,16 +147,55 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ github.token }}
 
-      - name: Install crane
+      - name: Log in to Upbound
+        if: steps.guard.outputs.proceed == 'true'
+        uses: docker/login-action@af1e73f918a031802d376d3c8bbc3fe56130a9b0 # v4.4.0
+        with:
+          registry: xpkg.upbound.io
+          username: ${{ secrets.XPKG_MIRROR_ACCESS_ID }}
+          password: ${{ secrets.XPKG_MIRROR_TOKEN }}
+
+      - name: Setup crane
         if: steps.guard.outputs.proceed == 'true'
         uses: imjasonh/setup-crane@feee3b6bb0d4c68370f256a4502498c9227e5c6b # v0.7
 
-      - name: Install cosign
+      - name: Mirror to xpkg.upbound.io
         if: steps.guard.outputs.proceed == 'true'
+        env:
+          VERSION: ${{ github.event.inputs.version }}
+        run: |
+          set -euo pipefail
+          crane copy \
+            "${CROSSPLANE_REGORG}/provider-gridscale:${VERSION}" \
+            "${MIRROR_REGORG}/provider-gridscale:${VERSION}" \
+            --allow-nondistributable-artifacts
+
+  sign-and-sbom:
+    needs: publish-artifacts
+    # Sign even if publish/mirror fails — only needs the ghcr tag (may already exist).
+    if: ${{ always() && !cancelled() && github.event.inputs.version != '' }}
+    runs-on: ubuntu-24.04
+    permissions:
+      id-token: write
+      packages: write
+      contents: read
+    env:
+      VERSION: ${{ github.event.inputs.version }}
+    steps:
+      - name: Log in to GHCR
+        uses: docker/login-action@af1e73f918a031802d376d3c8bbc3fe56130a9b0 # v4.4.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ github.token }}
+
+      - name: Install crane
+        uses: imjasonh/setup-crane@feee3b6bb0d4c68370f256a4502498c9227e5c6b # v0.7
+
+      - name: Install cosign
         uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
 
       - name: Resolve image digest
-        if: steps.guard.outputs.proceed == 'true'
         id: digest
         run: |
           set -euo pipefail
@@ -90,7 +204,6 @@ jobs:
           echo "ref=${IMAGE}@${DIGEST}" >> "$GITHUB_OUTPUT"
 
       - name: Keyless cosign sign
-        if: steps.guard.outputs.proceed == 'true'
         env:
           REF: ${{ steps.digest.outputs.ref }}
         run: |
@@ -98,7 +211,6 @@ jobs:
           cosign sign --yes "${REF}"
 
       - name: Generate SBOM (SPDX JSON)
-        if: steps.guard.outputs.proceed == 'true'
         uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610 # v0.24.0
         with:
           image: ${{ steps.digest.outputs.ref }}
@@ -107,7 +219,6 @@ jobs:
           upload-artifact: true
 
       - name: Attest SBOM with cosign (keyless)
-        if: steps.guard.outputs.proceed == 'true'
         env:
           REF: ${{ steps.digest.outputs.ref }}
         run: |
