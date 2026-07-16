@@ -439,3 +439,19 @@ Tracked as **D-020-FU** in `BACKLOG.md`.
 convenient" note (2026-07-16b) — that was reverted; a naive re-dispatch would have shipped an
 extension-less package. The unsigned-digest gap is accepted as low-risk tracked debt until v0.2.0.
 
+## D-021 — Upstream bug fixes: local Upjet overrides + open upstream PRs
+
+**Date:** 2026-07-17 · **Status:** Accepted (operator go-ahead in session)
+**Context:** a proactive 32-resource upstream sweep found U-1 (5 credential fields missing `Sensitive`),
+LB-1 (loadbalancer `status` Optional instead of Computed), and UP-2 (objectstorage Update calls the
+wrong Read func; marketplace_app.type from wrong source). U-1/LB-1 are schema-flag bugs (locally
+overridable via Upjet config); UP-2 is a runtime CRUD bug (upstream-only).
+**Decision:** (1) Fix U-1 + LB-1 **locally now** via config-time schema overrides (`config/sensitive.go`,
+`config/loadbalancer.go`) — landed `8ae7376`/`c38e52b`; (2) **open upstream PRs** for all three on
+`gridscale/terraform-provider-gridscale` under the operator's identity — **#509** (U-1), **#510** (LB-1),
+**#511** (objectstorage). Operator explicitly authorized both the local pushes and opening the PRs
+(and granted `Bash(gh pr create:*)`).
+**Counterpoint:** local overrides are carried debt — drop them once the upstream PRs merge and we
+re-vendor (bump `TERRAFORM_PROVIDER_VERSION`), else we mask a fixed upstream. Tracked in
+`TECH-DEBT-REGISTER.md` (U-1, LB-1). The D-020-FU `--extensions-root` cosign fix must precede v0.2.0.
+

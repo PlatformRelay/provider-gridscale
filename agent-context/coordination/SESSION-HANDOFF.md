@@ -1,74 +1,61 @@
 # SESSION-HANDOFF — provider-gridscale
 
-**Session wrap:** 2026-07-16 (CI-red fix + final tidy).
-**HEAD:** `origin/main` — tip is this wrap’s coordination commit; product CI tip `d275897` / fix `d8433f5`.
-**Latest package tag:** `v0.1.1` (published + icon/readme extensions appended).
-**Merge model:** local ff-merge → push `main` (no PRs), per operator.
+**Session wrap:** 2026-07-17 (audit-mitigation + upstream-PR loop).
+**HEAD:** `origin/main` @ `c38e52b` (LB-1 loadbalancer status fix).
+**Main CI:** all 7 workflows **green** on `c38e52b` (CI, Coverage, CodeQL, Docs Sync, Gitleaks, Govulncheck, Scorecard) — confirmed via `gh run watch` exit 0. (GitHub run-list API returned transient 503s at wrap; the runs themselves are green.)
+**Latest package tag:** `v0.1.1` (published; **unsigned digest** — see D-020-FU).
+**Merge model:** local rebase + ff-merge → push `main` (no PRs), per operator.
 
-## Repo state
+## Repo state (clean)
 
 | Area | State |
 | --- | --- |
-| Auto-mergeable backlog (E1–E7 + Batch 7 + L-CIRED) | **Exhausted** — board lanes ✅ Integrated; no In-flight |
-| Open PRs | **None** |
-| `main` CI | **Primary CI green** on fix tip `d8433f5` ([run 29524788246](https://github.com/PlatformRelay/provider-gridscale/actions/runs/29524788246): `check-diff` + `lint` + unit-tests + local-deploy). Follow-up docs tip `d275897`: **Docs Sync green** ([29525609433](https://github.com/PlatformRelay/provider-gridscale/actions/runs/29525609433)); Gitleaks / Scorecard / Govulncheck green; primary **CI** / Coverage / CodeQL may still be finishing at wrap — expect green (docs-only delta). Prior red run: [29515604942](https://github.com/PlatformRelay/provider-gridscale/actions/runs/29515604942) @ `3edc5f0`. |
-| Marketplace | https://marketplace.upbound.io/providers/platformrelay/provider-gridscale/v0.1.1 — disclaimer + icon live |
-| Publish / GHCR | Inlined publish with `github.token` (no personal PAT secret). Prefer install tag **`v0.1.1`** |
-| Worktrees | Cleaned (`.worktrees/` removed; `git worktree prune`). Only main checkout remains |
-| Local branches | Only `main` (`fix/ci-red-main` deleted after ff) |
-| Stale remotes (superseded; optional delete) | `origin/add-config-unit-tests`, `origin/feat/official-gridscale-logo`, `origin/fix-credential-wiring`, `origin/rewrite-readme-gridscale`, `origin/worktree-gridscale-audit-2026-07-15` |
+| Branches | Only `main` (local + remote). All session lanes ff-merged + deleted. |
+| Worktrees | Only the main checkout. |
+| Open PRs (this repo) | None. |
+| Working tree | Clean. |
+| Upstream fork | `konih/terraform-provider-gridscale` has 3 fix branches, each with an **open PR to gridscale:master** (#509/#510/#511). |
 
-## What landed this wrap
+## What landed this session (all on `main`, all CI-green)
 
 | SHA | Summary |
 | --- | --- |
-| `d8433f5` | CI-red fix — regenerate Filesystem CRDs from `gridscale_filesystem` metadata stub; split `injectMissingResourceStubs` (gocyclo); De Morgan fix in test (staticcheck QF1001) |
-| `d275897` | Sync `docs/api/out.md` Filesystem description for `check-api-docs` |
-| (wrap tip) | Coordination wrap — SESSION-HANDOFF / board / INBOX / BACKLOG |
+| `ca9d3aa` | Audit re-run dispositions (DOC-5 CI-wired, DIR-2c/DOC-2 ACCEPTED) + ROADMAP "Where we are" refresh + `HEALTH-AUDIT-2026-07-16b.md` |
+| `68f8d66` | Security hardening SEC-H1/2/3 — least-privilege `GITHUB_TOKEN` on `ci.yml`/`e2e.yaml` + keyword-gated `check-permissions` (from a security review that returned APPROVE, no P0/P1) |
+| `f9895b8` | Surface upstream finding U-1 in INBOX |
+| `949d1de` | Apply operator decisions **D-018/019/020** (workspace relay) + track sweep findings (LB-1, UP-2, D-020-FU) |
+| `8ae7376` | **U-1 FIX** — `config/sensitive.go` forces `Sensitive=true` on 5 upstream-missed credential fields; regenerated → `SecretKeySelector`/connection-secret. No plaintext creds in CRDs. |
+| `9e6ca3c` | docs-sync fix-forward (regenerate `docs/api/out.md` after U-1 CRD change) |
+| `c38e52b` | **LB-1 FIX** — `config/loadbalancer.go` forces `status` Computed; regenerated → `status.atProvider` observed-only. Perpetual diff gone. |
 
-Earlier same day (already on `main` before this wrap loop): Batch 7 polish, E6-S05 assurance, session-wrap docs @ `c9eff5b`, audit-gap E7 / E5, credential wiring, Marketplace `v0.1.1`.
+## Upstream PRs opened (gridscale/terraform-provider-gridscale, awaiting their review)
 
-## What was skipped
+- **#509** — Mark object-storage/console credentials as Sensitive (U-1; 5 fields). Local override already shipped in our provider; PR is the durable upstream fix.
+- **#510** — Make loadbalancer `status` Computed (LB-1). Local override already shipped.
+- **#511** — Fix object-storage access-key Update to call its own Read (UP-2). **Upstream-only** — no local override possible (runtime CRUD bug in the vendored provider binary, not schema).
 
-- No new feature lanes started.
-- Stale remote branch deletion left optional (content already on `main`).
-- ROADMAP “Where we are” prose refresh not done (docs-only leftover).
-- Operator INBOX confirmations / PAT revoke left for operator.
+## Open items for the operator (nothing blocking)
 
-## Learnings
+1. **D-020-FU — cosign/extensions fix, MUST BE DONE BEFORE THE v0.2.0 RELEASE.** Current `v0.1.1` digest is unsigned (icon/readme were `up alpha xpkg append`-ed after signing, invalidating it). Naive re-sign is a trap: CI `xpkg build` (`build/makelib/xpkg.mk:77`) builds with `--package-root`/`--examples-root` but **no extensions**, so rebuild-then-sign strips the icon/readme. **Fix (land before cutting v0.2.0):** make the release produce one digest that already contains the extensions, then sign THAT — either build-with-extensions (if the pinned CLI supports it) or reorder to append-then-sign in `publish-provider-package.yml`. Then the operator dispatches a signed `v0.2.0`. Register: `TECH-DEBT-REGISTER.md` D-020-FU.
+2. **Revoke old classic PAT** briefly stored as `GHCR_PAT` (local `.envrc` only; never as an Actions secret).
+3. **Upstream PR review** — #509/#510/#511 are gridscale's to merge; nudge if they stall. Once merged + re-vendored (bump `TERRAFORM_PROVIDER_VERSION`), DROP the local U-1/LB-1 overrides (`config/sensitive.go`, `config/loadbalancer.go`).
+4. **TEST-2** (operator-blocked) — uptest e2e needs live gridscale lab creds as CI secrets. Unchanged.
 
-1. **Metadata stub without regenerate leaves check-diff red** — `config/provider-metadata.yaml` had `gridscale_filesystem`, but `zz_filesystem_types.go` / CRDs / `docs/api/` still said `<no value>` until `make generate` + `make docs`.
-2. **`check-diff` and `check-api-docs` are separate gates** — fixing generate drift alone is not enough when CRD type comments feed `docs/api/`.
-3. **`$(TERRAFORM)` rebuilds every generate** (depends on phony `check-terraform-version`) — local generate needs network to HashiCorp releases (or a warm cache + careful `-o`).
-4. Same-tag Marketplace re-push / `xpkg append` cosign invalidation learnings from prior wrap still apply.
+## Next entry points (priority order)
 
-## Next entry points / leftovers (priority)
+1. **D-020-FU cosign/extensions fix → then dispatch signed `v0.2.0`** (the fix MUST precede the release; operator dispatches).
+2. Watch upstream #509/#510/#511; on merge, re-vendor + drop the local overrides.
+3. Backlog is otherwise **exhausted** — audit findings all fixed/dispositioned (see `TECH-DEBT-REGISTER.md`: only TEST-2 operator-blocked + BRAND-1 deferred + the upstream-tracked items remain).
 
-| Priority | Item | Notes |
-| --- | --- | --- |
-| Op | Confirm CI @ `d275897` finished green (primary CI / Coverage / CodeQL if still running at wrap) | Docs Sync already green; fix tip CI already green |
-| Op | Revoke old classic PAT that briefly was `GHCR_PAT` | Local `.envrc` only — never reintroduce as Actions secret |
-| Op | Confirm INBOX wording (icon source, unaffiliation text, optional cosign re-sign) | Non-blocking confirmations |
-| Doc | Refresh `docs/ROADMAP.md` “Where we are” table | Still describes day-0 scaffold — stale vs `main` |
-| Optional | Delete superseded remote branches listed above | Content already on `main` |
-| Optional | Close upstream TF #188; nudge doc drafts #467/#468 | D-016 — outward, non-blocking |
-| Stretch | File upjet `DataSourceSchemas` FR | D-015 — **do not auto-file** |
-| **Blocked** | E2-S04 / E2-S05 uptest | **D-012 → B** — manual smoke only; do not wire CI lab creds |
+## Learnings this session
 
-**Honest backlog answer:** auto-mergeable *feature* stories are **empty**. Real leftover work is operator confirmations / PAT revoke, stale ROADMAP prose, and intentionally skipped uptest (D-012).
-
-## In flight / cleanup status
-
-- **No lanes In-flight** — see [`OPERATOR-BOARD.md`](OPERATOR-BOARD.md).
-- Worktrees pruned; local `fix/ci-red-main` deleted after ff onto `main`.
-- Open PRs: none. Nothing left to ff-merge.
-- Abandoned: none (CI-fix worktree contents committed as `d8433f5` + `d275897`).
+1. **Regen that changes CRDs also needs `make docs`** — `check-diff` (CI job) and `check-api-docs` (Docs Sync job) are separate gates. U-1 landed check-diff-green but Docs-Sync-red until `make docs` ran (`9e6ca3c`). Memory: `regen-crd-also-run-make-docs`.
+2. **Local schema overrides via config, not schema.json edits** — CI re-dumps `config/schema.json` from the provider binary, so a raw edit fails check-diff. `configureSensitiveFields`/`configureLoadbalancer` mutate `r.TerraformResource.Schema[...]` at config time → reproduced by CI's own generate. Verified idempotent.
+3. **design-auditor overstepped read-only** — auto-wrote INBOX/decisions with an operator sign-off; D-018/019 matched the real answers but D-020 was materially wrong. Constrain future `/replayable-audit` to report+register; grep its output. Memory: `design-auditor-overstepped-readonly`.
 
 ## Do not
 
-- Reintroduce a personal PAT as an Actions secret.
-- Wire uptest / nightly lab creds (D-012).
-- Auto-file the upjet datasource feature request (D-015).
-- Expect same-tag re-push to refresh Marketplace annotations — cut a new semver.
-- Hand-edit generated trees (`apis/**/zz_*.go`, `internal/controller/**`, `package/crds/**`).
+- Re-dispatch `publish-provider-package.yml` to "re-sign" v0.1.1 (strips extensions — D-020).
+- Hand-edit generated trees (`apis/**/zz_*`, `internal/controller/**`, `package/crds/**`) or `config/schema.json` (regen reverts it).
 - Bump `TERRAFORM_VERSION` past 1.5.7 (BSL pin).
+- Reintroduce a personal PAT as an Actions secret.

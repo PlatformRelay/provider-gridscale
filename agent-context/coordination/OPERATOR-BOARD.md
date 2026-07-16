@@ -1,8 +1,19 @@
 # OPERATOR-BOARD — provider-gridscale (lanes + locks)
 
-Coordinator: session wrap 2026-07-16 (CI-red fix landed). Base: `origin/main` (wrap tip).
-**No lanes In-flight.** Auto-mergeable backlog exhausted. See
-[`SESSION-HANDOFF.md`](SESSION-HANDOFF.md) for next entry points.
+Coordinator: session wrap **2026-07-17** (audit-mitigation + upstream-PR loop). Base: `origin/main` @ `c38e52b`.
+**No lanes In-flight.** Backlog exhausted; audit findings all fixed/dispositioned. See
+[`SESSION-HANDOFF.md`](SESSION-HANDOFF.md) for next entry points (D-020-FU → signed v0.2.0).
+
+### Batch 8 — audit-mitigation + upstream fixes (2026-07-17) — landed on `main`
+
+| Lane | Story | State |
+| --- | --- | --- |
+| L-DISPO | Audit re-run dispositions (DOC-5 CI-wired; DIR-2c/DOC-2 ACCEPTED) + ROADMAP refresh | ✅ Integrated (`ca9d3aa`) |
+| L-SECHARD | SEC-H1/2/3 least-privilege `GITHUB_TOKEN` (ci/e2e) + keyword-gate | ✅ Integrated (`68f8d66`) |
+| L-DECIDE | Apply operator D-018/019/020 (workspace relay) + track sweep findings | ✅ Integrated (`949d1de`) |
+| L-U1 | **U-1** credential-sensitivity fix (`config/sensitive.go`) + regen | ✅ Integrated (`8ae7376`+`9e6ca3c` docs) |
+| L-LB1 | **LB-1** loadbalancer `status` Computed (`config/loadbalancer.go`) + regen | ✅ Integrated (`c38e52b`) |
+| Upstream PRs | #509 (U-1) / #510 (LB-1) / #511 (objectstorage) on gridscale:master | 🔵 Opened — awaiting gridscale review |
 
 Lanes own **disjoint paths**; auto-merge only on gates-green + `/tech-review` APPROVE + green CI
 (security/API/release lanes are **surfaced, not auto-merged**). Merge model this session: local

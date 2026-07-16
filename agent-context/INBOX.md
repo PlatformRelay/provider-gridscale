@@ -24,39 +24,37 @@ remove here. This repo's INBOX is independent — never coordinate other repos f
 > the real answer is **do NOT re-dispatch** — CI `xpkg build` omits `--extensions-root`, so a rebuild
 > strips the icon/readme extensions). The revert was correct; the true answers are now recorded.
 
+> **Session 2026-07-17 wrap:** main @ `c38e52b`, all 7 CI workflows green. Landed **U-1** and **LB-1**
+> local fixes (see below, both RESOLVED). Opened 3 upstream PRs on `gridscale/terraform-provider-gridscale`:
+> **#509** (sensitivity/U-1), **#510** (loadbalancer status/LB-1), **#511** (objectstorage wrong-Read).
+> Deleted the 5 superseded remote branches. Backlog exhausted; see [`coordination/SESSION-HANDOFF.md`](coordination/SESSION-HANDOFF.md).
+
 ---
 
-## Decisions (open) — security (needs a call)
+## 🔴 Decision (open) — needs your call
 
-**S1. U-1 — upstream sensitive-flag bug leaks S3 creds to plaintext in our CRDs.** A proactive
-upstream bug hunt found that `gridscale/terraform-provider-gridscale` (v2.3.0 **and** HEAD,
-unreported) omits `Sensitive: true` on 5 credential fields:
-`k8s.log_delivery_access_key`/`_secret_key`, `postgresql.pgaudit_log_access_key`/`_secret_key`
-(core S3 creds), and `server.console_token` (lower-tier). Because our baked `config/schema.json`
-inherits `sensitive: false`, Upjet renders these as plain `type: string` in the generated CRDs
-(bare `*string`, not `SecretKeySelector`) — so those S3 credentials are persisted **in plaintext**
-in the Kubernetes CR. Same resources correctly mark `password`/`kubeconfig` sensitive, so this is an
-upstream oversight, not by design. Full register row: `archive/audits/TECH-DEBT-REGISTER.md` (U-1).
-- **Option A — Upstream PR** (add `Sensitive: true` to the 5 fields). Trivial, safe, self-contained;
-  aligns with the standing "hunt upstream bugs → open PR upstream" practice. Outward action under
-  your gh identity, so it needs your go-ahead. Once merged + we re-vendor the schema, Upjet routes
-  them into connection Secrets automatically — no local override needed.
-- **Option B — Local Upjet override + regenerate** (mark the fields sensitive in `config/`, then
-  `make generate`). Fixes our provider immediately without waiting on upstream. **NOW UNBLOCKED** —
-  terraform 1.5.7 is cached and a baseline `make generate` runs clean. **In progress this session** as
-  a codegen lane (the fields become `SecretKeySelector` in the CRDs).
-- **Recommended:** **A + B** — I am landing **B** now; **A (the upstream PR) still needs your go-ahead**
-  (outward action under your gh identity). **Answer / instructions:** _(operator)_
+**D-020-FU — cosign/extensions fix, DO BEFORE the v0.2.0 release.** `v0.1.1`'s published digest is
+**unsigned**: it was cosign-signed at publish, then icon/readme were `up alpha xpkg append`-ed, which
+changed the digest and invalidated the signature. A naive re-sign is a trap — CI `xpkg build`
+(`build/makelib/xpkg.mk:77`) builds with `--package-root`/`--examples-root` but **no extensions**, so
+rebuild-then-sign would strip the icon/readme and republish an extension-less package.
+- **Option A — leave as tracked debt** (near-term). Functional + listed; only matters for a signed
+  supply-chain release. Zero action.
+- **Option B — wire the fix, then cut a signed `v0.2.0`** (RECOMMENDED before any signed release).
+  Make the release produce one digest that already contains the extensions, then sign THAT: either
+  build-with-extensions (if the pinned CLI supports it) or reorder to **append-then-sign** in
+  `publish-provider-package.yml`. Operator dispatches the actual `v0.2.0` (release = operator-only).
+- **Recommended:** **B — the fix MUST land before v0.2.0.** **Answer / instructions:** _(operator)_
 
-**S2. Additional upstream findings** (full 32-resource sweep → `archive/audits/TECH-DEBT-REGISTER.md`):
-- **LB-1 (loadbalancer `status`)** — upstream marks it `Optional`+`Default:"active"` with **no
-  `Computed`**, though it's server-derived → perpetual plan diff, propagated to our CRD. Local fix:
-  mark it computed (folding into the same regen lane as U-1). Upstream PR: separate from U-1.
-- **Upstream-only CRUD bugs (PR-worthy, no local fix):** `objectstorage` Update returns the wrong
-  Read func (`resourceGridscaleSshkeyRead`) → stale state after update; `marketplace_app.type` set
-  from the wrong source field. Need your go-ahead to PR upstream.
-- **Awareness (not a bug):** `objectstorage`'s external-name annotation IS its `access_key` (a secret
-  value upstream marks Sensitive) — noted for our secret-handling posture.
+## ✅ Resolved this session (recorded, no further call)
+
+- **U-1 (S3/console credentials sensitive)** — **FIXED locally** (`config/sensitive.go`, `8ae7376`):
+  5 fields now `SecretKeySelector`/connection-secret, no plaintext creds in CRDs. Upstream **PR #509**
+  opened. Drop the local override once #509 merges + we re-vendor.
+- **LB-1 (loadbalancer `status` Computed)** — **FIXED locally** (`config/loadbalancer.go`, `c38e52b`):
+  `status` now observed-only, perpetual diff gone. Upstream **PR #510** opened. Drop override on merge.
+- **UP-2 (objectstorage wrong-Read + marketplace_app.type)** — **upstream-only**, no local fix possible
+  (runtime CRUD bug in the vendored binary). Upstream **PR #511** opened (objectstorage).
 
 ---
 
@@ -64,12 +62,11 @@ upstream oversight, not by design. Full register row: `archive/audits/TECH-DEBT-
 
 1. **Revoke the old classic PAT** that was briefly stored as `GHCR_PAT` (local PAT in
    `.envrc` only — do **not** put it in Actions secrets).
+2. **Nudge/track upstream PRs** #509/#510/#511 if they stall; on merge, re-vendor
+   (`TERRAFORM_PROVIDER_VERSION`) and drop the local U-1/LB-1 overrides.
 
 ### Non-blocking / optional
 
-- Delete superseded remote branches: `add-config-unit-tests`, `feat/official-gridscale-logo`,
-  `fix-credential-wiring`, `rewrite-readme-gridscale`, `worktree-gridscale-audit-2026-07-15`
-  (content already on `main`).
 - Upjet `DataSourceSchemas` feature request (D-015) — do not auto-file.
 - Optional: close upstream TF #188; nudge doc drafts #467/#468 (D-016).
 
