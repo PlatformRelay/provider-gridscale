@@ -2,7 +2,15 @@
 
 Untracked audit findings from [`archive/audits/HEALTH-AUDIT-2026-07-15.md`](archive/audits/HEALTH-AUDIT-2026-07-15.md) translated into INVEST stories. Every finding is grounded against `origin/main` code; stories match the `E<n>-S<nn>` / `REQ-E<n>-S<nn>-<mm>` scheme and the `openspec/config.yaml` U/E/M/D taxonomy (one **Test:** artifact + one **Verify:** command per REQ).
 
-> **Status: FOR OPERATOR REVIEW — do not auto-merge.** Proposed story IDs below are *proposals*; they are NOT yet written into `docs/ROADMAP.md` / `agent-context/BACKLOG.md` (that is the E1 design lane's territory). A concurrent `/agent-loop-auto` session already laned the top-4 findings (L1-CRED, L2-TEST, L3-README — see `coordination/OPERATOR-BOARD.md`); this doc covers only the untracked remainder.
+> **Status: reviewed — operator answered D-013 → A (reconcile-then-merge) 2026-07-16.** Proposed story IDs below are *proposals*; they are NOT yet written into `docs/ROADMAP.md` / `agent-context/BACKLOG.md` (that is the E1 design lane's territory). A concurrent `/agent-loop-auto` session already laned the top-4 findings (L1-CRED, L2-TEST, L3-README — see `coordination/OPERATOR-BOARD.md`); this doc covers only the untracked remainder.
+
+> **⚠ Reconciled against D-012 (2026-07-16, postdates this doc — see `decisions.md` / D-013):** the
+> operator decided **manual smoke tests only — no automated uptest, no e2e CI creds** (lab access is
+> interview-time-boxed; the archived-uptest counterpoint was offered and declined). Any uptest- or
+> e2e-enablement-dependent assumption below (TEST-2/E2-S05 wiring, E2-S06's "unblocks e2e" framing)
+> is **superseded** and flagged inline. Story **E2-S09** (e2e auth smoke) lives in
+> [`PROVIDER-DOCS-RESEARCH-2026-07-15.md`](PROVIDER-DOCS-RESEARCH-2026-07-15.md) and carries the same
+> flag: kept, but needs rescoping against D-012 before laning.
 
 ## Traceability — every finding → tracking status
 
@@ -14,7 +22,7 @@ Untracked audit findings from [`archive/audits/HEALTH-AUDIT-2026-07-15.md`](arch
 | TEST-1 | P1 | **LANED** | OPERATOR-BOARD L2-TEST |
 | DOC-3 | P2 | **LANED** | OPERATOR-BOARD L3-README |
 | DOC-2 | P2 | **ROADMAP-E4** | ≈ E4-S02 (curated example per group) |
-| TEST-2 | P2 | **ROADMAP-E2** | ≈ E2-S05 (enable e2e on `/test-examples` + nightly) |
+| TEST-2 | P2 | **ROADMAP-E2** | ≈ E2-S05 (enable e2e on `/test-examples` + nightly) — **superseded by D-012 (2026-07-16): manual smoke only, no uptest wiring** |
 | DOC-4 | P3 | **ROADMAP-E6** (surfaced) | ≈ E6-S03; operator decision on maintainer (OPERATOR-BOARD deferred) |
 | DIR-3 | P3 | **WITHDRAWN-FIXED** | commit `797adad` |
 | DIR-1 | — | **WITHDRAWN-FIXED** | docs exist on main |
@@ -48,7 +56,9 @@ Resolves **ARCH-1** (`config/` — no `Reference{}` present, grep-confirmed). Co
 - [ ] Gates green: `make generate` clean, `make reviewable`, `make check-diff`, `make test.spec`.
 
 **Touches:** `config/gridscale.go` (or new `config/references.go`), `config/provider.go`, `examples-generated/**`
-**Depends on:** none (independent of L1-CRED; unblocks E2-S05 e2e)
+**Depends on:** none (independent of L1-CRED; ~~unblocks E2-S05 e2e~~ — **D-012 note (2026-07-16):**
+the e2e-unblocking motivation is superseded; automated uptest/e2e is not happening. The story stands
+on its own merits — correct reference wiring + interpolation-free examples — not as an e2e enabler)
 **Not in scope:** external-name strategy changes (that is E2-S08 / ARCH-3); wiring refs for name-keyed targets whose `id` is not a stable UUID (defer); the e2e-lab curation in E2-S04.
 
 ---
@@ -201,3 +211,8 @@ Resolves **TEST-3** (`.github/workflows/ci.yml:53-56` — the `report-breaking-c
 
 ## Recommendation (do first)
 **E2-S06 (ARCH-1)** — highest untracked severity (P1), and it is the one that unblocks e2e: with credentials landing on L1-CRED, the remaining reason examples can't pass uptest is the five manifests carrying literal `${...}`. Wiring references removes that blocker and makes E2-S04/S05 real. Run **E5-S09 (goimports) alone and last** among the Go lanes to avoid a repo-wide reformat collision.
+
+> **D-012 note (2026-07-16):** the "unblocks e2e / makes E2-S04/S05 real" rationale above is
+> **superseded** — D-012 decided manual smoke only, no automated uptest. E2-S06 remains the top
+> pick for its own correctness value (reference-wired CRDs, interpolation-free generated examples),
+> but it should be re-prioritized without the e2e-enablement weight.
