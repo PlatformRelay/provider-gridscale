@@ -10,7 +10,22 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 ## [Unreleased]
 
+### CI/CD
+
+- **release:** Sign published package even if the xpkg.upbound.io mirror fails (decouple sign-and-sbom) [65b56ec](https://github.com/platformrelay/provider-gridscale/commit/65b56ec4ccbb6701616a3f97053b7dc67acc8b7c)
+
+
+### Documentation
+
+- **decisions,inbox:** Log operator answers — D-009 confirmed B (closed), D-012→B, D-013 PR#7 reconcile-then-merge [92e0550](https://github.com/platformrelay/provider-gridscale/commit/92e0550810d32c0cb32a99314103d740b3632501)
+
+- **inbox:** V0.1.0 published to ghcr; record signing (GHCR_PAT read) + Upbound-mirror cred follow-ups [4f96887](https://github.com/platformrelay/provider-gridscale/commit/4f968877d79e01f032876b64b2f43195b35e6fb4)
+
+## [0.1.0](https://github.com/platformrelay/provider-gridscale/compare/v0.1.0-alpha.1..v0.1.0) - 2026-07-16
+
 ### Bug Fixes
+
+- **cleanup:** Gridscale changelog label, go1.25 unify, drop dead schema gate, README matrix guard (DIR-2a/2c,TEST-3,DOC-5) [f9bf6f7](https://github.com/platformrelay/provider-gridscale/commit/f9bf6f73ddb5a4196fe666ea6686f622c2a3c543)
 
 - **integration:** Cite D-012 for coverage-widen; switch Codecov to tokenless OIDC [05114ed](https://github.com/platformrelay/provider-gridscale/commit/05114edea04414d41b2f7aa7d07e72c187c49dd9)
 
@@ -43,6 +58,18 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 ### Documentation
 
+- **governance:** Drop stale DOC-4 open-decision refs (maintainer set); track BRAND-1 icon polish [a3d7131](https://github.com/platformrelay/provider-gridscale/commit/a3d7131cb570e15e0c46aa6b3d023e45676c2d25)
+
+- **decisions:** Reconcile D-008..D-011 as resolved; D-012 stays operator-blocked [23275ae](https://github.com/platformrelay/provider-gridscale/commit/23275ae6435e4485a19100c0453ab1692c3c3966)
+
+- **audit,inbox:** Commit 2026-07-16 health audit + record v0.1.0 release-ready/held for operator go-ahead [6f254da](https://github.com/platformrelay/provider-gridscale/commit/6f254da24bf28e23329a2a03e6c9c4e9955a1092)
+
+- **audit:** Mark ARCH-1/2, DIR-2, TEST-3, DOC-2 fixed; only operator-blocked TEST-2 remains [950f064](https://github.com/platformrelay/provider-gridscale/commit/950f0649e0a8414b35ae3cbb7a780711a6463c0d)
+
+- **examples:** Add curated marketplace + ipv6 examples (DOC-2) [bdcf722](https://github.com/platformrelay/provider-gridscale/commit/bdcf72226747a2d1fd23c8c097acec0cadcbaa1a)
+
+- **branding,testing:** Image-gen prompt (D-009) + uptest smoke runbook (D-012) [6222151](https://github.com/platformrelay/provider-gridscale/commit/6222151b2ab980d393733ffa796135ac0f1904f0)
+
 - **readme:** Add logo + badge row + docs/examples pointers (E3-S02/S04) [eec5d77](https://github.com/platformrelay/provider-gridscale/commit/eec5d77751b1957bd19cf60c3be591116fea53b6)
 
 - **governance:** Name @konih as maintainer (DOC-4) [f79d1a0](https://github.com/platformrelay/provider-gridscale/commit/f79d1a0807139a948ab16af5369552ce460b5d4e)
@@ -72,6 +99,8 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 ### Features
 
+- **config:** Cross-resource references + provider-metadata fixes (ARCH-1/ARCH-2) [5959886](https://github.com/platformrelay/provider-gridscale/commit/595988691768cb33657a464a28b0e7af0ab8c167)
+
 - **marketplace:** Add crossplane.yaml metadata + marketplace readme (E3-S03) [8ed8ec5](https://github.com/platformrelay/provider-gridscale/commit/8ed8ec5ff2200cd360a65bdc39e7e6716ee67d56)
 
 - **branding:** Add provider icon + light/dark variants (E3-S01, placeholder) [df4a3ec](https://github.com/platformrelay/provider-gridscale/commit/df4a3ecf86f6440e5dbb9d8d7534a5129d166c35)
@@ -83,6 +112,8 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 
 ### Tests
+
+- **metadatafix:** Table test for re-key rules + idempotency (F1) [3f3508b](https://github.com/platformrelay/provider-gridscale/commit/3f3508bf32c801aa3787c4e97f67f30e32636cda)
 
 - **clients:** Cover credential resolution; widen coverage floor to internal/clients (E2-S03/D-007) [5d054e5](https://github.com/platformrelay/provider-gridscale/commit/5d054e55c3463d4f48d33a1ea9076c5093524abf)
 
