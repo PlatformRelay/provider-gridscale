@@ -81,7 +81,7 @@ carries exactly one `**Test:**` (artifact) + one `**Verify:**` (command) + a `**
 - **Coverage** — codecov upload for visibility; a **floor scoped to the hand-authored packages
   `./config/...` and `./internal/clients/...`** (start ~70%, ratchet up), **not** repo-wide. Generated
   packages (`internal/controller/**`, `apis/**/zz_*.go`, `package/crds/**`) are excluded from the floor.
-  > **Updated by [D-007](../../agent-context/decisions.md) (2026-07-16):** the floor originally covered
+  > **Updated by [D-012](../../agent-context/decisions.md) (2026-07-16):** the floor originally covered
   > only `./config/...`. It now also includes `./internal/clients/...` — the audit-critical credential
   > surface (`TerraformSetupBuilder`/`resolveModern`/`resolveLegacy`/`buildProviderConfiguration`, which
   > map a `ProviderConfig` + `Secret` into the Terraform provider setup). This is a hand-authored package,
@@ -92,7 +92,7 @@ carries exactly one `**Test:**` (artifact) + one `**Verify:**` (command) + a `**
 - ❌ **envtest / Ginkgo reconcile tests** — controllers are generated; nothing of ours to exercise.
 - ❌ **mockery / interface mocks** — no hand-written business interfaces to mock.
 - ❌ **Repo-wide coverage floor** — generated code would dominate and make the number a lie. (The
-  floor stays scoped to the hand-authored packages `./config/...` + `./internal/clients/...`; see D-007.)
+  floor stays scoped to the hand-authored packages `./config/...` + `./internal/clients/...`; see D-012.)
 - ❌ **Standalone Chainsaw suites** — uptest already renders Chainsaw for CRUD; hand-rolled Chainsaw
   only pays off at the Composition/policy layer, which is kaddy's E6g-S03, not this provider.
 
