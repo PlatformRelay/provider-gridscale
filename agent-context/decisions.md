@@ -99,3 +99,90 @@ and before this entry existed — either it was approved out-of-band or a prior 
 surfaced security/deps change. It clears real called CVEs and `main` is green, so it is **not
 reverted**; the gap is noted so future surfaced items are logged at merge time, not after. The
 follow-up CI wiring for `govulncheck` remains **E5-S01** (surfaced), separate from this local bump.
+
+---
+
+## D-008 — Real maintainer identity → A (Konrad Heimel, sole initial maintainer)
+
+**Date:** 2026-07-16 · **Status:** Accepted — operator answered **A** (was tracked as **DOC-4**).
+**Context:** `CODEOWNERS`, `OWNERS.md`, and `GOVERNANCE.md` shipped as template stubs (`@username`,
+`Full Name <email@example.com>`, "maintainers TBD"); no manifest — including the Marketplace
+`maintainer` annotation in `package/crossplane.yaml` — could name a real owner until this was answered.
+**Decision:** Konrad Heimel as the sole initial maintainer (operator + repo author). Fill all three
+governance files and the Marketplace `maintainer` with that identity: `Konrad Heimel`, GitHub handle
+`@konih`, email `konrad.heimel@gmail.com`. **Verified on `main`:** `CODEOWNERS` fallback + scoped
+owners are `@konih`; `OWNERS.md` lists `Konrad Heimel <konrad.heimel@gmail.com> ([konih])`;
+`GOVERNANCE.md` names "Konrad Heimel (@konih)" as current maintainer (no "TBD"); and
+`package/crossplane.yaml` carries `meta.crossplane.io/maintainer: Konrad Heimel <konrad.heimel@gmail.com>`.
+Landed in `dff9a33` (governance files) + `860c5e6` (crossplane maintainer annotation).
+**Counterpoints:** (1) Solo-maintainer **bus-factor** — a single owner is a single point of failure;
+accepted for an early-stage project, with GOVERNANCE.md's "Becoming a maintainer" path open for
+co-maintainers later. (2) **Stale cross-reference:** `GOVERNANCE.md` line ~55 still calls the
+maintainer identity "an open operator decision (tracked as DOC-4)", which is now false — a cosmetic
+follow-up one-liner (out of scope for this 2-file reconciliation), not a blocker; the maintainer is
+correctly named at line ~53.
+
+---
+
+## D-009 — E3-S01 branding icon → B (ship placeholder for v0.1.0) — COORDINATOR decision
+
+**Date:** 2026-07-16 · **Status:** **Coordinator decision** under the operator's standing
+"decide-for-B-and-ask-later" latitude — **the operator can override this.**
+**Context:** `extensions/icons/icon.svg` (+ light/dark variants under `docs/assets/branding/`) landed
+as a **placeholder** (`df4a3ec`) — an original, neutral, valid SVG that renders correctly. The open
+question was whether v0.1.0 must wait on a real commissioned brand icon before publishing to the
+Marketplace and embedding in the README.
+**Decision:** Ship v0.1.0 with the placeholder icon; do **not** block the release on branding. Track a
+real commissioned icon as post-release polish (new backlog/debt item **BRAND-1: commission real
+provider icon**). Rationale: the placeholder is a valid, neutral, original asset that renders fine; a
+real brand icon is a subjective designer call that should not gate an otherwise-ready release.
+Consequently `iconURI` is intentionally left out of `package/crossplane.yaml` for now (see D-010).
+**Counterpoints:** A placeholder icon on the Upbound Marketplace listing is a **weaker first
+impression** than a commissioned brand mark — accepted, revisit post-v0.1.0 under BRAND-1. Because
+this is a coordinator call rather than an operator answer, it is recorded explicitly so the operator
+can reverse it (choose option A/C) before the release is cut.
+
+---
+
+## D-010 — E3-S03 Marketplace metadata → A (filled; `iconURI` deferred to branding)
+
+**Date:** 2026-07-16 · **Status:** Resolved — objective fields done on `main`.
+**Context:** the INBOX text claimed `package/crossplane.yaml` carried only `capabilities: [SafeStart]`
+with no `meta.crossplane.io` annotations and an empty `extensions/readme/readme.md`. That text was
+**stale** — the manifest had already been populated. This manifest renders the Upbound Marketplace
+listing and ships inside the published XPKG (release-adjacent).
+**Decision:** Fill the Marketplace metadata in one pass. **Verified on `main`:** `crossplane.yaml` now
+carries `meta.crossplane.io` annotations — `maintainer`, `source` (`github.com/PlatformRelay/
+provider-gridscale`), `license` (`Apache-2.0`), `description`, `readme`, and a `friendly-name` — plus
+`capabilities: [SafeStart]`; and `extensions/readme/readme.md` is populated (~3986 bytes). Landed
+`860c5e6`. **`iconURI` is intentionally NOT set** — it is deferred to the branding decision (D-009 →
+placeholder / BRAND-1), so the objective metadata is resolved while the icon URL waits on a real
+brand asset.
+**Counterpoints:** Publishing the objective metadata before a final `iconURI` means the manifest is
+touched twice (once now, once when BRAND-1 lands the real icon) — accepted; the objective fields are
+correct and stable on first publish, and the icon is the only field legitimately still in flux.
+
+---
+
+## D-011 — E5 CI/CD hardening & supply-chain epic (S01–S06) → A (implemented, green)
+
+**Date:** 2026-07-16 · **Status:** Resolved — implemented and **all CI workflows green on `main`**.
+**Context:** scope was fixed by **D-004→A** (codecov, Scorecard, CodeQL, govulncheck job, gitleaks,
+pre-commit, dependabot/renovate, cliff, cosign/SBOM). Local quality *tools* had already landed
+(E2-S06…S10); wiring them into `.github/workflows/` was the E5 epic and had been deliberately deferred
+as surfaced-not-auto-merged. E3-S04 README badges also waited on these jobs existing.
+**Decision:** Implement E5 lane-by-lane, adding workflow files rather than editing stock `ci.yml`.
+**Verified on `main`:** the workflows exist — `coverage.yml`, `govulncheck.yml`, `scorecard.yml`,
+`codeql.yml`, `gitleaks.yml`, `changelog.yml` — plus `codecov.yml`, `.github/gitleaks.toml`,
+`.pre-commit-config.yaml`, `cliff.toml`, tuned `.github/renovate.json5`, and keyless cosign signing +
+SBOM in `publish-provider-package.yml`. Landed across `8980b57` (coverage/govulncheck/scorecard/codeql),
+`273d49e` (gitleaks + pre-commit), `dc699c4` (renovate tuning + cliff changelog), `aa5dba6`
+(cosign/SBOM), with integration fixes `05114ed` (tokenless Codecov OIDC) / `d936e5a` (renovate matcher
++ unsigned-publish warning). **CI status:** CI, Coverage, Govulncheck, Scorecard, CodeQL, Gitleaks all
+**green** on `main`. E3-S04 badges are consequently satisfied (README badge row: CI / Coverage /
+CodeQL / Scorecard / Go Report / Go Version / Release / License).
+**Counterpoints:** per D-004 this is a **pragmatic baseline** (SonarCloud, OpenVEX, and the E6-S05
+assurance case stay out/stretch) — a weaker signal than full supply-chain parity, accepted as
+proportionate for a generated provider's first release. Cosign signing/SBOM only run when
+`publish-provider-package.yml` is dispatched with an explicit version input; an input-less run emits a
+visible "package will be UNSIGNED" warning (by design) rather than failing.

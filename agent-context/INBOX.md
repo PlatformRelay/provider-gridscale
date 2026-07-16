@@ -4,76 +4,36 @@ Items needing the operator. **Decisions** carry full Context + Options (one mark
 **Answer** field. When answered, record in [`decisions.md`](decisions.md) (with counterpoints) and
 remove here. This repo's INBOX is independent — never coordinate other repos from here.
 
-> **Loop status (2026-07-16, `/agent-loop-auto`):** the auto-mergeable backlog is **exhausted**. The
-> last clean lane — **E3-S02 README enrichment** (resource matrix + community links) — landed on
-> `main`. Everything remaining is **operator-gated** (maintainer identity, real branding, Marketplace
-> metadata, the E5 CI/supply-chain epic, and uptest lab creds) and is surfaced below as decisions
-> **D-008…D-012**. The loop has **stopped at this stop condition** per the auto-merge guardrails; it
-> did not auto-merge any release/CI/API-surface change. Answer the decisions below (any session) to
-> unblock the next batch.
+> **Loop status (2026-07-16, `/agent-loop-auto`):** the auto-mergeable backlog is **exhausted** and
+> most of the earlier operator-gated batch is now **resolved**. Parallel work since these were written
+> landed maintainer identity (**D-008**), Marketplace metadata (**D-010**), and the whole E5
+> CI/supply-chain epic (**D-011**) — all on `main`, all 6 CI workflows green — so those have moved to
+> [`decisions.md`](decisions.md). Branding (**D-009**) was settled as a coordinator decision (ship the
+> placeholder for v0.1.0; see below + `decisions.md`). What still needs the operator: **D-012** (uptest
+> e2e — operator-blocked on live lab creds) and the **RELEASE v0.1.0** go-ahead. The loop stays
+> **stopped** at these; it did not auto-cut the release or auto-merge any CI/API-surface change.
 
 ---
 
 ## Decisions (open)
 
-### D-008 — Real maintainer identity (was **DOC-4**)
+> **Reconciled 2026-07-16:** **D-008** (maintainer identity → A), **D-010** (Marketplace metadata → A),
+> and **D-011** (E5 CI/supply-chain epic → A) were all **resolved by parallel work** and are now logged
+> in [`decisions.md`](decisions.md) — removed from this open list per the INBOX rule. **D-009**
+> (branding icon) was **decided B** (see below). Only **D-012** and the release item below remain.
 
-**Blocks:** E6-S03 (fill `CODEOWNERS`, `OWNERS.md`, `GOVERNANCE.md` maintainers) **and** the
-`maintainer` annotation in E3-S03's `package/crossplane.yaml`.
-**Context:** `CODEOWNERS` (`#*  @username`), `OWNERS.md` (`Full Name <email@example.com>
-([githubusername])`), and `GOVERNANCE.md` ("maintainers TBD") are all still **template stubs**. No
-manifest can name a real owner until this is answered.
-**Options:**
-- **A (Recommended)** — Konrad Heimel as sole initial maintainer (operator + author of the repo);
-  fill all three files + the Marketplace `maintainer` with that identity (name, GitHub handle, email).
-- **B** — Konrad + one or more named co-maintainers (provide handles/emails).
-- **C** — Defer to post-v0.1.0; ship with a generic "PlatformRelay maintainers" placeholder and a
-  tracking note.
-**Answer:** _(pending)_
+### D-009 — E3-S01 branding: real icon vs. placeholder → **DECIDED B** (coordinator)
 
-### D-009 — E3-S01 branding: real icon vs. placeholder
+**Status:** **Coordinator decision** under the operator's standing "decide-for-B-and-ask-later"
+latitude — **operator may override.** Full entry in [`decisions.md`](decisions.md).
+**Decision:** Ship v0.1.0 with the placeholder icon (`df4a3ec` — an original, neutral, valid SVG that
+renders fine); a real commissioned brand icon is post-release polish tracked as **BRAND-1: commission
+real provider icon**. `iconURI` in `package/crossplane.yaml` stays unset until BRAND-1 lands.
+**Counterpoint:** a placeholder on the Marketplace listing is a weaker first impression — accepted,
+revisit post-v0.1.0. Override this (choose real/reused icon) before the release is cut if you'd rather
+not ship the placeholder.
 
-**Blocks:** finalizing E3-S01, the README logo (deferred half of E3-S02), and E3-S03's `iconURI`.
-**Context:** `extensions/icons/icon.svg` + light/dark variants landed as a **placeholder** (`df4a3ec`).
-A placeholder must not be published as the Marketplace icon or embedded as the README logo.
-**Options:**
-- **A (Recommended)** — Provide/commission a real square gridscale-provider icon (+ light/dark + social
-  card) before v0.1.0, then wire it into README + `iconURI`.
-- **B** — Ship v0.1.0 with the placeholder; track the real icon as a post-release polish item.
-- **C** — Reuse an existing PlatformRelay/gridscale brand asset (point me at it).
-**Answer:** _(pending)_
-
-### D-010 — E3-S03 Marketplace metadata (`package/crossplane.yaml`)
-
-**Depends on:** D-008 (maintainer) + D-009 (iconURI). **Surfaced — release manifest, not auto-merged.**
-**Context:** `package/crossplane.yaml` currently carries only `capabilities: [SafeStart]` — no
-`meta.crossplane.io` annotations (maintainer, source, license, iconURI, description, readme), and
-`extensions/readme/readme.md` is **empty**. This is what renders the Upbound Marketplace listing, so
-it goes into the published XPKG (release-adjacent).
-**Options:**
-- **A (Recommended)** — Fill it in one pass **once D-008 + D-009 are answered** (so maintainer + real
-  `iconURI` are correct on first publish); populate `extensions/readme/readme.md` at the same time.
-- **B** — Fill the objective fields now (source, license, description, readme path) with maintainer +
-  icon left as explicit `TBD` — produces a half-baked manifest that gets redone; **not recommended**.
-- **C** — Defer entirely to release-prep.
-**Answer:** _(pending)_
-
-### D-011 — E5 CI/CD hardening & supply-chain epic (S01–S06)
-
-**Surfaced — CI/release; the largest remaining epic.** Scope fixed by **D-004→A** (codecov, Scorecard,
-CodeQL, govulncheck job, gitleaks, pre-commit, dependabot, cliff, cosign/SBOM).
-**Context:** the local quality **tools** already landed (E2-S06…S10: `make vuln`/`arch-lint`/
-`test.race`/fuzz/`tidy-check`). Wiring each into `.github/workflows/` is E5 and was **deliberately
-deferred** as surfaced-not-auto-merged. E3-S04 badges also wait on these jobs existing.
-**Options:**
-- **A (Recommended)** — Green-light the harness to implement E5 lane-by-lane, **adding** workflow files
-  rather than editing stock `ci.yml` where possible; each merge still surfaced for your review before
-  landing (CI/release guardrail stays on).
-- **B** — You implement/review E5 directly (CI secrets, Codecov token, cosign identity are yours).
-- **C** — Hold E5 until v0.1.0 scope is locked.
-**Answer:** _(pending)_
-
-### D-012 — E2-S04/S05 uptest e2e coverage
+### D-012 — E2-S04/S05 uptest e2e coverage — **OPERATOR-BLOCKED**
 
 **Blocked on lab access.** Not parallelizable (machine-locked live-API suite).
 **Context:** CRED-1/2 are **live-validated** by a single manual smoke test (real Server create/delete,
