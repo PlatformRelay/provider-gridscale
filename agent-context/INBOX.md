@@ -16,11 +16,13 @@ remove here. This repo's INBOX is independent — never coordinate other repos f
 > artifact). Only **TEST-2** (operator-blocked, live uptest creds) + BRAND-1 (deferred) remain open.
 > Also refreshed the stale `docs/ROADMAP.md` "Where we are" table.
 >
-> ⚠️ **Note on the 3 confirmations below:** the audit subagent auto-marked these as
-> "operator-confirmed via /operator-inbox" and pre-wrote D-018/019/020 to `decisions.md`. **No
-> operator confirmation actually occurred**, so that was reverted — the items remain **open** below,
-> awaiting your genuine sign-off. (These are outward/legal — icon source, unaffiliation wording,
-> cosign republish — and gate nothing, so they were left for you rather than auto-decided.)
+> ✅ **The 3 confirmations are now RESOLVED (2026-07-16c).** The operator answered them via
+> `/operator-inbox` on 2026-07-16; the answers were relayed through the **workspace** INBOX because
+> this repo's live worktree session had clobbered the in-repo writes. Applied here as **D-018 KEEP
+> icon / D-019 KEEP disclaimer / D-020 HOLD cosign** (see `decisions.md`). Note: the audit subagent's
+> earlier auto-write got D-018/019 right but **D-020 materially wrong** (it said "re-sign approved";
+> the real answer is **do NOT re-dispatch** — CI `xpkg build` omits `--extensions-root`, so a rebuild
+> strips the icon/readme extensions). The revert was correct; the true answers are now recorded.
 
 ---
 
@@ -40,30 +42,21 @@ upstream oversight, not by design. Full register row: `archive/audits/TECH-DEBT-
   your gh identity, so it needs your go-ahead. Once merged + we re-vendor the schema, Upjet routes
   them into connection Secrets automatically — no local override needed.
 - **Option B — Local Upjet override + regenerate** (mark the fields sensitive in `config/`, then
-  `make generate`). Fixes our provider immediately without waiting on upstream. **Blocked locally:**
-  `make generate` needs `terraform 1.5.7` on PATH (not available in this session); the lane can run
-  once tooling is available or you run the regen.
-- **Recommended:** **A + B** — file the upstream PR (durable fix) *and* land the local override so
-  v0.1.0 doesn't ship plaintext S3 creds in the interim. **Answer / instructions:** _(operator)_
+  `make generate`). Fixes our provider immediately without waiting on upstream. **NOW UNBLOCKED** —
+  terraform 1.5.7 is cached and a baseline `make generate` runs clean. **In progress this session** as
+  a codegen lane (the fields become `SecretKeySelector` in the CRDs).
+- **Recommended:** **A + B** — I am landing **B** now; **A (the upstream PR) still needs your go-ahead**
+  (outward action under your gh identity). **Answer / instructions:** _(operator)_
 
----
-
-## Decisions (open) — confirmations (non-blocking)
-
-1. **Marketplace icon source** — used operator `.cache/gridscale.svg` (+ PNG) for
-   `extensions/icons/icon.svg` and branding light/dark. **Recommended:** keep.
-   **Answer / instructions:** _(operator)_
-
-2. **Unaffiliation wording** — shipped as:
-   > community PlatformRelay project … **not** affiliated with, endorsed by, or an official
-   > product of gridscale GmbH.
-   **Recommended:** keep. **Answer / instructions:** _(operator)_
-
-3. **Post-append cosign** — each `up alpha xpkg append` invalidates prior keyless signatures.
-   `v0.1.1` was signed in publish then re-appended for icon/readme extensions — re-sign if
-   Scorecard/supply-chain demo needs a valid signature on the current digest.
-   **Recommended:** re-dispatch sign when convenient (not blocking demo copy).
-   **Answer / instructions:** _(operator)_
+**S2. Additional upstream findings** (full 32-resource sweep → `archive/audits/TECH-DEBT-REGISTER.md`):
+- **LB-1 (loadbalancer `status`)** — upstream marks it `Optional`+`Default:"active"` with **no
+  `Computed`**, though it's server-derived → perpetual plan diff, propagated to our CRD. Local fix:
+  mark it computed (folding into the same regen lane as U-1). Upstream PR: separate from U-1.
+- **Upstream-only CRUD bugs (PR-worthy, no local fix):** `objectstorage` Update returns the wrong
+  Read func (`resourceGridscaleSshkeyRead`) → stale state after update; `marketplace_app.type` set
+  from the wrong source field. Need your go-ahead to PR upstream.
+- **Awareness (not a bug):** `objectstorage`'s external-name annotation IS its `access_key` (a secret
+  value upstream marks Sensitive) — noted for our secret-handling posture.
 
 ---
 

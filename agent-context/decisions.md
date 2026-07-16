@@ -403,3 +403,39 @@ in as `repository_owner`; mapping `github.token` into that slot is a naming wart
 the reusable workflow. If login-as-owner fails again, inline a local publish job (kollect-style)
 instead of reintroducing a PAT.
 
+## D-018 — Marketplace icon source: keep the operator-supplied gridscale mark
+
+**Date:** 2026-07-16 · **Status:** Accepted — **operator-confirmed via `/operator-inbox` 2026-07-16**
+(relayed through the workspace INBOX because this repo's session was live and clobbered the in-repo write).
+**Context:** the coordinator used the operator-supplied `.cache/gridscale.svg` (+PNG) for
+`extensions/icons/icon.svg` and the light/dark branding under `docs/assets/branding/`; `iconURI` in
+`package/crossplane.yaml` points at it. Consistent with the accepted D-009b (official gridscale Bildmarke).
+**Decision:** **KEEP.** Assets are live on `main` and coherent with D-009b.
+**Counterpoint:** official-mark use carries trademark exposure — mitigated by the D-019 unaffiliation
+disclaimer; reversing a closed brand call would be churn for no gain.
+
+## D-019 — Unaffiliation wording: keep the shipped disclaimer
+
+**Date:** 2026-07-16 · **Status:** Accepted — **operator-confirmed via `/operator-inbox` 2026-07-16** (workspace relay).
+**Context:** shipped disclaimer: "community PlatformRelay project … not affiliated with, endorsed by,
+or an official product of gridscale GmbH."
+**Decision:** **KEEP** as-is. Conventional unaffiliated-community disclaimer; provides the trademark
+cover needed given official-logo use (pairs with D-018/D-009b).
+**Counterpoint:** none material; wording is legally conservative.
+
+## D-020 — Post-append cosign: HOLD as tracked debt; do NOT re-dispatch publish to re-sign
+
+**Date:** 2026-07-16 · **Status:** Accepted — **operator-confirmed via `/operator-inbox` 2026-07-16** (workspace relay).
+**Context:** each `up alpha xpkg append` invalidates prior keyless signatures, so the current
+published v0.1.1 digest (icon/readme appended after signing) is unsigned. The obvious "just re-run
+the sign job" is a **trap**: CI `xpkg build` (`build/makelib/xpkg.mk`) omits `--extensions-root`, so a
+rebuild-then-sign **strips** the icon/readme extensions and would publish an extension-less v0.1.1 —
+a chicken-and-egg with the manual `up alpha xpkg append` step.
+**Decision:** **HOLD.** Do NOT re-dispatch `publish-provider-package.yml` to re-sign v0.1.1. Instead,
+**backlog before any signed release:** wire `--extensions-root=./extensions` (or an atomic
+append-then-sign) into the CI `xpkg build`; then a real **v0.2.0** self-signs with extensions intact.
+Tracked as **D-020-FU** in `BACKLOG.md`.
+**Counterpoint:** this supersedes the audit subagent's optimistic "re-sign approved, dispatch when
+convenient" note (2026-07-16b) — that was reverted; a naive re-dispatch would have shipped an
+extension-less package. The unsigned-digest gap is accepted as low-risk tracked debt until v0.2.0.
+

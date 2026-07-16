@@ -14,7 +14,7 @@ Public build order: [docs/ROADMAP.md](../docs/ROADMAP.md). OpenSpec changes: `op
 | E6-S05 (assurance) | **landed** (`3edc5f0`); was stretch |
 | L-CIRED (CI restore) | **landed** (`d8433f5`+`d275897`) — primary CI green |
 | E8 datasources | **rescoped** (D-015) — document omission + track upstream; no codegen |
-| Next | Operator INBOX confirmations / PAT revoke; optional ROADMAP “Where we are” refresh |
+| Next | **U-1 + LB-1 local override lane** (mark 5 S3-cred fields sensitive + loadbalancer `status` computed; regen) — in progress. Then **D-020-FU** (wire `--extensions-root` into CI `xpkg build` before any signed release), upstream PRs (U-1 / LB-1 / objectstorage wrong-Read — need operator go-ahead), PAT revoke. INBOX confirmations D-018/019/020 **resolved**; ROADMAP refreshed. |
 
 ## E2 test-hardening batch (S06–S10) — ported from kollect's test tooling
 
