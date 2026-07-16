@@ -118,6 +118,35 @@ jobs:
             ${{ github.event.inputs.version != '' && format('VERSION={0}', github.event.inputs.version) || '' }} \
             publish
 
+      # D-020-FU: `up alpha xpkg append` is the only way to add extensions (crossplane
+      # xpkg build has no --extensions-root). The build system's $(UP) is a dangling
+      # no-op, so install a pinned `up` on PATH here. Pinned by version; from the
+      # official Upbound CDN (same trust model as the other curl-installed tools).
+      - name: Install up CLI (pinned, for extensions append)
+        if: ${{ github.event.inputs.version != '' }}
+        env:
+          UP_VERSION: v0.51.0
+        run: |
+          set -euo pipefail
+          curl -fsSLo /usr/local/bin/up \
+            "https://cli.upbound.io/stable/${UP_VERSION}/bin/linux_amd64/up"
+          chmod +x /usr/local/bin/up
+          up version --client
+
+      # D-020-FU: append the marketplace extensions (icon/readme) to the just-pushed
+      # release index so the FINAL digest carries them — the sign-and-sbom job then
+      # signs THAT digest. `up alpha xpkg append` rewrites the tag to a new digest and
+      # invalidates any prior signature, so it must run here (after publish, before
+      # sign), never after signing (the v0.1.1 trap; see decisions.md D-020/D-020-FU).
+      # Only for named releases: unversioned dev builds are neither signed nor listed.
+      - name: Append marketplace extensions to release index (D-020-FU)
+        if: ${{ github.event.inputs.version != '' }}
+        run: |
+          make \
+            XPKG_REG_ORGS="${{ env.CROSSPLANE_REGORG }}" \
+            VERSION=${{ github.event.inputs.version }} \
+            xpkg.append.extensions
+
   mirror-to-upbound:
     needs: publish-artifacts
     runs-on: ubuntu-24.04
@@ -172,8 +201,12 @@ jobs:
 
   sign-and-sbom:
     needs: publish-artifacts
-    # Sign even if publish/mirror fails — only needs the ghcr tag (may already exist).
-    if: ${{ always() && !cancelled() && github.event.inputs.version != '' }}
+    # D-020-FU: gate on publish-artifacts SUCCESS (not always()). That job now runs
+    # the extensions append; if it fails, the tag would still point at the pre-append
+    # extension-less digest, and an always()-gated sign would sign THAT — reviving the
+    # very bug this fix kills. Only sign when build+publish+append all succeeded. The
+    # "Verify extensions present" step below is the belt-and-suspenders backstop.
+    if: ${{ success() && github.event.inputs.version != '' }}
     runs-on: ubuntu-24.04
     permissions:
       id-token: write
@@ -202,6 +235,40 @@ jobs:
           DIGEST="$(crane digest "${IMAGE}:${VERSION}")"
           echo "Resolved ${IMAGE}:${VERSION} -> ${DIGEST}"
           echo "ref=${IMAGE}@${DIGEST}" >> "$GITHUB_OUTPUT"
+
+      # D-020-FU fail-closed: never sign an extension-less digest. `up alpha xpkg
+      # append` adds an `io.crossplane.xpkg: upbound` layer to every platform child
+      # manifest (verified against v0.1.1). If the append step no-op'd or the digest
+      # somehow lacks that layer, refuse to sign rather than publishing a signed but
+      # extension-less package. Guards against future reordering/re-dispatch too.
+      - name: Verify extensions present before signing (D-020-FU)
+        env:
+          REF: ${{ steps.digest.outputs.ref }}
+        run: |
+          set -euo pipefail
+          children="$(crane manifest "${REF}" | jq -r '.manifests[]?.digest // empty')"
+          if [ -z "${children}" ]; then
+            # Single-arch package: inspect its own layers.
+            children="${REF#*@}"
+          fi
+          missing=0
+          for child in ${children}; do
+            case "${child}" in
+              sha256:*) mref="${IMAGE}@${child}" ;;
+              *)        mref="${child}" ;;
+            esac
+            if crane manifest "${mref}" \
+                 | jq -e '[.layers[]? | select(.annotations["io.crossplane.xpkg"] == "upbound")] | length > 0' >/dev/null; then
+              echo "OK: ${mref} carries an io.crossplane.xpkg=upbound extensions layer"
+            else
+              echo "::error::${mref} is MISSING the io.crossplane.xpkg=upbound extensions layer"
+              missing=1
+            fi
+          done
+          if [ "${missing}" -ne 0 ]; then
+            echo "::error::Refusing to sign — resolved digest ${REF} lacks appended extensions (D-020-FU)."
+            exit 1
+          fi
 
       - name: Keyless cosign sign
         env:

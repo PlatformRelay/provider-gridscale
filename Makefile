@@ -106,6 +106,28 @@ xpkg.build.provider-gridscale: do.build.images
 build.init: $(UP) $(CROSSPLANE_CLI) check-terraform-version
 
 # ====================================================================================
+# D-020-FU: append marketplace extensions (icon/readme) to the release index.
+#
+# `crossplane xpkg build` has no --extensions-root flag (only --package-root /
+# --examples-root), so the extensions under ./extensions cannot be built into the
+# package. They must be appended to the already-pushed release index with
+# `up alpha xpkg append`, which adds an `io.crossplane.xpkg: upbound` layer and
+# rewrites the tag to a NEW digest that carries them. That new digest is what the
+# publish workflow then signs — appending AFTER signing would invalidate the
+# signature (the v0.1.1 trap; see agent-context/decisions.md D-020 / D-020-FU).
+# So this MUST run after `publish` and before the cosign sign job.
+#
+# NOTE: the build system's `$(UP)` (in `build.init`) is a dangling reference — no
+# makelib defines it, so it never installs anything. Rather than depend on it, the
+# publish workflow provisions a pinned `up` on PATH and we invoke it via UP_CLI.
+UP_CLI ?= up
+EXTENSIONS_DIR ?= $(ROOT_DIR)/extensions
+xpkg.append.extensions:
+	@$(INFO) Appending extensions $(EXTENSIONS_DIR) to $(XPKG_REG_ORGS)/$(PROJECT_NAME):$(VERSION)
+	@$(UP_CLI) alpha xpkg append --extensions-root=$(EXTENSIONS_DIR) $(XPKG_REG_ORGS)/$(PROJECT_NAME):$(VERSION) || $(FAIL)
+	@$(OK) Appended extensions to $(XPKG_REG_ORGS)/$(PROJECT_NAME):$(VERSION)
+
+# ====================================================================================
 # Setup Terraform for fetching provider schema
 TERRAFORM := $(TOOLS_HOST_DIR)/terraform-$(TERRAFORM_VERSION)
 TERRAFORM_WORKDIR := $(WORK_DIR)/terraform
