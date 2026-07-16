@@ -51,6 +51,16 @@ classifier-blocked a dry run). Verified offline: flag existence, make-target exp
 predicate against the **real** v0.1.1 manifests (TRUE) + a base-only manifest (fails closed). If append
 misbehaves at dispatch, the fail-closed check aborts before any signature is produced — safe by construction.
 
+**If the v0.2.0 run blocks, the two most likely spots (both fail SAFE — no bad signature):**
+1. **`up`→ghcr auth in the append step.** `up alpha xpkg append` is assumed to read the docker keychain
+   written by `docker/login-action` (ecosystem convention, untested here). If it can't push, the append
+   step fails → sign is skipped (gated on publish-artifacts success). Fix: ensure `up` sees ghcr creds
+   (it may need `up login` or an explicit registry-auth flag) — not a keychain the append step can reach.
+2. **Verify step false-fails on annotation scheme.** The check keys on `io.crossplane.xpkg: upbound`,
+   observed on v0.1.1 (built by an *unknown* `up` version). CI pins `up` v0.51.0, which wasn't run here;
+   if it emits a different annotation value, verify fails closed. The verify step now **dumps the actual
+   layer annotations** on failure — read that log to see what v0.51.0 produced and adjust the predicate.
+
 ## ✅ Resolved this session (recorded, no further call)
 
 - **D-020-FU (cosign/extensions)** — **FIXED** (`2e15c3e`, above). Closes fully on the signed v0.2.0 dispatch.

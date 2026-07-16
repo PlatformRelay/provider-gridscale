@@ -257,11 +257,17 @@ jobs:
               sha256:*) mref="${IMAGE}@${child}" ;;
               *)        mref="${child}" ;;
             esac
-            if crane manifest "${mref}" \
+            manifest="$(crane manifest "${mref}")"
+            if printf '%s' "${manifest}" \
                  | jq -e '[.layers[]? | select(.annotations["io.crossplane.xpkg"] == "upbound")] | length > 0' >/dev/null; then
               echo "OK: ${mref} carries an io.crossplane.xpkg=upbound extensions layer"
             else
               echo "::error::${mref} is MISSING the io.crossplane.xpkg=upbound extensions layer"
+              # Self-diagnosing: this path is untestable until dispatch, so dump the
+              # actual layer annotations. If a newer `up` uses a different annotation
+              # value/scheme than v0.1.1's `upbound`, this shows exactly what to key on.
+              echo "Layer annotations actually present on ${mref}:"
+              printf '%s' "${manifest}" | jq -c '[.layers[]?.annotations // {}]'
               missing=1
             fi
           done
