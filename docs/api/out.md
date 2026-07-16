@@ -306,7 +306,7 @@ _Appears in:_
 
 
 
-Filesystem is the Schema for the Filesystems API. <no value>
+Filesystem is the Schema for the Filesystems API. Manages a gridscale_filesystem resource. Stub entry - upstream provider docs were not scraped for this resource.
 
 
 
@@ -5386,7 +5386,7 @@ _Appears in:_
 
 
 
-Filesystem is the Schema for the Filesystems API. <no value>
+Filesystem is the Schema for the Filesystems API. Manages a gridscale_filesystem resource. Stub entry - upstream provider docs were not scraped for this resource.
 
 
 
