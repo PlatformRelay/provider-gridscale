@@ -8,9 +8,9 @@ package v1alpha1
 
 import (
 	"context"
-	v1alpha1 "github.com/PlatformRelay/provider-gridscale/apis/namespaced/paas/v1alpha1"
-	v1alpha11 "github.com/PlatformRelay/provider-gridscale/apis/namespaced/ssl/v1alpha1"
+	v1alpha1 "github.com/PlatformRelay/provider-gridscale/apis/namespaced/ssl/v1alpha1"
 	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
+	resource "github.com/crossplane/upjet/v2/pkg/resource"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -59,46 +59,46 @@ func (mg *Backupschedule) ResolveReferences(ctx context.Context, c client.Reader
 	return nil
 }
 
-// ResolveReferences of this K8S.
-func (mg *K8S) ResolveReferences(ctx context.Context, c client.Reader) error {
+// ResolveReferences of this Filesystem.
+func (mg *Filesystem) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPINamespacedResolver(c, mg)
 
 	var rsp reference.NamespacedResolutionResponse
 	var err error
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SecurityZoneUUID),
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.NetworkUUID),
 		Extract:      reference.ExternalName(),
 		Namespace:    mg.GetNamespace(),
-		Reference:    mg.Spec.ForProvider.SecurityZoneUUIDRef,
-		Selector:     mg.Spec.ForProvider.SecurityZoneUUIDSelector,
+		Reference:    mg.Spec.ForProvider.NetworkUUIDRef,
+		Selector:     mg.Spec.ForProvider.NetworkUUIDSelector,
 		To: reference.To{
-			List:    &v1alpha1.SecurityzoneList{},
-			Managed: &v1alpha1.Securityzone{},
+			List:    &NetworkList{},
+			Managed: &Network{},
 		},
 	})
 	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.SecurityZoneUUID")
+		return errors.Wrap(err, "mg.Spec.ForProvider.NetworkUUID")
 	}
-	mg.Spec.ForProvider.SecurityZoneUUID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.SecurityZoneUUIDRef = rsp.ResolvedReference
+	mg.Spec.ForProvider.NetworkUUID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.NetworkUUIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SecurityZoneUUID),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.NetworkUUID),
 		Extract:      reference.ExternalName(),
 		Namespace:    mg.GetNamespace(),
-		Reference:    mg.Spec.InitProvider.SecurityZoneUUIDRef,
-		Selector:     mg.Spec.InitProvider.SecurityZoneUUIDSelector,
+		Reference:    mg.Spec.InitProvider.NetworkUUIDRef,
+		Selector:     mg.Spec.InitProvider.NetworkUUIDSelector,
 		To: reference.To{
-			List:    &v1alpha1.SecurityzoneList{},
-			Managed: &v1alpha1.Securityzone{},
+			List:    &NetworkList{},
+			Managed: &Network{},
 		},
 	})
 	if err != nil {
-		return errors.Wrap(err, "mg.Spec.InitProvider.SecurityZoneUUID")
+		return errors.Wrap(err, "mg.Spec.InitProvider.NetworkUUID")
 	}
-	mg.Spec.InitProvider.SecurityZoneUUID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.InitProvider.SecurityZoneUUIDRef = rsp.ResolvedReference
+	mg.Spec.InitProvider.NetworkUUID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.NetworkUUIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -110,6 +110,25 @@ func (mg *Loadbalancer) ResolveReferences(ctx context.Context, c client.Reader) 
 	var rsp reference.NamespacedResolutionResponse
 	var err error
 
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.BackendServer); i3++ {
+		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.BackendServer[i3].Host),
+			Extract:      resource.ExtractParamPath("ip", true),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.ForProvider.BackendServer[i3].HostRef,
+			Selector:     mg.Spec.ForProvider.BackendServer[i3].HostSelector,
+			To: reference.To{
+				List:    &IPv4List{},
+				Managed: &IPv4{},
+			},
+		})
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.BackendServer[i3].Host")
+		}
+		mg.Spec.ForProvider.BackendServer[i3].Host = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.BackendServer[i3].HostRef = rsp.ResolvedReference
+
+	}
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.ForwardingRule); i3++ {
 		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ForwardingRule[i3].CertificateUUID),
@@ -118,8 +137,8 @@ func (mg *Loadbalancer) ResolveReferences(ctx context.Context, c client.Reader) 
 			Reference:    mg.Spec.ForProvider.ForwardingRule[i3].CertificateUUIDRef,
 			Selector:     mg.Spec.ForProvider.ForwardingRule[i3].CertificateUUIDSelector,
 			To: reference.To{
-				List:    &v1alpha11.CertificateList{},
-				Managed: &v1alpha11.Certificate{},
+				List:    &v1alpha1.CertificateList{},
+				Managed: &v1alpha1.Certificate{},
 			},
 		})
 		if err != nil {
@@ -163,6 +182,25 @@ func (mg *Loadbalancer) ResolveReferences(ctx context.Context, c client.Reader) 
 	mg.Spec.ForProvider.ListenIPv6UUID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ListenIPv6UUIDRef = rsp.ResolvedReference
 
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.BackendServer); i3++ {
+		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.BackendServer[i3].Host),
+			Extract:      resource.ExtractParamPath("ip", true),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.InitProvider.BackendServer[i3].HostRef,
+			Selector:     mg.Spec.InitProvider.BackendServer[i3].HostSelector,
+			To: reference.To{
+				List:    &IPv4List{},
+				Managed: &IPv4{},
+			},
+		})
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.BackendServer[i3].Host")
+		}
+		mg.Spec.InitProvider.BackendServer[i3].Host = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.BackendServer[i3].HostRef = rsp.ResolvedReference
+
+	}
 	for i3 := 0; i3 < len(mg.Spec.InitProvider.ForwardingRule); i3++ {
 		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ForwardingRule[i3].CertificateUUID),
@@ -171,8 +209,8 @@ func (mg *Loadbalancer) ResolveReferences(ctx context.Context, c client.Reader) 
 			Reference:    mg.Spec.InitProvider.ForwardingRule[i3].CertificateUUIDRef,
 			Selector:     mg.Spec.InitProvider.ForwardingRule[i3].CertificateUUIDSelector,
 			To: reference.To{
-				List:    &v1alpha11.CertificateList{},
-				Managed: &v1alpha11.Certificate{},
+				List:    &v1alpha1.CertificateList{},
+				Managed: &v1alpha1.Certificate{},
 			},
 		})
 		if err != nil {
@@ -219,6 +257,138 @@ func (mg *Loadbalancer) ResolveReferences(ctx context.Context, c client.Reader) 
 	return nil
 }
 
+// ResolveReferences of this Mariadb.
+func (mg *Mariadb) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPINamespacedResolver(c, mg)
+
+	var rsp reference.NamespacedResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.NetworkUUID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.NetworkUUIDRef,
+		Selector:     mg.Spec.ForProvider.NetworkUUIDSelector,
+		To: reference.To{
+			List:    &NetworkList{},
+			Managed: &Network{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.NetworkUUID")
+	}
+	mg.Spec.ForProvider.NetworkUUID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.NetworkUUIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.NetworkUUID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.InitProvider.NetworkUUIDRef,
+		Selector:     mg.Spec.InitProvider.NetworkUUIDSelector,
+		To: reference.To{
+			List:    &NetworkList{},
+			Managed: &Network{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.NetworkUUID")
+	}
+	mg.Spec.InitProvider.NetworkUUID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.NetworkUUIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this Memcached.
+func (mg *Memcached) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPINamespacedResolver(c, mg)
+
+	var rsp reference.NamespacedResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.NetworkUUID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.NetworkUUIDRef,
+		Selector:     mg.Spec.ForProvider.NetworkUUIDSelector,
+		To: reference.To{
+			List:    &NetworkList{},
+			Managed: &Network{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.NetworkUUID")
+	}
+	mg.Spec.ForProvider.NetworkUUID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.NetworkUUIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.NetworkUUID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.InitProvider.NetworkUUIDRef,
+		Selector:     mg.Spec.InitProvider.NetworkUUIDSelector,
+		To: reference.To{
+			List:    &NetworkList{},
+			Managed: &Network{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.NetworkUUID")
+	}
+	mg.Spec.InitProvider.NetworkUUID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.NetworkUUIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this MySQL.
+func (mg *MySQL) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPINamespacedResolver(c, mg)
+
+	var rsp reference.NamespacedResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.NetworkUUID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.NetworkUUIDRef,
+		Selector:     mg.Spec.ForProvider.NetworkUUIDSelector,
+		To: reference.To{
+			List:    &NetworkList{},
+			Managed: &Network{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.NetworkUUID")
+	}
+	mg.Spec.ForProvider.NetworkUUID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.NetworkUUIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.NetworkUUID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.InitProvider.NetworkUUIDRef,
+		Selector:     mg.Spec.InitProvider.NetworkUUIDSelector,
+		To: reference.To{
+			List:    &NetworkList{},
+			Managed: &Network{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.NetworkUUID")
+	}
+	mg.Spec.InitProvider.NetworkUUID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.NetworkUUIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
 // ResolveReferences of this Paas.
 func (mg *Paas) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPINamespacedResolver(c, mg)
@@ -244,21 +414,48 @@ func (mg *Paas) ResolveReferences(ctx context.Context, c client.Reader) error {
 	mg.Spec.ForProvider.NetworkUUIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.SecurityZoneUUID),
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.NetworkUUID),
 		Extract:      reference.ExternalName(),
 		Namespace:    mg.GetNamespace(),
-		Reference:    mg.Spec.ForProvider.SecurityZoneUUIDRef,
-		Selector:     mg.Spec.ForProvider.SecurityZoneUUIDSelector,
+		Reference:    mg.Spec.InitProvider.NetworkUUIDRef,
+		Selector:     mg.Spec.InitProvider.NetworkUUIDSelector,
 		To: reference.To{
-			List:    &v1alpha1.SecurityzoneList{},
-			Managed: &v1alpha1.Securityzone{},
+			List:    &NetworkList{},
+			Managed: &Network{},
 		},
 	})
 	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.SecurityZoneUUID")
+		return errors.Wrap(err, "mg.Spec.InitProvider.NetworkUUID")
 	}
-	mg.Spec.ForProvider.SecurityZoneUUID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.SecurityZoneUUIDRef = rsp.ResolvedReference
+	mg.Spec.InitProvider.NetworkUUID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.NetworkUUIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this Postgresql.
+func (mg *Postgresql) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPINamespacedResolver(c, mg)
+
+	var rsp reference.NamespacedResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.NetworkUUID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.NetworkUUIDRef,
+		Selector:     mg.Spec.ForProvider.NetworkUUIDSelector,
+		To: reference.To{
+			List:    &NetworkList{},
+			Managed: &Network{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.NetworkUUID")
+	}
+	mg.Spec.ForProvider.NetworkUUID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.NetworkUUIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.NetworkUUID),
@@ -276,23 +473,6 @@ func (mg *Paas) ResolveReferences(ctx context.Context, c client.Reader) error {
 	}
 	mg.Spec.InitProvider.NetworkUUID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.NetworkUUIDRef = rsp.ResolvedReference
-
-	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.SecurityZoneUUID),
-		Extract:      reference.ExternalName(),
-		Namespace:    mg.GetNamespace(),
-		Reference:    mg.Spec.InitProvider.SecurityZoneUUIDRef,
-		Selector:     mg.Spec.InitProvider.SecurityZoneUUIDSelector,
-		To: reference.To{
-			List:    &v1alpha1.SecurityzoneList{},
-			Managed: &v1alpha1.Securityzone{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.InitProvider.SecurityZoneUUID")
-	}
-	mg.Spec.InitProvider.SecurityZoneUUID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.InitProvider.SecurityZoneUUIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -355,6 +535,25 @@ func (mg *Server) ResolveReferences(ctx context.Context, c client.Reader) error 
 	mg.Spec.ForProvider.Isoimage = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.IsoimageRef = rsp.ResolvedReference
 
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.Network); i3++ {
+		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Network[i3].FirewallTemplateUUID),
+			Extract:      reference.ExternalName(),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.ForProvider.Network[i3].FirewallTemplateUUIDRef,
+			Selector:     mg.Spec.ForProvider.Network[i3].FirewallTemplateUUIDSelector,
+			To: reference.To{
+				List:    &FirewallList{},
+				Managed: &Firewall{},
+			},
+		})
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.Network[i3].FirewallTemplateUUID")
+		}
+		mg.Spec.ForProvider.Network[i3].FirewallTemplateUUID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.ForProvider.Network[i3].FirewallTemplateUUIDRef = rsp.ResolvedReference
+
+	}
 	for i3 := 0; i3 < len(mg.Spec.ForProvider.Network); i3++ {
 		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.Network[i3].ObjectUUID),
@@ -444,6 +643,25 @@ func (mg *Server) ResolveReferences(ctx context.Context, c client.Reader) error 
 	mg.Spec.InitProvider.Isoimage = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.IsoimageRef = rsp.ResolvedReference
 
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.Network); i3++ {
+		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Network[i3].FirewallTemplateUUID),
+			Extract:      reference.ExternalName(),
+			Namespace:    mg.GetNamespace(),
+			Reference:    mg.Spec.InitProvider.Network[i3].FirewallTemplateUUIDRef,
+			Selector:     mg.Spec.InitProvider.Network[i3].FirewallTemplateUUIDSelector,
+			To: reference.To{
+				List:    &FirewallList{},
+				Managed: &Firewall{},
+			},
+		})
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.Network[i3].FirewallTemplateUUID")
+		}
+		mg.Spec.InitProvider.Network[i3].FirewallTemplateUUID = reference.ToPtrValue(rsp.ResolvedValue)
+		mg.Spec.InitProvider.Network[i3].FirewallTemplateUUIDRef = rsp.ResolvedReference
+
+	}
 	for i3 := 0; i3 < len(mg.Spec.InitProvider.Network); i3++ {
 		rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.Network[i3].ObjectUUID),
@@ -570,6 +788,50 @@ func (mg *Snapshotschedule) ResolveReferences(ctx context.Context, c client.Read
 	}
 	mg.Spec.InitProvider.StorageUUID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.StorageUUIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this Sqlserver.
+func (mg *Sqlserver) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPINamespacedResolver(c, mg)
+
+	var rsp reference.NamespacedResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.NetworkUUID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.NetworkUUIDRef,
+		Selector:     mg.Spec.ForProvider.NetworkUUIDSelector,
+		To: reference.To{
+			List:    &NetworkList{},
+			Managed: &Network{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.NetworkUUID")
+	}
+	mg.Spec.ForProvider.NetworkUUID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.NetworkUUIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.NetworkUUID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.InitProvider.NetworkUUIDRef,
+		Selector:     mg.Spec.InitProvider.NetworkUUIDSelector,
+		To: reference.To{
+			List:    &NetworkList{},
+			Managed: &Network{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.NetworkUUID")
+	}
+	mg.Spec.InitProvider.NetworkUUID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.NetworkUUIDRef = rsp.ResolvedReference
 
 	return nil
 }

@@ -17,7 +17,17 @@ import (
 type BackendServerInitParameters struct {
 
 	// A valid domain or an IP address of a server.
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/gridscale/v1alpha1.IPv4
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("ip",true)
 	Host *string `json:"host,omitempty" tf:"host,omitempty"`
+
+	// Reference to a IPv4 in gridscale to populate host.
+	// +kubebuilder:validation:Optional
+	HostRef *v1.NamespacedReference `json:"hostRef,omitempty" tf:"-"`
+
+	// Selector for a IPv4 in gridscale to populate host.
+	// +kubebuilder:validation:Optional
+	HostSelector *v1.NamespacedSelector `json:"hostSelector,omitempty" tf:"-"`
 
 	// The proxy protocol version. The proxy protocol is disabled by default and the valid version is either v1 or v2.
 	ProxyProtocol *string `json:"proxyProtocol,omitempty" tf:"proxy_protocol,omitempty"`
@@ -41,8 +51,18 @@ type BackendServerObservation struct {
 type BackendServerParameters struct {
 
 	// A valid domain or an IP address of a server.
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/gridscale/v1alpha1.IPv4
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("ip",true)
 	// +kubebuilder:validation:Optional
-	Host *string `json:"host" tf:"host,omitempty"`
+	Host *string `json:"host,omitempty" tf:"host,omitempty"`
+
+	// Reference to a IPv4 in gridscale to populate host.
+	// +kubebuilder:validation:Optional
+	HostRef *v1.NamespacedReference `json:"hostRef,omitempty" tf:"-"`
+
+	// Selector for a IPv4 in gridscale to populate host.
+	// +kubebuilder:validation:Optional
+	HostSelector *v1.NamespacedSelector `json:"hostSelector,omitempty" tf:"-"`
 
 	// The proxy protocol version. The proxy protocol is disabled by default and the valid version is either v1 or v2.
 	// +kubebuilder:validation:Optional

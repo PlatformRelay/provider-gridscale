@@ -76,6 +76,16 @@ func (in *BackendServerInitParameters) DeepCopyInto(out *BackendServerInitParame
 		*out = new(string)
 		**out = **in
 	}
+	if in.HostRef != nil {
+		in, out := &in.HostRef, &out.HostRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.HostSelector != nil {
+		in, out := &in.HostSelector, &out.HostSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.ProxyProtocol != nil {
 		in, out := &in.ProxyProtocol, &out.ProxyProtocol
 		*out = new(string)
@@ -135,6 +145,16 @@ func (in *BackendServerParameters) DeepCopyInto(out *BackendServerParameters) {
 		in, out := &in.Host, &out.Host
 		*out = new(string)
 		**out = **in
+	}
+	if in.HostRef != nil {
+		in, out := &in.HostRef, &out.HostRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.HostSelector != nil {
+		in, out := &in.HostSelector, &out.HostSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.ProxyProtocol != nil {
 		in, out := &in.ProxyProtocol, &out.ProxyProtocol
@@ -531,6 +551,16 @@ func (in *FilesystemInitParameters) DeepCopyInto(out *FilesystemInitParameters) 
 		*out = new(string)
 		**out = **in
 	}
+	if in.NetworkUUIDRef != nil {
+		in, out := &in.NetworkUUIDRef, &out.NetworkUUIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.NetworkUUIDSelector != nil {
+		in, out := &in.NetworkUUIDSelector, &out.NetworkUUIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.PerformanceClass != nil {
 		in, out := &in.PerformanceClass, &out.PerformanceClass
 		*out = new(string)
@@ -758,6 +788,16 @@ func (in *FilesystemParameters) DeepCopyInto(out *FilesystemParameters) {
 		in, out := &in.NetworkUUID, &out.NetworkUUID
 		*out = new(string)
 		**out = **in
+	}
+	if in.NetworkUUIDRef != nil {
+		in, out := &in.NetworkUUIDRef, &out.NetworkUUIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.NetworkUUIDSelector != nil {
+		in, out := &in.NetworkUUIDSelector, &out.NetworkUUIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.PerformanceClass != nil {
 		in, out := &in.PerformanceClass, &out.PerformanceClass
@@ -2465,16 +2505,6 @@ func (in *K8SInitParameters) DeepCopyInto(out *K8SInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.SecurityZoneUUIDRef != nil {
-		in, out := &in.SecurityZoneUUIDRef, &out.SecurityZoneUUIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.SecurityZoneUUIDSelector != nil {
-		in, out := &in.SecurityZoneUUIDSelector, &out.SecurityZoneUUIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.SurgeNode != nil {
 		in, out := &in.SurgeNode, &out.SurgeNode
 		*out = new(bool)
@@ -2944,16 +2974,6 @@ func (in *K8SParameters) DeepCopyInto(out *K8SParameters) {
 		in, out := &in.SecurityZoneUUID, &out.SecurityZoneUUID
 		*out = new(string)
 		**out = **in
-	}
-	if in.SecurityZoneUUIDRef != nil {
-		in, out := &in.SecurityZoneUUIDRef, &out.SecurityZoneUUIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.SecurityZoneUUIDSelector != nil {
-		in, out := &in.SecurityZoneUUIDSelector, &out.SecurityZoneUUIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.SurgeNode != nil {
 		in, out := &in.SurgeNode, &out.SurgeNode
@@ -3602,6 +3622,16 @@ func (in *MariadbInitParameters) DeepCopyInto(out *MariadbInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.NetworkUUIDRef != nil {
+		in, out := &in.NetworkUUIDRef, &out.NetworkUUIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.NetworkUUIDSelector != nil {
+		in, out := &in.NetworkUUIDSelector, &out.NetworkUUIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.PerformanceClass != nil {
 		in, out := &in.PerformanceClass, &out.PerformanceClass
 		*out = new(string)
@@ -3948,6 +3978,16 @@ func (in *MariadbParameters) DeepCopyInto(out *MariadbParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.NetworkUUIDRef != nil {
+		in, out := &in.NetworkUUIDRef, &out.NetworkUUIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.NetworkUUIDSelector != nil {
+		in, out := &in.NetworkUUIDSelector, &out.NetworkUUIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.PerformanceClass != nil {
 		in, out := &in.PerformanceClass, &out.PerformanceClass
 		*out = new(string)
@@ -4065,6 +4105,16 @@ func (in *MemcachedInitParameters) DeepCopyInto(out *MemcachedInitParameters) {
 		in, out := &in.NetworkUUID, &out.NetworkUUID
 		*out = new(string)
 		**out = **in
+	}
+	if in.NetworkUUIDRef != nil {
+		in, out := &in.NetworkUUIDRef, &out.NetworkUUIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.NetworkUUIDSelector != nil {
+		in, out := &in.NetworkUUIDSelector, &out.NetworkUUIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.PerformanceClass != nil {
 		in, out := &in.PerformanceClass, &out.PerformanceClass
@@ -4312,6 +4362,16 @@ func (in *MemcachedParameters) DeepCopyInto(out *MemcachedParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.NetworkUUIDRef != nil {
+		in, out := &in.NetworkUUIDRef, &out.NetworkUUIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.NetworkUUIDSelector != nil {
+		in, out := &in.NetworkUUIDSelector, &out.NetworkUUIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.PerformanceClass != nil {
 		in, out := &in.PerformanceClass, &out.PerformanceClass
 		*out = new(string)
@@ -4479,6 +4539,16 @@ func (in *MySQLInitParameters) DeepCopyInto(out *MySQLInitParameters) {
 		in, out := &in.NetworkUUID, &out.NetworkUUID
 		*out = new(string)
 		**out = **in
+	}
+	if in.NetworkUUIDRef != nil {
+		in, out := &in.NetworkUUIDRef, &out.NetworkUUIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.NetworkUUIDSelector != nil {
+		in, out := &in.NetworkUUIDSelector, &out.NetworkUUIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.PerformanceClass != nil {
 		in, out := &in.PerformanceClass, &out.PerformanceClass
@@ -4825,6 +4895,16 @@ func (in *MySQLParameters) DeepCopyInto(out *MySQLParameters) {
 		in, out := &in.NetworkUUID, &out.NetworkUUID
 		*out = new(string)
 		**out = **in
+	}
+	if in.NetworkUUIDRef != nil {
+		in, out := &in.NetworkUUIDRef, &out.NetworkUUIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.NetworkUUIDSelector != nil {
+		in, out := &in.NetworkUUIDSelector, &out.NetworkUUIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.PerformanceClass != nil {
 		in, out := &in.PerformanceClass, &out.PerformanceClass
@@ -6363,16 +6443,6 @@ func (in *PaasInitParameters) DeepCopyInto(out *PaasInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.SecurityZoneUUIDRef != nil {
-		in, out := &in.SecurityZoneUUIDRef, &out.SecurityZoneUUIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.SecurityZoneUUIDSelector != nil {
-		in, out := &in.SecurityZoneUUIDSelector, &out.SecurityZoneUUIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.ServiceTemplateUUID != nil {
 		in, out := &in.ServiceTemplateUUID, &out.ServiceTemplateUUID
 		*out = new(string)
@@ -6642,16 +6712,6 @@ func (in *PaasParameters) DeepCopyInto(out *PaasParameters) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.SecurityZoneUUIDRef != nil {
-		in, out := &in.SecurityZoneUUIDRef, &out.SecurityZoneUUIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.SecurityZoneUUIDSelector != nil {
-		in, out := &in.SecurityZoneUUIDSelector, &out.SecurityZoneUUIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.ServiceTemplateUUID != nil {
 		in, out := &in.ServiceTemplateUUID, &out.ServiceTemplateUUID
 		*out = new(string)
@@ -6904,6 +6964,16 @@ func (in *PostgresqlInitParameters) DeepCopyInto(out *PostgresqlInitParameters) 
 		in, out := &in.NetworkUUID, &out.NetworkUUID
 		*out = new(string)
 		**out = **in
+	}
+	if in.NetworkUUIDRef != nil {
+		in, out := &in.NetworkUUIDRef, &out.NetworkUUIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.NetworkUUIDSelector != nil {
+		in, out := &in.NetworkUUIDSelector, &out.NetworkUUIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.PerformanceClass != nil {
 		in, out := &in.PerformanceClass, &out.PerformanceClass
@@ -7200,6 +7270,16 @@ func (in *PostgresqlParameters) DeepCopyInto(out *PostgresqlParameters) {
 		in, out := &in.NetworkUUID, &out.NetworkUUID
 		*out = new(string)
 		**out = **in
+	}
+	if in.NetworkUUIDRef != nil {
+		in, out := &in.NetworkUUIDRef, &out.NetworkUUIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.NetworkUUIDSelector != nil {
+		in, out := &in.NetworkUUIDSelector, &out.NetworkUUIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.PerformanceClass != nil {
 		in, out := &in.PerformanceClass, &out.PerformanceClass
@@ -8406,6 +8486,16 @@ func (in *ServerNetworkInitParameters) DeepCopyInto(out *ServerNetworkInitParame
 		*out = new(string)
 		**out = **in
 	}
+	if in.FirewallTemplateUUIDRef != nil {
+		in, out := &in.FirewallTemplateUUIDRef, &out.FirewallTemplateUUIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.FirewallTemplateUUIDSelector != nil {
+		in, out := &in.FirewallTemplateUUIDSelector, &out.FirewallTemplateUUIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.IP != nil {
 		in, out := &in.IP, &out.IP
 		*out = new(string)
@@ -8576,6 +8666,16 @@ func (in *ServerNetworkParameters) DeepCopyInto(out *ServerNetworkParameters) {
 		in, out := &in.FirewallTemplateUUID, &out.FirewallTemplateUUID
 		*out = new(string)
 		**out = **in
+	}
+	if in.FirewallTemplateUUIDRef != nil {
+		in, out := &in.FirewallTemplateUUIDRef, &out.FirewallTemplateUUIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.FirewallTemplateUUIDSelector != nil {
+		in, out := &in.FirewallTemplateUUIDSelector, &out.FirewallTemplateUUIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.IP != nil {
 		in, out := &in.IP, &out.IP
@@ -9745,6 +9845,16 @@ func (in *SqlserverInitParameters) DeepCopyInto(out *SqlserverInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.NetworkUUIDRef != nil {
+		in, out := &in.NetworkUUIDRef, &out.NetworkUUIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.NetworkUUIDSelector != nil {
+		in, out := &in.NetworkUUIDSelector, &out.NetworkUUIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.PerformanceClass != nil {
 		in, out := &in.PerformanceClass, &out.PerformanceClass
 		*out = new(string)
@@ -9994,6 +10104,16 @@ func (in *SqlserverParameters) DeepCopyInto(out *SqlserverParameters) {
 		in, out := &in.NetworkUUID, &out.NetworkUUID
 		*out = new(string)
 		**out = **in
+	}
+	if in.NetworkUUIDRef != nil {
+		in, out := &in.NetworkUUIDRef, &out.NetworkUUIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.NetworkUUIDSelector != nil {
+		in, out := &in.NetworkUUIDSelector, &out.NetworkUUIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.PerformanceClass != nil {
 		in, out := &in.PerformanceClass, &out.PerformanceClass

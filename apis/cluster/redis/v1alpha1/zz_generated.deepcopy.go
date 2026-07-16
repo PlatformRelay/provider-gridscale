@@ -9,6 +9,7 @@
 package v1alpha1
 
 import (
+	"github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 
@@ -62,6 +63,16 @@ func (in *CacheInitParameters) DeepCopyInto(out *CacheInitParameters) {
 		in, out := &in.NetworkUUID, &out.NetworkUUID
 		*out = new(string)
 		**out = **in
+	}
+	if in.NetworkUUIDRef != nil {
+		in, out := &in.NetworkUUIDRef, &out.NetworkUUIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.NetworkUUIDSelector != nil {
+		in, out := &in.NetworkUUIDSelector, &out.NetworkUUIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.PerformanceClass != nil {
 		in, out := &in.PerformanceClass, &out.PerformanceClass
@@ -239,6 +250,16 @@ func (in *CacheParameters) DeepCopyInto(out *CacheParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.NetworkUUIDRef != nil {
+		in, out := &in.NetworkUUIDRef, &out.NetworkUUIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.NetworkUUIDSelector != nil {
+		in, out := &in.NetworkUUIDSelector, &out.NetworkUUIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.PerformanceClass != nil {
 		in, out := &in.PerformanceClass, &out.PerformanceClass
 		*out = new(string)
@@ -411,6 +432,16 @@ func (in *StoreInitParameters) DeepCopyInto(out *StoreInitParameters) {
 		in, out := &in.NetworkUUID, &out.NetworkUUID
 		*out = new(string)
 		**out = **in
+	}
+	if in.NetworkUUIDRef != nil {
+		in, out := &in.NetworkUUIDRef, &out.NetworkUUIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.NetworkUUIDSelector != nil {
+		in, out := &in.NetworkUUIDSelector, &out.NetworkUUIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.PerformanceClass != nil {
 		in, out := &in.PerformanceClass, &out.PerformanceClass
@@ -647,6 +678,16 @@ func (in *StoreParameters) DeepCopyInto(out *StoreParameters) {
 		in, out := &in.NetworkUUID, &out.NetworkUUID
 		*out = new(string)
 		**out = **in
+	}
+	if in.NetworkUUIDRef != nil {
+		in, out := &in.NetworkUUIDRef, &out.NetworkUUIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.NetworkUUIDSelector != nil {
+		in, out := &in.NetworkUUIDSelector, &out.NetworkUUIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.PerformanceClass != nil {
 		in, out := &in.PerformanceClass, &out.PerformanceClass

@@ -11,7 +11,9 @@ spec:
   forProvider:
     algorithm: leastconn
     backendServer:
-    - host: ${gridscale_ipv4.server.ip}
+    - hostSelector:
+        matchLabels:
+          testing.upbound.io/example-name: server
       weight: 100
     forwardingRule:
     - listenPort: 80

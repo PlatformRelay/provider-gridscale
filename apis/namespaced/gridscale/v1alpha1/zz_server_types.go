@@ -684,7 +684,16 @@ type ServerNetworkInitParameters struct {
 	Bootdevice *bool `json:"bootdevice,omitempty" tf:"bootdevice,omitempty"`
 
 	// The UUID of firewall template.
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/gridscale/v1alpha1.Firewall
 	FirewallTemplateUUID *string `json:"firewallTemplateUuid,omitempty" tf:"firewall_template_uuid,omitempty"`
+
+	// Reference to a Firewall in gridscale to populate firewallTemplateUuid.
+	// +kubebuilder:validation:Optional
+	FirewallTemplateUUIDRef *v1.NamespacedReference `json:"firewallTemplateUuidRef,omitempty" tf:"-"`
+
+	// Selector for a Firewall in gridscale to populate firewallTemplateUuid.
+	// +kubebuilder:validation:Optional
+	FirewallTemplateUUIDSelector *v1.NamespacedSelector `json:"firewallTemplateUuidSelector,omitempty" tf:"-"`
 
 	// Manually assign DHCP IP to the server (if applicable).
 	// Manually assign DHCP IP to the server.
@@ -772,8 +781,17 @@ type ServerNetworkParameters struct {
 	Bootdevice *bool `json:"bootdevice,omitempty" tf:"bootdevice,omitempty"`
 
 	// The UUID of firewall template.
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/gridscale/v1alpha1.Firewall
 	// +kubebuilder:validation:Optional
 	FirewallTemplateUUID *string `json:"firewallTemplateUuid,omitempty" tf:"firewall_template_uuid,omitempty"`
+
+	// Reference to a Firewall in gridscale to populate firewallTemplateUuid.
+	// +kubebuilder:validation:Optional
+	FirewallTemplateUUIDRef *v1.NamespacedReference `json:"firewallTemplateUuidRef,omitempty" tf:"-"`
+
+	// Selector for a Firewall in gridscale to populate firewallTemplateUuid.
+	// +kubebuilder:validation:Optional
+	FirewallTemplateUUIDSelector *v1.NamespacedSelector `json:"firewallTemplateUuidSelector,omitempty" tf:"-"`
 
 	// Manually assign DHCP IP to the server (if applicable).
 	// Manually assign DHCP IP to the server.

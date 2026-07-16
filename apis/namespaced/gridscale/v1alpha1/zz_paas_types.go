@@ -48,16 +48,7 @@ type PaasInitParameters struct {
 
 	// DEPRECATED  The UUID of the security zone that the service is attached to.
 	// Security zone UUID linked to PaaS service
-	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/paas/v1alpha1.Securityzone
 	SecurityZoneUUID *string `json:"securityZoneUuid,omitempty" tf:"security_zone_uuid,omitempty"`
-
-	// Reference to a Securityzone in paas to populate securityZoneUuid.
-	// +kubebuilder:validation:Optional
-	SecurityZoneUUIDRef *v1.NamespacedReference `json:"securityZoneUuidRef,omitempty" tf:"-"`
-
-	// Selector for a Securityzone in paas to populate securityZoneUuid.
-	// +kubebuilder:validation:Optional
-	SecurityZoneUUIDSelector *v1.NamespacedSelector `json:"securityZoneUuidSelector,omitempty" tf:"-"`
 
 	// The template used to create the service.
 	// Template that PaaS service uses
@@ -186,17 +177,8 @@ type PaasParameters struct {
 
 	// DEPRECATED  The UUID of the security zone that the service is attached to.
 	// Security zone UUID linked to PaaS service
-	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/paas/v1alpha1.Securityzone
 	// +kubebuilder:validation:Optional
 	SecurityZoneUUID *string `json:"securityZoneUuid,omitempty" tf:"security_zone_uuid,omitempty"`
-
-	// Reference to a Securityzone in paas to populate securityZoneUuid.
-	// +kubebuilder:validation:Optional
-	SecurityZoneUUIDRef *v1.NamespacedReference `json:"securityZoneUuidRef,omitempty" tf:"-"`
-
-	// Selector for a Securityzone in paas to populate securityZoneUuid.
-	// +kubebuilder:validation:Optional
-	SecurityZoneUUIDSelector *v1.NamespacedSelector `json:"securityZoneUuidSelector,omitempty" tf:"-"`
 
 	// The template used to create the service.
 	// Template that PaaS service uses

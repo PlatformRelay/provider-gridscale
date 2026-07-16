@@ -12,6 +12,8 @@
     "mysqlSqlMode",
     "name",
     "networkUuid",
+    "networkUuidRef",
+    "networkUuidSelector",
     "performanceClass",
     "release",
     "securityZoneUuid"

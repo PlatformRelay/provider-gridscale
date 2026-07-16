@@ -9,7 +9,7 @@ import (
 func configureGridscale(p *ujconfig.Provider) {
 	// gridscale_mysql8_0: the trailing "_0" version segment makes upjet derive an
 	// invalid Go kind ("0"). Give it an explicit, valid Kind.
-	p.AddResourceConfigurator("gridscale_mysql8_0", func(r *ujconfig.Resource) {
+	p.AddResourceConfigurator(tfMySQL8, func(r *ujconfig.Resource) {
 		r.Kind = "MySQL8"
 	})
 	// gridscale_storage_import: kind "Import" -> controller package "import", a Go

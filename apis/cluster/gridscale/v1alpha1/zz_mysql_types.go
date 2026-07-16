@@ -70,7 +70,16 @@ type MySQLInitParameters struct {
 
 	// The UUID of the network that the service is attached to.
 	// The UUID of the network that the service is attached to.
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/cluster/gridscale/v1alpha1.Network
 	NetworkUUID *string `json:"networkUuid,omitempty" tf:"network_uuid,omitempty"`
+
+	// Reference to a Network in gridscale to populate networkUuid.
+	// +kubebuilder:validation:Optional
+	NetworkUUIDRef *v1.Reference `json:"networkUuidRef,omitempty" tf:"-"`
+
+	// Selector for a Network in gridscale to populate networkUuid.
+	// +kubebuilder:validation:Optional
+	NetworkUUIDSelector *v1.Selector `json:"networkUuidSelector,omitempty" tf:"-"`
 
 	// Performance class of mysql service. Available performance classes at the time of writing: standard, high, insane, ultra.
 	// Performance class of MySQL service.
@@ -276,8 +285,17 @@ type MySQLParameters struct {
 
 	// The UUID of the network that the service is attached to.
 	// The UUID of the network that the service is attached to.
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/cluster/gridscale/v1alpha1.Network
 	// +kubebuilder:validation:Optional
 	NetworkUUID *string `json:"networkUuid,omitempty" tf:"network_uuid,omitempty"`
+
+	// Reference to a Network in gridscale to populate networkUuid.
+	// +kubebuilder:validation:Optional
+	NetworkUUIDRef *v1.Reference `json:"networkUuidRef,omitempty" tf:"-"`
+
+	// Selector for a Network in gridscale to populate networkUuid.
+	// +kubebuilder:validation:Optional
+	NetworkUUIDSelector *v1.Selector `json:"networkUuidSelector,omitempty" tf:"-"`
 
 	// Performance class of mysql service. Available performance classes at the time of writing: standard, high, insane, ultra.
 	// Performance class of MySQL service.

@@ -31,7 +31,16 @@ type MemcachedInitParameters struct {
 
 	// The UUID of the network that the service is attached to.
 	// The UUID of the network that the service is attached to.
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/gridscale/v1alpha1.Network
 	NetworkUUID *string `json:"networkUuid,omitempty" tf:"network_uuid,omitempty"`
+
+	// Reference to a Network in gridscale to populate networkUuid.
+	// +kubebuilder:validation:Optional
+	NetworkUUIDRef *v1.NamespacedReference `json:"networkUuidRef,omitempty" tf:"-"`
+
+	// Selector for a Network in gridscale to populate networkUuid.
+	// +kubebuilder:validation:Optional
+	NetworkUUIDSelector *v1.NamespacedSelector `json:"networkUuidSelector,omitempty" tf:"-"`
 
 	// Performance class of Memcached service. Available performance classes at the time of writing: standard, high, insane, ultra.
 	// Performance class of Memcached service.
@@ -147,8 +156,17 @@ type MemcachedParameters struct {
 
 	// The UUID of the network that the service is attached to.
 	// The UUID of the network that the service is attached to.
+	// +crossplane:generate:reference:type=github.com/PlatformRelay/provider-gridscale/apis/namespaced/gridscale/v1alpha1.Network
 	// +kubebuilder:validation:Optional
 	NetworkUUID *string `json:"networkUuid,omitempty" tf:"network_uuid,omitempty"`
+
+	// Reference to a Network in gridscale to populate networkUuid.
+	// +kubebuilder:validation:Optional
+	NetworkUUIDRef *v1.NamespacedReference `json:"networkUuidRef,omitempty" tf:"-"`
+
+	// Selector for a Network in gridscale to populate networkUuid.
+	// +kubebuilder:validation:Optional
+	NetworkUUIDSelector *v1.NamespacedSelector `json:"networkUuidSelector,omitempty" tf:"-"`
 
 	// Performance class of Memcached service. Available performance classes at the time of writing: standard, high, insane, ultra.
 	// Performance class of Memcached service.
