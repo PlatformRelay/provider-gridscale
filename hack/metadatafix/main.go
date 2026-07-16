@@ -50,6 +50,31 @@ var textRewrites = map[string]string{
 	"The capacity of a storage/ISO Image/ISO Image/snapshot in GB.": "The capacity of a storage/ISO Image/template/snapshot in GB.",
 }
 
+// fixMetadata applies the deterministic corrections to the scraped metadata
+// content: line-scoped key re-keying followed by file-scoped text corrections.
+// It is a pure function of its input and is idempotent — re-running it on
+// already-corrected content returns byte-identical output.
+func fixMetadata(content string) string {
+	// Line-scoped key re-keying. Whole-line matching (not substring) is
+	// deliberate: it prevents "marketplace application" from clobbering the
+	// embedded substring in "imported marketplace application", and prevents
+	// touching a title where it legitimately appears as a name:/title: value.
+	lines := strings.Split(content, "\n")
+	for i, line := range lines {
+		if repl, ok := keyRewrites[line]; ok {
+			lines[i] = repl
+		}
+	}
+	content = strings.Join(lines, "\n")
+
+	// File-scoped text corrections.
+	for from, to := range textRewrites {
+		content = strings.ReplaceAll(content, from, to)
+	}
+
+	return content
+}
+
 func main() {
 	if len(os.Args) != 2 {
 		fmt.Fprintln(os.Stderr, "usage: metadatafix <path-to-provider-metadata.yaml>")
@@ -64,21 +89,8 @@ func main() {
 		fmt.Fprintf(os.Stderr, "metadatafix: read %s: %v\n", path, err)
 		os.Exit(1)
 	}
-	content := string(raw)
 
-	// Line-scoped key re-keying.
-	lines := strings.Split(content, "\n")
-	for i, line := range lines {
-		if repl, ok := keyRewrites[line]; ok {
-			lines[i] = repl
-		}
-	}
-	content = strings.Join(lines, "\n")
-
-	// File-scoped text corrections.
-	for from, to := range textRewrites {
-		content = strings.ReplaceAll(content, from, to)
-	}
+	content := fixMetadata(string(raw))
 
 	if content == string(raw) {
 		// Idempotent no-op (e.g. upstream already fixed the docs).
