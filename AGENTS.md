@@ -41,6 +41,12 @@ tree as read-only build output:
 - **Commits:** `:gitmoji: type(scope): summary` — ASCII shortcode only; no Unicode emoji; no AI
   co-author trailers; never modify git config. One logical change per commit.
 - **Merge:** rebase-and-merge only — linear history, no squash, no merge commits.
+- **Branch policy (`protect-main` ruleset on `main`):** PRs required; **1 approving
+  review** + last-push approval + dismiss-stale for non-bypass actors; no force-push /
+  no branch deletion; required checks `lint`, `check-diff`, `unit-tests`, `gitleaks`,
+  `govulncheck`, `coverage`, `Analyze (go)` (up-to-date). **Admin** bypass is
+  `pull_request` mode only — solo merges via `gh pr merge --rebase --admin`. Markdown-only
+  PRs may skip CI jobs via `detect-noop`; those still need admin/bypass to land.
 - **Spec-driven:** every implementation lane references an OpenSpec change under `openspec/changes/`.
   A change is `proposal.md` + `design.md` + `tasks.md` + `specs/<capability>/spec.md`.
 - **TDD:** mandatory for hand-authored Go and `hack/` scripts — failing test first. Generated code

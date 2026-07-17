@@ -9,7 +9,7 @@ what remains operator-gated.
 
 | Claim | Evidence in this repo |
 | --- | --- |
-| Changes land through reviewed, linear history | [`CONTRIBUTING.md`](../CONTRIBUTING.md) merge policy (rebase-and-merge); [`GOVERNANCE.md`](../GOVERNANCE.md) |
+| Changes land through reviewed, linear history | Ruleset **`protect-main`** (1 approval + required checks + Admin PR-only bypass for solo); [`CONTRIBUTING.md`](../CONTRIBUTING.md) rebase-and-merge; [`GOVERNANCE.md`](../GOVERNANCE.md); [`AGENTS.md`](../AGENTS.md) |
 | Maintainers are identifiable | [`OWNERS.md`](../OWNERS.md), [`CODEOWNERS`](../CODEOWNERS) |
 | Vulnerability reporting path exists | [`SECURITY.md`](../SECURITY.md) |
 | Code of Conduct is a recognised standard | [`CODE_OF_CONDUCT.md`](../CODE_OF_CONDUCT.md) (Contributor Covenant 2.1) |
