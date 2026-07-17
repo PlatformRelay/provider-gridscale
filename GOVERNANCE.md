@@ -130,7 +130,9 @@ contribute, how to report a vulnerability, and who owns the repository.
 This `GOVERNANCE.md`, alongside [`CONTRIBUTING.md`](CONTRIBUTING.md),
 [`SECURITY.md`](SECURITY.md), and the [Code of Conduct](CODE_OF_CONDUCT.md), exists to make the
 project's governance **transparent and discoverable** — publishing the model *is* the maturity
-signal. In keeping with the honesty of [`SECURITY.md`](SECURITY.md), note that the automated
-supply-chain and governance checks (OpenSSF Scorecard, CodeQL, and friends) are **planned** under
-[Epic E5](docs/ROADMAP.md#e5--cicd-hardening--supply-chain), not yet running; this document advances
-the governance dimension of that baseline rather than asserting the scans already pass.
+signal. Supply-chain automation from [Epic E5](docs/ROADMAP.md#e5--cicd-hardening--supply-chain) is
+**running** (CodeQL, OpenSSF Scorecard, govulncheck, gitleaks, coverage). Branch protection on
+`main` is enforced by ruleset **`protect-main`**: one approval for external contributors, required
+CI/SAST checks, and an Admin **pull-request-only** bypass so the solo maintainer can merge without
+a second human (`gh pr merge --rebase --admin`). Scorecard **Code-Review** (second-person approvals)
+remains a multi-maintainer goal.

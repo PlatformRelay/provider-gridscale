@@ -1,5 +1,8 @@
 name: Scorecard
 
+# Results feed the OpenSSF Scorecard badge; protect-main requires Analyze (go)
+# and CI gates separately (see AGENTS.md branch policy).
+
 on:
   push:
     branches:
