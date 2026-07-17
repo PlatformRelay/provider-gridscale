@@ -8,6 +8,19 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 (with a leading gitmoji token) on the default branch using
 [git-cliff](https://git-cliff.org/).
 
+## [Unreleased]
+
+### Bug Fixes
+
+- **ci:** Accept up v0.51 per-extension annotations in D-020-FU verify [43294ed](https://github.com/platformrelay/provider-gridscale/commit/43294edb7cb5e32de9e309e17e6d07d3fbc0cee4)
+
+
+### Documentation
+
+- Document protect-main solo Branch-Protection [843ea82](https://github.com/platformrelay/provider-gridscale/commit/843ea823ef54d8643337315b9f1a5c887b10108a)
+
+- **coordination:** Close v0.2.0 release — signed publish green [77be16d](https://github.com/platformrelay/provider-gridscale/commit/77be16dbd60906933c1bdcf715d8de1611e6c9ae)
+
 ## [0.2.0](https://github.com/platformrelay/provider-gridscale/compare/v0.1.1..v0.2.0) - 2026-07-17
 
 ### Bug Fixes
@@ -33,6 +46,8 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 
 ### Documentation
+
+- **readme:** OpenSSF Scorecard badge, drop Go Report, prep v0.2.0 [1799637](https://github.com/platformrelay/provider-gridscale/commit/1799637fcc822baeb5bb5e78322a8531d152ef2b)
 
 - **coordination:** D-020-FU fixed (2e15c3e) — ready for signed v0.2.0 dispatch [acbfb48](https://github.com/platformrelay/provider-gridscale/commit/acbfb4878517b6928770eb314b483345527b8b93)
 
