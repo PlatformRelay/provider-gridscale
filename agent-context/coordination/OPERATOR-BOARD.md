@@ -1,8 +1,15 @@
 # OPERATOR-BOARD — provider-gridscale (lanes + locks)
 
-Coordinator: session wrap **2026-07-17** (audit-mitigation + upstream-PR loop). Base: `origin/main` @ `c38e52b`.
-**No lanes In-flight.** Backlog exhausted; audit findings all fixed/dispositioned. See
-[`SESSION-HANDOFF.md`](SESSION-HANDOFF.md) for next entry points (D-020-FU → signed v0.2.0).
+Coordinator: session wrap **2026-07-17c** (badges + signed v0.2.0). Base: `origin/main` @ `43294ed`.
+**No lanes In-flight.** **v0.2.0 published & signed.** See [`SESSION-HANDOFF.md`](SESSION-HANDOFF.md).
+
+### Batch 9 — badges + v0.2.0 release (2026-07-17c) — landed on `main`
+
+| Lane | Story | State |
+| --- | --- | --- |
+| L-BADGES | OpenSSF Scorecard badge; drop Go Report; GitHub Releases for release badge | ✅ Integrated (`1799637`) |
+| L-REL020 | Tag + GitHub Release v0.2.0; dispatch signed publish | ✅ Published ([run](https://github.com/PlatformRelay/provider-gridscale/actions/runs/29574409336)) |
+| L-VERIFY | D-020-FU verify accepts `up` v0.51 per-extension annotations | ✅ Integrated (`43294ed`) |
 
 ### Batch 8 — audit-mitigation + upstream fixes (2026-07-17) — landed on `main`
 

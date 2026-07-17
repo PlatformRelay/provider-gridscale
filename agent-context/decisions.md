@@ -441,7 +441,8 @@ extension-less package. The unsigned-digest gap is accepted as low-risk tracked 
 
 ## D-020-FU — RESOLVED: append-then-sign wired into the publish workflow
 
-**Date:** 2026-07-17 · **Status:** Implemented — landed `2e15c3e` on `main`; awaiting operator v0.2.0 dispatch to close.
+**Date:** 2026-07-17 · **Status:** Closed — signed **v0.2.0** published
+([run 29574409336](https://github.com/PlatformRelay/provider-gridscale/actions/runs/29574409336)).
 **Context:** D-020 backlogged "wire `--extensions-root` (or atomic append-then-sign) before a signed release."
 Investigation ruled out the first option: `crossplane xpkg build` (the CLI used by `build/makelib/xpkg.mk`)
 has **no** `--extensions-root` flag — only `--package-root`/`--examples-root`/`--ignore`/`--package-file`.
@@ -464,7 +465,10 @@ ghcr was NOT exercised** (production registry; a dry run was classifier-blocked)
 backstop that keeps signing safe even if append no-ops or the tag/digest-input assumption is off.
 **Counterpoint / residual:** the dangling `$(UP)` is a latent build-system bug left untouched (out of scope);
 worth a follow-up to define `UP` properly in `k8s_tools.mk`-style tooling so `build.init` actually installs it.
-Closes fully once the operator dispatches a signed **v0.2.0** and its run's verify step passes.
+**v0.2.0 close-out (2026-07-17c):** first dispatch hit the predicted annotation-scheme false-fail —
+`up` v0.51.0 emits discrete `icons`/`readme`/`docs`/`release-notes` layers on at least one platform
+child (legacy `upbound` still appears on others). Fail-closed correctly refused to sign. Predicate
+widened in `43294ed` to accept either scheme; re-dispatch signed successfully. Do not re-sign v0.1.1.
 
 ## D-021 — Upstream bug fixes: local Upjet overrides + open upstream PRs
 
