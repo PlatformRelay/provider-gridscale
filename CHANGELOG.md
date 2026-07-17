@@ -17,7 +17,11 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 ### Documentation
 
-- Document protect-main solo Branch-Protection [843ea82](https://github.com/platformrelay/provider-gridscale/commit/843ea823ef54d8643337315b9f1a5c887b10108a)
+- Align protect-main required checks with always-on jobs [f79c1fc](https://github.com/platformrelay/provider-gridscale/commit/f79c1fc3ea1d935381e2c7ac07a1632fb44c5cbb)
+
+- Sync CHANGELOG for protect-main docs PR ([#13](https://github.com/platformrelay/provider-gridscale/pull/13))[47629ec](https://github.com/platformrelay/provider-gridscale/commit/47629ec45ca89a4e16face462776f4680693dc76)
+
+- Document protect-main solo Branch-Protection [9b17fda](https://github.com/platformrelay/provider-gridscale/commit/9b17fda5b99aa531107960238bf8a7029deeb6d2)
 
 - **coordination:** Close v0.2.0 release — signed publish green [77be16d](https://github.com/platformrelay/provider-gridscale/commit/77be16dbd60906933c1bdcf715d8de1611e6c9ae)
 
