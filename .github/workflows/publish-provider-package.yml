@@ -236,11 +236,12 @@ jobs:
           echo "Resolved ${IMAGE}:${VERSION} -> ${DIGEST}"
           echo "ref=${IMAGE}@${DIGEST}" >> "$GITHUB_OUTPUT"
 
-      # D-020-FU fail-closed: never sign an extension-less digest. `up alpha xpkg
-      # append` adds an `io.crossplane.xpkg: upbound` layer to every platform child
-      # manifest (verified against v0.1.1). If the append step no-op'd or the digest
-      # somehow lacks that layer, refuse to sign rather than publishing a signed but
-      # extension-less package. Guards against future reordering/re-dispatch too.
+      # D-020-FU fail-closed: never sign an extension-less digest. Appended
+      # marketplace extensions show up as `io.crossplane.xpkg` layer annotations.
+      # Schemes observed in the wild:
+      #   - v0.1.1-era: a single combined layer with value `upbound`
+      #   - `up` v0.51.0: per-extension layers (`icons`, `readme`, `docs`, …)
+      # Accept either. Refuse only when neither scheme is present.
       - name: Verify extensions present before signing (D-020-FU)
         env:
           REF: ${{ steps.digest.outputs.ref }}
@@ -258,14 +259,16 @@ jobs:
               *)        mref="${child}" ;;
             esac
             manifest="$(crane manifest "${mref}")"
-            if printf '%s' "${manifest}" \
-                 | jq -e '[.layers[]? | select(.annotations["io.crossplane.xpkg"] == "upbound")] | length > 0' >/dev/null; then
-              echo "OK: ${mref} carries an io.crossplane.xpkg=upbound extensions layer"
+            # Combined "upbound" layer OR discrete marketplace extension layers.
+            if printf '%s' "${manifest}" | jq -e '
+              [.layers[]?.annotations["io.crossplane.xpkg"] // empty]
+              | map(select(. == "upbound" or . == "icons" or . == "readme"))
+              | length > 0
+            ' >/dev/null; then
+              echo "OK: ${mref} carries marketplace extensions (upbound and/or icons/readme)"
+              printf '%s' "${manifest}" | jq -c '[.layers[]?.annotations["io.crossplane.xpkg"] // empty]'
             else
-              echo "::error::${mref} is MISSING the io.crossplane.xpkg=upbound extensions layer"
-              # Self-diagnosing: this path is untestable until dispatch, so dump the
-              # actual layer annotations. If a newer `up` uses a different annotation
-              # value/scheme than v0.1.1's `upbound`, this shows exactly what to key on.
+              echo "::error::${mref} is MISSING marketplace extensions (no upbound/icons/readme layer)"
               echo "Layer annotations actually present on ${mref}:"
               printf '%s' "${manifest}" | jq -c '[.layers[]?.annotations // {}]'
               missing=1
