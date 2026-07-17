@@ -7,11 +7,10 @@
 [![CI](https://img.shields.io/github/actions/workflow/status/PlatformRelay/provider-gridscale/ci.yml?branch=main&label=CI)](https://github.com/PlatformRelay/provider-gridscale/actions/workflows/ci.yml)
 [![Coverage](https://img.shields.io/codecov/c/github/PlatformRelay/provider-gridscale)](https://codecov.io/gh/PlatformRelay/provider-gridscale)
 [![CodeQL](https://img.shields.io/github/actions/workflow/status/PlatformRelay/provider-gridscale/codeql.yml?branch=main&label=CodeQL)](https://github.com/PlatformRelay/provider-gridscale/actions/workflows/codeql.yml)
-[![Scorecard](https://img.shields.io/github/actions/workflow/status/PlatformRelay/provider-gridscale/scorecard.yml?branch=main&label=Scorecard)](https://github.com/PlatformRelay/provider-gridscale/actions/workflows/scorecard.yml)
-[![Go Report Card](https://goreportcard.com/badge/github.com/PlatformRelay/provider-gridscale)](https://goreportcard.com/report/github.com/PlatformRelay/provider-gridscale)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/PlatformRelay/provider-gridscale/badge)](https://securityscorecards.dev/viewer/?uri=github.com/PlatformRelay/provider-gridscale)
 [![Go Version](https://img.shields.io/github/go-mod/go-version/PlatformRelay/provider-gridscale)](https://github.com/PlatformRelay/provider-gridscale/blob/main/go.mod)
 [![Release](https://img.shields.io/github/v/release/PlatformRelay/provider-gridscale?include_prereleases&sort=semver)](https://github.com/PlatformRelay/provider-gridscale/releases)
-[![Marketplace](https://img.shields.io/badge/Upbound%20Marketplace-v0.1.1-blue)](https://marketplace.upbound.io/providers/platformrelay/provider-gridscale)
+[![Marketplace](https://img.shields.io/badge/Upbound%20Marketplace-v0.2.0-blue)](https://marketplace.upbound.io/providers/platformrelay/provider-gridscale)
 [![License](https://img.shields.io/github/license/PlatformRelay/provider-gridscale)](LICENSE)
 
 </div>
@@ -234,7 +233,7 @@ datasources without a resource twin (notably `backup_list` and `public_network`)
 have no Crossplane equivalent until upstream upjet adds datasource support.
 
 Install from the [Upbound Marketplace](https://marketplace.upbound.io/providers/platformrelay/provider-gridscale)
-or GHCR (`ghcr.io/platformrelay/provider-gridscale:v0.1.1`).
+or GHCR (`ghcr.io/platformrelay/provider-gridscale:v0.2.0`).
 
 ## Developing
 

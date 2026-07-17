@@ -8,14 +8,120 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 (with a leading gitmoji token) on the default branch using
 [git-cliff](https://git-cliff.org/).
 
-## [Unreleased]
+## [0.2.0](https://github.com/platformrelay/provider-gridscale/compare/v0.1.1..v0.2.0) - 2026-07-17
+
+### Bug Fixes
+
+- **config:** Make loadbalancer status Computed to stop perpetual diff (LB-1) [c38e52b](https://github.com/platformrelay/provider-gridscale/commit/c38e52baabb9f1a8c37142d26e8df475d1c77924)
+
+- **config:** Mark upstream-missed S3/console credentials sensitive (U-1) [8ae7376](https://github.com/platformrelay/provider-gridscale/commit/8ae7376bf34b5a862c57e342ee8100dc01aad0fb)
+
+- **ci:** Restore green main — filesystem CRD generate + metadatafix lint [d8433f5](https://github.com/platformrelay/provider-gridscale/commit/d8433f5942b909575c552d08be057a78fb410938)
+
 
 ### CI/CD
+
+- **publish:** Self-diagnosing D-020-FU verify + name dispatch watch-points [60b9e8f](https://github.com/platformrelay/provider-gridscale/commit/60b9e8f659a4c1f65339e955173c4f140f798d95)
+
+- **publish:** Append extensions before cosign sign (D-020-FU) [2e15c3e](https://github.com/platformrelay/provider-gridscale/commit/2e15c3e916094ca6ac08bf8a1c44e3d6d1a1398d)
+
+- **security:** Least-privilege GITHUB_TOKEN on ci.yml + e2e.yaml (SEC-H1/2/3) [68f8d66](https://github.com/platformrelay/provider-gridscale/commit/68f8d6683f6178d4ba420e820b4d711ea77d01c3)
+
+- **checks:** Wire check-docs into check-diff; document GOTOOLCHAIN base [d21087f](https://github.com/platformrelay/provider-gridscale/commit/d21087ff2afa14f33a0d6519bd9f5b5bc9906477)
+
+- **docs:** Add check-api-docs sync gate (E4-S01) [58f1103](https://github.com/platformrelay/provider-gridscale/commit/58f11036155c0749dd9c3bcaaf22381568954a7e)
+
+
+### Documentation
+
+- **coordination:** D-020-FU fixed (2e15c3e) — ready for signed v0.2.0 dispatch [acbfb48](https://github.com/platformrelay/provider-gridscale/commit/acbfb4878517b6928770eb314b483345527b8b93)
+
+- **coordination:** 2026-07-17 handover — U-1/LB-1 landed, upstream PRs, D-020-FU [b4782dd](https://github.com/platformrelay/provider-gridscale/commit/b4782dd306f7fe0822c39da6ba11f3461e35fa7c)
+
+- **api:** Sync CRD reference after U-1 sensitivity fix [9e6ca3c](https://github.com/platformrelay/provider-gridscale/commit/9e6ca3c0b52d0183a46c3050d458537941e653e1)
+
+- **decisions:** Apply operator answers D-018/019/020 + track sweep findings [949d1de](https://github.com/platformrelay/provider-gridscale/commit/949d1de4d16d5100b1cf612bf5a3562275bf656d)
+
+- **inbox:** Surface upstream U-1 sensitive-flag security finding [f9895b8](https://github.com/platformrelay/provider-gridscale/commit/f9895b82b1d26d0d3cdd59a30b0b5d6d8705168d)
+
+- **audit:** 07-16b re-audit disposition + ROADMAP refresh [ca9d3aa](https://github.com/platformrelay/provider-gridscale/commit/ca9d3aac966e9bed31f0a17370d519513f52f278)
+
+- **coordination:** Finalize wrap tip references [a1748f3](https://github.com/platformrelay/provider-gridscale/commit/a1748f370a251056590e57ba0856981e8e01ce67)
+
+- **coordination:** Wrap — CI green, handoff, board, inbox [8976f55](https://github.com/platformrelay/provider-gridscale/commit/8976f55ca1c0a8c34b6d6c9b6a458f7c6e67c00f)
+
+- **api:** Sync Filesystem description after metadata stub [d275897](https://github.com/platformrelay/provider-gridscale/commit/d2758973534d2d10446fd258dcfd394a18805254)
+
+- **coordination:** Session wrap — handoff, board, backlog, inbox [c9eff5b](https://github.com/platformrelay/provider-gridscale/commit/c9eff5bddb4cd9f9de2d68e767e3fbebb7eaaf5a)
+
+- **security:** Assurance case + refresh supply-chain posture (E6-S05) [3edc5f0](https://github.com/platformrelay/provider-gridscale/commit/3edc5f0eeb57909bb698026720f663d0616d94b7)
+
+- **examples:** Sync curated index + ApplicationImport (E4-S02) [fdbf300](https://github.com/platformrelay/provider-gridscale/commit/fdbf3002388dc162124e81362b48d7bdaaf582e8)
+
+- **api:** Regenerate CRD reference for sync gate (E4-S01) [2384fe4](https://github.com/platformrelay/provider-gridscale/commit/2384fe44993874e476f6df1b70e8ebafdeef6f14)
+
+- **readme:** Prefer v0.1.1 package tag in install hint [bcc0ba0](https://github.com/platformrelay/provider-gridscale/commit/bcc0ba0ff8f10c06bbdd226293bc319d2dc75667)
+
+- **readme:** Point Marketplace badge at v0.1.1 [f4cfe59](https://github.com/platformrelay/provider-gridscale/commit/f4cfe59ac26f3ddcddb62baa741aec0e6814b618)
+
+- **readme:** Marketplace badge + datasource limitations (E3-S04/E8) [c15a328](https://github.com/platformrelay/provider-gridscale/commit/c15a328b0c43356c26b5da5e8246fd968ee8ee11)
+
+## [0.1.1](https://github.com/platformrelay/provider-gridscale/compare/v0.1.0..v0.1.1) - 2026-07-16
+
+### Bug Fixes
+
+- **ci:** Use linked-package GITHUB_TOKEN for GHCR publish/sign [dda3fe6](https://github.com/platformrelay/provider-gridscale/commit/dda3fe6b5271d92b41a660cd04d9d68423ad59e9)
+
+- **ci:** Self-contained Tag workflow; record supply-chain follow-ups [62da618](https://github.com/platformrelay/provider-gridscale/commit/62da6185834b9f80fd693859dcf1ab9f22323cc6)
+
+- **hack/metadatafix:** Inject stubs for schema resources missing from scrape (E7-S02) [2e7583e](https://github.com/platformrelay/provider-gridscale/commit/2e7583ef2f0d784641bd9ae9395fafd83ae1ad61)
+
+
+### Build System
+
+- **toolchain:** Pin Go 1.26.5 everywhere + go-version drift guard (E5-S08) [c44e178](https://github.com/platformrelay/provider-gridscale/commit/c44e17817eb5ef018eabb610d0cca0c9eafeecd9)
+
+
+### CI/CD
+
+- **release:** Inline publish with github.token (drop upstream reusable) [1f8a20b](https://github.com/platformrelay/provider-gridscale/commit/1f8a20b2d167e604806570b1027c791ea031bce2)
+
+- **release:** Publish/sign with github.token — drop GHCR_PAT secret [a3e3f54](https://github.com/platformrelay/provider-gridscale/commit/a3e3f5454f85ea273bc9b77d5eb6f0a892197c21)
+
+- **workflows:** Activate schema-version-diff gate on PR schema changes (E5-S10) [a58b174](https://github.com/platformrelay/provider-gridscale/commit/a58b17442ecab10255e2444d930a6c8763518812)
+
+- **lint:** Scope gosec G101/G104 to generated+test code (E5-S07) [4438b32](https://github.com/platformrelay/provider-gridscale/commit/4438b32f10b5174438482fa5213f96b73b41969f)
 
 - **release:** Sign published package even if the xpkg.upbound.io mirror fails (decouple sign-and-sbom) [65b56ec](https://github.com/platformrelay/provider-gridscale/commit/65b56ec4ccbb6701616a3f97053b7dc67acc8b7c)
 
 
 ### Documentation
+
+- Add unaffiliation disclaimer for gridscale GmbH [b5acc41](https://github.com/platformrelay/provider-gridscale/commit/b5acc418a62185dfa0c13843f3bc5e2602032c77)
+
+- **coordination:** Session handoff — audit-gap loop done, next entry points [ff5a5f1](https://github.com/platformrelay/provider-gridscale/commit/ff5a5f1c67776da3a2d6803b354c0962d8dcd9e5)
+
+- **decisions,inbox:** D-017 public Upbound + link GHCR package to repo [4cd7e94](https://github.com/platformrelay/provider-gridscale/commit/4cd7e941a8f08c164c9cafb3f2c7fb89b9dbc857)
+
+- **ci:** Keep GHCR_PAT for upstream publish; token works for sign [c3a5b89](https://github.com/platformrelay/provider-gridscale/commit/c3a5b897733748b654db146af27f49a4203b8f81)
+
+- **coordination:** Mark batch-5/6 complete; audit-gap loop exhausted [0f3f7b8](https://github.com/platformrelay/provider-gridscale/commit/0f3f7b805d95cfe72360d23aff2d3d9a717c786e)
+
+- **decisions:** E6-S06 upstream triage for gridscale TF provider (#194/#200/#187/#188) [222f75c](https://github.com/platformrelay/provider-gridscale/commit/222f75c2caa0b04c04a253084f14dd8692d43665)
+
+- **readme:** Flag upstream-deprecated resources and fields (E4-S05) [0f5fdaa](https://github.com/platformrelay/provider-gridscale/commit/0f5fdaa34fab5ec36397c5896b464410e1a26586)
+
+- **coordination:** Mark batch-4 integrated; claim batch-5 lanes [752b764](https://github.com/platformrelay/provider-gridscale/commit/752b76448037dd93c09ec9509aec26c043758909)
+
+- **adr:** Record cross-resource reference decision (ADR-0005) [b8fe841](https://github.com/platformrelay/provider-gridscale/commit/b8fe8414795e9ecb04ac0138763db62e56222279)
+
+- **decisions:** D-015 — E8 datasources unsupported by upjet; rescope to document+track (L-E8SCOPE) [6622354](https://github.com/platformrelay/provider-gridscale/commit/6622354c5f07fa1f61118b7376bab70588e7679c)
+
+- **decisions:** D-009b — BRAND-1 closed via official gridscale Bildmarke [10e107d](https://github.com/platformrelay/provider-gridscale/commit/10e107d1d4f9ecbf0696abcfd6da700e8b179f4a)
+
+- **config:** Correct external-name rationale + document import formats (E7-S03) [921ac95](https://github.com/platformrelay/provider-gridscale/commit/921ac958c20590a542d9719ad1b0fd29a895214b)
+
+- **coordination:** Claim batch-4 lanes; register E7 epic + E2-S11 renumbering (D-014) [ac858b1](https://github.com/platformrelay/provider-gridscale/commit/ac858b17da23404d2d60b80acdbbe746b8593329)
 
 - **backlog:** Reconcile gap-stories vs D-012/D-013 — flag uptest-dependent criteria as superseded [784055c](https://github.com/platformrelay/provider-gridscale/commit/784055cf2ca3005030b74e6ab67123daffa69196)
 
@@ -28,7 +134,18 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 ### Features
 
-- **branding:** Use official gridscale Bildmarke for provider icon [15897bb](https://github.com/platformrelay/provider-gridscale/commit/15897bb8a996bc2d9c0c83a45911a3471987aa9e)
+- **branding:** Sync official gridscale icon for Marketplace append [64fc363](https://github.com/platformrelay/provider-gridscale/commit/64fc363db50c783d8d5d50a0704c74eb0fb514cd)
+
+- **config:** Wire full cross-resource reference set (E7-S01) [9ebca1d](https://github.com/platformrelay/provider-gridscale/commit/9ebca1d5389171477af12a58624383806a298ebc)
+
+- **branding:** Use official gridscale Bildmarke for provider icon [9c342cb](https://github.com/platformrelay/provider-gridscale/commit/9c342cb7705c642579ea448bf90d19d3d70b5d60)
+
+
+### Tests
+
+- **config:** Assert provider-metadata keys match schema (E7-S02) [94c24bb](https://github.com/platformrelay/provider-gridscale/commit/94c24bb199929f25cbf1e50e38e4ec5e3dc6aaaa)
+
+- **clients:** Non-live credential-wiring regression tests (E2-S11) [be73bd8](https://github.com/platformrelay/provider-gridscale/commit/be73bd8be680098c7dfd613ca0369a2e933c9dd5)
 
 ## [0.1.0](https://github.com/platformrelay/provider-gridscale/compare/v0.1.0-alpha.1..v0.1.0) - 2026-07-16
 

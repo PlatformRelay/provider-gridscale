@@ -3,4 +3,4 @@ kind: Provider
 metadata:
   name: provider-gridscale
 spec:
-  package: xpkg.crossplane.io/PlatformRelay/provider-gridscale:v0.1.0
+  package: xpkg.upbound.io/platformrelay/provider-gridscale:v0.2.0
