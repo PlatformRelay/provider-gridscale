@@ -17,6 +17,8 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 ### Documentation
 
+- Sync CHANGELOG for protect-main check alignment [a215a53](https://github.com/platformrelay/provider-gridscale/commit/a215a53811288edbcf83660eb13c5640ae3321ba)
+
 - Align protect-main required checks with always-on jobs [f79c1fc](https://github.com/platformrelay/provider-gridscale/commit/f79c1fc3ea1d935381e2c7ac07a1632fb44c5cbb)
 
 - Sync CHANGELOG for protect-main docs PR ([#13](https://github.com/platformrelay/provider-gridscale/pull/13))[47629ec](https://github.com/platformrelay/provider-gridscale/commit/47629ec45ca89a4e16face462776f4680693dc76)
