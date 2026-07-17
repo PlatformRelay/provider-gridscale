@@ -43,10 +43,11 @@ tree as read-only build output:
 - **Merge:** rebase-and-merge only — linear history, no squash, no merge commits.
 - **Branch policy (`protect-main` ruleset on `main`):** PRs required; **1 approving
   review** + last-push approval + dismiss-stale for non-bypass actors; no force-push /
-  no branch deletion; required checks `lint`, `check-diff`, `unit-tests`, `gitleaks`,
-  `govulncheck`, `coverage`, `Analyze (go)` (up-to-date). **Admin** bypass is
-  `pull_request` mode only — solo merges via `gh pr merge --rebase --admin`. Markdown-only
-  PRs may skip CI jobs via `detect-noop`; those still need admin/bypass to land.
+  no branch deletion; required checks `gitleaks`, `govulncheck`, `coverage`,
+  `Analyze (go)` (always-on — not skipped by `detect-noop`; up-to-date). CI jobs
+  `lint` / `check-diff` / `unit-tests` still run on code PRs but are not ruleset-required
+  so markdown-only PRs can merge. **Admin** bypass is `pull_request` mode only —
+  solo merges via `gh pr merge --rebase --admin`.
 - **Spec-driven:** every implementation lane references an OpenSpec change under `openspec/changes/`.
   A change is `proposal.md` + `design.md` + `tasks.md` + `specs/<capability>/spec.md`.
 - **TDD:** mandatory for hand-authored Go and `hack/` scripts — failing test first. Generated code
