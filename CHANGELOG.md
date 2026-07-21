@@ -8,24 +8,24 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 (with a leading gitmoji token) on the default branch using
 [git-cliff](https://git-cliff.org/).
 
-## [Unreleased]
+## [0.2.1](https://github.com/platformrelay/provider-gridscale/compare/v0.2.0..v0.2.1) - 2026-07-21
 
 ### Bug Fixes
 
-- **deps:** Bump golang.org/x/text to v0.39.0 for GO-2026-5970 [2f69d44](https://github.com/platformrelay/provider-gridscale/commit/2f69d448366a714105af788b641679ed611c8d2c)
+- **deps:** Bump golang.org/x/text to v0.39.0 for GO-2026-5970 [03f1c31](https://github.com/platformrelay/provider-gridscale/commit/03f1c3190cb36a5b508cd4346eef242a686cac86)
 
 - **ci:** Accept up v0.51 per-extension annotations in D-020-FU verify [43294ed](https://github.com/platformrelay/provider-gridscale/commit/43294edb7cb5e32de9e309e17e6d07d3fbc0cee4)
 
 
 ### Documentation
 
-- Sync CHANGELOG (post-badge bump) [6a8b59b](https://github.com/platformrelay/provider-gridscale/commit/6a8b59bc24d55a0d36880529ddd562832c2185fc)
+- Sync CHANGELOG (post-badge bump) [e337c7c](https://github.com/platformrelay/provider-gridscale/commit/e337c7c95a5fb5882ee3832f68851a3b048c2c54)
 
-- Point Marketplace badge at v0.2.1 [a963468](https://github.com/platformrelay/provider-gridscale/commit/a963468f88f42d551043ff419b29f5bc44ba5ece)
+- Point Marketplace badge at v0.2.1 [fee45f3](https://github.com/platformrelay/provider-gridscale/commit/fee45f3d28e78ceaa0daee88d377684ce33b2f30)
 
-- Sync CHANGELOG and bump install refs to v0.2.1 [dd6894a](https://github.com/platformrelay/provider-gridscale/commit/dd6894ac061f55367f43551fee2957116f0a3b38)
+- Sync CHANGELOG and bump install refs to v0.2.1 [270950a](https://github.com/platformrelay/provider-gridscale/commit/270950a0b635a2fe83bd33540bc10a9b19ac7345)
 
-- Kollect-style badges, README, and logo candidates [5fd649a](https://github.com/platformrelay/provider-gridscale/commit/5fd649acd75ed582dec28034656e093d0708c764)
+- Kollect-style badges, README, and logo candidates [97b9c87](https://github.com/platformrelay/provider-gridscale/commit/97b9c87f574ba0b2e6622ab8a1591fadb88da610)
 
 - Sync CHANGELOG (post-rebase SHA) ([#14](https://github.com/platformrelay/provider-gridscale/pull/14))[422450b](https://github.com/platformrelay/provider-gridscale/commit/422450b765fc37fc7d33c6be4e8dc60413502b5b)
 
@@ -42,7 +42,7 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 ### Miscellaneous
 
-- **ci:** Declare top-level workflow permissions [ad84edf](https://github.com/platformrelay/provider-gridscale/commit/ad84edf016ebd2e1635761a9f71a7276f3a67242)
+- **ci:** Declare top-level workflow permissions [1e07b86](https://github.com/platformrelay/provider-gridscale/commit/1e07b86ed2c1adf5182cead5f34c228c86e157a3)
 
 ## [0.2.0](https://github.com/platformrelay/provider-gridscale/compare/v0.1.1..v0.2.0) - 2026-07-17
 

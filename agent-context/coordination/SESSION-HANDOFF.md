@@ -1,57 +1,32 @@
 # SESSION-HANDOFF — provider-gridscale
 
-**Session wrap:** 2026-07-17c (badges + signed v0.2.0 release).
-**HEAD:** `origin/main` @ `43294ed` (D-020-FU verify accepts `up` v0.51 per-extension annotations).
-**Main CI:** Scorecard green after re-run; publish green on re-dispatch.
-**Latest package tag:** **`v0.2.0`** — published to GHCR + Upbound, **keyless-cosign signed**,
+**Session wrap:** 2026-07-21 (vuln patch + README/docs + logo candidates → **v0.2.1**).
+**HEAD:** `origin/main` @ `c53fc82` (docs(changelog) sync for PR #15); wrap PR may tip further.
+**Latest package tag:** **`v0.2.1`** — published to GHCR + Upbound, **keyless-cosign signed**,
 extensions verified, SBOM attested
-([run 29574409336](https://github.com/PlatformRelay/provider-gridscale/actions/runs/29574409336)).
-Prefer this over unsigned `v0.1.1`. Do **not** re-sign v0.1.1.
-**Merge model:** local rebase + ff-merge → push `main` (no PRs), per operator.
+([run 29868142402](https://github.com/PlatformRelay/provider-gridscale/actions/runs/29868142402)).
+Prefer this over v0.2.0. Shipping Marketplace icon still the press Bildmarke until **BRAND-2**.
+**Merge model:** PRs into `main`; solo via `gh pr merge --rebase --admin`.
 
 ## Done this session
 
 | Item | Result |
 | --- | --- |
-| README badges | Dropped Go Report Card; replaced Actions Scorecard status with **OpenSSF Scorecard** API badge; Marketplace → v0.2.0 |
-| Releases badge | Was "no releases found" — only git tags existed. Created GitHub Releases for v0.1.0-alpha.1…v0.2.0 |
-| CHANGELOG / tag | Regenerated for 0.2.0; annotated tag `v0.2.0` @ `1799637` |
-| Publish #1 | Failed closed at verify (annotation scheme) — safe, no bad signature |
-| Verify fix | `43294ed` — accept `upbound` **or** `icons`/`readme` |
-| Publish #2 | **All green** — publish-artifacts, mirror-to-upbound, sign-and-sbom |
+| GO-2026-5970 | `golang.org/x/text` → v0.39.0; `make vuln` / Govulncheck green |
+| Scorecard Token-Permissions | Top-level `permissions:` on backport / tag / publish |
+| README badges | Kollect-style native Actions badges + Scorecard/codecov/Marketplace/GHCR |
+| Docs | `docs/README.md`, assurance Scorecard drivers, branding candidates A–G |
+| PR #15 | Merged rebase-admin → `main` |
+| Release | Annotated tag + GitHub Release **v0.2.1**; publish **all green** |
 
-## Repo state (clean)
+## Open for the operator
 
-| Area | State |
-| --- | --- |
-| Branches | Only `main` (local + remote). |
-| Worktrees | Only the main checkout. |
-| Open PRs (this repo) | None (changelog workflow may open an automated PR for the tag — merge if it appears). |
-| Working tree | Clean after coordination commit. |
-| Upstream fork | `konih/terraform-provider-gridscale` PRs #509/#510/#511 still open on gridscale:master. |
-
-## Open items for the operator (nothing blocking)
-
-1. **Revoke old classic PAT** briefly stored as `GHCR_PAT` (local `.envrc` only).
-2. **Upstream PR review** — #509/#510/#511; on merge, re-vendor + drop local U-1/LB-1 overrides.
-3. **TEST-2** (operator-blocked) — uptest e2e needs live gridscale lab creds as CI secrets.
-
-## Next entry points
-
-1. Watch upstream #509/#510/#511; on merge, re-vendor + drop overrides.
-2. Backlog otherwise exhausted — only TEST-2 + BRAND-1 deferred remain.
-
-## Learnings
-
-1. **GitHub Releases ≠ tags.** shields.io `/github/v/release` needs `gh release create`, not just `git tag`.
-2. **`up` v0.51.0 annotation scheme** — discrete `icons`/`readme`/`docs`/`release-notes` layers; legacy
-   combined `upbound` still appears on some platform children. Verify must accept both.
-3. **Fail-closed worked as designed** — first dispatch refused to sign; fix + re-dispatch produced a
-   signed extension-bearing digest.
+1. **BRAND-2** — pick logo candidate (recommended **F**) or keep Bildmarke — see INBOX.
+2. Revoke old classic PAT (local `.envrc` only).
+3. Upstream TF PRs #509/#510/#511.
 
 ## Do not
 
-- Re-dispatch publish to "re-sign" v0.1.1 (strips extensions — D-020).
+- Re-sign v0.1.1 / strip extensions.
 - Hand-edit generated trees or `config/schema.json`.
-- Bump `TERRAFORM_VERSION` past 1.5.7 (BSL pin).
-- Reintroduce a personal PAT as an Actions secret.
+- Bump `TERRAFORM_VERSION` past 1.5.7.

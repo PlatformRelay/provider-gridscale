@@ -1,13 +1,13 @@
 # OPERATOR-BOARD — provider-gridscale (lanes + locks)
 
-Coordinator: session **2026-07-21** (vuln + badges + logos + docs). Base: `origin/main` @ `422450b`.
-**In flight:** L-DOCS-BRAND on branch `docs/readme-badges-logos`.
+Coordinator: session wrap **2026-07-21** (v0.2.1 security patch + docs). Base: `origin/main` @ `c53fc82`.
+**No lanes In-flight.** **v0.2.1 published & signed** — see [`SESSION-HANDOFF.md`](SESSION-HANDOFF.md).
 
-### Batch 10 — vuln + README/docs + logo candidates (2026-07-21) — in flight
+### Batch 10 — vuln + README/docs + logo candidates (2026-07-21) — landed on `main`
 
 | Lane | Story | State |
 | --- | --- | --- |
-| L-DOCS-BRAND | Fix `golang.org/x/text` GO-2026-5970; Scorecard top-level permissions; kollect-style badges; README/docs; logo candidates A–G; BRAND-2 INBOX | 🔶 In flight (`docs/readme-badges-logos`) |
+| L-DOCS-BRAND | x/text GO-2026-5970; Scorecard permissions; kollect badges; README/docs; logo candidates; BRAND-2 INBOX | ✅ Merged PR #15 → tag **v0.2.1** published ([run](https://github.com/PlatformRelay/provider-gridscale/actions/runs/29868142402)) |
 
 ### Batch 9 — badges + v0.2.0 release (2026-07-17c) — landed on `main`
 
