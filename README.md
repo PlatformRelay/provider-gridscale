@@ -92,9 +92,9 @@ kubectl get providers
 
 Package path in [`examples/install.yaml`](examples/install.yaml):
 
-`xpkg.upbound.io/platformrelay/provider-gridscale:v0.2.0`
+`xpkg.upbound.io/platformrelay/provider-gridscale:v0.2.1`
 
-Also published to GHCR: `ghcr.io/platformrelay/provider-gridscale:v0.2.0`.
+Also published to GHCR: `ghcr.io/platformrelay/provider-gridscale:v0.2.1`.
 
 **Next:** apply a resource from [`examples/cluster/`](examples/cluster/) or
 [`examples/namespaced/`](examples/namespaced/), then `kubectl explain servers`

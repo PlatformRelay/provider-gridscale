@@ -12,20 +12,31 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 ### Bug Fixes
 
+- **deps:** Bump golang.org/x/text to v0.39.0 for GO-2026-5970 [2f69d44](https://github.com/platformrelay/provider-gridscale/commit/2f69d448366a714105af788b641679ed611c8d2c)
+
 - **ci:** Accept up v0.51 per-extension annotations in D-020-FU verify [43294ed](https://github.com/platformrelay/provider-gridscale/commit/43294edb7cb5e32de9e309e17e6d07d3fbc0cee4)
 
 
 ### Documentation
 
-- Sync CHANGELOG for protect-main check alignment [a215a53](https://github.com/platformrelay/provider-gridscale/commit/a215a53811288edbcf83660eb13c5640ae3321ba)
+- Kollect-style badges, README, and logo candidates [5fd649a](https://github.com/platformrelay/provider-gridscale/commit/5fd649acd75ed582dec28034656e093d0708c764)
 
-- Align protect-main required checks with always-on jobs [f79c1fc](https://github.com/platformrelay/provider-gridscale/commit/f79c1fc3ea1d935381e2c7ac07a1632fb44c5cbb)
+- Sync CHANGELOG (post-rebase SHA) ([#14](https://github.com/platformrelay/provider-gridscale/pull/14))[422450b](https://github.com/platformrelay/provider-gridscale/commit/422450b765fc37fc7d33c6be4e8dc60413502b5b)
+
+- Sync CHANGELOG for protect-main check alignment [d01f4ba](https://github.com/platformrelay/provider-gridscale/commit/d01f4ba17f6e19aeee231eb15e784e95fa9e7e02)
+
+- Align protect-main required checks with always-on jobs [60fbbec](https://github.com/platformrelay/provider-gridscale/commit/60fbbec594e8de58d25bafa56465964ea7e1df0a)
 
 - Sync CHANGELOG for protect-main docs PR ([#13](https://github.com/platformrelay/provider-gridscale/pull/13))[47629ec](https://github.com/platformrelay/provider-gridscale/commit/47629ec45ca89a4e16face462776f4680693dc76)
 
 - Document protect-main solo Branch-Protection [9b17fda](https://github.com/platformrelay/provider-gridscale/commit/9b17fda5b99aa531107960238bf8a7029deeb6d2)
 
 - **coordination:** Close v0.2.0 release — signed publish green [77be16d](https://github.com/platformrelay/provider-gridscale/commit/77be16dbd60906933c1bdcf715d8de1611e6c9ae)
+
+
+### Miscellaneous
+
+- **ci:** Declare top-level workflow permissions [ad84edf](https://github.com/platformrelay/provider-gridscale/commit/ad84edf016ebd2e1635761a9f71a7276f3a67242)
 
 ## [0.2.0](https://github.com/platformrelay/provider-gridscale/compare/v0.1.1..v0.2.0) - 2026-07-17
 
