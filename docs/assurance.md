@@ -35,6 +35,26 @@ what remains operator-gated.
 - **No Terraform datasource CRDs** — documented under README “Known limitations” (D-015).
 - **No SonarCloud / OpenVEX** unless D-004 is revisited.
 
+## OpenSSF Scorecard — known grade drivers
+
+The README Scorecard badge tracks
+[securityscorecards.dev](https://securityscorecards.dev/viewer/?uri=github.com/PlatformRelay/provider-gridscale).
+As of the 2026-07-20 scan the overall grade was **6.7**. Drivers that are
+*not* a red CI job, but still pull the badge into the amber band:
+
+| Check | Why it is low | What moves it |
+| --- | --- | --- |
+| Maintained (0) | Repo younger than 90 days | Time + continued commits/issues |
+| Code-Review (0) | Scorecard saw 0/27 human-approved merges (solo admin merges) | Land changes via reviewed PRs with a non-author approval |
+| Token-Permissions | Some workflows lacked top-level `permissions:` | Declared deny-by-default roots on backport / tag / publish (this PR) |
+| Packaging (−1) | Heuristic missed `workflow_dispatch`-only GHCR publish | Optional: also publish on `release` published events |
+| Signed-Releases (−1) | Cosign signs the **xpkg/GHCR** digest, not GitHub Release assets | Optional: attach cosign bundles / checksums to GitHub Releases |
+| CII-Best-Practices (0) | No OpenSSF Best Practices badge yet | Operator registers the project at bestpractices.dev |
+| Vulnerabilities | OSV findings in the dependency graph | Keep `make vuln` / Govulncheck green (e.g. `golang.org/x/text` bump) |
+
+Re-run Scorecard after the next scheduled workflow (or `workflow_dispatch`) to
+pick up permission and vuln fixes.
+
 ## Review cadence
 
 Re-read this page when cutting a minor release or after a Scorecard grade change.
