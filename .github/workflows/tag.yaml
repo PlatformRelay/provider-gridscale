@@ -16,6 +16,11 @@ on:
         description: "Tag message"
         required: true
 
+# Scorecard Token-Permissions: deny-by-default at the workflow root; the
+# create-tag job elevates contents:write only for the tag push.
+permissions:
+  contents: read
+
 jobs:
   create-tag:
     runs-on: ubuntu-latest

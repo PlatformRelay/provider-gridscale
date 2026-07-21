@@ -24,6 +24,11 @@ env:
   MIRROR_REGORG: xpkg.upbound.io/platformrelay
   IMAGE: ghcr.io/platformrelay/provider-gridscale
 
+# Scorecard Token-Permissions: deny-by-default at the workflow root. Jobs that
+# push to GHCR elevate packages:write explicitly.
+permissions:
+  contents: read
+
 jobs:
   publish-artifacts:
     runs-on: ubuntu-24.04
