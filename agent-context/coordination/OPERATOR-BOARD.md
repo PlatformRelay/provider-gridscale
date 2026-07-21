@@ -1,7 +1,13 @@
 # OPERATOR-BOARD — provider-gridscale (lanes + locks)
 
-Coordinator: session wrap **2026-07-17c** (badges + signed v0.2.0). Base: `origin/main` @ `43294ed`.
-**No lanes In-flight.** **v0.2.0 published & signed.** See [`SESSION-HANDOFF.md`](SESSION-HANDOFF.md).
+Coordinator: session **2026-07-21** (vuln + badges + logos + docs). Base: `origin/main` @ `422450b`.
+**In flight:** L-DOCS-BRAND on branch `docs/readme-badges-logos`.
+
+### Batch 10 — vuln + README/docs + logo candidates (2026-07-21) — in flight
+
+| Lane | Story | State |
+| --- | --- | --- |
+| L-DOCS-BRAND | Fix `golang.org/x/text` GO-2026-5970; Scorecard top-level permissions; kollect-style badges; README/docs; logo candidates A–G; BRAND-2 INBOX | 🔶 In flight (`docs/readme-badges-logos`) |
 
 ### Batch 9 — badges + v0.2.0 release (2026-07-17c) — landed on `main`
 
@@ -23,8 +29,8 @@ Coordinator: session wrap **2026-07-17c** (badges + signed v0.2.0). Base: `origi
 | Upstream PRs | #509 (U-1) / #510 (LB-1) / #511 (objectstorage) on gridscale:master | 🔵 Opened — awaiting gridscale review |
 
 Lanes own **disjoint paths**; auto-merge only on gates-green + `/tech-review` APPROVE + green CI
-(security/API/release lanes are **surfaced, not auto-merged**). Merge model this session: local
-ff-merge → push `main` (no PRs).
+(security/API/release lanes are **surfaced, not auto-merged**). Merge model: PRs into `main`
+(`protect-main` ruleset; solo via `gh pr merge --rebase --admin`).
 
 ### Batch 1 — landed on `main`
 
