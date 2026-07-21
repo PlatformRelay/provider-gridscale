@@ -19,6 +19,10 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 ### Documentation
 
+- Point Marketplace badge at v0.2.1 [a963468](https://github.com/platformrelay/provider-gridscale/commit/a963468f88f42d551043ff419b29f5bc44ba5ece)
+
+- Sync CHANGELOG and bump install refs to v0.2.1 [dd6894a](https://github.com/platformrelay/provider-gridscale/commit/dd6894ac061f55367f43551fee2957116f0a3b38)
+
 - Kollect-style badges, README, and logo candidates [5fd649a](https://github.com/platformrelay/provider-gridscale/commit/5fd649acd75ed582dec28034656e093d0708c764)
 
 - Sync CHANGELOG (post-rebase SHA) ([#14](https://github.com/platformrelay/provider-gridscale/pull/14))[422450b](https://github.com/platformrelay/provider-gridscale/commit/422450b765fc37fc7d33c6be4e8dc60413502b5b)
