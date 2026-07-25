@@ -4,7 +4,7 @@ RUN apk --no-cache add ca-certificates bash
 ARG TARGETOS
 ARG TARGETARCH
 
-ADD "bin/${TARGETOS}_${TARGETARCH}/provider" /usr/local/bin/provider
+COPY "bin/${TARGETOS}_${TARGETARCH}/provider" /usr/local/bin/provider
 
 ENV USER_ID=65532
 
@@ -28,7 +28,7 @@ RUN mkdir -p ${PLUGIN_DIR}
 
 ADD https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_${TARGETOS}_${TARGETARCH}.zip /tmp
 ADD ${TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX}/${TERRAFORM_PROVIDER_DOWNLOAD_NAME}_${TERRAFORM_PROVIDER_VERSION}_${TARGETOS}_${TARGETARCH}.zip /tmp
-ADD terraformrc.hcl ${TF_CLI_CONFIG_FILE}
+COPY terraformrc.hcl ${TF_CLI_CONFIG_FILE}
 
 RUN unzip /tmp/terraform_${TERRAFORM_VERSION}_${TARGETOS}_${TARGETARCH}.zip -d /usr/local/bin \
   && chmod +x /usr/local/bin/terraform \
