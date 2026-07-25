@@ -8,11 +8,11 @@ on:
   pull_request: {}
   workflow_dispatch: {}
 
-# Least-privilege default (SEC-H1): every job here is read-only w.r.t. the
-# GITHUB_TOKEN (checkout, lint, generate/diff, unit tests, local kind deploy,
-# artifact upload). None push to a registry or write repo contents.
-permissions:
-  contents: read
+# Least-privilege default (SEC-H1 / REQ-SONAR-PG-04): deny all at workflow
+# level; each job that needs checkout / GITHUB_TOKEN read declares
+# `permissions: contents: read` locally. None push to a registry or write
+# repo contents.
+permissions: {}
 
 env:
   # Common versions
@@ -23,6 +23,8 @@ env:
 jobs:
   detect-noop:
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
     outputs:
       noop: ${{ steps.noop.outputs.should_skip }}
     steps:
@@ -38,6 +40,8 @@ jobs:
     runs-on: ubuntu-24.04
     needs: detect-noop
     if: needs.detect-noop.outputs.noop != 'true'
+    permissions:
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -78,6 +82,8 @@ jobs:
     runs-on: ubuntu-24.04
     needs: detect-noop
     if: needs.detect-noop.outputs.noop != 'true'
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout
@@ -122,6 +128,8 @@ jobs:
     runs-on: ubuntu-24.04
     needs: detect-noop
     if: needs.detect-noop.outputs.noop != 'true'
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout
@@ -165,6 +173,8 @@ jobs:
     runs-on: ubuntu-24.04
     needs: detect-noop
     if: needs.detect-noop.outputs.noop != 'true'
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout
@@ -214,6 +224,8 @@ jobs:
     runs-on: ubuntu-24.04
     needs: detect-noop
     if: needs.detect-noop.outputs.noop != 'true'
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout
@@ -263,6 +275,8 @@ jobs:
       - unit-tests
       - local-deploy
     if: needs.detect-noop.outputs.noop != 'true'
+    permissions:
+      contents: read
 
     steps:
       - name: Setup QEMU
