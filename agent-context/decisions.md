@@ -486,3 +486,31 @@ overridable via Upjet config); UP-2 is a runtime CRUD bug (upstream-only).
 re-vendor (bump `TERRAFORM_PROVIDER_VERSION`), else we mask a fixed upstream. Tracked in
 `TECH-DEBT-REGISTER.md` (U-1, LB-1). The D-020-FU `--extensions-root` cosign fix must precede v0.2.0.
 
+---
+
+## BRAND-2 — Keep the official press Bildmarke; remove the logo candidates
+
+**Date:** 2026-07-24 · **Status:** Decided — operator answered via `/operator-inbox`. **Actioned**
+(candidate marks removed from the repo).
+**Context:** D-009b / D-018 shipped gridscale GmbH's official figurative mark (press Bildmarke) for the
+Marketplace tile + README. BRAND-2 asked whether to swap in an *original* ecosystem mark. Seven
+candidates had been staged under `docs/assets/branding/candidates/`: PNG concepts **A–E** plus drop-in
+SVG marks **F** / **G**.
+**Options considered:**
+- **A — Keep the official press Bildmarke (chosen).** Status quo; zero swap work.
+- **B — Ship candidate F (SVG lattice)** — the originally *recommended* mark: original, already vector,
+  Marketplace-ready.
+- **C — Ship candidate G (SVG orbit).**
+- **D — Ship candidate A (PNG grid-orbit) after an SVG trace/polish pass.**
+**Decision:** **Keep the official gridscale press Bildmarke** on the Marketplace listing + README, **and
+remove the candidate logos from the repo** (`docs/assets/branding/candidates/` deleted — A–E PNGs, F/G
+SVGs, and the candidates gallery README). Dangling `candidates/` links were cleaned from `README.md`,
+`docs/README.md`, and `docs/assets/branding/README.md`; the press-mark references were left intact.
+**Counterpoint (kept even though overruled):** shipping gridscale's official registered mark on an
+*unaffiliated community* provider carries trademark + implied-endorsement exposure — precisely the reason
+an original mark (candidate F) was recommended in the first place. Operator accepts this risk, presumably
+mitigated by the existing "community PlatformRelay project — not affiliated with, endorsed by, or an
+official product of gridscale GmbH" attribution under `docs/assets/branding/README.md` (and/or explicit
+permission from gridscale GmbH). If that attribution ever weakens or the listing implies endorsement,
+revisit and swap to an original mark.
+

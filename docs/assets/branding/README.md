@@ -22,10 +22,3 @@
 Prefer the **Bildmarke** at small sizes / Marketplace tiles. Prefer the
 **primary wordmark** only where horizontal space allows. Do not recolour the
 press mark; swap light/dark variants instead.
-
-## Original candidates (pick one)
-
-Seven original marks (PNG + SVG) for a future swap away from the press
-Bildmarke — see **[candidates/README.md](candidates/README.md)** and INBOX
-decision **BRAND-2**. Shipping icon stays the Bildmarke until that decision
-lands.
