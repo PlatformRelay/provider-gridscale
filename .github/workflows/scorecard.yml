@@ -13,9 +13,9 @@ on:
   workflow_dispatch: {}
 
 # Explicit minimal scopes (avoid permissions: read-all / githubactions:S8234).
+# Write scopes stay job-scoped — top-level write breaks ossf/scorecard-action
+# publish verification ("global perm is set to write").
 permissions:
-  security-events: write
-  id-token: write
   contents: read
   actions: read
 
