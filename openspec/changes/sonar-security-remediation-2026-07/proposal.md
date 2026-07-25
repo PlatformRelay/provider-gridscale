@@ -16,7 +16,6 @@ Backlog IDs (claim one per worktree — see `agent-context/BACKLOG.md` / OPERATO
 
 ## Why
 
-
 SonarCloud project `PlatformRelay_provider-gridscale` reports **13 open SECURITY
 issues** (2 BLOCKER · 1 CRITICAL · 10 MAJOR). Zero Security Hotspots `TO_REVIEW`.
 This change is the authoritative, carefully analyzed remediation backlog: every
@@ -32,7 +31,9 @@ Source scan: SonarCloud main analysis, 2026-07-25 (issue keys cited in the spec)
 - Spec REQs for every **FIX** (and for **SAFE** items that need an explicit
   Sonar accept / NOSONAR rationale in-tree).
 - Meta tests under `hack/test/` that grep workflows/scripts for the unsafe
-  patterns (TDD: failing test first).
+  patterns (TDD: failing test first). Multi-site REQs PG-04 and PG-06 use
+  **per-lane Test/Verify scripts** aligned with BACKLOG file locks
+  (`sonar_pg_04_{e2e,ci}_*`, `sonar_pg_06_{publish,gitleaks}_*`).
 
 ## Non-goals
 
