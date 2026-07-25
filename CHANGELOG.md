@@ -8,6 +8,37 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 (with a leading gitmoji token) on the default branch using
 [git-cliff](https://git-cliff.org/).
 
+## [0.2.2](https://github.com/platformrelay/provider-gridscale/compare/v0.2.1..v0.2.2) - 2026-07-25
+
+### Bug Fixes
+
+- **ci:** Job-scope Scorecard write permissions for publish ([#26](https://github.com/platformrelay/provider-gridscale/pull/26))[7780f01](https://github.com/platformrelay/provider-gridscale/commit/7780f015a9cf4fc37c63a7cdc98e25f86561438f)
+
+- **ci:** Scope ci.yml permissions per job ([#24](https://github.com/platformrelay/provider-gridscale/pull/24))[21dfb81](https://github.com/platformrelay/provider-gridscale/commit/21dfb81ebfc590449496bf0e53112e4bfc64390a)
+
+- **ci:** Harden e2e secret env, sha256 hash, job permissions ([#23](https://github.com/platformrelay/provider-gridscale/pull/23))[6a6aa5f](https://github.com/platformrelay/provider-gridscale/commit/6a6aa5ff8da7d61a29d2f1b815988d4756e57d67)
+
+- **ci:** Enforce HTTPS on gitleaks installer curl ([#22](https://github.com/platformrelay/provider-gridscale/pull/22))[1da4080](https://github.com/platformrelay/provider-gridscale/commit/1da40804807857cd43ea092355fc45ee6adce7d3)
+
+- **ci:** Harden publish workflow input injection and curl TLS ([#21](https://github.com/platformrelay/provider-gridscale/pull/21))[a9c6efe](https://github.com/platformrelay/provider-gridscale/commit/a9c6efed2d029b22587f527b6ce6af510a3914e2)
+
+- **docker:** Use COPY for local provider artifacts ([#19](https://github.com/platformrelay/provider-gridscale/pull/19))[ef6053a](https://github.com/platformrelay/provider-gridscale/commit/ef6053a6b62c378c3e6fffe8c8510e411a4b0b44)
+
+- **scripts:** Bound version_diff.py paths to repo root ([#18](https://github.com/platformrelay/provider-gridscale/pull/18))[48aacef](https://github.com/platformrelay/provider-gridscale/commit/48aacefb7126ca09696970dbf86220ddaa047e5a)
+
+- **ci:** Scope Scorecard workflow permissions explicitly ([#17](https://github.com/platformrelay/provider-gridscale/pull/17))[b55ae7a](https://github.com/platformrelay/provider-gridscale/commit/b55ae7a47b4473caadd9a31c2531b8226b120ced)
+
+
+### Documentation
+
+- **brand:** Clear BRAND-2 inbox after keep-Bildmarke ([#25](https://github.com/platformrelay/provider-gridscale/pull/25))[68caf77](https://github.com/platformrelay/provider-gridscale/commit/68caf77c8116636652e9e3cb94c46a048fb53e0d)
+
+- **brand:** Keep press Bildmarke; remove logo candidates [1b09c17](https://github.com/platformrelay/provider-gridscale/commit/1b09c17dbc533dd7fc1039c3edd11e9f3f963219)
+
+- **openspec:** Align PG-04/PG-06 Test paths with backlog locks ([#20](https://github.com/platformrelay/provider-gridscale/pull/20))[ca0583b](https://github.com/platformrelay/provider-gridscale/commit/ca0583b03f2a17b2e9c8e8933f4c12bcdad1187e)
+
+- **openspec:** Add sonar-security-remediation-2026-07 change [394d49f](https://github.com/platformrelay/provider-gridscale/commit/394d49f7d85ef2b6a2885fc6ded6f2c7dddf3f68)
+
 ## [0.2.1](https://github.com/platformrelay/provider-gridscale/compare/v0.2.0..v0.2.1) - 2026-07-21
 
 ### Bug Fixes
