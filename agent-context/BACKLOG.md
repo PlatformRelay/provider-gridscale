@@ -105,3 +105,74 @@ Research Q5 closed in [`decisions.md`](decisions.md) **D-016** — summary for l
 | Feature #188 backup location | **done upstream** (PR #193 merged); already in our `BackupSchedule` CRDs. No lane. |
 
 No new stories spawned from this triage.
+
+## E5 — SonarCloud SECURITY remediation (2026-07)
+
+OpenSpec (worktree / upcoming PR): `openspec/changes/sonar-security-remediation-2026-07/`
+(REQs PG-01…PG-08). **Lane rule:** file locks below are exclusive; meta tests under
+`hack/test/sonar_pg_*` / `scripts/version_diff_test.py` owned by the same lane.
+
+| Story | Closes | File lock | P | Status |
+| --- | --- | --- | --- | --- |
+| E5-S11 | PG-01, PG-06 (publish curl) | `.github/workflows/publish-provider-package.yml`, `hack/test/sonar_pg_01_*`, `hack/test/sonar_pg_06_publish_*` | P0 | ⬜ claimable |
+| E5-S12 | PG-02, PG-03, PG-04 (e2e) | `.github/workflows/e2e.yaml`, `hack/test/sonar_pg_02_*`, `sonar_pg_03_*`, `sonar_pg_04_e2e_*` | P0 | ⬜ claimable |
+| E5-S13 | PG-04 (ci) | `.github/workflows/ci.yml`, `hack/test/sonar_pg_04_ci_*` | P1 | ⬜ claimable |
+| E5-S14 | PG-05 | `.github/workflows/scorecard.yml`, `hack/test/sonar_pg_05_*` | P1 | ⬜ claimable |
+| E5-S15 | PG-06 (gitleaks) | `.github/workflows/gitleaks.yml`, `hack/test/sonar_pg_06_gitleaks_*` | P1 | ⬜ claimable |
+| E5-S16 | PG-07 | `scripts/version_diff.py`, `scripts/version_diff_test.py` | P1 | ⬜ claimable |
+| E5-S17 | PG-08 | `cluster/images/provider-gridscale/Dockerfile`, `hack/test/sonar_pg_08_*` | P1 | ⬜ claimable |
+
+**Parallel batch (4):** E5-S11 + E5-S14 + E5-S16 + E5-S17 · **First if solo:** E5-S11
+
+### E5-S11 — Publish workflow: no input injection + HTTPS curl (P0)
+**Outcome:** `workflow_dispatch` version and curl installs cannot inject shell or downgrade TLS.
+
+**Acceptance**
+- Given Build/Publish steps, when `inputs.version` is set, then it reaches the shell only via `env:` / `$VERSION` — never `${{ inputs.* }}` / `format(...)` inside `run:`.
+- Given the Upbound/`up` curl step, when it runs, then curl uses `--proto '=https' --tlsv1.2`.
+- **Edge:** given a metacharacter version (`v1"; echo pwned; "`), when dispatched, then no injected command runs.
+
+**Done when:** failing meta tests first → green Verify; closes **REQ-SONAR-PG-01** + **REQ-SONAR-PG-06** (publish site); gates green.
+**File lock:** `.github/workflows/publish-provider-package.yml`, `hack/test/sonar_pg_01_*`, `hack/test/sonar_pg_06_publish_*`
+**Depends on:** none · **Parallel-safe-with:** E5-S12…S17 · **Not in scope:** e2e/gitleaks curls
+
+### E5-S12 — e2e.yaml: secret via env, sha256 hash, job-scoped perms (P0)
+**Outcome:** e2e stops expanding secrets unsafely; hashes with sha256; scopes `contents: read` to jobs.
+
+**Acceptance**
+- Datasource secret only via `env:` + `"$UPTEST_DATASOURCE"` in `run:`.
+- Example-list hash uses `sha256sum`, not `md5sum`.
+- No workflow-level `contents: read`; jobs declare needs.
+- **Edge:** empty/unset datasource → explicit failure, not silent empty success.
+
+**Done when:** Verify `sonar_pg_02/03/04_e2e`; closes **REQ-SONAR-PG-02/03/04** (e2e half).
+**File lock:** `.github/workflows/e2e.yaml` + listed meta tests
+**Depends on:** none · **Parallel-safe-with:** E5-S11, S13–S17
+
+### E5-S13 — ci.yml job-scoped permissions (P1)
+**Outcome:** drop workflow-level `contents: read`; per-job `permissions`.
+**Edge:** jobs that need read still declare it so checkout does not 403.
+**Verify:** `bash hack/test/sonar_pg_04_ci_job_scoped_permissions_test.sh` · closes **REQ-SONAR-PG-04** (ci half)
+**File lock:** `.github/workflows/ci.yml`, `hack/test/sonar_pg_04_ci_*` · **Parallel-safe-with:** all except another `ci.yml` lane
+
+### E5-S14 — Scorecard explicit permissions (P1)
+**Outcome:** replace `permissions: read-all` with minimal scopes (`security-events: write`, `id-token: write`, `contents: read`, `actions: read`).
+**Edge:** SARIF upload still has `security-events: write`.
+**Verify:** `bash hack/test/sonar_pg_05_scorecard_permissions_test.sh` · closes **REQ-SONAR-PG-05**
+**File lock:** `.github/workflows/scorecard.yml`, `hack/test/sonar_pg_05_*`
+
+### E5-S15 — gitleaks curl HTTPS enforce (P1)
+**Outcome:** gitleaks installer curl uses `--proto '=https' --tlsv1.2`.
+**Verify:** `bash hack/test/sonar_pg_06_gitleaks_curl_https_test.sh` · closes **REQ-SONAR-PG-06** (gitleaks)
+**File lock:** `.github/workflows/gitleaks.yml`, `hack/test/sonar_pg_06_gitleaks_*`
+
+### E5-S16 — version_diff.py path bound to repo root (P1)
+**Outcome:** CLI paths `resolve()`d; reject escapes outside repo root.
+**Edge:** `../../etc/passwd`-shaped path → non-zero, no open outside root.
+**Verify:** `python3 -m pytest scripts/version_diff_test.py -q` · closes **REQ-SONAR-PG-07**
+**File lock:** `scripts/version_diff.py`, `scripts/version_diff_test.py`
+
+### E5-S17 — Dockerfile local ADD → COPY (P1)
+**Outcome:** local `bin/…/provider` + `terraformrc.hcl` use `COPY`; remote URL ADD/curl allowed.
+**Verify:** `bash hack/test/sonar_pg_08_dockerfile_copy_test.sh` · closes **REQ-SONAR-PG-08**
+**File lock:** `cluster/images/provider-gridscale/Dockerfile`, `hack/test/sonar_pg_08_*`
