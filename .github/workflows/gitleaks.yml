@@ -34,7 +34,7 @@ jobs:
           set -euo pipefail
           tarball="gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
           url="https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/${tarball}"
-          curl -fsSL -o "${tarball}" "${url}"
+          curl -fsSL --proto '=https' --tlsv1.2 -o "${tarball}" "${url}"
           echo "${GITLEAKS_SHA256}  ${tarball}" | sha256sum -c -
           tar -xzf "${tarball}" gitleaks
           install -m 0755 gitleaks /usr/local/bin/gitleaks
