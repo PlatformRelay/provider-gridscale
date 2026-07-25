@@ -104,23 +104,26 @@ jobs:
         run: make vendor vendor.check
 
       - name: Build Artifacts
-        run: |
-          make -j \
-            XPKG_REG_ORGS="${{ env.CROSSPLANE_REGORG }}" \
-            XPKG_REG_ORGS_NO_PROMOTE="${{ env.CROSSPLANE_REGORG }}" \
-            BRANCH_NAME="main" \
-            ${{ github.event.inputs.version != '' && format('VERSION={0}', github.event.inputs.version) || '' }} \
-            build.all
         env:
           BUILD_ARGS: "--load"
-
-      - name: Publish Artifacts
+          VERSION: ${{ github.event.inputs.version }}
         run: |
           make -j \
             XPKG_REG_ORGS="${{ env.CROSSPLANE_REGORG }}" \
             XPKG_REG_ORGS_NO_PROMOTE="${{ env.CROSSPLANE_REGORG }}" \
             BRANCH_NAME="main" \
-            ${{ github.event.inputs.version != '' && format('VERSION={0}', github.event.inputs.version) || '' }} \
+            ${VERSION:+VERSION="${VERSION}"} \
+            build.all
+
+      - name: Publish Artifacts
+        env:
+          VERSION: ${{ github.event.inputs.version }}
+        run: |
+          make -j \
+            XPKG_REG_ORGS="${{ env.CROSSPLANE_REGORG }}" \
+            XPKG_REG_ORGS_NO_PROMOTE="${{ env.CROSSPLANE_REGORG }}" \
+            BRANCH_NAME="main" \
+            ${VERSION:+VERSION="${VERSION}"} \
             publish
 
       # D-020-FU: `up alpha xpkg append` is the only way to add extensions (crossplane
@@ -133,7 +136,7 @@ jobs:
           UP_VERSION: v0.51.0
         run: |
           set -euo pipefail
-          curl -fsSLo /usr/local/bin/up \
+          curl --proto '=https' --tlsv1.2 -fsSLo /usr/local/bin/up \
             "https://cli.upbound.io/stable/${UP_VERSION}/bin/linux_amd64/up"
           chmod +x /usr/local/bin/up
           up version --client
@@ -146,10 +149,12 @@ jobs:
       # Only for named releases: unversioned dev builds are neither signed nor listed.
       - name: Append marketplace extensions to release index (D-020-FU)
         if: ${{ github.event.inputs.version != '' }}
+        env:
+          VERSION: ${{ github.event.inputs.version }}
         run: |
           make \
             XPKG_REG_ORGS="${{ env.CROSSPLANE_REGORG }}" \
-            VERSION=${{ github.event.inputs.version }} \
+            VERSION="${VERSION}" \
             xpkg.append.extensions
 
   mirror-to-upbound:
