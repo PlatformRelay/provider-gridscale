@@ -2,14 +2,45 @@
 
 import json
 import sys
+from pathlib import Path
 
 # usage: version_diff.py <generated resource list> <base JSON schema path> <bumped JSON schema path>
 # example usage: version_diff.py config/generated.lst .work/schema.json.3.38.0 config/schema.json
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+
+
+class PathOutsideRepoError(ValueError):
+    """Raised when a resolved path escapes the repository root."""
+
+
+def resolve_under_repo(path: str | Path, *, repo_root: Path | None = None) -> Path:
+    """Resolve *path* and reject it unless it stays under the repository root."""
+    root = (repo_root if repo_root is not None else REPO_ROOT).resolve()
+    resolved = Path(path).resolve()
+    try:
+        resolved.relative_to(root)
+    except ValueError as exc:
+        raise PathOutsideRepoError(
+            f"path escapes repository root: {path!r} -> {resolved}"
+        ) from exc
+    return resolved
+
+
 if __name__ == "__main__":
-    base_path = sys.argv[2]
-    bumped_path = sys.argv[3]
-    print(f'Reporting schema changes between "{base_path}" as base version and "{bumped_path}" as bumped version')
-    with open(sys.argv[1]) as f:
+    try:
+        resources_path = resolve_under_repo(sys.argv[1])
+        base_path = resolve_under_repo(sys.argv[2])
+        bumped_path = resolve_under_repo(sys.argv[3])
+    except PathOutsideRepoError as err:
+        print(err, file=sys.stderr)
+        sys.exit(1)
+
+    print(
+        f'Reporting schema changes between "{base_path}" as base version '
+        f'and "{bumped_path}" as bumped version'
+    )
+    with open(resources_path) as f:
         resources = json.load(f)
     with open(base_path) as f:
         base = json.load(f)
