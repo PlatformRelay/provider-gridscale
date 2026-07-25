@@ -12,8 +12,12 @@ on:
     - cron: '0 7 * * 1'
   workflow_dispatch: {}
 
-# Least-privilege default; the analysis job elevates only what it needs.
-permissions: read-all
+# Explicit minimal scopes (avoid permissions: read-all / githubactions:S8234).
+permissions:
+  security-events: write
+  id-token: write
+  contents: read
+  actions: read
 
 jobs:
   analysis:
@@ -25,6 +29,7 @@ jobs:
       # Needed to publish results and get a badge (publish_results: true).
       id-token: write
       contents: read
+      actions: read
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
