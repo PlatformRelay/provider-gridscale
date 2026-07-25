@@ -10,7 +10,6 @@ Front door is the [root README](../README.md). This tree is the map.
 | [api/](api/) | Generated CRD API reference (`make docs`) |
 | [adr/](adr/) | Architecture decision records |
 | [assets/branding/](assets/branding/) | Shipping icon + wordmarks |
-| [assets/branding/candidates/](assets/branding/candidates/) | Logo options awaiting operator pick (BRAND-2) |
 
 Provider package extensions (Marketplace icon / readme) live under
 [`../extensions/`](../extensions/), not here.

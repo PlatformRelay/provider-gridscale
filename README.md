@@ -184,9 +184,8 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`AGENTS.md`](AGENTS.md).
 
 ## Branding
 
-Shipping icon today: gridscale press Bildmarke (see
-[`docs/assets/branding/`](docs/assets/branding/)). **Original logo candidates**
-for a future swap: [`docs/assets/branding/candidates/`](docs/assets/branding/candidates/).
+Shipping icon: gridscale press Bildmarke (see
+[`docs/assets/branding/`](docs/assets/branding/)).
 
 ## Community
 
