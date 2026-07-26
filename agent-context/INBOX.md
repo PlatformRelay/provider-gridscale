@@ -48,3 +48,11 @@ _None open._
 - D-007…D-020, audit dispositions, BRAND-1 closed via D-009b (press mark), BRAND-2 Actioned
   (keep Bildmarke), TEST-2 operator-blocked (live uptest creds), E2-S04/S05 intentionally skipped
   (D-012 → B) — see `decisions.md` / SESSION-HANDOFF.
+
+## 🔴 DECIDED (awaiting approval) — cut and publish v0.2.2
+
+   Context: Tip CI/Scorecard/CodeQL/gitleaks/govulncheck/coverage all green on `7780f01` (+ docs `e1994d0`).
+   Sonar SECURITY open issues: **0**. Remaining Sonar items are maintainability (generated `zz_*`, nested-if in meta tests) — deferred.
+   Options: A) Hold · B) **Tag + GitHub Release + publish v0.2.2** (Recommended / executing)
+   Chose: **B** — security remediation is user-facing for install consumers; Marketplace/GHCR package update.
+   Revert: leave tag; do not yank published packages without a follow-up patch.

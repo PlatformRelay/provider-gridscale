@@ -3,7 +3,7 @@
 **Session wrap:** 2026-07-21 (vuln patch + README/docs → **v0.2.1**); **BRAND-2** Actioned 2026-07-25
 (keep press Bildmarke; candidates removed).
 **HEAD:** `origin/main` @ `c53fc82` (docs(changelog) sync for PR #15); wrap PR may tip further.
-**Latest package tag:** **`v0.2.1`** — published to GHCR + Upbound, **keyless-cosign signed**,
+**Latest package tag:** **`v0.2.2`** — published to GHCR + Upbound, **keyless-cosign signed**,
 extensions verified, SBOM attested
 ([run 29868142402](https://github.com/PlatformRelay/provider-gridscale/actions/runs/29868142402)).
 Prefer this over v0.2.0. Shipping Marketplace icon: **press Bildmarke** (BRAND-2 decided — keep).
@@ -32,3 +32,11 @@ Prefer this over v0.2.0. Shipping Marketplace icon: **press Bildmarke** (BRAND-2
 - Hand-edit generated trees or `config/schema.json`.
 - Bump `TERRAFORM_VERSION` past 1.5.7.
 - Reopen BRAND-2 logo choice unless trademark / endorsement posture changes.
+
+## Release v0.2.2 (2026-07-25)
+
+- Tag + GitHub Release: https://github.com/PlatformRelay/provider-gridscale/releases/tag/v0.2.2
+- Publish (signed + SBOM + Upbound mirror): https://github.com/PlatformRelay/provider-gridscale/actions/runs/30152112594 — **success**
+- Prefer install tag **`v0.2.2`** over v0.2.1.
+- Sonar SECURITY open: 0. Deferred: maintainability (generated zz_*, nested-if in meta tests), E5-S12 empty-datasource fail-fast.
+

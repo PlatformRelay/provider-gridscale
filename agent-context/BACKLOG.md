@@ -114,15 +114,15 @@ OpenSpec (worktree / upcoming PR): `openspec/changes/sonar-security-remediation-
 
 | Story | Closes | File lock | P | Status |
 | --- | --- | --- | --- | --- |
-| E5-S11 | PG-01, PG-06 (publish curl) | `.github/workflows/publish-provider-package.yml`, `hack/test/sonar_pg_01_*`, `hack/test/sonar_pg_06_publish_*` | P0 | ⬜ claimable |
-| E5-S12 | PG-02, PG-03, PG-04 (e2e) | `.github/workflows/e2e.yaml`, `hack/test/sonar_pg_02_*`, `sonar_pg_03_*`, `sonar_pg_04_e2e_*` | P0 | ⬜ claimable |
-| E5-S13 | PG-04 (ci) | `.github/workflows/ci.yml`, `hack/test/sonar_pg_04_ci_*` | P1 | ⬜ claimable |
-| E5-S14 | PG-05 | `.github/workflows/scorecard.yml`, `hack/test/sonar_pg_05_*` | P1 | ⬜ claimable |
-| E5-S15 | PG-06 (gitleaks) | `.github/workflows/gitleaks.yml`, `hack/test/sonar_pg_06_gitleaks_*` | P1 | ⬜ claimable |
-| E5-S16 | PG-07 | `scripts/version_diff.py`, `scripts/version_diff_test.py` | P1 | ⬜ claimable |
-| E5-S17 | PG-08 | `cluster/images/provider-gridscale/Dockerfile`, `hack/test/sonar_pg_08_*` | P1 | ⬜ claimable |
+| E5-S11 | PG-01, PG-06 (publish curl) | `.github/workflows/publish-provider-package.yml`, `hack/test/sonar_pg_01_*`, `hack/test/sonar_pg_06_publish_*` | P0 | ✅ Integrated (a9c6efe) |
+| E5-S12 | PG-02, PG-03, PG-04 (e2e) | `.github/workflows/e2e.yaml`, `hack/test/sonar_pg_02_*`, `sonar_pg_03_*`, `sonar_pg_04_e2e_*` | P0 | ✅ Integrated (6a6aa5f) |
+| E5-S13 | PG-04 (ci) | `.github/workflows/ci.yml`, `hack/test/sonar_pg_04_ci_*` | P1 | ✅ Integrated (21dfb81) |
+| E5-S14 | PG-05 | `.github/workflows/scorecard.yml`, `hack/test/sonar_pg_05_*` | P1 | ✅ Integrated (b55ae7a) |
+| E5-S15 | PG-06 (gitleaks) | `.github/workflows/gitleaks.yml`, `hack/test/sonar_pg_06_gitleaks_*` | P1 | ✅ Integrated (1da4080) |
+| E5-S16 | PG-07 | `scripts/version_diff.py`, `scripts/version_diff_test.py` | P1 | ✅ Integrated (48aacef) |
+| E5-S17 | PG-08 | `cluster/images/provider-gridscale/Dockerfile`, `hack/test/sonar_pg_08_*` | P1 | ✅ Integrated (ef6053a) |
 
-**Parallel batch (4):** E5-S11 + E5-S14 + E5-S16 + E5-S17 · **First if solo:** E5-S11
+**Batch landed 2026-07-25** (E5-S11…S17 all Integrated on `main`; 9/9 `hack/test/sonar_pg_*` meta tests green; SonarCloud SECURITY open: 0).
 
 ### E5-S11 — Publish workflow: no input injection + HTTPS curl (P0)
 **Outcome:** `workflow_dispatch` version and curl installs cannot inject shell or downgrade TLS.
