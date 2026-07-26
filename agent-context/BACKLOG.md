@@ -14,7 +14,10 @@ Public build order: [docs/ROADMAP.md](../docs/ROADMAP.md). OpenSpec changes: `op
 | E6-S05 (assurance) | **landed** (`3edc5f0`); was stretch |
 | L-CIRED (CI restore) | **landed** (`d8433f5`+`d275897`) — primary CI green |
 | E8 datasources | **rescoped** (D-015) — document omission + track upstream; no codegen |
-| Next | **U-1 + LB-1 local override lane** (mark 5 S3-cred fields sensitive + loadbalancer `status` computed; regen) — in progress. Then **D-020-FU** (wire `--extensions-root` into CI `xpkg build` before any signed release), upstream PRs (U-1 / LB-1 / objectstorage wrong-Read — need operator go-ahead), PAT revoke. INBOX confirmations D-018/019/020 **resolved**; ROADMAP refreshed. |
+| U-1 + LB-1 overrides | **landed** — S3/console creds sensitive (`8ae7376`, `config/sensitive.go`); loadbalancer `status` Computed (`c38e52b`, `config/loadbalancer.go`); D-021 |
+| D-020-FU (extensions in signed release) | **landed** (`43294ed`+`60b9e8f`) — `make xpkg.append.extensions` append-then-sign + fail-closed verify in publish workflow; v0.2.2 signed w/ extensions verified |
+| E5 SonarCloud SECURITY (E5-S11…S17) | **landed 2026-07-25** — 7 lanes Integrated; 9/9 `hack/test/sonar_pg_*` green; SonarCloud SECURITY open: 0 |
+| Backlog | **exhausted** — remaining items are operator-only: revoke old classic PAT; nudge/track upstream TF PRs #509/#510/#511 (on merge, re-vendor + drop U-1/LB-1 overrides). Optional Scorecard polish (D-016) non-blocking. |
 
 ## E2 test-hardening batch (S06–S10) — ported from kollect's test tooling
 
