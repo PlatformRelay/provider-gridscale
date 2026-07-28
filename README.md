@@ -42,7 +42,7 @@ clusters in YAML — Crossplane reconciles them against
 - **Cluster *and* namespaced APIs** — `gridscale.platformrelay.io` (cluster) and
   `gridscale.m.platformrelay.io` (namespaced) so multi-tenant teams can own
   their own `ProviderConfig`.
-- **33 managed resources / 8 API groups** — servers, storage, networking, PaaS
+- **34 managed resources / 8 API groups** — servers, storage, networking, PaaS
   databases, K8s, object storage, marketplace apps, and more.
 - **Signed packages** — GHCR + Upbound Marketplace publishes are keyless-cosign
   signed with an SBOM (from `v0.2.0` onward).
@@ -113,20 +113,20 @@ Namespaced `ProviderConfig` / `ClusterProviderConfig` live under
 
 ## Supported resources
 
-33 managed resources across 8 API groups, each served under both the
+34 managed resources across 8 API groups, each served under both the
 cluster-scoped and namespaced families. Kind names below are the exact API
 server values (Upjet casing) — copy straight into `kind:`.
 
 | API group | Managed resources (`Kind`) |
 | --- | --- |
-| `gridscale` | `Backupschedule`, `Filesystem`, `Firewall`, `IPv4`, `IPv6`, `Isoimage`, `K8S`, `Loadbalancer`, `Mariadb`, `Memcached` †, `MySQL` †, `Network`, `Paas`, `Postgresql`, `Server`, `Snapshot`, `Snapshotschedule`, `Sqlserver`, `Sshkey`, `Storage`, `Template` |
+| `gridscale` | `Backupschedule`, `Filesystem`, `Firewall`, `IPv4`, `IPv6`, `Isoimage`, `K8S`, `Loadbalancer`, `Mariadb`, `Memcached` †, `MySQL` †, `Network`, `Paas`, `Postgresql`, `PublicNetwork`, `Server`, `Snapshot`, `Snapshotschedule`, `Sqlserver`, `Sshkey`, `Storage`, `Template` |
 | `marketplace` | `Application`, `ApplicationImport` |
 | `mysql8` | `MySQL8` |
 | `object` | `StorageAccesskey`, `StorageBucket` |
 | `paas` | `Securityzone` |
 | `redis` | `Cache`, `Store` |
 | `ssl` | `Certificate` |
-| `storage` | `Clone`, `StorageImport` |
+| `storage` | `BackupList`, `Clone`, `StorageImport` |
 
 † Upstream-deprecated — see [Deprecations](#deprecations).
 

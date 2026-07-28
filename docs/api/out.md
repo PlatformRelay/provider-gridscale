@@ -55,6 +55,8 @@
 - [PaasList](#paaslist)
 - [Postgresql](#postgresql)
 - [PostgresqlList](#postgresqllist)
+- [PublicNetwork](#publicnetwork)
+- [PublicNetworkList](#publicnetworklist)
 - [Server](#server)
 - [ServerList](#serverlist)
 - [Snapshot](#snapshot)
@@ -3241,6 +3243,120 @@ _Appears in:_
 | `atProvider` _[PostgresqlObservation](#postgresqlobservation)_ |  |  |  |
 
 
+#### PublicNetwork
+
+
+
+PublicNetwork is the Schema for the PublicNetworks API. Returns the account's public network details.
+
+
+
+_Appears in:_
+- [PublicNetworkList](#publicnetworklist)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `apiVersion` _string_ | `gridscale.gridscale.m.platformrelay.io/v1alpha1` | | |
+| `kind` _string_ | `PublicNetwork` | | |
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |  |  |
+| `spec` _[PublicNetworkSpec](#publicnetworkspec)_ |  |  |  |
+| `status` _[PublicNetworkStatus](#publicnetworkstatus)_ |  |  |  |
+
+
+#### PublicNetworkList
+
+
+
+PublicNetworkList contains a list of PublicNetwork.
+
+
+
+
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `apiVersion` _string_ | `gridscale.gridscale.m.platformrelay.io/v1alpha1` | | |
+| `kind` _string_ | `PublicNetworkList` | | |
+| `metadata` _[ListMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#listmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |  |  |
+| `items` _[PublicNetwork](#publicnetwork) array_ |  |  |  |
+
+
+#### PublicNetworkObservation
+
+
+
+PublicNetworkObservation are the observable fields of a PublicNetwork.
+
+
+
+_Appears in:_
+- [PublicNetworkStatus](#publicnetworkstatus)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `name` _string_ |  |  |  |
+| `status` _string_ |  |  |  |
+| `networkType` _string_ |  |  |  |
+| `locationUUID` _string_ |  |  |  |
+| `locationName` _string_ |  |  |  |
+| `locationCountry` _string_ |  |  |  |
+| `locationIATA` _string_ |  |  |  |
+| `l2Security` _boolean_ |  |  |  |
+| `deleteBlock` _boolean_ |  |  |  |
+| `labels` _string array_ |  |  |  |
+| `createTime` _string_ |  |  |  |
+| `changeTime` _string_ |  |  |  |
+
+
+#### PublicNetworkParameters
+
+
+
+PublicNetworkParameters are the configurable fields of a PublicNetwork.
+No inputs are required — the controller discovers the public network automatically.
+
+
+
+_Appears in:_
+- [PublicNetworkSpec](#publicnetworkspec)
+
+
+
+#### PublicNetworkSpec
+
+
+
+PublicNetworkSpec defines the desired state of PublicNetwork.
+
+
+
+_Appears in:_
+- [PublicNetwork](#publicnetwork)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `writeConnectionSecretToRef` _[LocalSecretReference](#localsecretreference)_ | WriteConnectionSecretToReference specifies the namespace and name of a<br />Secret to which any connection details for this managed resource should<br />be written. Connection details frequently include the endpoint, username,<br />and password required to connect to the managed resource. |  |  |
+| `providerConfigRef` _[ProviderConfigReference](#providerconfigreference)_ | ProviderConfigReference specifies how the provider that will be used to<br />create, observe, update, and delete this managed resource should be<br />configured. | \{ kind:ClusterProviderConfig name:default \} |  |
+| `managementPolicies` _[ManagementPolicies](#managementpolicies)_ | THIS IS A BETA FIELD. It is on by default but can be opted out<br />through a Crossplane feature flag.<br />ManagementPolicies specify the array of actions Crossplane is allowed to<br />take on the managed and external resources.<br />See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223<br />and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md | [*] | Enum: [Observe Create Update Delete LateInitialize *] <br /> |
+| `forProvider` _[PublicNetworkParameters](#publicnetworkparameters)_ |  |  |  |
+
+
+#### PublicNetworkStatus
+
+
+
+PublicNetworkStatus defines the observed state of PublicNetwork.
+
+
+
+_Appears in:_
+- [PublicNetwork](#publicnetwork)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `atProvider` _[PublicNetworkObservation](#publicnetworkobservation)_ |  |  |  |
+
+
 #### ResourceLimitInitParameters
 
 
@@ -5127,6 +5243,8 @@ _Appears in:_
 - [PaasList](#paaslist)
 - [Postgresql](#postgresql)
 - [PostgresqlList](#postgresqllist)
+- [PublicNetwork](#publicnetwork)
+- [PublicNetworkList](#publicnetworklist)
 - [Server](#server)
 - [ServerList](#serverlist)
 - [Snapshot](#snapshot)
@@ -8325,6 +8443,121 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `atProvider` _[PostgresqlObservation](#postgresqlobservation)_ |  |  |  |
+
+
+#### PublicNetwork
+
+
+
+PublicNetwork is the Schema for the PublicNetworks API. Returns the account's public network details.
+
+
+
+_Appears in:_
+- [PublicNetworkList](#publicnetworklist)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `apiVersion` _string_ | `gridscale.gridscale.platformrelay.io/v1alpha1` | | |
+| `kind` _string_ | `PublicNetwork` | | |
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |  |  |
+| `spec` _[PublicNetworkSpec](#publicnetworkspec)_ |  |  |  |
+| `status` _[PublicNetworkStatus](#publicnetworkstatus)_ |  |  |  |
+
+
+#### PublicNetworkList
+
+
+
+PublicNetworkList contains a list of PublicNetwork.
+
+
+
+
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `apiVersion` _string_ | `gridscale.gridscale.platformrelay.io/v1alpha1` | | |
+| `kind` _string_ | `PublicNetworkList` | | |
+| `metadata` _[ListMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#listmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |  |  |
+| `items` _[PublicNetwork](#publicnetwork) array_ |  |  |  |
+
+
+#### PublicNetworkObservation
+
+
+
+PublicNetworkObservation are the observable fields of a PublicNetwork.
+
+
+
+_Appears in:_
+- [PublicNetworkStatus](#publicnetworkstatus)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `name` _string_ |  |  |  |
+| `status` _string_ |  |  |  |
+| `networkType` _string_ |  |  |  |
+| `locationUUID` _string_ |  |  |  |
+| `locationName` _string_ |  |  |  |
+| `locationCountry` _string_ |  |  |  |
+| `locationIATA` _string_ |  |  |  |
+| `l2Security` _boolean_ |  |  |  |
+| `deleteBlock` _boolean_ |  |  |  |
+| `labels` _string array_ |  |  |  |
+| `createTime` _string_ |  |  |  |
+| `changeTime` _string_ |  |  |  |
+
+
+#### PublicNetworkParameters
+
+
+
+PublicNetworkParameters are the configurable fields of a PublicNetwork.
+No inputs are required — the controller discovers the public network automatically.
+
+
+
+_Appears in:_
+- [PublicNetworkSpec](#publicnetworkspec)
+
+
+
+#### PublicNetworkSpec
+
+
+
+PublicNetworkSpec defines the desired state of PublicNetwork.
+
+
+
+_Appears in:_
+- [PublicNetwork](#publicnetwork)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `writeConnectionSecretToRef` _[SecretReference](#secretreference)_ | WriteConnectionSecretToReference specifies the namespace and name of a<br />Secret to which any connection details for this managed resource should<br />be written. Connection details frequently include the endpoint, username,<br />and password required to connect to the managed resource. |  |  |
+| `providerConfigRef` _[Reference](#reference)_ | ProviderConfigReference specifies how the provider that will be used to<br />create, observe, update, and delete this managed resource should be<br />configured. | \{ name:default \} |  |
+| `managementPolicies` _[ManagementPolicies](#managementpolicies)_ | THIS IS A BETA FIELD. It is on by default but can be opted out<br />through a Crossplane feature flag.<br />ManagementPolicies specify the array of actions Crossplane is allowed to<br />take on the managed and external resources.<br />This field is planned to replace the DeletionPolicy field in a future<br />release. Currently, both could be set independently and non-default<br />values would be honored if the feature flag is enabled. If both are<br />custom, the DeletionPolicy field will be ignored.<br />See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223<br />and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md | [*] |  |
+| `deletionPolicy` _[DeletionPolicy](#deletionpolicy)_ | DeletionPolicy specifies what will happen to the underlying external<br />when this managed resource is deleted - either "Delete" or "Orphan" the<br />external resource.<br />This field is planned to be deprecated in favor of the ManagementPolicies<br />field in a future release. Currently, both could be set independently and<br />non-default values would be honored if the feature flag is enabled.<br />See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223 | Delete | Enum: [Orphan Delete] <br /> |
+| `forProvider` _[PublicNetworkParameters](#publicnetworkparameters)_ |  |  |  |
+
+
+#### PublicNetworkStatus
+
+
+
+PublicNetworkStatus defines the observed state of PublicNetwork.
+
+
+
+_Appears in:_
+- [PublicNetwork](#publicnetwork)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `atProvider` _[PublicNetworkObservation](#publicnetworkobservation)_ |  |  |  |
 
 
 #### ResourceLimitInitParameters
