@@ -8,6 +8,16 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 (with a leading gitmoji token) on the default branch using
 [git-cliff](https://git-cliff.org/).
 
+## [Unreleased]
+
+### Documentation
+
+- **observe:** Add 38 observe-only example YAMLs and docs E8-S01 [f8a3884](https://github.com/platformrelay/provider-gridscale/commit/f8a3884bf50cf75bdf9b90b4403ea242c0437f5e)
+
+- **backlog:** Mark backlog exhausted (U-1/LB-1/D-020-FU/E5 all landed) ([#29](https://github.com/platformrelay/provider-gridscale/pull/29))[ec942b9](https://github.com/platformrelay/provider-gridscale/commit/ec942b96cf443609fa53ecf52182f5a3bc3d515a)
+
+- **coordination:** Mark E5 sonar-security batch Integrated ([#28](https://github.com/platformrelay/provider-gridscale/pull/28))[3378a81](https://github.com/platformrelay/provider-gridscale/commit/3378a8124ec06c9b327358c0e904e10460c1a025)
+
 ## [0.2.2](https://github.com/platformrelay/provider-gridscale/compare/v0.2.1..v0.2.2) - 2026-07-25
 
 ### Bug Fixes
@@ -30,6 +40,8 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 
 ### Documentation
+
+- **release:** Changelog + install refs for v0.2.2 ([#27](https://github.com/platformrelay/provider-gridscale/pull/27))[e1994d0](https://github.com/platformrelay/provider-gridscale/commit/e1994d0ff6baf2b65f0b09d8f23fd7e743efbd10)
 
 - **brand:** Clear BRAND-2 inbox after keep-Bildmarke ([#25](https://github.com/platformrelay/provider-gridscale/pull/25))[68caf77](https://github.com/platformrelay/provider-gridscale/commit/68caf77c8116636652e9e3cb94c46a048fb53e0d)
 
