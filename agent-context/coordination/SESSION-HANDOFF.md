@@ -2,12 +2,14 @@
 
 **Session wrap:** 2026-07-21 (vuln patch + README/docs → **v0.2.1**); **BRAND-2** Actioned 2026-07-25
 (keep press Bildmarke; candidates removed).
-**HEAD:** `origin/main` @ `c53fc82` (docs(changelog) sync for PR #15); wrap PR may tip further.
+**HEAD:** `origin/main` @ `f250bdd` (E8 data-sources epic merged — PRs #30–#33).
 **Latest package tag:** **`v0.2.2`** — published to GHCR + Upbound, **keyless-cosign signed**,
 extensions verified, SBOM attested
 ([run 29868142402](https://github.com/PlatformRelay/provider-gridscale/actions/runs/29868142402)).
 Prefer this over v0.2.0. Shipping Marketplace icon: **press Bildmarke** (BRAND-2 decided — keep).
 **Merge model:** PRs into `main`; solo via `gh pr merge --rebase --admin`.
+
+E8 data-sources epic complete (PRs #30–#33): BackupList + PublicNetwork observe-only controllers + 38 YAML examples.
 
 ## Done this session
 
