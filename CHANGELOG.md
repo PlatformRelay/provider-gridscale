@@ -14,6 +14,8 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 - **observe:** Move YAMLs to examples/, update grpc, refresh changelog [6a9b19f](https://github.com/platformrelay/provider-gridscale/commit/6a9b19fc67c57cb2e0a01b096733f04e8633d525)
 
+- **backuplist:** Fix deprecated API, goimports, regenerate managed/deepcopy files [5d9a3a4](https://github.com/platformrelay/provider-gridscale/commit/5d9a3a445d759c791d41727f48f8847bf88b257f)
+
 - **backuplist:** Gofmt, README count 33, API docs, grpc v1.82.1, changelog [d2ff5a3](https://github.com/platformrelay/provider-gridscale/commit/d2ff5a3e09cc95a4227d64e2af7ed3cfee3ed593)
 
 
