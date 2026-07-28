@@ -23,6 +23,10 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 - **coordination:** Mark E5 sonar-security batch Integrated ([#28](https://github.com/platformrelay/provider-gridscale/pull/28))[3378a81](https://github.com/platformrelay/provider-gridscale/commit/3378a8124ec06c9b327358c0e904e10460c1a025)
 
+
+### Features
+
+- **backuplist:** Add BackupList CRD and observe-only controller E8-S02 [73d9201](https://github.com/platformrelay/provider-gridscale/commit/73d9201b756ca3cf81888311a6661017b743ac0d)
 ## [0.2.2](https://github.com/platformrelay/provider-gridscale/compare/v0.2.1..v0.2.2) - 2026-07-25
 
 ### Bug Fixes
