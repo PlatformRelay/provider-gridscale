@@ -21,7 +21,7 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 ### Documentation
 
-- **api:** Regenerate CRD reference docs and README for PublicNetwork E8-S03 [4070c5f](https://github.com/platformrelay/provider-gridscale/commit/4070c5f8439e818c1a33a6f566a7384f899b9c85)
+- **api:** Regenerate CRD reference docs and README for PublicNetwork E8-S03 [1d8a2e8](https://github.com/platformrelay/provider-gridscale/commit/1d8a2e8679b97bb7333ed1a735ea606460143c99)
 
 - **observe:** Add 38 observe-only example YAMLs and docs E8-S01 [e92f89e](https://github.com/platformrelay/provider-gridscale/commit/e92f89e051884187ec9c33e6cb9d2f9f8ee3cfa6)
 
@@ -32,14 +32,16 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 ### Features
 
-- **publicnetwork:** Add PublicNetwork CRD and observe-only controller E8-S03 [82ea712](https://github.com/platformrelay/provider-gridscale/commit/82ea712b7f50defb77f2c3006db5d5fc833c3af1)
+- **setup:** Wire PublicNetwork controller into setup_custom E8-S04 [80e2d4e](https://github.com/platformrelay/provider-gridscale/commit/80e2d4e5359e637284abaa1de739d85278817366)
+
+- **publicnetwork:** Add PublicNetwork CRD and observe-only controller E8-S03 [fbc69d9](https://github.com/platformrelay/provider-gridscale/commit/fbc69d95d5d70b6f44cf1e0c32b678df4b4bc270)
 
 - **backuplist:** Add BackupList CRD and observe-only controller E8-S02 [643d488](https://github.com/platformrelay/provider-gridscale/commit/643d488f87f98ea538886e5b42b02a12902d92cd)
 
 
 ### Tests
 
-- **publicnetwork:** Add namespaced tests and fix errObserveOnly sentinel E8-S03 [4a6df9a](https://github.com/platformrelay/provider-gridscale/commit/4a6df9ac46fbbfda45b93c01df1a86b247af07f3)
+- **publicnetwork:** Add namespaced tests and fix errObserveOnly sentinel E8-S03 [2a5a8bd](https://github.com/platformrelay/provider-gridscale/commit/2a5a8bd3094a41a8b672c7d5f05dd0ff9a781a47)
 
 ## [0.2.2](https://github.com/platformrelay/provider-gridscale/compare/v0.2.1..v0.2.2) - 2026-07-25
 
