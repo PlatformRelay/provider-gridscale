@@ -36,6 +36,11 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 - **backuplist:** Add BackupList CRD and observe-only controller E8-S02 [643d488](https://github.com/platformrelay/provider-gridscale/commit/643d488f87f98ea538886e5b42b02a12902d92cd)
 
+
+### Tests
+
+- **publicnetwork:** Add namespaced tests and fix errObserveOnly sentinel E8-S03 [4a6df9a](https://github.com/platformrelay/provider-gridscale/commit/4a6df9ac46fbbfda45b93c01df1a86b247af07f3)
+
 ## [0.2.2](https://github.com/platformrelay/provider-gridscale/compare/v0.2.1..v0.2.2) - 2026-07-25
 
 ### Bug Fixes
