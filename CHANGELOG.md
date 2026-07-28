@@ -12,16 +12,16 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 ### Bug Fixes
 
-- **observe:** Move YAMLs to examples/, update grpc, refresh changelog [6a9b19f](https://github.com/platformrelay/provider-gridscale/commit/6a9b19fc67c57cb2e0a01b096733f04e8633d525)
+- **backuplist:** Fix deprecated API, goimports, regenerate managed/deepcopy files [64a5f5c](https://github.com/platformrelay/provider-gridscale/commit/64a5f5c6c2f78dee4ba7a468f327f1e365ce9cdd)
 
-- **backuplist:** Fix deprecated API, goimports, regenerate managed/deepcopy files [5d9a3a4](https://github.com/platformrelay/provider-gridscale/commit/5d9a3a445d759c791d41727f48f8847bf88b257f)
+- **backuplist:** Gofmt, README count 33, API docs, grpc v1.82.1, changelog [99a0d12](https://github.com/platformrelay/provider-gridscale/commit/99a0d12a4bbab55983393faf79c8e05cd641e09e)
 
-- **backuplist:** Gofmt, README count 33, API docs, grpc v1.82.1, changelog [d2ff5a3](https://github.com/platformrelay/provider-gridscale/commit/d2ff5a3e09cc95a4227d64e2af7ed3cfee3ed593)
+- **observe:** Move YAMLs to examples/, update grpc, refresh changelog [80107f1](https://github.com/platformrelay/provider-gridscale/commit/80107f12349b2e42f92af29566d8ecce411fa4af)
 
 
 ### Documentation
 
-- **observe:** Add 38 observe-only example YAMLs and docs E8-S01 [f8a3884](https://github.com/platformrelay/provider-gridscale/commit/f8a3884bf50cf75bdf9b90b4403ea242c0437f5e)
+- **observe:** Add 38 observe-only example YAMLs and docs E8-S01 [e92f89e](https://github.com/platformrelay/provider-gridscale/commit/e92f89e051884187ec9c33e6cb9d2f9f8ee3cfa6)
 
 - **backlog:** Mark backlog exhausted (U-1/LB-1/D-020-FU/E5 all landed) ([#29](https://github.com/platformrelay/provider-gridscale/pull/29))[ec942b9](https://github.com/platformrelay/provider-gridscale/commit/ec942b96cf443609fa53ecf52182f5a3bc3d515a)
 
@@ -30,7 +30,9 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 ### Features
 
-- **backuplist:** Add BackupList CRD and observe-only controller E8-S02 [73d9201](https://github.com/platformrelay/provider-gridscale/commit/73d9201b756ca3cf81888311a6661017b743ac0d)
+- **publicnetwork:** Add PublicNetwork CRD and observe-only controller E8-S03 [82ea712](https://github.com/platformrelay/provider-gridscale/commit/82ea712b7f50defb77f2c3006db5d5fc833c3af1)
+
+- **backuplist:** Add BackupList CRD and observe-only controller E8-S02 [643d488](https://github.com/platformrelay/provider-gridscale/commit/643d488f87f98ea538886e5b42b02a12902d92cd)
 
 ## [0.2.2](https://github.com/platformrelay/provider-gridscale/compare/v0.2.1..v0.2.2) - 2026-07-25
 
