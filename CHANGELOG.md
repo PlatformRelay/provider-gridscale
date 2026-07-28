@@ -21,6 +21,8 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 ### Documentation
 
+- **api:** Regenerate CRD reference docs and README for PublicNetwork E8-S03 [4070c5f](https://github.com/platformrelay/provider-gridscale/commit/4070c5f8439e818c1a33a6f566a7384f899b9c85)
+
 - **observe:** Add 38 observe-only example YAMLs and docs E8-S01 [e92f89e](https://github.com/platformrelay/provider-gridscale/commit/e92f89e051884187ec9c33e6cb9d2f9f8ee3cfa6)
 
 - **backlog:** Mark backlog exhausted (U-1/LB-1/D-020-FU/E5 all landed) ([#29](https://github.com/platformrelay/provider-gridscale/pull/29))[ec942b9](https://github.com/platformrelay/provider-gridscale/commit/ec942b96cf443609fa53ecf52182f5a3bc3d515a)
