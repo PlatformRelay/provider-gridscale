@@ -22,6 +22,8 @@ _None open._
    `.envrc` only — do **not** put it in Actions secrets).
 2. **Nudge/track upstream PRs** #509/#510/#511 if they stall; on merge, re-vendor
    (`TERRAFORM_PROVIDER_VERSION`) and drop the local U-1/LB-1 overrides.
+3. **Consider releasing v0.3.0** — E8 adds 2 new custom observe-only controllers (BackupList,
+   PublicNetwork) + 38 observe-only example YAMLs. User-facing feature set warrants a minor bump.
 
 ### Non-blocking / optional
 
@@ -34,6 +36,9 @@ _None open._
 
 ## ✅ Resolved this session (recorded, no further call)
 
+- **E8 data-sources epic** — 4 stories landed 2026-07-28 (PRs #30–#33). 34 managed resources.
+  BackupList + PublicNetwork observe-only controllers active at provider startup.
+  Next: operator decides v0.3.0 release timing.
 - **GO-2026-5970** — `golang.org/x/text` bumped to v0.39.0; `make vuln` green again.
 - **README badges** — native GitHub Actions badges (CI / Coverage / E2E / Gitleaks / Govulncheck /
   CodeQL) plus Scorecard, codecov, release, Marketplace, GHCR, Go, License (kollect pattern).
