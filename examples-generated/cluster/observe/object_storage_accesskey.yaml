@@ -1,0 +1,13 @@
+apiVersion: object.gridscale.platformrelay.io/v1alpha1
+kind: StorageAccesskey
+metadata:
+  name: observe-object_storage_accesskey
+  annotations:
+    # Set external-name to the UUID of the existing gridscale resource to observe.
+    crossplane.io/external-name: "<replace-with-uuid>"
+spec:
+  managementPolicies:
+    - Observe
+  providerConfigRef:
+    name: default
+  forProvider: {}
