@@ -1,0 +1,13 @@
+apiVersion: gridscale.gridscale.platformrelay.io/v1alpha1
+kind: Firewall
+metadata:
+  name: observe-firewall
+  annotations:
+    # Set external-name to the UUID of the existing gridscale resource to observe.
+    crossplane.io/external-name: "<replace-with-uuid>"
+spec:
+  managementPolicies:
+    - Observe
+  providerConfigRef:
+    name: default
+  forProvider: {}

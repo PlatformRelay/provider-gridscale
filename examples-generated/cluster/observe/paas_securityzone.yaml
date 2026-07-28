@@ -1,0 +1,13 @@
+apiVersion: paas.gridscale.platformrelay.io/v1alpha1
+kind: Securityzone
+metadata:
+  name: observe-paas_securityzone
+  annotations:
+    # Set external-name to the UUID of the existing gridscale resource to observe.
+    crossplane.io/external-name: "<replace-with-uuid>"
+spec:
+  managementPolicies:
+    - Observe
+  providerConfigRef:
+    name: default
+  forProvider: {}

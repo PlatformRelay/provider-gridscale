@@ -1,0 +1,13 @@
+apiVersion: ssl.gridscale.platformrelay.io/v1alpha1
+kind: Certificate
+metadata:
+  name: observe-ssl_certificate
+  annotations:
+    # Set external-name to the UUID of the existing gridscale resource to observe.
+    crossplane.io/external-name: "<replace-with-uuid>"
+spec:
+  managementPolicies:
+    - Observe
+  providerConfigRef:
+    name: default
+  forProvider: {}
