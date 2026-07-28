@@ -14,6 +14,8 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 - **observe:** Move YAMLs to examples/, update grpc, refresh changelog [6a9b19f](https://github.com/platformrelay/provider-gridscale/commit/6a9b19fc67c57cb2e0a01b096733f04e8633d525)
 
+- **backuplist:** Gofmt, README count 33, API docs, grpc v1.82.1, changelog [d2ff5a3](https://github.com/platformrelay/provider-gridscale/commit/d2ff5a3e09cc95a4227d64e2af7ed3cfee3ed593)
+
 
 ### Documentation
 
@@ -27,6 +29,7 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 ### Features
 
 - **backuplist:** Add BackupList CRD and observe-only controller E8-S02 [73d9201](https://github.com/platformrelay/provider-gridscale/commit/73d9201b756ca3cf81888311a6661017b743ac0d)
+
 ## [0.2.2](https://github.com/platformrelay/provider-gridscale/compare/v0.2.1..v0.2.2) - 2026-07-25
 
 ### Bug Fixes
