@@ -27,8 +27,9 @@ import (
 const (
 	errNotPublicNetwork = "managed resource is not a PublicNetwork"
 	errGetNetworks      = "cannot get networks"
-	errNoPublicNetwork  = "no public network found in account"
 )
+
+var errObserveOnly = errors.New("publicnetwork is observe-only: use managementPolicies: [Observe]")
 
 type connector struct {
 	kube    client.Client
@@ -119,11 +120,11 @@ func (e *external) Observe(ctx context.Context, mg xpresource.Managed) (managed.
 }
 
 func (e *external) Create(_ context.Context, _ xpresource.Managed) (managed.ExternalCreation, error) {
-	return managed.ExternalCreation{}, errors.New("PublicNetwork is observe-only and does not support Create")
+	return managed.ExternalCreation{}, errObserveOnly
 }
 
 func (e *external) Update(_ context.Context, _ xpresource.Managed) (managed.ExternalUpdate, error) {
-	return managed.ExternalUpdate{}, errors.New("PublicNetwork is observe-only and does not support Update")
+	return managed.ExternalUpdate{}, errObserveOnly
 }
 
 func (e *external) Delete(_ context.Context, _ xpresource.Managed) (managed.ExternalDelete, error) {

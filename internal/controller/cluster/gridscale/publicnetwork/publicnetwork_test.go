@@ -7,13 +7,15 @@ package publicnetwork
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
 	v1alpha1 "github.com/PlatformRelay/provider-gridscale/apis/cluster/gridscale/v1alpha1"
 	"github.com/PlatformRelay/provider-gridscale/internal/clients"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func newTestExternal(t *testing.T, handler http.HandlerFunc) (*external, func()) {
@@ -35,7 +37,7 @@ func TestObserve_PublicNetworkFound(t *testing.T) {
 		},
 	}
 	ext, cleanup := newTestExternal(t, func(w http.ResponseWriter, r *http.Request) {
-		json.NewEncoder(w).Encode(resp)
+		json.NewEncoder(w).Encode(resp) //nolint:errcheck
 	})
 	defer cleanup()
 
@@ -62,7 +64,7 @@ func TestObserve_OnlyPrivateNetworks(t *testing.T) {
 		},
 	}
 	ext, cleanup := newTestExternal(t, func(w http.ResponseWriter, r *http.Request) {
-		json.NewEncoder(w).Encode(resp)
+		json.NewEncoder(w).Encode(resp) //nolint:errcheck
 	})
 	defer cleanup()
 
@@ -79,7 +81,7 @@ func TestObserve_OnlyPrivateNetworks(t *testing.T) {
 func TestObserve_EmptyNetworkList(t *testing.T) {
 	resp := networksResponse{Networks: map[string]networkEntry{}}
 	ext, cleanup := newTestExternal(t, func(w http.ResponseWriter, r *http.Request) {
-		json.NewEncoder(w).Encode(resp)
+		json.NewEncoder(w).Encode(resp) //nolint:errcheck
 	})
 	defer cleanup()
 
@@ -96,15 +98,15 @@ func TestObserve_EmptyNetworkList(t *testing.T) {
 func TestCreate_ReturnsError(t *testing.T) {
 	ext := &external{client: clients.NewGridscaleClient("u", "t", "http://localhost:1")}
 	_, err := ext.Create(context.Background(), &v1alpha1.PublicNetwork{})
-	if err == nil {
-		t.Fatal("Create should return observe-only error")
+	if !errors.Is(err, errObserveOnly) {
+		t.Fatalf("Create: want errObserveOnly, got %v", err)
 	}
 }
 
 func TestUpdate_ReturnsError(t *testing.T) {
 	ext := &external{client: clients.NewGridscaleClient("u", "t", "http://localhost:1")}
 	_, err := ext.Update(context.Background(), &v1alpha1.PublicNetwork{})
-	if err == nil {
-		t.Fatal("Update should return observe-only error")
+	if !errors.Is(err, errObserveOnly) {
+		t.Fatalf("Update: want errObserveOnly, got %v", err)
 	}
 }
