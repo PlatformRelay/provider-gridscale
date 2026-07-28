@@ -226,11 +226,15 @@ func main() {
 			MaxConcurrentReconciles: 1,
 		}), "Cannot setup CRD gate")
 		kingpin.FatalIfError(controllerCluster.SetupGated(mgr, clusterOpts), "Cannot setup cluster-scoped Gridscale controllers")
+		kingpin.FatalIfError(controllerCluster.SetupCustomGated(mgr, clusterOpts), "Cannot setup cluster-scoped custom controllers")
 		kingpin.FatalIfError(controllerNamespaced.SetupGated(mgr, namespacedOpts), "Cannot setup namespaced Gridscale controllers")
+		kingpin.FatalIfError(controllerNamespaced.SetupCustomGated(mgr, namespacedOpts), "Cannot setup namespaced custom controllers")
 	} else {
 		log.Info("Provider has missing RBAC permissions for watching CRDs, controller SafeStart capability will be disabled")
 		kingpin.FatalIfError(controllerCluster.Setup(mgr, clusterOpts), "Cannot setup cluster-scoped Gridscale controllers")
+		kingpin.FatalIfError(controllerCluster.SetupCustom(mgr, clusterOpts), "Cannot setup cluster-scoped custom controllers")
 		kingpin.FatalIfError(controllerNamespaced.Setup(mgr, namespacedOpts), "Cannot setup namespaced Gridscale controllers")
+		kingpin.FatalIfError(controllerNamespaced.SetupCustom(mgr, namespacedOpts), "Cannot setup namespaced custom controllers")
 	}
 
 	kingpin.FatalIfError(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")
