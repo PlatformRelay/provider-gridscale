@@ -12,6 +12,8 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 ### Bug Fixes
 
+- **main:** Wire SetupCustom and SetupCustomGated into provider startup E8-S04 [feadc92](https://github.com/platformrelay/provider-gridscale/commit/feadc92f0b65915223a41229cf50a1f5d0b76c85)
+
 - **backuplist:** Fix deprecated API, goimports, regenerate managed/deepcopy files [64a5f5c](https://github.com/platformrelay/provider-gridscale/commit/64a5f5c6c2f78dee4ba7a468f327f1e365ce9cdd)
 
 - **backuplist:** Gofmt, README count 33, API docs, grpc v1.82.1, changelog [99a0d12](https://github.com/platformrelay/provider-gridscale/commit/99a0d12a4bbab55983393faf79c8e05cd641e09e)
