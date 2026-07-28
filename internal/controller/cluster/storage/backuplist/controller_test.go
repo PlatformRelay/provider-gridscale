@@ -11,9 +11,10 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
 	v1alpha1 "github.com/PlatformRelay/provider-gridscale/apis/cluster/storage/v1alpha1"
 	"github.com/PlatformRelay/provider-gridscale/internal/clients"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func newTestClient(t *testing.T, handler http.HandlerFunc) (*clients.GridscaleClient, func()) {

@@ -117,12 +117,12 @@ func (e *external) Disconnect(_ context.Context) error {
 func Setup(mgr ctrl.Manager, o tjcontroller.Options) error {
 	name := managed.ControllerName(v1alpha1.BackupList_GroupVersionKind.String())
 	opts := []managed.ReconcilerOption{
-		managed.WithExternalConnecter(&connector{
+		managed.WithExternalConnector(&connector{
 			kube:    mgr.GetClient(),
 			setupFn: o.SetupFn,
 		}),
 		managed.WithLogger(o.Logger.WithValues("controller", name)),
-		managed.WithRecorder(event.NewAPIRecorder(mgr.GetEventRecorderFor(name))),
+		managed.WithRecorder(event.NewAPIRecorder(mgr.GetEventRecorderFor(name))), //nolint:staticcheck // suppress until crossplane-runtime offers the new recorder api
 		managed.WithTimeout(1 * time.Minute),
 		managed.WithPollInterval(o.PollInterval),
 		managed.WithManagementPolicies(),
@@ -142,7 +142,7 @@ func Setup(mgr ctrl.Manager, o tjcontroller.Options) error {
 
 // SetupGated registers the controller behind a CRD-existence gate.
 func SetupGated(mgr ctrl.Manager, o tjcontroller.Options) error {
-	o.Options.Gate.Register(func() {
+	o.Gate.Register(func() {
 		if err := Setup(mgr, o); err != nil {
 			mgr.GetLogger().Error(err, "unable to setup reconciler", "gvk", v1alpha1.BackupList_GroupVersionKind.String())
 		}
