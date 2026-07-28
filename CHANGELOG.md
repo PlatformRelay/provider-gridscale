@@ -10,6 +10,11 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 ## [Unreleased]
 
+### Bug Fixes
+
+- **observe:** Move YAMLs to examples/, update grpc, refresh changelog [6a9b19f](https://github.com/platformrelay/provider-gridscale/commit/6a9b19fc67c57cb2e0a01b096733f04e8633d525)
+
+
 ### Documentation
 
 - **observe:** Add 38 observe-only example YAMLs and docs E8-S01 [f8a3884](https://github.com/platformrelay/provider-gridscale/commit/f8a3884bf50cf75bdf9b90b4403ea242c0437f5e)
