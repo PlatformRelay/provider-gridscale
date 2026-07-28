@@ -5,8 +5,8 @@
 package controller
 
 import (
-	ctrl "sigs.k8s.io/controller-runtime"
 	tjcontroller "github.com/crossplane/upjet/v2/pkg/controller"
+	ctrl "sigs.k8s.io/controller-runtime"
 
 	backuplist "github.com/PlatformRelay/provider-gridscale/internal/controller/cluster/storage/backuplist"
 )

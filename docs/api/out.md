@@ -13621,11 +13621,118 @@ _Appears in:_
 
 
 ### Resource Types
+- [BackupList](#backuplist)
+- [BackupListList](#backuplistlist)
 - [Clone](#clone)
 - [CloneList](#clonelist)
 - [StorageImport](#storageimport)
 - [StorageImportList](#storageimportlist)
 
+
+
+#### BackupList
+
+
+
+BackupList is the Schema for the BackupLists API. Lists storage backups for a given storage UUID.
+
+
+
+_Appears in:_
+- [BackupListList](#backuplistlist)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `apiVersion` _string_ | `storage.gridscale.m.platformrelay.io/v1alpha1` | | |
+| `kind` _string_ | `BackupList` | | |
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |  |  |
+| `spec` _[BackupListSpec](#backuplistspec)_ |  |  |  |
+| `status` _[BackupListStatus](#backupliststatus)_ |  |  |  |
+
+
+#### BackupListList
+
+
+
+BackupListList contains a list of BackupList.
+
+
+
+
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `apiVersion` _string_ | `storage.gridscale.m.platformrelay.io/v1alpha1` | | |
+| `kind` _string_ | `BackupListList` | | |
+| `metadata` _[ListMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#listmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |  |  |
+| `items` _[BackupList](#backuplist) array_ |  |  |  |
+
+
+#### BackupListObservation
+
+
+
+BackupListObservation are the observable fields of a BackupList.
+
+
+
+_Appears in:_
+- [BackupListStatus](#backupliststatus)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `storageBackups` _[StorageBackupEntry](#storagebackupentry) array_ | StorageBackups is the list of backups for the storage. |  |  |
+
+
+#### BackupListParameters
+
+
+
+BackupListParameters are the configurable fields of a BackupList.
+
+
+
+_Appears in:_
+- [BackupListSpec](#backuplistspec)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `storageUUID` _string_ | StorageUUID is the UUID of the storage whose backups to list. |  | Required: \{\} <br /> |
+
+
+#### BackupListSpec
+
+
+
+BackupListSpec defines the desired state of BackupList.
+
+
+
+_Appears in:_
+- [BackupList](#backuplist)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `writeConnectionSecretToRef` _[LocalSecretReference](#localsecretreference)_ | WriteConnectionSecretToReference specifies the namespace and name of a<br />Secret to which any connection details for this managed resource should<br />be written. Connection details frequently include the endpoint, username,<br />and password required to connect to the managed resource. |  |  |
+| `providerConfigRef` _[ProviderConfigReference](#providerconfigreference)_ | ProviderConfigReference specifies how the provider that will be used to<br />create, observe, update, and delete this managed resource should be<br />configured. | \{ kind:ClusterProviderConfig name:default \} |  |
+| `managementPolicies` _[ManagementPolicies](#managementpolicies)_ | THIS IS A BETA FIELD. It is on by default but can be opted out<br />through a Crossplane feature flag.<br />ManagementPolicies specify the array of actions Crossplane is allowed to<br />take on the managed and external resources.<br />See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223<br />and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md | [*] | Enum: [Observe Create Update Delete LateInitialize *] <br /> |
+| `forProvider` _[BackupListParameters](#backuplistparameters)_ |  |  |  |
+
+
+#### BackupListStatus
+
+
+
+BackupListStatus defines the observed state of BackupList.
+
+
+
+_Appears in:_
+- [BackupList](#backuplist)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `atProvider` _[BackupListObservation](#backuplistobservation)_ |  |  |  |
 
 
 #### Clone
@@ -13777,6 +13884,26 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `atProvider` _[CloneObservation](#cloneobservation)_ |  |  |  |
+
+
+#### StorageBackupEntry
+
+
+
+StorageBackupEntry describes a single backup entry returned by the gridscale
+storage backups API.
+
+
+
+_Appears in:_
+- [BackupListObservation](#backuplistobservation)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `objectUuid` _string_ |  |  |  |
+| `name` _string_ |  |  |  |
+| `capacity` _float_ |  |  |  |
+| `createTime` _string_ |  |  |  |
 
 
 #### StorageImport
@@ -13931,11 +14058,119 @@ _Appears in:_
 
 
 ### Resource Types
+- [BackupList](#backuplist)
+- [BackupListList](#backuplistlist)
 - [Clone](#clone)
 - [CloneList](#clonelist)
 - [StorageImport](#storageimport)
 - [StorageImportList](#storageimportlist)
 
+
+
+#### BackupList
+
+
+
+BackupList is the Schema for the BackupLists API. Lists storage backups for a given storage UUID.
+
+
+
+_Appears in:_
+- [BackupListList](#backuplistlist)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `apiVersion` _string_ | `storage.gridscale.platformrelay.io/v1alpha1` | | |
+| `kind` _string_ | `BackupList` | | |
+| `metadata` _[ObjectMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#objectmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |  |  |
+| `spec` _[BackupListSpec](#backuplistspec)_ |  |  |  |
+| `status` _[BackupListStatus](#backupliststatus)_ |  |  |  |
+
+
+#### BackupListList
+
+
+
+BackupListList contains a list of BackupList.
+
+
+
+
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `apiVersion` _string_ | `storage.gridscale.platformrelay.io/v1alpha1` | | |
+| `kind` _string_ | `BackupListList` | | |
+| `metadata` _[ListMeta](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.30/#listmeta-v1-meta)_ | Refer to Kubernetes API documentation for fields of `metadata`. |  |  |
+| `items` _[BackupList](#backuplist) array_ |  |  |  |
+
+
+#### BackupListObservation
+
+
+
+BackupListObservation are the observable fields of a BackupList.
+
+
+
+_Appears in:_
+- [BackupListStatus](#backupliststatus)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `storageBackups` _[StorageBackupEntry](#storagebackupentry) array_ | StorageBackups is the list of backups for the storage. |  |  |
+
+
+#### BackupListParameters
+
+
+
+BackupListParameters are the configurable fields of a BackupList.
+
+
+
+_Appears in:_
+- [BackupListSpec](#backuplistspec)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `storageUUID` _string_ | StorageUUID is the UUID of the storage whose backups to list. |  | Required: \{\} <br /> |
+
+
+#### BackupListSpec
+
+
+
+BackupListSpec defines the desired state of BackupList.
+
+
+
+_Appears in:_
+- [BackupList](#backuplist)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `writeConnectionSecretToRef` _[SecretReference](#secretreference)_ | WriteConnectionSecretToReference specifies the namespace and name of a<br />Secret to which any connection details for this managed resource should<br />be written. Connection details frequently include the endpoint, username,<br />and password required to connect to the managed resource. |  |  |
+| `providerConfigRef` _[Reference](#reference)_ | ProviderConfigReference specifies how the provider that will be used to<br />create, observe, update, and delete this managed resource should be<br />configured. | \{ name:default \} |  |
+| `managementPolicies` _[ManagementPolicies](#managementpolicies)_ | THIS IS A BETA FIELD. It is on by default but can be opted out<br />through a Crossplane feature flag.<br />ManagementPolicies specify the array of actions Crossplane is allowed to<br />take on the managed and external resources.<br />This field is planned to replace the DeletionPolicy field in a future<br />release. Currently, both could be set independently and non-default<br />values would be honored if the feature flag is enabled. If both are<br />custom, the DeletionPolicy field will be ignored.<br />See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223<br />and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md | [*] |  |
+| `deletionPolicy` _[DeletionPolicy](#deletionpolicy)_ | DeletionPolicy specifies what will happen to the underlying external<br />when this managed resource is deleted - either "Delete" or "Orphan" the<br />external resource.<br />This field is planned to be deprecated in favor of the ManagementPolicies<br />field in a future release. Currently, both could be set independently and<br />non-default values would be honored if the feature flag is enabled.<br />See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223 | Delete | Enum: [Orphan Delete] <br /> |
+| `forProvider` _[BackupListParameters](#backuplistparameters)_ |  |  |  |
+
+
+#### BackupListStatus
+
+
+
+BackupListStatus defines the observed state of BackupList.
+
+
+
+_Appears in:_
+- [BackupList](#backuplist)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `atProvider` _[BackupListObservation](#backuplistobservation)_ |  |  |  |
 
 
 #### Clone
@@ -14088,6 +14323,26 @@ _Appears in:_
 | Field | Description | Default | Validation |
 | --- | --- | --- | --- |
 | `atProvider` _[CloneObservation](#cloneobservation)_ |  |  |  |
+
+
+#### StorageBackupEntry
+
+
+
+StorageBackupEntry describes a single backup entry returned by the gridscale
+storage backups API.
+
+
+
+_Appears in:_
+- [BackupListObservation](#backuplistobservation)
+
+| Field | Description | Default | Validation |
+| --- | --- | --- | --- |
+| `objectUuid` _string_ |  |  |  |
+| `name` _string_ |  |  |  |
+| `capacity` _float_ |  |  |  |
+| `createTime` _string_ |  |  |  |
 
 
 #### StorageImport

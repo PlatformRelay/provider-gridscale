@@ -42,7 +42,7 @@ clusters in YAML — Crossplane reconciles them against
 - **Cluster *and* namespaced APIs** — `gridscale.platformrelay.io` (cluster) and
   `gridscale.m.platformrelay.io` (namespaced) so multi-tenant teams can own
   their own `ProviderConfig`.
-- **32 managed resources / 8 API groups** — servers, storage, networking, PaaS
+- **33 managed resources / 8 API groups** — servers, storage, networking, PaaS
   databases, K8s, object storage, marketplace apps, and more.
 - **Signed packages** — GHCR + Upbound Marketplace publishes are keyless-cosign
   signed with an SBOM (from `v0.2.0` onward).
@@ -113,7 +113,7 @@ Namespaced `ProviderConfig` / `ClusterProviderConfig` live under
 
 ## Supported resources
 
-32 managed resources across 8 API groups, each served under both the
+33 managed resources across 8 API groups, each served under both the
 cluster-scoped and namespaced families. Kind names below are the exact API
 server values (Upjet casing) — copy straight into `kind:`.
 
