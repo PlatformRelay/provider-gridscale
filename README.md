@@ -13,7 +13,6 @@
 <a href="https://codecov.io/gh/PlatformRelay/provider-gridscale"><img src="https://codecov.io/gh/PlatformRelay/provider-gridscale/graph/badge.svg" alt="codecov"></a>
 <a href="https://github.com/PlatformRelay/provider-gridscale/releases"><img src="https://img.shields.io/github/v/release/PlatformRelay/provider-gridscale?include_prereleases&sort=semver" alt="Release"></a>
 <a href="https://marketplace.upbound.io/providers/platformrelay/provider-gridscale"><img src="https://img.shields.io/badge/Upbound%20Marketplace-v0.3.0-blue" alt="Marketplace"></a>
-<a href="https://github.com/orgs/PlatformRelay/packages?repo_name=provider-gridscale"><img src="https://img.shields.io/badge/ghcr.io-platformrelay%2Fprovider-gridscale-2496ED?logo=docker&logoColor=white" alt="Container"></a>
 <a href="https://github.com/PlatformRelay/provider-gridscale/blob/main/go.mod"><img src="https://img.shields.io/github/go-mod/go-version/PlatformRelay/provider-gridscale" alt="Go"></a>
 <a href="LICENSE"><img src="https://img.shields.io/github/license/PlatformRelay/provider-gridscale" alt="License"></a>
 </p>
