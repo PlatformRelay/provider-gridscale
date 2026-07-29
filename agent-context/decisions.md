@@ -538,11 +538,14 @@ tag is `v0.2.2`. New additive controllers/CRDs ⇒ SemVer **minor** bump.
 **Counterpoint (kept even though overruled):** batching the upstream re-vendor (B) would likely avoid an
 imminent v0.3.1 — each of #509/#510/#511 merging drops a local Upjet override, arguably itself
 minor-worthy. Operator accepts a possible near-term follow-up release in exchange for shipping E8 now.
-**Release-prep (this session, PR):** CHANGELOG regenerated via git-cliff → `[0.3.0]` section (compare
-`v0.2.2..v0.3.0`, 2026-07-29); README Marketplace badge + install refs bumped to v0.3.0;
+**Release-prep (this session, PR #35):** README Marketplace badge + install/GHCR refs bumped to v0.3.0;
 `examples/install.yaml` bumped `v0.2.1`→`v0.3.0` (fixing pre-existing drift — the v0.2.2 release bumped
-only README, leaving install.yaml at v0.2.1).
-**Operator-only tail (per standing permissions):** create tag `v0.3.0` on the merged `main` commit and
-push (`tag.yaml` workflow is broken — ref lacks `on.workflow_call` — so tag manually); dispatch
-`publish-provider-package.yml -f version=v0.3.0`; then `cosign verify` the published digest.
+only README, leaving install.yaml at v0.2.1); CHANGELOG regenerated the repo's way (plain `git cliff` →
+`[Unreleased]`, per the `Changelog` verify gate). The versioned `[0.3.0]` section is **not** hand-written
+— the `Changelog` workflow's `release` job produces it automatically on the `v0.3.0` tag push and opens a
+`changelog/v0.3.0` PR to merge.
+**Operator-only tail (per standing permissions):** (1) merge PR #35; (2) create tag `v0.3.0` on the
+merged `main` commit and push — `tag.yaml` is broken (ref lacks `on.workflow_call`), so tag manually;
+this fires the auto changelog PR (merge it) but **not** publish; (3) dispatch
+`publish-provider-package.yml -f version=v0.3.0`; (4) `cosign verify` the published digest.
 

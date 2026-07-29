@@ -8,11 +8,11 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 (with a leading gitmoji token) on the default branch using
 [git-cliff](https://git-cliff.org/).
 
-## [0.3.0](https://github.com/platformrelay/provider-gridscale/compare/v0.2.2..v0.3.0) - 2026-07-29
+## [Unreleased]
 
 ### Bug Fixes
 
-- **main:** Wire SetupCustom and SetupCustomGated into provider startup E8-S04 [4152617](https://github.com/platformrelay/provider-gridscale/commit/4152617b442c569b65adaff2522ef4f42da1e704)
+- **main:** Wire SetupCustom and SetupCustomGated into provider startup E8-S04 [feadc92](https://github.com/platformrelay/provider-gridscale/commit/feadc92f0b65915223a41229cf50a1f5d0b76c85)
 
 - **backuplist:** Fix deprecated API, goimports, regenerate managed/deepcopy files [64a5f5c](https://github.com/platformrelay/provider-gridscale/commit/64a5f5c6c2f78dee4ba7a468f327f1e365ce9cdd)
 
@@ -22,8 +22,6 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 
 ### Documentation
-
-- **coordination:** Mark E8 data-sources epic Integrated (PRs #30-#33) ([#34](https://github.com/platformrelay/provider-gridscale/pull/34))[309b76a](https://github.com/platformrelay/provider-gridscale/commit/309b76a5a38fdb9d03840ebb1642d19bdb39905a)
 
 - **api:** Regenerate CRD reference docs and README for PublicNetwork E8-S03 [1d8a2e8](https://github.com/platformrelay/provider-gridscale/commit/1d8a2e8679b97bb7333ed1a735ea606460143c99)
 
@@ -36,7 +34,7 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 ### Features
 
-- **setup:** Wire PublicNetwork controller into setup_custom E8-S04 [fb3ecf8](https://github.com/platformrelay/provider-gridscale/commit/fb3ecf8084aaded555e32d89cc97ec5cd654f7d2)
+- **setup:** Wire PublicNetwork controller into setup_custom E8-S04 [80e2d4e](https://github.com/platformrelay/provider-gridscale/commit/80e2d4e5359e637284abaa1de739d85278817366)
 
 - **publicnetwork:** Add PublicNetwork CRD and observe-only controller E8-S03 [fbc69d9](https://github.com/platformrelay/provider-gridscale/commit/fbc69d95d5d70b6f44cf1e0c32b678df4b4bc270)
 
