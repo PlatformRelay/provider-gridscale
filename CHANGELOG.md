@@ -10,6 +10,12 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 ## [Unreleased]
 
+### Documentation
+
+- **readme:** Drop the broken ghcr.io Container badge link [50281a6](https://github.com/platformrelay/provider-gridscale/commit/50281a64098533ad791f918e7d5767bb83fd534f)
+
+## [0.3.0](https://github.com/platformrelay/provider-gridscale/compare/v0.2.2..v0.3.0) - 2026-07-29
+
 ### Bug Fixes
 
 - **main:** Wire SetupCustom and SetupCustomGated into provider startup E8-S04 [4152617](https://github.com/platformrelay/provider-gridscale/commit/4152617b442c569b65adaff2522ef4f42da1e704)
@@ -23,11 +29,11 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 ### Documentation
 
-- **release:** Clarify publish is independent of the changelog PR [56ab9f7](https://github.com/platformrelay/provider-gridscale/commit/56ab9f70154ca9481756530de3689322cc9ddd95)
+- **release:** Clarify publish is independent of the changelog PR [6d985f1](https://github.com/platformrelay/provider-gridscale/commit/6d985f1f31ccabe764c8fa2a268ed979f933bf06)
 
-- **release:** Defer v0.3.0 changelog to tag automation; correct coordination [c36fb92](https://github.com/platformrelay/provider-gridscale/commit/c36fb927705c9cb6d366b79498a10b8cb69dbe2d)
+- **release:** Defer v0.3.0 changelog to tag automation; correct coordination [4cafa4e](https://github.com/platformrelay/provider-gridscale/commit/4cafa4e4d9740e00f399869c868ca4cdccf8fb48)
 
-- **release:** V0.3.0 changelog + install refs; decide D-022 (release E8) [53a8d01](https://github.com/platformrelay/provider-gridscale/commit/53a8d011a63c3263c53ea8f2a609d275ec68b27d)
+- **release:** V0.3.0 changelog + install refs; decide D-022 (release E8) [ac9dd78](https://github.com/platformrelay/provider-gridscale/commit/ac9dd78d44ce64d59f2fe328da13b8cd033c94bf)
 
 - **coordination:** Mark E8 data-sources epic Integrated (PRs #30-#33) ([#34](https://github.com/platformrelay/provider-gridscale/pull/34))[309b76a](https://github.com/platformrelay/provider-gridscale/commit/309b76a5a38fdb9d03840ebb1642d19bdb39905a)
 
