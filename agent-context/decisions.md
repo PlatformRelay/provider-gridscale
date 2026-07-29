@@ -514,3 +514,35 @@ official product of gridscale GmbH" attribution under `docs/assets/branding/READ
 permission from gridscale GmbH). If that attribution ever weakens or the listing implies endorsement,
 revisit and swap to an original mark.
 
+---
+
+## D-022 — Cut and release v0.3.0 (E8 data-sources epic is user-facing)
+
+**Date:** 2026-07-29 · **Status:** Decided — operator answered via `/operator-inbox` (AskUserQuestion).
+Release-prep landed as a PR; the tag + publish + verify are the operator's remaining **operator-only**
+steps (per standing permissions).
+**Context:** The E8 data-sources epic landed on `main` across PRs #30–#33 (integrated via #34): two new
+observe-only custom controllers — **BackupList** (`storage.gridscale.platformrelay.io/v1alpha1`) and
+**PublicNetwork** (`gridscale.gridscale.platformrelay.io/v1alpha1`) — plus 38 observe-only example
+YAMLs, both wired into provider startup (`setup_custom.go` + `main.go`, E8-S04). CI on the integrated
+tip `309b76a` is fully green (CI, CodeQL, Coverage, Scorecard, Govulncheck, Gitleaks). Last published
+tag is `v0.2.2`. New additive controllers/CRDs ⇒ SemVer **minor** bump.
+**Options considered:**
+- **A — Release v0.3.0 now (chosen).** Tag + GitHub Release + publish. Feature set is done, CI green,
+  observe-only ⇒ low blast radius; no reason to sit on shipped user-facing work.
+- **B — Hold for upstream TF PRs #509/#510/#511**, then re-vendor + drop the local U-1/LB-1 Upjet
+  overrides and batch everything into one v0.3.0. Cleaner single release, but those PRs are outside
+  our control and may stall for weeks.
+- **C — Hold, no release yet.** Leaves E8 unavailable to install consumers.
+**Decision:** **A** — cut v0.3.0.
+**Counterpoint (kept even though overruled):** batching the upstream re-vendor (B) would likely avoid an
+imminent v0.3.1 — each of #509/#510/#511 merging drops a local Upjet override, arguably itself
+minor-worthy. Operator accepts a possible near-term follow-up release in exchange for shipping E8 now.
+**Release-prep (this session, PR):** CHANGELOG regenerated via git-cliff → `[0.3.0]` section (compare
+`v0.2.2..v0.3.0`, 2026-07-29); README Marketplace badge + install refs bumped to v0.3.0;
+`examples/install.yaml` bumped `v0.2.1`→`v0.3.0` (fixing pre-existing drift — the v0.2.2 release bumped
+only README, leaving install.yaml at v0.2.1).
+**Operator-only tail (per standing permissions):** create tag `v0.3.0` on the merged `main` commit and
+push (`tag.yaml` workflow is broken — ref lacks `on.workflow_call` — so tag manually); dispatch
+`publish-provider-package.yml -f version=v0.3.0`; then `cosign verify` the published digest.
+

@@ -22,8 +22,13 @@ _None open._
    `.envrc` only — do **not** put it in Actions secrets).
 2. **Nudge/track upstream PRs** #509/#510/#511 if they stall; on merge, re-vendor
    (`TERRAFORM_PROVIDER_VERSION`) and drop the local U-1/LB-1 overrides.
-3. **Consider releasing v0.3.0** — E8 adds 2 new custom observe-only controllers (BackupList,
-   PublicNetwork) + 38 observe-only example YAMLs. User-facing feature set warrants a minor bump.
+3. **Publish v0.3.0** — decided **D-022 → A** (release now) via `/operator-inbox` 2026-07-29.
+   Release-prep landed (CHANGELOG `[0.3.0]`, README + `examples/install.yaml` bumped to v0.3.0).
+   **Operator-only tail** (per standing permissions):
+   - Create tag `v0.3.0` on the merged `main` commit and push it. `tag.yaml` workflow is broken
+     (ref lacks `on.workflow_call`) → tag **manually**: `git tag v0.3.0 <sha> && git push origin v0.3.0`.
+   - Dispatch publish: `gh workflow run publish-provider-package.yml -f version=v0.3.0`.
+   - Verify: `cosign verify ghcr.io/platformrelay/provider-gridscale:v0.3.0 --certificate-oidc-issuer https://token.actions.githubusercontent.com --certificate-identity-regexp 'https://github.com/PlatformRelay/provider-gridscale/.*'`.
 
 ### Non-blocking / optional
 
@@ -38,7 +43,8 @@ _None open._
 
 - **E8 data-sources epic** — 4 stories landed 2026-07-28 (PRs #30–#33). 34 managed resources.
   BackupList + PublicNetwork observe-only controllers active at provider startup.
-  Next: operator decides v0.3.0 release timing.
+- **v0.3.0 release** — decided **D-022 → A** (release now, 2026-07-29). Release-prep done; publish
+  is the operator-only tail (see Operator task 3).
 - **GO-2026-5970** — `golang.org/x/text` bumped to v0.39.0; `make vuln` green again.
 - **README badges** — native GitHub Actions badges (CI / Coverage / E2E / Gitleaks / Govulncheck /
   CodeQL) plus Scorecard, codecov, release, Marketplace, GHCR, Go, License (kollect pattern).
@@ -53,11 +59,5 @@ _None open._
 - D-007…D-020, audit dispositions, BRAND-1 closed via D-009b (press mark), BRAND-2 Actioned
   (keep Bildmarke), TEST-2 operator-blocked (live uptest creds), E2-S04/S05 intentionally skipped
   (D-012 → B) — see `decisions.md` / SESSION-HANDOFF.
-
-## 🔴 DECIDED (awaiting approval) — cut and publish v0.2.2
-
-   Context: Tip CI/Scorecard/CodeQL/gitleaks/govulncheck/coverage all green on `7780f01` (+ docs `e1994d0`).
-   Sonar SECURITY open issues: **0**. Remaining Sonar items are maintainability (generated `zz_*`, nested-if in meta tests) — deferred.
-   Options: A) Hold · B) **Tag + GitHub Release + publish v0.2.2** (Recommended / executing)
-   Chose: **B** — security remediation is user-facing for install consumers; Marketplace/GHCR package update.
-   Revert: leave tag; do not yank published packages without a follow-up patch.
+- **v0.2.2** — cut, signed, and published (GHCR + Upbound, keyless-cosign, extensions verified).
+  Superseded by v0.3.0 (D-022).
