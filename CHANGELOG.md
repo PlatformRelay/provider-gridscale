@@ -23,6 +23,8 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 ### Documentation
 
+- **release:** Clarify publish is independent of the changelog PR [56ab9f7](https://github.com/platformrelay/provider-gridscale/commit/56ab9f70154ca9481756530de3689322cc9ddd95)
+
 - **release:** Defer v0.3.0 changelog to tag automation; correct coordination [c36fb92](https://github.com/platformrelay/provider-gridscale/commit/c36fb927705c9cb6d366b79498a10b8cb69dbe2d)
 
 - **release:** V0.3.0 changelog + install refs; decide D-022 (release E8) [53a8d01](https://github.com/platformrelay/provider-gridscale/commit/53a8d011a63c3263c53ea8f2a609d275ec68b27d)
