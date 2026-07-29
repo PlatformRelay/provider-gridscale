@@ -31,7 +31,8 @@ _None open._
      `on.workflow_call`) → tag **manually**: `git tag v0.3.0 <sha> && git push origin v0.3.0`.
      The tag push fires the `Changelog` workflow's `release` job → **auto-opens a `changelog/v0.3.0`
      PR** with the `[0.3.0]` notes; merge that too. (It does **not** trigger publish.)
-   - **Publish**: `gh workflow run publish-provider-package.yml -f version=v0.3.0`.
+   - **Publish**: `gh workflow run publish-provider-package.yml -f version=v0.3.0`. (Builds from the
+     tag — dispatch it right after tagging; it does **not** depend on the changelog PR being merged.)
    - **Verify**: `cosign verify ghcr.io/platformrelay/provider-gridscale:v0.3.0 --certificate-oidc-issuer https://token.actions.githubusercontent.com --certificate-identity-regexp 'https://github.com/PlatformRelay/provider-gridscale/.*'`.
 
 ### Non-blocking / optional

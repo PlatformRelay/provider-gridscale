@@ -547,5 +547,6 @@ only README, leaving install.yaml at v0.2.1); CHANGELOG regenerated the repo's w
 **Operator-only tail (per standing permissions):** (1) merge PR #35; (2) create tag `v0.3.0` on the
 merged `main` commit and push — `tag.yaml` is broken (ref lacks `on.workflow_call`), so tag manually;
 this fires the auto changelog PR (merge it) but **not** publish; (3) dispatch
-`publish-provider-package.yml -f version=v0.3.0`; (4) `cosign verify` the published digest.
+`publish-provider-package.yml -f version=v0.3.0` — it builds from the tag and does **not** depend on the
+changelog PR being merged first; (4) `cosign verify` the published digest.
 
