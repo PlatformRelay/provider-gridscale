@@ -8,9 +8,12 @@ on:
   issue_comment:
     types: [created]
 
-# Job-scoped permissions (REQ-SONAR-PG-04): no workflow-level contents: read.
-# Jobs that checkout / call the GitHub API declare permissions locally; jobs that
-# POST commit statuses also elevate statuses: write.
+# Least-privilege token (REQ-SONAR-PG-04): a workflow-level read-only floor,
+# with each job elevating only what it needs. Jobs that checkout / call the
+# GitHub API keep contents: read; jobs that POST commit statuses add statuses: write.
+permissions:
+  contents: read
+
 env:
   GO_VERSION: "1.26.5"
 
