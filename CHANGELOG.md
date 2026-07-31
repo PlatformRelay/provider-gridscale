@@ -10,9 +10,16 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 ## [Unreleased]
 
+### Bug Fixes
+
+- **ci:** Add workflow-level read-only permission floor to e2e.yaml [792a627](https://github.com/platformrelay/provider-gridscale/commit/792a62748e4170b772da0e402cfe3bd355fb45b2)
+
+- **deps:** Bump goldmark 1.7.17 and otel 1.44.0 for GO-2026-5320/5158 [991c741](https://github.com/platformrelay/provider-gridscale/commit/991c7413587a8fe2b61ab4400a322f3681cf4e23)
+
+
 ### Documentation
 
-- **readme:** Drop the broken ghcr.io Container badge link [50281a6](https://github.com/platformrelay/provider-gridscale/commit/50281a64098533ad791f918e7d5767bb83fd534f)
+- **readme:** Drop the broken ghcr.io Container badge link [a18fd3c](https://github.com/platformrelay/provider-gridscale/commit/a18fd3c5d875c2ed6a0cf188418bb6ea8563eb7f)
 
 ## [0.3.0](https://github.com/platformrelay/provider-gridscale/compare/v0.2.2..v0.3.0) - 2026-07-29
 
