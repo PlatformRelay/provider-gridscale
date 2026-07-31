@@ -8,7 +8,7 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 (with a leading gitmoji token) on the default branch using
 [git-cliff](https://git-cliff.org/).
 
-## [Unreleased]
+## [0.3.0](https://github.com/platformrelay/provider-gridscale/compare/v0.2.2..v0.3.0) - 2026-07-31
 
 ### Bug Fixes
 
