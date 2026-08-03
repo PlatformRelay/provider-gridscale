@@ -19,4 +19,7 @@ var (
 	SchemeBuilder = &scheme.Builder{GroupVersion: SchemeGroupVersion}
 )
 
-func init() {}
+func init() {
+	// Intentionally empty: CRD types register via SchemeBuilder and generated zz_*.go,
+	// not from this Upjet scaffold stub. Do not call AddToScheme here (double-register risk).
+}
