@@ -32,34 +32,55 @@ import (
 
 const crdDir = "../package/crds"
 
+// Named view types below replace anonymous nested structs so Sonar godre:S8205
+// stays clear while JSON tags and unmarshalling behaviour stay identical.
+
+type crdNames struct {
+	Kind   string `json:"kind"`
+	Plural string `json:"plural"`
+}
+
+type crdForProvider struct {
+	Properties map[string]json.RawMessage `json:"properties"`
+}
+
+type crdSpecProperties struct {
+	ForProvider crdForProvider `json:"forProvider"`
+}
+
+type crdResourceSpec struct {
+	Properties crdSpecProperties `json:"properties"`
+}
+
+type crdSchemaProperties struct {
+	Spec crdResourceSpec `json:"spec"`
+}
+
+type crdOpenAPIV3Schema struct {
+	Properties crdSchemaProperties `json:"properties"`
+}
+
+type crdVersionSchema struct {
+	OpenAPIV3Schema crdOpenAPIV3Schema `json:"openAPIV3Schema"`
+}
+
+type crdVersion struct {
+	Name   string            `json:"name"`
+	Schema crdVersionSchema  `json:"schema"`
+}
+
+type crdSpec struct {
+	Group    string       `json:"group"`
+	Names    crdNames     `json:"names"`
+	Scope    string       `json:"scope"`
+	Versions []crdVersion `json:"versions"`
+}
+
 // crd is a minimal typed view of a generated CRD. Unmarshalling into a struct
 // (rather than map[string]interface{}) means missing fields become zero values
 // that fail assertions naturally, instead of panicking on a bad type assertion.
 type crd struct {
-	Spec struct {
-		Group string `json:"group"`
-		Names struct {
-			Kind   string `json:"kind"`
-			Plural string `json:"plural"`
-		} `json:"names"`
-		Scope    string `json:"scope"`
-		Versions []struct {
-			Name   string `json:"name"`
-			Schema struct {
-				OpenAPIV3Schema struct {
-					Properties struct {
-						Spec struct {
-							Properties struct {
-								ForProvider struct {
-									Properties map[string]json.RawMessage `json:"properties"`
-								} `json:"forProvider"`
-							} `json:"properties"`
-						} `json:"spec"`
-					} `json:"properties"`
-				} `json:"openAPIV3Schema"`
-			} `json:"schema"`
-		} `json:"versions"`
-	} `json:"spec"`
+	Spec crdSpec `json:"spec"`
 }
 
 // contract is the scoped, stable fragment we serialize to a golden file.
@@ -159,40 +180,111 @@ func namespacedGroupFor(clusterGroup string) string {
 	return strings.Replace(clusterGroup, ".gridscale.", ".gridscale.m.", 1)
 }
 
+func marshalCRDFragment(t *testing.T, frag contract) []byte {
+	t.Helper()
+	got, err := json.MarshalIndent(frag, "", "  ")
+	if err != nil {
+		t.Fatalf("marshal fragment: %v", err)
+	}
+	return append(got, '\n')
+}
+
+func writeCRDGolden(t *testing.T, goldenPath string, got []byte) {
+	t.Helper()
+	if err := os.MkdirAll(filepath.Dir(goldenPath), 0o755); err != nil {
+		t.Fatalf("mkdir golden dir: %v", err)
+	}
+	if err := os.WriteFile(goldenPath, got, 0o644); err != nil {
+		t.Fatalf("write golden: %v", err)
+	}
+}
+
+func assertCRDGoldenMatch(t *testing.T, name string, got []byte, goldenPath string) {
+	t.Helper()
+	want, err := os.ReadFile(goldenPath)
+	if err != nil {
+		t.Fatalf("read golden %s (run UPDATE_GOLDEN=1 to create): %v", goldenPath, err)
+	}
+	if !bytes.Equal(got, want) {
+		t.Errorf("CRD contract drift for %s.\n--- got ---\n%s\n--- want ---\n%s",
+			name, got, want)
+	}
+}
+
+func runCRDGoldenCase(t *testing.T, tc crdCase, update bool) {
+	t.Helper()
+	got := marshalCRDFragment(t, extract(t, loadCRD(t, tc.clusterFile)))
+	goldenPath := filepath.Join("testdata", "crd-contract", tc.name+".golden.json")
+	if update {
+		writeCRDGolden(t, goldenPath, got)
+		return
+	}
+	assertCRDGoldenMatch(t, tc.name, got, goldenPath)
+}
+
 // TestCRDGoldenContract compares the scoped fragment of each cluster-scoped CRD
 // against its committed golden. UPDATE_GOLDEN=1 regenerates the goldens.
 func TestCRDGoldenContract(t *testing.T) {
 	update := os.Getenv("UPDATE_GOLDEN") == "1"
 	for _, tc := range crdCases {
 		t.Run(tc.name, func(t *testing.T) {
-			frag := extract(t, loadCRD(t, tc.clusterFile))
-			got, err := json.MarshalIndent(frag, "", "  ")
-			if err != nil {
-				t.Fatalf("marshal fragment: %v", err)
-			}
-			got = append(got, '\n')
-
-			goldenPath := filepath.Join("testdata", "crd-contract", tc.name+".golden.json")
-			if update {
-				if err := os.MkdirAll(filepath.Dir(goldenPath), 0o755); err != nil {
-					t.Fatalf("mkdir golden dir: %v", err)
-				}
-				if err := os.WriteFile(goldenPath, got, 0o644); err != nil {
-					t.Fatalf("write golden: %v", err)
-				}
-				return
-			}
-
-			want, err := os.ReadFile(goldenPath)
-			if err != nil {
-				t.Fatalf("read golden %s (run UPDATE_GOLDEN=1 to create): %v", goldenPath, err)
-			}
-			if !bytes.Equal(got, want) {
-				t.Errorf("CRD contract drift for %s.\n--- got ---\n%s\n--- want ---\n%s",
-					tc.name, got, want)
-			}
+			runCRDGoldenCase(t, tc, update)
 		})
 	}
+}
+
+func assertClusterKindGroupScope(t *testing.T, cluster crd, tc crdCase) {
+	t.Helper()
+	if cluster.Spec.Names.Kind != tc.wantKind {
+		t.Errorf("cluster kind = %q, want %q", cluster.Spec.Names.Kind, tc.wantKind)
+	}
+	if cluster.Spec.Group != tc.wantClusterGroup {
+		t.Errorf("cluster group = %q, want %q", cluster.Spec.Group, tc.wantClusterGroup)
+	}
+	if !strings.HasSuffix(cluster.Spec.Group, clusterGroupSuffix) {
+		t.Errorf("cluster group %q lacks suffix %q", cluster.Spec.Group, clusterGroupSuffix)
+	}
+	if cluster.Spec.Scope != "Cluster" {
+		t.Errorf("cluster scope = %q, want Cluster", cluster.Spec.Scope)
+	}
+}
+
+func assertNamespacedGroupScope(t *testing.T, cluster, namespaced crd) {
+	t.Helper()
+	wantNS := namespacedGroupFor(cluster.Spec.Group)
+	if namespaced.Spec.Group != wantNS {
+		t.Errorf("namespaced group = %q, want %q (derived from cluster group)",
+			namespaced.Spec.Group, wantNS)
+	}
+	if namespaced.Spec.Scope != "Namespaced" {
+		t.Errorf("namespaced scope = %q, want Namespaced", namespaced.Spec.Scope)
+	}
+}
+
+func assertClusterNamespacedParity(t *testing.T, cluster, namespaced crd) {
+	t.Helper()
+	cf := extract(t, cluster)
+	nf := extract(t, namespaced)
+	if len(cf.ForProviderProps) == 0 {
+		t.Errorf("cluster forProvider property set is empty")
+	}
+	if namespaced.Spec.Names.Kind != cluster.Spec.Names.Kind {
+		t.Errorf("kind mismatch cluster=%q namespaced=%q",
+			cluster.Spec.Names.Kind, namespaced.Spec.Names.Kind)
+	}
+	if strings.Join(cf.ForProviderProps, ",") != strings.Join(nf.ForProviderProps, ",") {
+		t.Errorf("forProvider property set differs between scopes.\ncluster:    %v\nnamespaced: %v",
+			cf.ForProviderProps, nf.ForProviderProps)
+	}
+}
+
+func assertCRDStructuralInvariants(t *testing.T, tc crdCase) {
+	t.Helper()
+	cluster := loadCRD(t, tc.clusterFile)
+	namespaced := loadCRD(t, tc.namespacedFile)
+	assertClusterKindGroupScope(t, cluster, tc)
+	assertNamespacedGroupScope(t, cluster, namespaced)
+	assertClusterNamespacedParity(t, cluster, namespaced)
 }
 
 // TestCRDStructuralInvariants asserts invariants that must hold regardless of
@@ -201,52 +293,7 @@ func TestCRDGoldenContract(t *testing.T) {
 func TestCRDStructuralInvariants(t *testing.T) {
 	for _, tc := range crdCases {
 		t.Run(tc.name, func(t *testing.T) {
-			cluster := loadCRD(t, tc.clusterFile)
-			namespaced := loadCRD(t, tc.namespacedFile)
-
-			// Kind override / expected Kind is honored in the rendered CRD.
-			if cluster.Spec.Names.Kind != tc.wantKind {
-				t.Errorf("cluster kind = %q, want %q", cluster.Spec.Names.Kind, tc.wantKind)
-			}
-
-			// Cluster group matches expectation and follows the suffix rule.
-			if cluster.Spec.Group != tc.wantClusterGroup {
-				t.Errorf("cluster group = %q, want %q", cluster.Spec.Group, tc.wantClusterGroup)
-			}
-			if !strings.HasSuffix(cluster.Spec.Group, clusterGroupSuffix) {
-				t.Errorf("cluster group %q lacks suffix %q", cluster.Spec.Group, clusterGroupSuffix)
-			}
-			if cluster.Spec.Scope != "Cluster" {
-				t.Errorf("cluster scope = %q, want Cluster", cluster.Spec.Scope)
-			}
-
-			// Namespaced group is the cluster group with the `.m.` infix, and
-			// the CRD is Namespaced-scoped.
-			wantNS := namespacedGroupFor(cluster.Spec.Group)
-			if namespaced.Spec.Group != wantNS {
-				t.Errorf("namespaced group = %q, want %q (derived from cluster group)",
-					namespaced.Spec.Group, wantNS)
-			}
-			if namespaced.Spec.Scope != "Namespaced" {
-				t.Errorf("namespaced scope = %q, want Namespaced", namespaced.Spec.Scope)
-			}
-
-			// Cluster and namespaced variants must agree on kind and expose an
-			// identical, non-empty forProvider property set. Catches drift that
-			// touches only one scope.
-			cf := extract(t, cluster)
-			nf := extract(t, namespaced)
-			if len(cf.ForProviderProps) == 0 {
-				t.Errorf("cluster forProvider property set is empty")
-			}
-			if namespaced.Spec.Names.Kind != cluster.Spec.Names.Kind {
-				t.Errorf("kind mismatch cluster=%q namespaced=%q",
-					cluster.Spec.Names.Kind, namespaced.Spec.Names.Kind)
-			}
-			if strings.Join(cf.ForProviderProps, ",") != strings.Join(nf.ForProviderProps, ",") {
-				t.Errorf("forProvider property set differs between scopes.\ncluster:    %v\nnamespaced: %v",
-					cf.ForProviderProps, nf.ForProviderProps)
-			}
+			assertCRDStructuralInvariants(t, tc)
 		})
 	}
 }
