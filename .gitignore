@@ -23,3 +23,6 @@ cover.out
 !agent-context/
 !agent-context/**
 # .claude/ (local coordination + worktrees) remains ignored by the global rule.
+
+# Sonar scanner local working directory
+.scannerwork/
