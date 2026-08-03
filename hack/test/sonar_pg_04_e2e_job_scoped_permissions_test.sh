@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-# REQ-SONAR-PG-04 (e2e half): no workflow-level contents: read; jobs that need
-# it declare permissions: locally.
+# REQ-SONAR-PG-04 (e2e half): workflow may set a read-only floor
+# (`permissions: contents: read` — see a311484), but must not grant broader
+# write scopes at workflow level. Jobs that checkout / post statuses still
+# declare local permissions including contents: read.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
@@ -19,22 +21,17 @@ pre_jobs="$(awk '
   { print }
 ' "${WF}")"
 
-# Workflow-level permissions block must not grant contents: read.
-if echo "${pre_jobs}" | grep -Eq '^[[:space:]]*permissions:[[:space:]]*$'; then
-  # Collect indented keys under that permissions: until a non-indented / less-indented key.
-  if echo "${pre_jobs}" | awk '
-    /^[[:space:]]*permissions:[[:space:]]*$/ { in_perm=1; next }
-    in_perm && /^[^[:space:]#]/ { exit }
-    in_perm && /^[[:space:]]*contents:[[:space:]]*read[[:space:]]*$/ { found=1; exit }
-    END { exit found ? 0 : 1 }
-  '; then
-    fail "${WF}: workflow-level 'contents: read' must be removed; declare permissions on jobs"
-  fi
+# Workflow-level permissions must not grant write-class scopes.
+if echo "${pre_jobs}" | grep -Eq '^[[:space:]]*(contents|pull-requests|issues|packages|id-token):[[:space:]]*(write|admin)'; then
+  fail "${WF}: workflow-level permissions must not grant write/admin scopes"
 fi
-
-# Also catch the one-liner form: permissions: contents: read (unusual but possible).
-if echo "${pre_jobs}" | grep -Eq '^[[:space:]]*permissions:[[:space:]]*contents:[[:space:]]*read'; then
-  fail "${WF}: workflow-level 'permissions: contents: read' must be removed"
+if echo "${pre_jobs}" | awk '
+  /^[[:space:]]*permissions:[[:space:]]*$/ { in_perm=1; next }
+  in_perm && /^[^[:space:]#]/ { exit }
+  in_perm && /^[[:space:]]*(contents|pull-requests|issues|packages|id-token):[[:space:]]*(write|admin)[[:space:]]*$/ { found=1; exit }
+  END { exit found ? 0 : 1 }
+'; then
+  fail "${WF}: workflow-level permissions must not grant write/admin scopes"
 fi
 
 # Jobs that check out the repo / use gh pr checkout need a local permissions block
@@ -43,7 +40,6 @@ for job in get-example-list uptest; do
   if ! awk -v job="${job}" '
     $0 ~ "^[[:space:]]*" job ":[[:space:]]*$" { in_job=1; next }
     in_job && /^[[:space:]]+[a-zA-Z0-9_-]+:[[:space:]]*$/ && $0 !~ /^[[:space:]]{2}steps:/ {
-      # next sibling job (2-space indent under jobs:)
       if (match($0, /^  [a-zA-Z0-9_-]+:[[:space:]]*$/)) { exit }
     }
     in_job && /^  [a-zA-Z0-9_-]+:[[:space:]]*$/ && $0 !~ "^  " job ":" { exit }
@@ -55,4 +51,4 @@ for job in get-example-list uptest; do
   fi
 done
 
-echo "PASS: e2e.yaml has no workflow-level contents: read; jobs declare permissions locally"
+echo "PASS: e2e.yaml workflow floor is read-only; jobs declare permissions locally"

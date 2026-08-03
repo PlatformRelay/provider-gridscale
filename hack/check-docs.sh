@@ -17,8 +17,8 @@ for path in "${crd_dir}"/*.platformrelay.io_*.yaml; do
   case "${name}" in
     *.m.platformrelay.io_*) continue ;;
     *providerconfig*|*storeconfig*) continue ;;
+    *) managed+=("${name}") ;;
   esac
-  managed+=("${name}")
 done
 
 resource_count="${#managed[@]}"
@@ -30,12 +30,12 @@ echo "actual: ${resource_count} managed resources across ${group_count} API grou
 
 fail=0
 if ! grep -qE "\b${resource_count}\b" "${readme}"; then
-  echo "::error::README does not mention the current resource count (${resource_count}); resource matrix is stale."
+  echo "::error::README does not mention the current resource count (${resource_count}); resource matrix is stale." >&2
   fail=1
 fi
 if ! grep -qE "\b${group_count}\b" "${readme}"; then
-  echo "::error::README does not mention the current group count (${group_count}); resource matrix is stale."
+  echo "::error::README does not mention the current group count (${group_count}); resource matrix is stale." >&2
   fail=1
 fi
-[ "${fail}" -eq 0 ] && echo "README resource matrix is in sync (${resource_count}/${group_count})."
+[[ "${fail}" -eq 0 ]] && echo "README resource matrix is in sync (${resource_count}/${group_count})."
 exit "${fail}"

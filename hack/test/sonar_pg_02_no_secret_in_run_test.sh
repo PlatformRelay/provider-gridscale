@@ -14,12 +14,11 @@ fail() {
 [[ -f "${WF}" ]] || fail "missing ${WF}"
 
 # Secret must not be expanded inside any run: script body.
-if grep -Eq '\$\{\{[[:space:]]*secrets\.UPTEST_DATASOURCE[[:space:]]*\}\}' "${WF}"; then
-  # Allowed only under an env: binding (key: ${{ secrets.UPTEST_DATASOURCE }}).
-  # Disallow the echo/printf form that embeds the expression in run:.
-  if grep -Eq '(echo|printf).*\$\{\{[[:space:]]*secrets\.UPTEST_DATASOURCE[[:space:]]*\}\}' "${WF}"; then
-    fail "${WF}: secrets.UPTEST_DATASOURCE must not appear inside run: (use env: + \"\$UPTEST_DATASOURCE\")"
-  fi
+# Allowed only under an env: binding (key: ${{ secrets.UPTEST_DATASOURCE }}).
+# Disallow the echo/printf form that embeds the expression in run:.
+if grep -Eq '\$\{\{[[:space:]]*secrets\.UPTEST_DATASOURCE[[:space:]]*\}\}' "${WF}" \
+  && grep -Eq '(echo|printf).*\$\{\{[[:space:]]*secrets\.UPTEST_DATASOURCE[[:space:]]*\}\}' "${WF}"; then
+  fail "${WF}: secrets.UPTEST_DATASOURCE must not appear inside run: (use env: + \"\$UPTEST_DATASOURCE\")"
 fi
 
 # Must bind the secret through the step env: block.
@@ -32,12 +31,11 @@ if ! grep -Eq '\$UPTEST_DATASOURCE' "${WF}"; then
   fail "${WF}: run: must reference \"\$UPTEST_DATASOURCE\" (not secrets expression)"
 fi
 
+# Accept either printf '%s\n' "$UPTEST_DATASOURCE" form from the spec.
 if ! grep -Eq "printf[[:space:]]+'%s\\\\n'[[:space:]]+\"\\\$UPTEST_DATASOURCE\"" "${WF}" \
-  && ! grep -Eq 'printf[[:space:]]+"%s\\n"[[:space:]]+"\$UPTEST_DATASOURCE"' "${WF}"; then
-  # Accept either printf '%s\n' "$UPTEST_DATASOURCE" form from the spec.
-  if ! grep -F 'printf' "${WF}" | grep -q 'UPTEST_DATASOURCE'; then
-    fail "${WF}: run: should write datasource via printf '%s\\n' \"\$UPTEST_DATASOURCE\""
-  fi
+  && ! grep -Eq 'printf[[:space:]]+"%s\\n"[[:space:]]+"\$UPTEST_DATASOURCE"' "${WF}" \
+  && ! grep -F 'printf' "${WF}" | grep -q 'UPTEST_DATASOURCE'; then
+  fail "${WF}: run: should write datasource via printf '%s\\n' \"\$UPTEST_DATASOURCE\""
 fi
 
 echo "PASS: UPTEST_DATASOURCE is bound via env: and referenced as \"\$UPTEST_DATASOURCE\" in run:"
