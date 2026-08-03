@@ -65,8 +65,8 @@ type crdVersionSchema struct {
 }
 
 type crdVersion struct {
-	Name   string            `json:"name"`
-	Schema crdVersionSchema  `json:"schema"`
+	Name   string           `json:"name"`
+	Schema crdVersionSchema `json:"schema"`
 }
 
 type crdSpec struct {
