@@ -59,7 +59,7 @@ for file in "${FILES[@]}"; do
       ;;
     *sonar_pg_04_e2e*)
       # e2e allows read-only workflow floor (a311484); still forbid write/admin.
-      grep -Fq "workflow-level permissions must not grant write/admin scopes" "${file}" \
+      grep -Eq "workflow-level permissions must not grant write/admin scopes" "${file}" \
         || fail "${file}: missing workflow write/admin forbid message"
       ;;
   esac
