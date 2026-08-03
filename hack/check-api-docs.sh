@@ -19,7 +19,7 @@ go run "github.com/elastic/crd-ref-docs@${CRD_REF_DOCS_VERSION}" \
   --output-path=docs/api/
 
 if ! git diff --quiet -- docs/api/; then
-  echo "::error::docs/api/ is stale relative to apis/** — run \`make docs\` and commit."
+  echo "::error::docs/api/ is stale relative to apis/** — run \`make docs\` and commit." >&2
   git --no-pager diff --stat -- docs/api/
   git --no-pager diff -- docs/api/ | head -n 200
   exit 1

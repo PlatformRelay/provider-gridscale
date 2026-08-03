@@ -20,15 +20,14 @@ pre_jobs="$(awk '
 ' "${WF}")"
 
 # Workflow-level permissions block must not grant contents: read.
-if echo "${pre_jobs}" | grep -Eq '^[[:space:]]*permissions:[[:space:]]*$'; then
-  if echo "${pre_jobs}" | awk '
+if echo "${pre_jobs}" | grep -Eq '^[[:space:]]*permissions:[[:space:]]*$' \
+  && echo "${pre_jobs}" | awk '
     /^[[:space:]]*permissions:[[:space:]]*$/ { in_perm=1; next }
     in_perm && /^[^[:space:]#]/ { exit }
     in_perm && /^[[:space:]]*contents:[[:space:]]*read[[:space:]]*$/ { found=1; exit }
     END { exit found ? 0 : 1 }
   '; then
-    fail "${WF}: workflow-level 'contents: read' must be removed; declare permissions on jobs"
-  fi
+  fail "${WF}: workflow-level 'contents: read' must be removed; declare permissions on jobs"
 fi
 
 # Also catch the one-liner form: permissions: contents: read (unusual but possible).
