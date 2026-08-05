@@ -1,3 +1,20 @@
+
+## 2026-08-05 · Operator Q&A — G1–G4 (open-questions)
+
+- **G1 PAT revoke:** Dismiss ("forget that"). Counterpoint: residual risk if token still valid; operator accepted.
+- **G2 Sonar Autoscan:** Operator disabled Automatic Analysis in SonarCloud UI. Confirmed: Coverage run 30956241401 — `coverage` + `sonarcloud` both success.
+- **G3 Publish v0.3.0:** A — authorize publish. **Already complete** (2026-07-31): tag, GitHub Release, publish-provider-package success, GHCR digest `sha256:5b274548…`. No re-tag.
+- **G4 Upstream TF #509/#510/#511:** Wait — do not nudge. Revisit when upstream merges.
+
+## 2026-08-05 · D-026 — No v0.3.1 for Batch 11 alone
+
+**Date:** 2026-08-05 · **Status:** DECIDED (agent-loop-local cleanup)
+**Context:** Batch 11 (E5-S18…S21 + coverage CI) is on `main` after `v0.3.0`. Operator authorized release "if appropriate."
+**Options:** A) Cut v0.3.1 now · B) Skip until user-facing / upstream-TF change (chosen) · C) Hold forever on Batch 11.
+**Decision:** **B** — Batch 11 is CI/Sonar/test/Dockerfile-quoting hygiene; Unreleased changelog is thin; install tag stays **v0.3.0**.
+**Counterpoints:** Dockerfile quoting ships in the image build path — a pedantic patch release is defensible; deferred to keep GHCR/Marketplace noise low until a product change or upstream re-vendor.
+**Revert:** cut `v0.3.1` from current `main` + publish-provider-package.
+
 # decisions.md — provider-gridscale (append-only)
 
 Format per entry: **Decision** · date · context · choice · agent counterpoints (kept even when
@@ -549,4 +566,29 @@ merged `main` commit and push — `tag.yaml` is broken (ref lacks `on.workflow_c
 this fires the auto changelog PR (merge it) but **not** publish; (3) dispatch
 `publish-provider-package.yml -f version=v0.3.0` — it builds from the tag and does **not** depend on the
 changelog PR being merged first; (4) `cosign verify` the published digest.
+
+## D-023 — Empty `register.go` `init()` fix style (E5-S18) → A (nested comments)
+
+**Date:** 2026-08-04 · **Status:** DECIDED (agent-loop-local; awaiting operator ratification)
+**Context:** Sonar go:S1186 CRITICAL on `apis/{cluster,namespaced}/v1alpha1/register.go`
+(`func init() {}`). Types already register via `SchemeBuilder` / generated `zz_*.go`. Wiring
+`AddToScheme` in these `init()`s risks double-registration. Epic-writer labeled this **D-022**, but
+**D-022** on `main` is already “Cut and release v0.3.0” — renumbered to **D-023**.
+**Options:** A) Nested comment inside each empty `init()` (Sonar-accepted for S1186) · B) Delete
+empty `init()`s · C) Call `SchemeBuilder.AddToScheme` from `init()` (double-register risk).
+**Decision:** **A** — nested comments; no behaviour change. Operator invoked agent-loop-local with
+explicit “choose A”.
+**Counterpoints:** Deleting `init()` (B) is cleaner if the scaffold allows, but A is the
+lowest-blast-radius Sonar-documented fix and matches the story AC. C was rejected.
+**Revert:** remove the nested comments (or delete the `init`s if B is preferred later).
+
+## D-025 — e2e PG-04 meta allows workflow read-only floor (E5-S20)
+
+**Date:** 2026-08-04 · **Status:** DECIDED (agent-loop-local)
+**Context:** `hack/test/sonar_pg_04_e2e_*` still forbade workflow-level `contents: read`, but
+`main` @ a311484 intentionally added a workflow read-only floor. Meta test was already red on
+`main` before L-SHELL.
+**Decision:** Update e2e meta to allow `contents: read` floor; forbid workflow write/admin;
+keep job-local `contents: read` checks. Log as decide-and-log (no stop).
+**Revert:** restore prior “must be removed” assertion (would stay red until e2e.yaml changes).
 

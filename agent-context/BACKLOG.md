@@ -17,7 +17,8 @@ Public build order: [docs/ROADMAP.md](../docs/ROADMAP.md). OpenSpec changes: `op
 | U-1 + LB-1 overrides | **landed** — S3/console creds sensitive (`8ae7376`, `config/sensitive.go`); loadbalancer `status` Computed (`c38e52b`, `config/loadbalancer.go`); D-021 |
 | D-020-FU (extensions in signed release) | **landed** (`43294ed`+`60b9e8f`) — `make xpkg.append.extensions` append-then-sign + fail-closed verify in publish workflow; v0.2.2 signed w/ extensions verified |
 | E5 SonarCloud SECURITY (E5-S11…S17) | **landed 2026-07-25** — 7 lanes Integrated; 9/9 `hack/test/sonar_pg_*` green; SonarCloud SECURITY open: 0 |
-| Backlog | **exhausted** — remaining items are operator-only: revoke old classic PAT; nudge/track upstream TF PRs #509/#510/#511 (on merge, re-vendor + drop U-1/LB-1 overrides). Optional Scorecard polish (D-016) non-blocking. |
+| E5 SonarCloud MAINT/RELIABILITY (E5-S18…S21) + coverage CI | **landed 2026-08-04** — PR #41 → `f9f4628`; OpenSpec `sonar-maintainability-2026-08` |
+| Backlog | **exhausted** for implementable lanes. Operator: wait on upstream TF #509/#510/#511 (on merge, re-vendor + drop U-1/LB-1). Optional Scorecard polish (D-016) non-blocking. No package release for Batch 11 alone (CI/maintainability). |
 
 ## E2 test-hardening batch (S06–S10) — ported from kollect's test tooling
 
@@ -179,3 +180,202 @@ OpenSpec (worktree / upcoming PR): `openspec/changes/sonar-security-remediation-
 **Outcome:** local `bin/…/provider` + `terraformrc.hcl` use `COPY`; remote URL ADD/curl allowed.
 **Verify:** `bash hack/test/sonar_pg_08_dockerfile_copy_test.sh` · closes **REQ-SONAR-PG-08**
 **File lock:** `cluster/images/provider-gridscale/Dockerfile`, `hack/test/sonar_pg_08_*`
+
+---
+
+## E5 — SonarCloud MAINTAINABILITY + RELIABILITY remediation (2026-08)
+
+OpenSpec (create when first lane starts): `openspec/changes/sonar-maintainability-2026-08/`
+(REQs **PG-M01…PG-M08**). Source: SonarCloud project `PlatformRelay_provider-gridscale`,
+**46 open CODE_SMELL** (Maintainability 38 · Reliability 8). Zero SECURITY / BUG.
+
+**Out of scope for this batch:** coverage CI wiring (`sonar-coverage-ci` @ `d98f242`);
+generated `zz_*.go` smells; SECURITY (already 0).
+
+**Lane rule:** file locks below are exclusive. Clusters that share a file are **one story /
+one lane** (never parallel). Meta tests under `hack/test/sonar_pg_m_*` owned by the same lane
+as the production path they guard.
+
+### agent-loop-local lane plan (N=4, file-disjoint)
+
+| Lane | Story | Closes (Sonar) | File lock | P | Parallel? |
+| --- | --- | --- | --- | --- | --- |
+| **L-REG** | E5-S18 | go:S1186 ×2 CRITICAL | `apis/cluster/v1alpha1/register.go`, `apis/namespaced/v1alpha1/register.go`, `hack/test/sonar_pg_m01_*` | P0 | ✅ vs all |
+| **L-CFGTEST** | E5-S19 | go:S3776 ×3 CRITICAL + godre:S8205 ×6 MINOR | `config/crd_contract_test.go`, `config/external_name_fuzz_test.go`, `hack/test/sonar_pg_m02_*` (optional structural) | P0 | ✅ vs all **except** any other `config/*_test.go` lane |
+| **L-SHELL** | E5-S20 | shelldre:S131 ×1 + S7677 ×3 + S7688 ×8 + S1066 ×4 | `hack/check-docs.sh`, `hack/check-api-docs.sh`, `hack/test/e8_s01_*`, `hack/test/e8_s02_*`, `hack/test/e8_s03_*`, `hack/test/sonar_pg_02_*`, `hack/test/sonar_pg_04_ci_*`, `hack/test/sonar_pg_04_e2e_*`, `hack/test/sonar_pg_m04_*`…`m07_*` | P0/P1 | ✅ vs L-REG / L-CFGTEST / L-DOCKER |
+| **L-DOCKER** | E5-S21 | docker:S6570 ×19 MAJOR | `cluster/images/provider-gridscale/Dockerfile`, `hack/test/sonar_pg_m08_*` (extend or sibling of `sonar_pg_08_*`) | P1 | ✅ vs all **except** another Dockerfile lane |
+
+**Serialization notes**
+- Clusters **2 + 8** both touch `config/crd_contract_test.go` → **only E5-S19** (L-CFGTEST). Do not split.
+- Clusters **3 + 5 + part of 6** all touch `hack/check-docs.sh` → **only E5-S20** (L-SHELL).
+- Cluster **6** e8 scripts + cluster **7** sonar_pg nested-ifs share the `hack/test/` tree but
+  **disjoint filenames** with each other; kept in **one lane** so shell style stays consistent and
+  one agent owns all Sonar shell hygiene.
+- **L-DOCKER** re-touches the Dockerfile previously owned by landed E5-S17 — preserve `COPY` for
+  local artefacts; only add quoting for expansions (lines 27–39).
+- Base worktrees on a tip that includes the E8 observe meta tests
+  (`hack/test/e8_s01_*`, `e8_s03_*` — present on `origin/main`; may be missing on stale local
+  checkouts). Independent of `sonar-coverage-ci`.
+
+| Story | REQs | Status |
+| --- | --- | --- |
+| E5-S18 | PG-M01 | ✅ Integrated (PR #41) |
+| E5-S19 | PG-M02, PG-M03 | ✅ Integrated (PR #41) |
+| E5-S20 | PG-M04, PG-M05, PG-M06, PG-M07 | ✅ Integrated (PR #41) |
+| E5-S21 | PG-M08 | ✅ Integrated (PR #41) |
+| coverage CI | sonar_pg_09 | ✅ Integrated (PR #41) |
+
+### E5-S18 — Empty `init()` register funcs: nested comments (P0)
+**As a** maintainer **I want** the package `init()` stubs in cluster/namespaced `register.go` to
+satisfy go:S1186 **so that** Sonar CRITICAL empty-function smells clear without changing scheme
+registration behaviour.
+
+**Sonar keys / rule**
+- `apis/cluster/v1alpha1/register.go:22` — `AZ9magFP_3fq4FMeL0wZ` (go:S1186 CRITICAL)
+- `apis/namespaced/v1alpha1/register.go:22` — `AZ9magJP_3fq4FMeL0xy` (go:S1186 CRITICAL)
+
+**Acceptance criteria**
+- Given the Upjet scaffold `func init() {}` at both paths, when the fix lands, then each empty
+  function body contains a **nested comment** explaining why it is intentionally empty (types
+  register via `SchemeBuilder` / generated `zz_*.go`), meeting Sonar S1186 — **or** an equivalent
+  no-op that Sonar accepts without registering types twice.
+- Given `make generate` / `make reviewable`, when run after the edit, then neither `register.go` is
+  overwritten back to a bare empty body (if codegen regenerates them, the intentional comment is
+  restored in the same change or the comment lives in a non-generated sibling — document which).
+- **Edge:** given a mistaken “fix” that calls `SchemeBuilder.AddToScheme` from both package
+  `init()`s, when controllers start, then we must **not** double-register; prefer nested comment
+  over wiring registration here.
+
+**Done when**
+- [ ] Meta test asserts both files’ `init` bodies are non-bare-empty (comment or documented pattern). **Level:** M · **Test:** `hack/test/sonar_pg_m01_register_init_not_empty_test.sh` · **Verify:** `bash hack/test/sonar_pg_m01_register_init_not_empty_test.sh`
+- [ ] `go test ./apis/...` (or package compile) still green; `make reviewable` clean
+- [ ] Closes Sonar keys above (or marked Fixed on next scan)
+- [ ] OpenSpec REQ-SONAR-PG-M01 filled under `sonar-maintainability-2026-08`
+
+**Touches:** `apis/cluster/v1alpha1/register.go`, `apis/namespaced/v1alpha1/register.go`,
+`hack/test/sonar_pg_m01_*`  
+**Depends on:** none · **Parallel-safe-with:** E5-S19, E5-S20, E5-S21  
+**Not in scope:** any `zz_*.go`; changing Group/Version; coverage CI
+
+### E5-S19 — Config test cognitive complexity + named CRD view types (P0)
+**As a** maintainer **I want** CRD-contract and external-name fuzz tests under the cognitive-complexity
+threshold and anonymous nested structs replaced with named types **so that** Sonar CRITICAL/MINOR
+smells in `config/*_test.go` clear without weakening golden/structural assertions.
+
+**Sonar keys / rules**
+- Cognitive complexity (go:S3776 CRITICAL):  
+  - `config/crd_contract_test.go:164` (21→≤15) `AZ9nqLQ5RbNgprH5pBN9` — `TestCRDGoldenContract`  
+  - `config/crd_contract_test.go:201` (28→≤15) `AZ9nqLQ5RbNgprH5pBN-` — `TestCRDStructuralInvariants`  
+  - `config/external_name_fuzz_test.go:18` (20→≤15) `AZ9n-G-75WRcdOwb-njc` — `FuzzGetExternalName`
+- Named types (godre:S8205 MINOR) — anonymous structs at `config/crd_contract_test.go:41–53`
+  keys `AZ9nqLQ5RbNgprH5pBN_` … `AZ9nqLQ5RbNgprH5pBOE` (6 issues)
+
+> **Must stay one story:** complexity + named types both edit `crd_contract_test.go`.
+
+**Acceptance criteria**
+- Given the three functions above, when complexity is reduced (extract helpers / table helpers /
+  early continue — outcome-focused), then each reports cognitive complexity **≤ 15** under Sonar
+  (or golangci equivalent if configured).
+- Given the nested anonymous structs inside `type crd`, when refactored, then each flagged nesting
+  level uses a **named type** (exported not required) with the same JSON tags and behaviour.
+- Given existing goldens under `config/testdata/crd-contract/`, when `go test ./config/ -count=1`
+  runs without `UPDATE_GOLDEN=1`, then all golden + structural invariants still pass (no silent
+  contract relaxation).
+- **Edge:** given `UPDATE_GOLDEN=1`, when regenerating, then goldens remain byte-stable for an
+  unchanged CRD tree (refactor touches tests only).
+- **Edge (fuzz):** given empty / non-string / missing `id` cases already in the fuzzer, when
+  complexity is reduced, then the stub contract (never error; empty id → `""`) still holds.
+
+**Done when**
+- [ ] `go test ./config/ -count=1` green; fuzz still builds (`go test ./config/ -run=FuzzGetExternalName -count=1`)
+- [ ] Closes the 3× S3776 + 6× S8205 keys above
+- [ ] REQ-SONAR-PG-M02 (complexity) + REQ-SONAR-PG-M03 (named types) in OpenSpec
+- [ ] Gates green (`make test` / reviewable as applicable)
+
+**Touches:** `config/crd_contract_test.go`, `config/external_name_fuzz_test.go`  
+**Depends on:** none · **Parallel-safe-with:** E5-S18, E5-S20, E5-S21  
+**Not in scope:** changing CRD goldens for product reasons; production `config/*.go`; coverage CI
+
+### E5-S20 — Shell hygiene: case default, stderr, `[[`, merge nested ifs (P0/P1)
+**As a** maintainer **I want** hand-authored `hack/` scripts and meta tests to satisfy Sonar shell
+rules **so that** CRITICAL/MAJOR Maintainability and Reliability smells clear without changing
+gate pass/fail semantics.
+
+**Sonar keys / rules (grouped)**
+1. **shelldre:S131 CRITICAL** — `hack/check-docs.sh:17` `AZ9oaSNAnB7bKDM9yqGC` (case missing `*)`)
+2. **shelldre:S7677 MAJOR** — error messages on stdout → stderr (`>&2`):  
+   - `hack/check-api-docs.sh:22` `AZ9rwTiXTAot3Azg_Ks5`  
+   - `hack/check-docs.sh:33,37` `AZ9oaSNAnB7bKDM9yqGD`, `AZ9oaSNAnB7bKDM9yqGE`
+3. **shelldre:S7688 MAJOR RELIABILITY** — prefer `[[` over `[`:  
+   - `hack/check-docs.sh:40`  
+   - `hack/test/e8_s01_observe_docs_test.sh:3`  
+   - `hack/test/e8_s01_observe_yaml_count_test.sh:5,6`  
+   - `hack/test/e8_s02_backuplist_crd_exists_test.sh:5,6`  
+   - `hack/test/e8_s03_publicnetwork_crd_exists_test.sh:5,6`
+4. **shelldre:S1066 MAJOR** — merge nested `if`s:  
+   - `hack/test/sonar_pg_02_no_secret_in_run_test.sh:20,38`  
+   - `hack/test/sonar_pg_04_ci_job_scoped_permissions_test.sh:24`  
+   - `hack/test/sonar_pg_04_e2e_job_scoped_permissions_test.sh:25`
+
+**Acceptance criteria**
+- Given `hack/check-docs.sh`’s `case`, when a CRD basename matches none of the skip patterns, then a
+  `*)` default arm handles it (continue / append — same as today’s implicit fall-through) so S131
+  clears.
+- Given `::error::` / failure echoes in `check-docs.sh` and `check-api-docs.sh`, when printed, then
+  they go to **stderr** (`>&2`).
+- Given the listed `[ … ]` tests, when updated, then they use bash `[[ … ]]` with equivalent
+  predicates (counts, `-f`, `-eq`).
+- Given nested `if` pairs in the three `sonar_pg_0{2,4}_*` scripts, when merged, then the combined
+  condition preserves the **same fail messages and fail conditions** (no weaker security grep).
+- **Edge:** given `check-docs.sh` with a stale README, when run, then exit non-zero and error text
+  still appears on stderr; success path still prints the sync confirmation.
+- **Edge:** given e8 meta tests after `[[` migration, when CRDs/docs are present, then scripts still
+  exit 0; when a path is missing, then still exit 1 with FAIL text.
+
+**Done when**
+- [ ] `bash hack/check-docs.sh` behaviour preserved (exit code + stderr on failure)
+- [ ] `bash hack/test/e8_s01_*.sh` `e8_s02_*.sh` `e8_s03_*.sh` green on a tip that has those files
+- [ ] `bash hack/test/sonar_pg_02_*.sh` `sonar_pg_04_ci_*.sh` `sonar_pg_04_e2e_*.sh` green
+- [ ] Meta guards for S131/S7677/S7688/S1066 patterns as needed (`hack/test/sonar_pg_m04_*` …)
+- [ ] Closes all keys in the four clusters above · REQ-SONAR-PG-M04…M07 in OpenSpec
+
+**Touches:** `hack/check-docs.sh`, `hack/check-api-docs.sh`, `hack/test/e8_s01_*`,
+`hack/test/e8_s02_*`, `hack/test/e8_s03_*`, `hack/test/sonar_pg_02_*`,
+`hack/test/sonar_pg_04_ci_*`, `hack/test/sonar_pg_04_e2e_*`, `hack/test/sonar_pg_m0{4,5,6,7}_*`  
+**Depends on:** none (rebase onto tip with E8 scripts) · **Parallel-safe-with:** E5-S18, S19, S21  
+**Not in scope:** rewriting check-docs counting logic; Dockerfile; Go tests; coverage CI
+
+### E5-S21 — Dockerfile: quote expansions (P1)
+**As a** release engineer **I want** Dockerfile `RUN`/`ADD`/`ENV` expansions quoted per docker:S6570
+**so that** 19 MAJOR Maintainability issues clear without breaking the terraform/plugin install layer.
+
+**Sonar keys / rule**
+- `cluster/images/provider-gridscale/Dockerfile:27–39` — docker:S6570 ×19
+  keys `AZ-GeyaXbiMwwowBPDZ4` … `AZ-GeyaXbiMwwowBPDaK`
+
+**Acceptance criteria**
+- Given lines that expand `${PLUGIN_DIR}`, `${TERRAFORM_*}`, `${TARGETOS}`, `${TARGETARCH}`,
+  `${USER_ID}`, zip paths, etc. in the Setup Terraform block (≈27–39), when fixed, then each
+  flagged expansion is properly quoted per S6570.
+- Given the E5-S17 contract, when this lane finishes, then local artefacts still use **`COPY`**
+  (not `ADD`) for `bin/…/provider` and `terraformrc.hcl`; remote URL `ADD` may remain.
+- **Edge:** given a build with the quoted Dockerfile, when `docker build` / CI image build runs,
+  then terraform + provider plugin still land under `${PLUGIN_DIR}` and the non-root `USER` still
+  applies (no path-split regressions from quoting).
+
+**Done when**
+- [ ] Meta test (extend `sonar_pg_08_*` or add `sonar_pg_m08_dockerfile_quoting_test.sh`) asserts
+  quoted forms for the flagged lines · **Level:** M
+- [ ] Existing `bash hack/test/sonar_pg_08_dockerfile_copy_test.sh` still green
+- [ ] Closes the 19× S6570 keys · REQ-SONAR-PG-M08 in OpenSpec
+
+**Touches:** `cluster/images/provider-gridscale/Dockerfile`, `hack/test/sonar_pg_m08_*`
+(and/or `hack/test/sonar_pg_08_*` if extended in-lane)  
+**Depends on:** none · **Parallel-safe-with:** E5-S18, S19, S20  
+**Not in scope:** base-image bumps; TERRAFORM_VERSION pin changes; coverage CI
+
+### First slice recommendation
+
+Start **E5-S18 (L-REG)** first — two CRITICAL fixes, tiny diff, zero product behaviour risk — then
+fan out **L-CFGTEST + L-SHELL + L-DOCKER** in parallel under `/agent-loop-local`. If only one
+implementer: S18 → S19 (remaining CRITICAL complexity) → S20 → S21.
