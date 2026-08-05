@@ -1,7 +1,21 @@
 # OPERATOR-BOARD — provider-gridscale (lanes + locks)
 
-Coordinator: session wrap **2026-07-21** (v0.2.1 security patch + docs). Base: `origin/main` @ `c53fc82`.
-**No lanes In-flight.** **v0.2.1 published & signed** — see [`SESSION-HANDOFF.md`](SESSION-HANDOFF.md).
+Coordinator: **agent-loop-local** cleanup — 2026-08-05.
+Base: `origin/main` @ `f9f4628` (PR #41). **No lanes In-flight.** Backlog exhausted for implementable work.
+
+### Batch 11 — SonarCloud MAINT/RELIABILITY + coverage (2026-08-04) — ✅ Integrated
+
+Landed via [PR #41](https://github.com/PlatformRelay/provider-gridscale/pull/41) (`gh pr merge --rebase --admin`). Tip: `f9f4628`.
+
+| Lane | Story | State |
+| --- | --- | --- |
+| L-REG | **E5-S18** empty `init()` nested comments | ✅ Integrated (PR #41) |
+| L-CFGTEST | **E5-S19** config test complexity + named types | ✅ Integrated (PR #41) |
+| L-SHELL | **E5-S20** shell hygiene | ✅ Integrated (PR #41) |
+| L-DOCKER | **E5-S21** Dockerfile quoting | ✅ Integrated (PR #41) |
+| L-COV | **coverage CI** Sonar analysis wiring | ✅ Integrated (PR #41) |
+
+**D-024:** Autoscan disabled (operator 2026-08-05); Coverage+sonarcloud green on run 30956241401.
 
 ### Batch 10 — vuln + README/docs + logo candidates (2026-07-21) — landed on `main`
 
@@ -110,6 +124,20 @@ IDs renumbered per **D-014** (gap E2-S06/07/08 → **E7-S01/02/03**, research E2
 
 > **Session wrap complete** — prefer Marketplace/install tag **v0.1.1**.
 > Primary CI green on `d8433f5`; Docs Sync green on `d275897`. See SESSION-HANDOFF.
+
+### Batch 11 — SonarCloud MAINT/RELIABILITY + coverage (2026-08-04) — ✅ Integrated on origin/main
+
+Landed via [PR #41](https://github.com/PlatformRelay/provider-gridscale/pull/41) (`gh pr merge --rebase --admin`). Tip: `origin/main` @ `f9f4628`.
+
+| Lane | Story | Owns (disjoint paths) | Auto-merge? | State |
+| --- | --- | --- | --- | --- |
+| L-REG | **E5-S18** empty `init()` nested comments (go:S1186 ×2) | register.go + sonar_pg_m01 + OpenSpec scaffold | yes | ✅ Integrated (PR #41 → `f9f4628`) |
+| L-CFGTEST | **E5-S19** test complexity + named types | config/*_test.go + pg-m02/m03 | yes | ✅ Integrated (PR #41) |
+| L-SHELL | **E5-S20** shell hygiene | hack/check-*.sh + e8/sonar_pg meta + pg-m04…m07 | yes | ✅ Integrated (PR #41) |
+| L-DOCKER | **E5-S21** Dockerfile quoting | Dockerfile + sonar_pg_m08 | yes | ✅ Integrated (PR #41) |
+| L-COV | **coverage CI** Sonar analysis wiring | coverage.yml, sonarcloud.yaml, sonar-project.properties, sonar_pg_09 | yes | ✅ Integrated (PR #41) |
+
+**D-024:** Autoscan disabled; Coverage+sonarcloud green (run 30956241401).
 
 ## Deferred / blocked (not board lanes)
 
