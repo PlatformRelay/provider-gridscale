@@ -330,14 +330,32 @@ arch-lint:
 # (the credential-resolution surface). D-007 widened the floor to include
 # internal/clients because it is the audit-critical credential path (ProviderConfig
 # + Secret -> terraform Setup), overriding D-005's original ./config/...-only scope.
+# Widened again to the custom non-upjet controllers + hack/metadatafix: they carry
+# tests but were outside -coverpkg, so SonarCloud saw them as 0% and the
+# new_coverage gate went red once coverage import was switched on (84fc81b).
 # Enforces a floor (COVERAGE_MIN, default 70) and emits cover.out as an artifact
 # for E5 (codecov). The floor guards against regression, it is not the target.
 COVERAGE_MIN ?= 70
+
+# Hand-authored packages carrying unit tests. Deliberately enumerated instead of
+# ./internal/controller/... — that glob pulls in ~60 upjet-generated controller
+# packages with no tests, dragging the measured total to ~12% and tripping the
+# floor. Anything NOT listed here reports 0% coverage to SonarCloud even when it
+# has passing tests, so add new hand-written packages to this list.
+COVER_PKGS = ./config/... \
+	./internal/clients/... \
+	./internal/controller/cluster/gridscale/publicnetwork/... \
+	./internal/controller/namespaced/gridscale/publicnetwork/... \
+	./internal/controller/cluster/storage/backuplist/... \
+	./internal/controller/namespaced/storage/backuplist/... \
+	./hack/metadatafix/...
+COVER_PKGS_CSV = $(shell echo $(COVER_PKGS) | tr -s ' ' ',')
+
 coverage:
-	@$(INFO) running unit coverage for config and internal/clients
-	go test -covermode=count -coverpkg=./config/...,./internal/clients/... -coverprofile=cover.out ./config/... ./internal/clients/...
+	@$(INFO) running unit coverage for the hand-authored surface
+	go test -covermode=count -coverpkg=$(COVER_PKGS_CSV) -coverprofile=cover.out $(COVER_PKGS)
 	@total=$$(go tool cover -func=cover.out | awk '/^total:/ {gsub(/%/,"",$$3); print $$3}'); \
-	echo "total unit coverage (config + internal/clients): $$total% / floor $(COVERAGE_MIN)%"; \
+	echo "total unit coverage (hand-authored surface): $$total% / floor $(COVERAGE_MIN)%"; \
 	awk -v t=$$total -v m=$(COVERAGE_MIN) 'BEGIN { exit (t+0 < m+0) }' || { echo "coverage below floor"; exit 1; }
 	@$(OK) unit coverage floor satisfied
 
