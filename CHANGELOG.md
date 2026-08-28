@@ -12,9 +12,9 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 ### Bug Fixes
 
-- **arch:** Declare the controller -> clients edge [e0ed1d0](https://github.com/platformrelay/provider-gridscale/commit/e0ed1d05c3c09be315d88bf57de12680b8e747d3)
+- **arch:** Declare the controller -> clients edge [5bd33d3](https://github.com/platformrelay/provider-gridscale/commit/5bd33d3598e2c2562afc5d5b7edffbbfccbcd48a)
 
-- **sonar:** Scope coverage to the hand-authored surface [8f759ea](https://github.com/platformrelay/provider-gridscale/commit/8f759ea719faabfba02161102c657cd704cf563c)
+- **sonar:** Scope coverage to the hand-authored surface [33b23fd](https://github.com/platformrelay/provider-gridscale/commit/33b23fd7fdcf9bf5cf547b83c76bfe107a5976d8)
 
 - **hack:** Reject e2e workflow write-all in PG-04 meta ([#41](https://github.com/platformrelay/provider-gridscale/pull/41))[f9f4628](https://github.com/platformrelay/provider-gridscale/commit/f9f4628eeddc9a07dc438584251ce36c92e9fc23)
 
@@ -48,7 +48,7 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 ### Tests
 
-- **controller:** Cover Connect/Setup/Delete and namespaced BackupList [42cc128](https://github.com/platformrelay/provider-gridscale/commit/42cc1286ba1315c7aacc30ef3fa38028be209f5e)
+- **controller:** Cover Connect/Setup/Delete and namespaced BackupList [21813e8](https://github.com/platformrelay/provider-gridscale/commit/21813e8b01ff72168cbefb399abe35d96aa1197c)
 
 ## [0.3.0](https://github.com/platformrelay/provider-gridscale/compare/v0.2.2..v0.3.0) - 2026-07-31
 
