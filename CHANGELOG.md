@@ -12,7 +12,43 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 ### Bug Fixes
 
-- **sonar:** Exclude generated + cluster/namespaced mirror from duplication gate [df8ae6f](https://github.com/platformrelay/provider-gridscale/commit/df8ae6ff928549dd37ffe6d3529b1641c53da09b)
+- **arch:** Declare the controller -> clients edge [e0ed1d0](https://github.com/platformrelay/provider-gridscale/commit/e0ed1d05c3c09be315d88bf57de12680b8e747d3)
+
+- **sonar:** Scope coverage to the hand-authored surface [8f759ea](https://github.com/platformrelay/provider-gridscale/commit/8f759ea719faabfba02161102c657cd704cf563c)
+
+- **hack:** Reject e2e workflow write-all in PG-04 meta ([#41](https://github.com/platformrelay/provider-gridscale/pull/41))[f9f4628](https://github.com/platformrelay/provider-gridscale/commit/f9f4628eeddc9a07dc438584251ce36c92e9fc23)
+
+- **hack:** Shell hygiene for Sonar S131/S7677/S7688/S1066 E5-S20 [5beb46c](https://github.com/platformrelay/provider-gridscale/commit/5beb46ce3f3ce1b72acd223a94f88d6b90b3376c)
+
+- **docker:** Quote Dockerfile expansions for S6570 E5-S21 [d9424ad](https://github.com/platformrelay/provider-gridscale/commit/d9424ad7a222b267e280b5d480e803ae6176b365)
+
+- **sonar:** Wire CI analysis so Go coverage reaches SonarCloud [84fc81b](https://github.com/platformrelay/provider-gridscale/commit/84fc81bb764def600a65f2eff2550b4a2c7b95cb)
+
+- **apis:** Nest comments in empty register init funcs E5-S18 [123c973](https://github.com/platformrelay/provider-gridscale/commit/123c9739f13357b01ae862deb115c75e4b298b25)
+
+- **apis:** Nest comments in empty register init funcs E5-S18 [225d35f](https://github.com/platformrelay/provider-gridscale/commit/225d35ff586afe9a703f4b4cfca53ed4a6fe57f3)
+
+- **sonar:** Exclude generated + cluster/namespaced mirror from duplication gate [b012a1f](https://github.com/platformrelay/provider-gridscale/commit/b012a1f8e610cd4ad53b828adb65c033337aeced)
+
+
+### Documentation
+
+- **coordination:** Sync Batch 11 land + archive E8 OpenSpec ([#42](https://github.com/platformrelay/provider-gridscale/pull/42))[3419d69](https://github.com/platformrelay/provider-gridscale/commit/3419d691abc1884ccd8a9d069387d2e1b1cf2a9d)
+
+
+### Refactoring
+
+- **config:** Lower CRD test complexity and name view types E5-S19 [5a051a7](https://github.com/platformrelay/provider-gridscale/commit/5a051a7798c4e9e26044d70b14190a80449e44b0)
+
+
+### Styling
+
+- **config:** Gofmt named CRD view types [0c6f604](https://github.com/platformrelay/provider-gridscale/commit/0c6f60491286975f1ba7233a588eef61af0f55f3)
+
+
+### Tests
+
+- **controller:** Cover Connect/Setup/Delete and namespaced BackupList [42cc128](https://github.com/platformrelay/provider-gridscale/commit/42cc1286ba1315c7aacc30ef3fa38028be209f5e)
 
 ## [0.3.0](https://github.com/platformrelay/provider-gridscale/compare/v0.2.2..v0.3.0) - 2026-07-31
 
