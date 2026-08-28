@@ -94,8 +94,22 @@ jobs:
             echo "has_token=true" >> "${GITHUB_OUTPUT}"
           fi
 
+      # The quality gate's New Code period is `previous_version`. Without a
+      # projectVersion Sonar has nothing to anchor on, so the baseline stays
+      # pinned at the first-ever analysis and "new code" grows without bound.
+      # Derive it from the latest tag so it tracks releases with no manual bump.
+      - name: Derive project version from latest tag
+        id: version
+        run: |
+          version="$(git describe --tags --abbrev=0 2>/dev/null || echo '0.0.0')"
+          echo "value=${version#v}" >> "${GITHUB_OUTPUT}"
+          echo "sonar.projectVersion=${version#v}"
+
       - uses: SonarSource/sonarqube-scan-action@22918119ff8e1ca75a623e15c8296b6ea4fbe28f # v8.2.1
         if: steps.sonar.outputs.has_token == 'true'
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectVersion=${{ steps.version.outputs.value }}
 
