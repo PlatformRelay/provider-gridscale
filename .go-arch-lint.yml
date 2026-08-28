@@ -49,6 +49,9 @@ deps:
   clients:
     mayDependOn:
       - apis
+      # The external test package (package clients_test) imports the package
+      # under test, which arch-lint sees as a self-edge.
+      - clients
   # cmd is the wiring entrypoint: it legitimately assembles everything.
   cmd:
     mayDependOn:
@@ -69,6 +72,10 @@ deps:
       - features
       - version
       - controller
+      # The hand-written E8 observe-only controllers (BackupList, PublicNetwork)
+      # call the gridscale REST API through the shared client. This edge is
+      # controller -> clients only; the reverse stays forbidden above.
+      - clients
   # apis is GENERATED. The zz_register.go aggregators import their sibling
   # apis/<group>/<version> packages, so allow apis self-dependency to keep the
   # generated tree green. Not a hand-authored boundary we police.
