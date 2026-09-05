@@ -8,6 +8,12 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 (with a leading gitmoji token) on the default branch using
 [git-cliff](https://git-cliff.org/).
 
+## [Unreleased]
+
+### Miscellaneous
+
+- **deps:** Bump x/mod to v0.40.0, Go to 1.26.6, pin image digest and goimports [b3411e4](https://github.com/platformrelay/provider-gridscale/commit/b3411e45175cd71b0c3ed7cbcce0bb5c25398691)
+
 ## [0.3.1](https://github.com/platformrelay/provider-gridscale/compare/v0.3.0..v0.3.1) - 2026-08-28
 
 ### Bug Fixes
