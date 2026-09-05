@@ -10,6 +10,11 @@ Release notes are generated from [Conventional Commits](https://www.conventional
 
 ## [Unreleased]
 
+### CI/CD
+
+- Resolve goimports from go.mod instead of an explicit @version [22af9f8](https://github.com/platformrelay/provider-gridscale/commit/22af9f8d6119322dba623f2d59ff73791d266c26)
+
+
 ### Miscellaneous
 
 - **deps:** Bump x/mod to v0.40.0, Go to 1.26.6, pin image digest and goimports [b3411e4](https://github.com/platformrelay/provider-gridscale/commit/b3411e45175cd71b0c3ed7cbcce0bb5c25398691)
